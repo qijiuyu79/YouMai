@@ -1,0 +1,86 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@android:color/white">
+
+      <ImageView android:id="@+id/img_psi_icon"
+          android:layout_width="100dp"
+          android:layout_height="match_parent"
+          android:src="@mipmap/shop_item_icon"/>
+
+        <TextView android:id="@+id/tv_psi_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_psi_icon"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="漫步生活馆"
+            android:textSize="13sp"
+            android:textColor="@color/color_333333"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/tv_psi_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/xing_icon"/>
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/xing_icon"/>
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/xing_icon"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/next_icon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"/>
+
+        <TextView android:id="@+id/tv_psi_num"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/red_round"
+            android:layout_marginRight="50dp"
+            android:text="5"
+            android:textSize="11sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"/>
+
+        <TextView android:id="@+id/tv_psi_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_psi_icon"
+            android:layout_below="@id/tv_psi_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="10月份京东购买的吉他，9成新，主要不太会用"
+            android:textColor="@color/color_777777"
+            android:textSize="11sp"
+            android:layout_marginRight="80dp"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

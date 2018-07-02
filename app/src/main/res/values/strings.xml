@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">有卖</string>
+    <string name="load_more">加载更多...</string>
+    <string name="http_error">网络繁忙，请稍后再试</string>
+    <string name="payment_success">支付成功</string>
+    <string name="payment_failed">支付失败</string>
+    <string name="paymnet_canceled">支付取消</string>
+    <string name="payment_has_been_cancelled">已取消支付！</string>
+    <string name="payment_confirming">支付结果确认中</string>
+    <string name="Please_install_alipay_client_first">请先安装支付宝客户端</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="color_FF4081">#FF4081</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="color_ececec">#ECECEC</color>
+    <color name="color_525252">#525252</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_E51C23">#E51C23</color>
+    <color name="color_bule">#2F9BFF</color>
+    <color name="color_bule2">#40B3F0</color>
+    <color name="color_bule3">#99ddff</color>
+    <color name="color_F5F5F5">#F5F5F5</color>
+    <color name="color_8a8a8a">#8a8a8a</color>
+    <color name="color_808080">#808080</color>
+    <color name="color_139E91">#139E91</color>
+    <color name="color_33333">#333333</color>
+    <color name="gray_bg">#f9f9f9</color>
+    <color name="color_D4D4D4">#D4D4D4</color>
+    <color name="color_777777">#777777</color>
+    <color name="color_CCCCCC">#CCCCCC</color>
+    <color name="color_efefef">#efefef</color>
+    <color name="color_B7B7B7">#B7B7B7</color>
+    <color name="color_666666">#666666</color>
+    <!-- 透明 -->
+    <color name="transparent">#00000000</color>
+</resources>

@@ -1,0 +1,64 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingBottom="10dp"
+        android:background="@android:color/white">
+
+       <ImageView android:id="@+id/img_mi_icon"
+           android:layout_width="120dp"
+           android:layout_height="180dp"
+           android:layout_marginLeft="12dp"
+           android:layout_marginTop="7dp"/>
+
+        <TextView android:id="@+id/tv_mi_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_mi_icon"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="13dp"
+            android:textColor="@color/color_333333"
+            android:textSize="13sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:src="@mipmap/zhifu_type_icon"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/img_mi_icon"
+            android:layout_marginLeft="13dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView android:id="@+id/tv_mi_newMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="现价：￥100.00"
+                android:textSize="13sp"
+                android:textColor="@color/color_E51C23"/>
+
+            <TextView android:id="@+id/tv_mi_oldMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原价：￥120.00"
+                android:textSize="11sp"
+                android:layout_marginLeft="15dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

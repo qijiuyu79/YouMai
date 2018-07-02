@@ -1,0 +1,84 @@
+package com.youmai.project.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2018/5/23 0023.
+ */
+
+public class MainBean implements Serializable {
+
+    private String address;
+    private String description;
+    private String id;
+    private List<String> imgList;
+    private Double latitude=0.0;
+    private Double longitude=0.0;
+    private double originalPrice;
+    private double presentPrice;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<String> imgList) {
+        this.imgList = imgList;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public double getPresentPrice() {
+        return presentPrice;
+    }
+
+    public void setPresentPrice(double presentPrice) {
+        this.presentPrice = presentPrice;
+    }
+}

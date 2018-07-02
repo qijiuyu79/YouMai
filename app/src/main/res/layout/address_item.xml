@@ -1,0 +1,43 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@drawable/white_share">
+
+        <TextView android:id="@+id/tv_ai_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="特斯拉"
+            android:textSize="14sp"
+            android:textColor="@color/color_333333"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_ai_name"
+            android:text="15011558963"
+            android:textSize="14sp"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ai_name"
+            android:text="北京海淀区西二旗北京市海淀区上地东路1号盈创动力A座北厅902室"
+            android:textSize="13sp"
+            android:textColor="@color/color_777777"
+            android:layout_marginTop="10dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

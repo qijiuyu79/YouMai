@@ -1,0 +1,66 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/head"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="实名认证"
+        android:textSize="18sp"
+        android:textColor="@color/color_777777"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="实名认证必须为您本人的真实身份信息"
+        android:textSize="12sp"
+        android:textColor="@color/color_777777"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"/>
+
+    <com.youmai.project.view.MeterailEditText
+        android:id="@+id/et_ac_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:maxLength="11"
+        app:hint="我的姓名">
+
+    </com.youmai.project.view.MeterailEditText>
+
+    <com.youmai.project.view.MeterailEditText
+        android:id="@+id/et_ac_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:maxLength="18"
+        app:hint="身份证号">
+
+    </com.youmai.project.view.MeterailEditText>
+
+    <com.youmai.project.view.ClickTextView
+        android:id="@+id/tv_ac_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_tabs"
+        android:gravity="center"
+        android:text="认证"
+        android:textColor="@android:color/white"
+        android:textSize="15sp" />
+
+
+</LinearLayout>

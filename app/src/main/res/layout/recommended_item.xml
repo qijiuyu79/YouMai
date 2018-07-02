@@ -1,0 +1,128 @@
+<com.youmai.project.view.ClickRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:background="@android:color/white">
+
+    <com.youmai.project.view.CircleImageView
+        android:id="@+id/img_ri_pic"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/ic_pic_icon"/>
+
+    <TextView android:id="@+id/tv_ri_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/img_ri_pic"
+        android:layout_alignTop="@id/img_ri_pic"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:text="漫步生活馆"
+        android:textSize="13sp"
+        android:textColor="@color/color_333333"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/img_ri_pic"
+        android:layout_alignBottom="@id/img_ri_pic"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/xing_icon"/>
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/xing_icon"/>
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/xing_icon"/>
+
+    </LinearLayout>
+
+    <ImageView android:id="@+id/img_ri_share"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/share_icon"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView android:id="@+id/tv_ri_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_333333"
+        android:textSize="12sp"
+        android:layout_below="@id/img_ri_pic"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView android:id="@+id/img_ri_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="190dp"
+        android:layout_below="@id/tv_ri_content"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/git_icon"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_ri_icon"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/location_icon"/>
+
+        <TextView android:id="@+id/tv_ri_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/color_999999"
+            android:textSize="11sp"/>
+
+        <TextView android:id="@+id/tv_ri_newMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ri_location"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_E51C23"/>
+
+        <TextView android:id="@+id/tv_ri_oldMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ri_location"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/tv_ri_newMoney"
+            android:layout_alignBottom="@id/tv_ri_newMoney"
+            android:layout_marginLeft="15dp"
+            android:textSize="11sp"
+            android:textColor="@color/color_999999"
+            android:gravity="bottom"/>
+
+        <com.youmai.project.view.ClickTextView
+            android:id="@+id/tv_ri_buy"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="购买"
+            android:textColor="@color/color_E51C23"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:background="@drawable/bg_recommended_buy"/>
+    </RelativeLayout>
+
+</com.youmai.project.view.ClickRelativeLayout>
