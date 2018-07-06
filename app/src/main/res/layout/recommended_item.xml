@@ -7,8 +7,8 @@
 
     <com.youmai.project.view.CircleImageView
         android:id="@+id/img_ri_pic"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:src="@mipmap/ic_pic_icon"/>
 
     <TextView android:id="@+id/tv_ri_name"
@@ -32,29 +32,32 @@
         android:layout_marginBottom="5dp">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="13dp"
+            android:layout_height="14dp"
             android:src="@mipmap/xing_icon"/>
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="13dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="4dp"
             android:src="@mipmap/xing_icon"/>
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="13dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="4dp"
             android:src="@mipmap/xing_icon"/>
 
     </LinearLayout>
 
     <ImageView android:id="@+id/img_ri_share"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:src="@mipmap/share_icon"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/tv_ri_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp" />
 
     <TextView android:id="@+id/tv_ri_content"
         android:layout_width="match_parent"
@@ -65,8 +68,8 @@
         android:layout_marginTop="10dp"/>
 
     <ImageView android:id="@+id/img_ri_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="190dp"
+        android:layout_width="346dp"
+        android:layout_height="281.5dp"
         android:layout_below="@id/tv_ri_content"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
@@ -79,16 +82,16 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="14dp"
+            android:layout_height="17dp"
             android:src="@mipmap/location_icon"/>
 
         <TextView android:id="@+id/tv_ri_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/color_999999"
-            android:textSize="11sp"/>
+            android:layout_marginLeft="19dp"
+            android:textColor="@color/color_FF4081"
+            android:textSize="14sp"/>
 
         <TextView android:id="@+id/tv_ri_newMoney"
             android:layout_width="wrap_content"
@@ -113,8 +116,8 @@
 
         <com.youmai.project.view.ClickTextView
             android:id="@+id/tv_ri_buy"
-            android:layout_width="60dp"
-            android:layout_height="25dp"
+            android:layout_width="65dp"
+            android:layout_height="26dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
