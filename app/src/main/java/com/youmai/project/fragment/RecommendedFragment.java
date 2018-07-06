@@ -52,7 +52,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_recommended, container, false);
 //        swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
-        listView=(ListView)view.findViewById(R.id.listView);
+        listView=(ListView)view.findViewById(R.id.list);
 //        swipeLayout.setColorSchemeResources(R.color.color_bule2,
 //                R.color.color_bule,
 //                R.color.color_bule2,
@@ -65,7 +65,9 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
 //            }
 //        }));
         //查询数据
-        loadData();
+//        loadData();
+        recommendedAdapter=new RecommendedAdapter(getActivity(),listBeanAll);
+        listView.setAdapter(recommendedAdapter);
         return view;
     }
 
@@ -173,6 +175,6 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser=isVisibleToUser;
         //查询数据
-        loadData();
+//        loadData();
     }
 }
