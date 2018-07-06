@@ -67,7 +67,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             //设置用户头像
             case R.id.img_ri_pic:
-                 PicturesUtil.selectPhoto(UserActivity.this,2);
+//                 PicturesUtil.selectPhoto(UserActivity.this,2);
                  break;
             //设置昵称
             case R.id.img_au_setName:

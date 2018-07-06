@@ -22,6 +22,7 @@ import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.activity.user.UserActivity;
 import com.youmai.project.utils.ActivitysLifecycle;
 import com.youmai.project.utils.GetLocation;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.SystemBarTintManager;
 
@@ -84,9 +85,9 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         if(tabHost!=null){
             spec=tabHost.newTabSpec("首页").setIndicator("首页").setContent(new Intent(this, MainActivity.class));
             tabHost.addTab(spec);
-            spec=tabHost.newTabSpec("商城").setIndicator("商城").setContent(new Intent(this, ShoppingActivity.class));
+            spec=tabHost.newTabSpec("逛街").setIndicator("逛街").setContent(new Intent(this, ShoppingActivity.class));
             tabHost.addTab(spec);
-            spec=tabHost.newTabSpec("中心").setIndicator("中心").setContent(new Intent(this, CenterActivity.class));
+            spec=tabHost.newTabSpec("发布").setIndicator("发布").setContent(new Intent(this, CenterActivity.class));
             tabHost.addTab(spec);
             spec=tabHost.newTabSpec("订单").setIndicator("订单").setContent(new Intent(this, OrderActivity.class));
             tabHost.addTab(spec);
@@ -119,16 +120,16 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                  tvMain.setTextColor(getResources().getColor(R.color.color_FF4081));
                  updateColor(0);
                  break;
-            //商城
+            //逛街
             case R.id.lin_tab_shop:
-                 tabHost.setCurrentTabByTag("商城");
+                 tabHost.setCurrentTabByTag("逛街");
                  imgShop.setImageDrawable(getResources().getDrawable(R.mipmap.tab_shop_click_icon));
                  tvShop.setTextColor(getResources().getColor(R.color.color_FF4081));
                  updateColor(1);
                  break;
             //中心
             case R.id.lin_tab_center:
-                 tabHost.setCurrentTabByTag("中心");
+                 tabHost.setCurrentTabByTag("发布");
                  updateColor(5);
                  break;
             //订单

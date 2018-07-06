@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity{
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
         //开始定位
-        getLocation();
+//        getLocation();
     }
 
     /**
@@ -103,14 +103,16 @@ public class MainActivity extends BaseActivity{
             super(fm);
         }
 
+        private final String[] titles = { "二手","闲置","收藏","宠物"};
+
         @Override
         public CharSequence getPageTitle(int position) {
-            return valList.get(position);
+            return titles[position];
         }
 
         @Override
         public int getCount() {
-            return valList.size();
+            return 4;
         }
 
         @Override
@@ -128,7 +130,13 @@ public class MainActivity extends BaseActivity{
                 //定位成功
                 case 0x00:
                      //获取商品分类
-                     getGoodsType();
+//                     getGoodsType();
+
+                    pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+                    pager.setOffscreenPageLimit(4);
+                    tabs.setViewPager(pager);
+                    tabs.setViewPagerCallBack(viewPagerCallBack);
+                    setTabsValue();
                      break;
                 //获取首页分类
                 case HandlerConstant.GET_GOODS_TYPE_SUCCESS:
