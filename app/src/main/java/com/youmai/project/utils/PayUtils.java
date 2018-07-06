@@ -9,10 +9,9 @@ import com.alipay.sdk.app.PayTask;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.EAppWinXinPayResVO;
 import com.youmai.project.http.HttpConstant;
-import com.youmai.project.http.HttpMethod;
 
 /**支付工具类
  * Created by Administrator on 2017/1/13 0013.

@@ -1,7 +1,6 @@
 package com.youmai.project.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,7 +15,7 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 
 import java.io.File;
 import java.text.DecimalFormat;

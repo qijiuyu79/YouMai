@@ -1,5 +1,7 @@
 package com.youmai.project.activity.main;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -11,31 +13,39 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.KeyEvent;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.EditText;
 
-import com.youmai.project.Application.MyApplication;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechRecognizer;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
-import com.youmai.project.activity.user.MyAddressActivity;
 import com.youmai.project.bean.Login;
 import com.youmai.project.bean.ViewPagerCallBack;
 import com.youmai.project.fragment.RecommendedFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.ActivitysLifecycle;
-import com.youmai.project.utils.FileUtils;
 import com.youmai.project.utils.GetLocation;
-import com.youmai.project.utils.LogUtils;
+import com.youmai.project.utils.IatSettings;
+import com.youmai.project.utils.JsonParser;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.view.PagerSlidingTabStrip;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
+    private SpeechRecognizer mIat;
+    // 语音听写UI
+    private RecognizerDialog iatDialog;
+    private SharedPreferences mSharedPreferences;
     private PagerSlidingTabStrip tabs;
+    private EditText etKeys;
     private DisplayMetrics dm;
     private ViewPager pager;
     //切换fragment的位置
@@ -45,12 +55,27 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+        //开始定位
+//        getLocation();
+    }
+
+
+    /**
+     * 初始化控件
+     */
+    private void initView(){
+        etKeys=(EditText)findViewById(R.id.et_am_keys);
         dm = getResources().getDisplayMetrics();
         pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        findViewById(R.id.img_am_apeck).setOnClickListener(this);
 
-        //开始定位
-//        getLocation();
+        // 初始化识别对象
+        mIat = SpeechRecognizer.createRecognizer(this, IatSettings.mInitListener);
+        // 初始化听写Dialog,如果只使用有UI听写功能,无需创建SpeechRecognizer
+        iatDialog = new RecognizerDialog(this, IatSettings.mInitListener);
+        mSharedPreferences = getSharedPreferences(IatSettings.PREFER_NAME, Context.MODE_PRIVATE);
     }
 
     /**
@@ -96,6 +121,41 @@ public class MainActivity extends BaseActivity{
         // 取消点击Tab时的背景色
         tabs.setTabBackground(0);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_am_apeck:
+                IatSettings.setParam(mSharedPreferences, mIat);
+                boolean isShowDialog = mSharedPreferences.getBoolean("iat_show", true);
+                if (isShowDialog) {
+                    // 显示听写对话框
+                    iatDialog.setListener(recognizerDialogListener);
+                    iatDialog.show();
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    /**
+     * 听写UI监听器
+     */
+    private RecognizerDialogListener recognizerDialogListener = new RecognizerDialogListener() {
+        public void onResult(RecognizerResult results, boolean isLast) {
+            String text = JsonParser.parseIatResult(results.getResultString());
+            etKeys.append(text);
+        }
+        /**
+         * 识别回调错误.
+         */
+        @Override
+        public void onError(SpeechError error) {
+        }
+    };
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
@@ -201,5 +261,12 @@ public class MainActivity extends BaseActivity{
         if(!TextUtils.isEmpty(auth_token)){
             HttpMethod.getAccessToken(auth_token,mHandler);
         }
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        // 退出时释放连接
+        mIat.cancel();
+        mIat.destroy();
     }
 }

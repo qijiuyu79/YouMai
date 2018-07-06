@@ -5,6 +5,50 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/color_FF4081">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@drawable/bg_search"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="40dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="17.5dp"
+                android:layout_height="17.5dp"
+                android:src="@mipmap/search_icon"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:id="@+id/et_am_keys"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@null"
+                android:textSize="15sp"
+                android:textColor="@color/color_333333"/>
+
+        </RelativeLayout>
+        
+        <com.youmai.project.view.ClickImageView
+            android:id="@+id/img_am_apeck"
+            android:layout_width="15.5dp"
+            android:layout_height="23dp"
+            android:src="@mipmap/speck_icon"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
+
     <com.youmai.project.view.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"

@@ -8,7 +8,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.MyLocationData;
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 
 /**
  * 定位

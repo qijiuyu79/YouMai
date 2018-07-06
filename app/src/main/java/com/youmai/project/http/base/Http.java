@@ -5,12 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 
-import com.youmai.project.Application.MyApplication;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpConstant;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.ParameterUtils;
-import com.youmai.project.utils.SPUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;

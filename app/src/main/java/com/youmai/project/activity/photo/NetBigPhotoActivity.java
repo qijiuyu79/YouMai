@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 

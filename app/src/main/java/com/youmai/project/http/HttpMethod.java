@@ -2,13 +2,11 @@ package com.youmai.project.http;
 
 import android.os.Handler;
 
-import com.youmai.project.Application.MyApplication;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.http.base.BaseRequst;
 import com.youmai.project.http.base.Http;
-import com.youmai.project.utils.LogUtils;
 
 import java.io.File;
 import java.io.IOException;

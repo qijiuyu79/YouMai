@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.http.HttpConstant;
 import com.youmai.project.utils.photo.ImageItem;

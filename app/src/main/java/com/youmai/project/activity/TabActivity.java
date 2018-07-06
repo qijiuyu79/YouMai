@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.main.MainActivity;
@@ -22,7 +22,6 @@ import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.activity.user.UserActivity;
 import com.youmai.project.utils.ActivitysLifecycle;
 import com.youmai.project.utils.GetLocation;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.SystemBarTintManager;
 

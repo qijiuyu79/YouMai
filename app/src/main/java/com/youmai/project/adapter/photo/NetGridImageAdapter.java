@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 
 import java.util.List;

@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.youmai.project.Application.MyApplication;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.main.MainActivity;
@@ -37,7 +37,6 @@ import com.youmai.project.view.MyGridView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.File;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 

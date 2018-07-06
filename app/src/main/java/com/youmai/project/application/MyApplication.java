@@ -1,10 +1,11 @@
-package com.youmai.project.Application;
+package com.youmai.project.application;
 
 import android.app.Application;
 
-import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.youmai.project.utils.ActivitysLifecycle;
 import com.youmai.project.utils.SPUtil;
 
@@ -23,7 +24,11 @@ public class MyApplication extends Application {
         gson = new Gson();
         spUtil = SPUtil.getInstance(this);
 
+        //初始化地图
         SDKInitializer.initialize(getApplicationContext());
+
+        //初始化讯飞语音
+        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=55d54ce6");
 
         registerActivityLifecycleCallbacks(ActivitysLifecycle.getInstance());
     }

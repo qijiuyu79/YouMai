@@ -4,8 +4,8 @@ import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.WindowManager;
-import com.youmai.project.Application.MyApplication;
-import java.util.HashMap;
+import com.youmai.project.application.MyApplication;
+
 import java.util.Map;
 
 /**
