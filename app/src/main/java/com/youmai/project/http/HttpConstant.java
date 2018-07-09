@@ -19,7 +19,7 @@ public class HttpConstant {
 
     public static final String GET_GOODS_TYPE="/goods/categories";
 
-    public static final String GET_LOCATION_GOODS="/goods/search";
+    public static final String GET_LOCATION_GOODS="/goods/list";
 
     public static final String GET_ACCESS_TOKEN="/auth/login";
 

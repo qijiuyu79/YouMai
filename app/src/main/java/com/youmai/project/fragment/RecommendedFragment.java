@@ -33,7 +33,7 @@ import java.util.List;
 
 public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
-//    private RefreshLayout swipeLayout;
+    private RefreshLayout swipeLayout;
     private ListView listView;
     private RecommendedAdapter recommendedAdapter;
     private List<MainBean> listBeanAll=new ArrayList<>();
@@ -51,21 +51,21 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_recommended, container, false);
-//        swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
+        swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
         listView=(ListView)view.findViewById(R.id.list);
-//        swipeLayout.setColorSchemeResources(R.color.color_bule2,
-//                R.color.color_bule,
-//                R.color.color_bule2,
-//                R.color.color_bule3);
-//        swipeLayout.setOnRefreshListener(RecommendedFragment.this);
-//        swipeLayout.setOnLoadListener(RecommendedFragment.this);
-//        swipeLayout.post(new Thread(new Runnable() {
-//            public void run() {
-//                swipeLayout.setRefreshing(true);
-//            }
-//        }));
+        swipeLayout.setColorSchemeResources(R.color.color_bule2,
+                R.color.color_bule,
+                R.color.color_bule2,
+                R.color.color_bule3);
+        swipeLayout.setOnRefreshListener(RecommendedFragment.this);
+        swipeLayout.setOnLoadListener(RecommendedFragment.this);
+        swipeLayout.post(new Thread(new Runnable() {
+            public void run() {
+                swipeLayout.setRefreshing(true);
+            }
+        }));
         //查询数据
-//        loadData();
+        loadData();
         recommendedAdapter=new RecommendedAdapter(getActivity(),listBeanAll);
         listView.setAdapter(recommendedAdapter);
         return view;
@@ -77,13 +77,12 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
      */
     private void loadData(){
         if(isVisibleToUser && view!=null && listBeanAll.size()==0){
-            HttpMethod.getLocationGoods(MainActivity.keyList.get(MainActivity.index),mHandler);
-//            swipeLayout.postDelayed(new Runnable() {
-//                public void run() {
-//                    listView.addHeaderView(new View(getActivity()));
-//                    HttpMethod.getLocationGoods(MainActivity.keyList.get(MainActivity.index),mHandler);
-//                }
-//            }, 0);
+            swipeLayout.postDelayed(new Runnable() {
+                public void run() {
+                    listView.addHeaderView(new View(getActivity()));
+                    HttpMethod.getLocationGoods("USED",page,mHandler);
+                }
+            }, 0);
         }
     }
 
@@ -94,7 +93,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                 case HandlerConstant.GET_LOCATION_GOODS_SUCCESS:
                      final String message= (String) msg.obj;
                      refresh(message);
-//                     swipeLayout.setRefreshing(false);
+                     swipeLayout.setRefreshing(false);
                      break;
                 case HandlerConstant.REQUST_ERROR:
                      break ;
@@ -150,10 +149,10 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
             }else{
                 recommendedAdapter.notifyDataSetChanged();
             }
-//            if(list.size()<10){
-//                isTotal=true;
-//                swipeLayout.setFooter(isTotal);
-//            }
+            if(list.size()<10){
+                isTotal=true;
+                swipeLayout.setFooter(isTotal);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -175,6 +174,6 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser=isVisibleToUser;
         //查询数据
-//        loadData();
+        loadData();
     }
 }

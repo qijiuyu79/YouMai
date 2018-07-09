@@ -34,8 +34,7 @@ public class RecommendedAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-//		return list==null ? 0 : list.size();
-		return 10;
+		return list==null ? 0 : list.size();
 	}
 
 	@Override
@@ -64,32 +63,32 @@ public class RecommendedAdapter extends BaseAdapter{
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-//		mainBean=list.get(position);
-//		if(mainBean!=null){
-//			holder.tvContext.setText(mainBean.getDescription());
-//			holder.tvLocation.setText(mainBean.getAddress());
-//			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(mainBean.getPresentPrice()/100));
-//			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(mainBean.getOriginalPrice()/100));
-//			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-//			if(null!=mainBean.getImgList() && mainBean.getImgList().size()>0){
-//				Glide.with(context).load(mainBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imgIcon);
-//			}
-//			holder.tvBuy.setTag(mainBean);
-//			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
-//				public void onClick(View v) {
-//					if(v.getTag()!=null){
-//						MainBean mainBean1= (MainBean) v.getTag();
-//						if(mainBean1!=null){
-//							Intent intent=new Intent(context, BuyGoodsActivity.class);
-//							Bundle bundle=new Bundle();
-//							bundle.putSerializable("MainBean",mainBean1);
-//							intent.putExtras(bundle);
-//							context.startActivity(intent);
-//						}
-//					}
-//				}
-//			});
-//		}
+		mainBean=list.get(position);
+		if(mainBean!=null){
+			holder.tvContext.setText(mainBean.getDescription());
+			holder.tvLocation.setText(mainBean.getAddress());
+			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(mainBean.getPresentPrice()/100));
+			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(mainBean.getOriginalPrice()/100));
+			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+			if(null!=mainBean.getImgList() && mainBean.getImgList().size()>0){
+				Glide.with(context).load(mainBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imgIcon);
+			}
+			holder.tvBuy.setTag(mainBean);
+			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(v.getTag()!=null){
+						MainBean mainBean1= (MainBean) v.getTag();
+						if(mainBean1!=null){
+							Intent intent=new Intent(context, BuyGoodsActivity.class);
+							Bundle bundle=new Bundle();
+							bundle.putSerializable("MainBean",mainBean1);
+							intent.putExtras(bundle);
+							context.startActivity(intent);
+						}
+					}
+				}
+			});
+		}
 		return view;
 	}
 	

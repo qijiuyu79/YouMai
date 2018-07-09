@@ -103,14 +103,15 @@ public class HttpMethod extends BaseRequst {
 
     /**
      * 根据分类获取附近的商品
-     * @param category
+     * @param type
      * @param handler
      */
-    public static void getLocationGoods(String category,final Handler handler) {
+    public static void getLocationGoods(String type,int page,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("category",category);
+        map.put("type",type);
         map.put("min_distance","0");
         map.put("max_distance","5000");
+        map.put("page",page+"");
         Http.getRetrofit().create(HttpApi.class).getLocationGoods(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

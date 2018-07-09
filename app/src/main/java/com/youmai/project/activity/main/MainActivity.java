@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             super(fm);
         }
 
-        private final String[] titles = { "二手","闲置","收藏","宠物"};
+        private final String[] titles = { "二手","闲置","宠物"};
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
@@ -193,7 +193,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 //                     getGoodsType();
 
                     pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-                    pager.setOffscreenPageLimit(4);
+                    pager.setOffscreenPageLimit(3);
                     tabs.setViewPager(pager);
                     tabs.setViewPagerCallBack(viewPagerCallBack);
                     setTabsValue();
