@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bimp {
-	public static int max = 0;
+//	public static int max = 0;
 	
 	public static List<ImageItem> selectBitmap = new ArrayList<>();
 	public static List<ImageItem> imgList = new ArrayList<>();

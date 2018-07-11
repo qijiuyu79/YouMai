@@ -168,7 +168,7 @@ public class HttpMethod extends BaseRequst {
         map.put("description",content);
         map.put("original_price",oldMoney);
         map.put("present_price",newMoney);
-        map.put("categories",goodsType);
+        map.put("type",goodsType);
         map.put("address",address);
         Http.upLoadFile(HttpConstant.ADD_GOODS,"images", list, map, new okhttp3.Callback() {
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {

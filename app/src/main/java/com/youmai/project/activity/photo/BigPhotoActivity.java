@@ -49,7 +49,6 @@ public class BigPhotoActivity extends Activity {
             public void onClick(View v) {
                     {
                         Bimp.selectBitmap.remove(id);
-                        Bimp.max--;
                         finish();
                 }
             }
