@@ -28,7 +28,6 @@
           android:text="确定"
           android:textColor="@color/color_333333"
           android:textSize="20sp"
-          android:background="@drawable/bg_addshop_des"
           android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

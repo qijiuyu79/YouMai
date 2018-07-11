@@ -31,7 +31,6 @@ import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.photo.Bimp;
 import com.youmai.project.utils.photo.ImageItem;
 import com.youmai.project.utils.photo.PicturesUtil;
-import com.youmai.project.view.CycleWheelView;
 import com.youmai.project.view.MyGridView;
 
 import org.json.JSONArray;
@@ -48,7 +47,6 @@ import java.util.List;
 public class AddShopActivity extends BaseActivity implements View.OnClickListener{
 
     private EditText etContent,etOldMoney,etNewMoney;
-    private TextView tvGoodsType;
     private MyGridView gridView;
     private GridImageAdapter adapter = null;
     //商品分类的索引
@@ -64,7 +62,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.color_FF4081);
+        tintManager.setStatusBarTintResource(R.color.gray_bg);
         initView();
     }
 
@@ -77,9 +75,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         etContent=(EditText)findViewById(R.id.et_aa_content);
         etOldMoney=(EditText)findViewById(R.id.et_aa_oleMoney);
         etNewMoney=(EditText)findViewById(R.id.et_aa_newMoney);
-        tvGoodsType=(TextView)findViewById(R.id.tv_aa_goodsType);
         gridView=(MyGridView)findViewById(R.id.mg_addshop);
-        tvGoodsType.setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.tv_aa_add).setOnClickListener(this);
         //清空图片集合
@@ -109,29 +105,17 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            //选择商品分类
-            case R.id.tv_aa_goodsType:
-                 selectGoodsType();
-                 break;
-            //关闭dialog
-            case R.id.picker_yes:
-            case R.id.rel_wheel:
-                 closeDialog();
-                 break;
             //提交
             case R.id.tv_aa_add:
                  final String content=etContent.getText().toString().trim();
                  final String oldMoney=etOldMoney.getText().toString().trim();
                  final String newMoney=etNewMoney.getText().toString().trim();
-                 final String goodsType=tvGoodsType.getText().toString().trim();
                  if(TextUtils.isEmpty(content)){
                      showMsg("请输入商品描述！");
                  }else if(TextUtils.isEmpty(oldMoney)){
                      showMsg("请输入商品原价！");
                  }else if(TextUtils.isEmpty(newMoney)){
                      showMsg("请输入商品现价！");
-                 }else if(TextUtils.isEmpty(goodsType)){
-                     showMsg("请选择商品分类！");
                  }else if(Bimp.selectBitmap.size()==0){
                      showMsg("请选择商品图片！");
                  }else{
@@ -163,37 +147,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
             default:
                 break;
         }
-    }
-
-
-    /**
-     * 选择商品分类
-     */
-    private void selectGoodsType(){
-        final View view = LayoutInflater.from(mContext).inflate(R.layout.goods_type_wheel, null);
-        CycleWheelView cycleWheelView=(CycleWheelView)view.findViewById(R.id.cycleWheelView);
-        dialogPop(view, true);
-        cycleWheelView.setLabels(MainActivity.valList);
-        try {
-            cycleWheelView.setWheelSize(5);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        cycleWheelView.setCycleEnable(false);
-        cycleWheelView.setSelection(0);
-        cycleWheelView.setAlphaGradual(0.5f);
-        cycleWheelView.setDivider(Color.parseColor("#abcdef"),1);
-        cycleWheelView.setSolid(Color.WHITE,Color.WHITE);
-        cycleWheelView.setLabelColor(Color.GRAY);
-        cycleWheelView.setLabelSelectColor(Color.BLACK);
-        cycleWheelView.setOnWheelItemSelectedListener(new CycleWheelView.WheelItemSelectedListener() {
-            public void onItemSelected(int position, String label) {
-                AddShopActivity.this.position=position;
-                tvGoodsType.setText(MainActivity.valList.get(position));
-            }
-        });
-        view.findViewById(R.id.picker_yes).setOnClickListener(this);
-        view.findViewById(R.id.rel_wheel).setOnClickListener(this);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

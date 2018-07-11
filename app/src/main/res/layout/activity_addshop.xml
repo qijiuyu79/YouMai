@@ -17,37 +17,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            
+            <EditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="添加宝贝"
-                android:textColor="@color/color_777777"
-                android:textSize="18sp" />
+                android:layout_marginBottom="10dp"
+                android:hint="宝贝名称"
+                android:textSize="15sp"
+                android:textColor="@color/color_444444"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dbd8d8"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:text="您的宝贝若超过7日未出售，将会自动降低其展示顺序."
-                android:textColor="@color/color_777777"
-                android:textSize="12sp" />
+                android:layout_marginLeft="20dp"
+                android:hint="宝贝详情"
+                android:textSize="15sp"
+                android:textColor="@color/color_444444"/>
 
             <EditText android:id="@+id/et_aa_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_addshop_des"
+                android:layout_marginTop="10dp"
+                android:background="@null"
                 android:gravity="top"
-                android:hint="宝贝详情"
-                android:text="11"
-                android:minLines="5"
-                android:padding="10dp"
+                android:hint="您的宝贝若7日未售出，将会自动降低其展示顺序。"
+                android:minLines="7"
                 android:textSize="13sp" />
 
             <com.youmai.project.view.MyGridView
@@ -56,22 +65,102 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:numColumns="3"
-                android:verticalSpacing="5dp"></com.youmai.project.view.MyGridView>
+                android:verticalSpacing="5dp">
+            </com.youmai.project.view.MyGridView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="20dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="17dp"
+                    android:src="@mipmap/location_icon"/>
+
+                <TextView android:id="@+id/tv_ri_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="盈创动力大厦a座北厅"
+                    android:textColor="@color/color_FF4081"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="宝贝分类"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_444444"
+                    android:layout_gravity="center"/>
+                
+                <TextView
+                    android:layout_width="62dp"
+                    android:layout_height="24.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="二手"
+                    android:textColor="@color/color_FF4081"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_recommended_buy"/>
+
+                <TextView
+                    android:layout_width="62dp"
+                    android:layout_height="24.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="闲置"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/borders"/>
+
+                <TextView
+                    android:layout_width="62dp"
+                    android:layout_height="24.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="宠物"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/borders"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center"
+                    android:text="宝贝原价"
+                    android:textColor="@color/color_444444"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text="¥"
-                    android:textColor="@color/color_777777"
+                    android:textColor="@color/color_444444"
                     android:textSize="15sp" />
 
                 <EditText
@@ -81,8 +170,6 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:gravity="center|left"
-                    android:hint="宝贝原价"
-                    android:text="32"
                     android:inputType="phone"
                     android:textColor="@color/color_777777"
                     android:textSize="15sp" />
@@ -92,7 +179,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/color_808080" />
 
@@ -101,16 +188,24 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center"
+                    android:text="宝贝现价"
+                    android:textColor="@color/color_e80000"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text="¥"
-                    android:textColor="@color/color_E51C23"
+                    android:textColor="@color/color_e80000"
                     android:textSize="15sp" />
 
                 <EditText
@@ -120,11 +215,8 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:gravity="center|left"
-                    android:hint="宝贝现价"
-                    android:text="20"
                     android:inputType="phone"
-                    android:textColor="@color/color_E51C23"
-                    android:textColorHint="@color/color_E51C23"
+                    android:textColor="@color/color_777777"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -132,25 +224,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/color_808080" />
-
-            <TextView android:id="@+id/tv_aa_goodsType"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="30dp"
-                android:hint="选择商品分类"
-                android:textSize="15sp"
-                android:textColor="@android:color/black"
-                android:gravity="center_vertical"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/color_808080" />
 

@@ -53,6 +53,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         view = inflater.inflate(R.layout.fragment_recommended, container, false);
         swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
         listView=(ListView)view.findViewById(R.id.list);
+        listView.setDividerHeight(0);
         swipeLayout.setColorSchemeResources(R.color.color_bule2,
                 R.color.color_bule,
                 R.color.color_bule2,

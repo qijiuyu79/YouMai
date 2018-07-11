@@ -2,13 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
+    android:paddingTop="10dp"
     android:background="@android:color/white">
 
     <com.youmai.project.view.CircleImageView
         android:id="@+id/img_ri_pic"
         android:layout_width="44dp"
         android:layout_height="44dp"
+        android:layout_marginLeft="14dp"
         android:src="@mipmap/ic_pic_icon"/>
 
     <TextView android:id="@+id/tv_ri_name"
@@ -65,6 +66,8 @@
         android:textColor="@color/color_333333"
         android:textSize="14sp"
         android:layout_below="@id/img_ri_pic"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
         android:layout_marginTop="10dp"/>
 
     <ImageView android:id="@+id/img_ri_icon"
@@ -75,9 +78,12 @@
         android:layout_centerHorizontal="true"/>
 
     <RelativeLayout
+        android:id="@+id/rel_ri"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_ri_icon"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
         android:layout_marginTop="10dp">
 
         <ImageView
@@ -121,10 +127,18 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:text="购买"
-            android:textColor="@color/color_E51C23"
+            android:textColor="@color/color_FF4081"
             android:textSize="13sp"
             android:gravity="center"
             android:background="@drawable/bg_recommended_buy"/>
+
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="11dp"
+        android:layout_below="@id/rel_ri"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_F5F5F5"/>
 
 </RelativeLayout>
