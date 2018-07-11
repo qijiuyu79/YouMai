@@ -1,14 +1,12 @@
 package com.youmai.project.activity.center;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
-import com.youmai.project.activity.main.MainActivity;
 import com.youmai.project.activity.photo.BigPhotoActivity;
 import com.youmai.project.adapter.photo.GridImageAdapter;
 import com.youmai.project.bean.MyGoods;
@@ -46,13 +43,15 @@ import java.util.List;
 
 public class AddShopActivity extends BaseActivity implements View.OnClickListener{
 
+    private TextView tvType1,tvType2,tvType3,tvAddress;
     private EditText etContent,etOldMoney,etNewMoney;
     private MyGridView gridView;
     private GridImageAdapter adapter = null;
-    //商品分类的索引
-    private int position;
+    //商品分类
+    private String type="USED";
     //压缩后的图片文件
     private List<File> listFile=new ArrayList<>();
+    private List<TextView> tvList=new ArrayList<>();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -72,24 +71,33 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("添加宝贝");
+        tvType1=(TextView)findViewById(R.id.tv_type1);
+        tvType2=(TextView)findViewById(R.id.tv_type2);
+        tvType3=(TextView)findViewById(R.id.tv_type3);
+        tvAddress=(TextView)findViewById(R.id.tv_aa_location);
         etContent=(EditText)findViewById(R.id.et_aa_content);
         etOldMoney=(EditText)findViewById(R.id.et_aa_oleMoney);
         etNewMoney=(EditText)findViewById(R.id.et_aa_newMoney);
         gridView=(MyGridView)findViewById(R.id.mg_addshop);
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.tv_aa_add).setOnClickListener(this);
+        tvType1.setOnClickListener(this);
+        tvType2.setOnClickListener(this);
+        tvType3.setOnClickListener(this);
+
+        //显示当前位置
+        tvAddress.setText(MyApplication.spUtil.getString(SPUtil.LOCATION_ADDRESS));
         //清空图片集合
-        if (Bimp.selectBitmap.size() != 0) {
-            Bimp.selectBitmap.clear();
-        }
+        Bimp.selectBitmap.clear();
+
         adapter = new GridImageAdapter(getApplicationContext(), Bimp.selectBitmap);
         gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 if (arg2 == Bimp.selectBitmap.size()) {
-                    if (Bimp.selectBitmap.size() >5) {
-                        showMsg("图片最多选择9个！");
+                    if (Bimp.selectBitmap.size() >=5) {
+                        showMsg("图片最多选择5个！");
                     } else {
                         PicturesUtil.selectPhoto(AddShopActivity.this,1);
                     }
@@ -100,11 +108,50 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         });
+
+        tvList.add(tvType1);
+        tvList.add(tvType2);
+        tvList.add(tvType3);
+    }
+
+
+    /**
+     * 改变分类颜色
+     * @param position
+     */
+    private void updateColor(int position){
+        for (int i=0;i<tvList.size();i++){
+             if(i!=position){
+                 TextView textView=tvList.get(i);
+                 if(textView!=null){
+                     textView.setTextColor(getResources().getColor(R.color.color_666666));
+                     textView.setBackground(getResources().getDrawable(R.drawable.borders));
+                 }
+             }
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.tv_type1:
+                 type="USED";
+                 tvType1.setTextColor(getResources().getColor(R.color.color_FF4081));
+                 tvType1.setBackground(getResources().getDrawable(R.drawable.bg_recommended_buy));
+                 updateColor(0);
+                 break;
+            case R.id.tv_type2:
+                 type="NEW";
+                 tvType2.setTextColor(getResources().getColor(R.color.color_FF4081));
+                 tvType2.setBackground(getResources().getDrawable(R.drawable.bg_recommended_buy));
+                 updateColor(1);
+                break;
+            case R.id.tv_type3:
+                 type="PET";
+                 tvType3.setTextColor(getResources().getColor(R.color.color_FF4081));
+                 tvType3.setBackground(getResources().getDrawable(R.drawable.bg_recommended_buy));
+                 updateColor(2);
+                break;
             //提交
             case R.id.tv_aa_add:
                  final String content=etContent.getText().toString().trim();
@@ -120,6 +167,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                      showMsg("请选择商品图片！");
                  }else{
                      showProgress("图片压缩中...",false);
+                     LogUtils.e(Bimp.selectBitmap.size()+"++++++++++++++");
                      mHandler.postDelayed(new Runnable() {
                          public void run() {
                              final List<String> imgAddress=new ArrayList<>();
@@ -135,8 +183,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                                  }
                              }
                              showProgress("数据上传中...",false);
-                             final String address= MyApplication.spUtil.getString(SPUtil.LOCATION_ADDRESS);
-                             HttpMethod.addGoods(content,oldMoney,newMoney,MainActivity.keyList.get(position),address,listFile,mHandler);
+                             HttpMethod.addGoods(content,oldMoney,newMoney,type,tvAddress.getText().toString().trim(),listFile,mHandler);
                          }
                      },100);
                  }
@@ -259,5 +306,4 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
              }
         }
     }
-
 }
