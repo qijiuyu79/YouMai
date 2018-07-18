@@ -161,12 +161,28 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page=1;
+                isTotal=false;
+                swipeLayout.setFooter(isTotal);
+                loadData();
+            }
+        }, 200);
     }
 
     @Override
     public void onLoad() {
-
+        if(isTotal){
+            swipeLayout.setLoading(false);
+            return;
+        }
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page++;
+                loadData();
+            }
+        }, 200);
 
     }
 

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
@@ -110,7 +111,18 @@ public class MeterailEditText extends RelativeLayout implements
 
 	public void setInPutType(int type){
         et_text.setInputType(type);
+
     }
+
+
+	/**
+	 * 设置最大输入限制
+	 * @param maxLength
+	 */
+	public void setMaxLength(int maxLength){
+		InputFilter[] filters = {new InputFilter.LengthFilter(maxLength)};
+		et_text.setFilters(filters);
+	}
 
 
     public void setDigits(String digits){

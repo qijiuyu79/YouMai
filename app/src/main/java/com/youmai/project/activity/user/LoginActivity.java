@@ -1,5 +1,6 @@
 package com.youmai.project.activity.user;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import com.youmai.project.bean.Login;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.SPUtil;
+import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.view.ClickTextView;
 import com.youmai.project.view.MeterailEditText;
 
@@ -38,6 +40,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
+            setTranslucentStatus(true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.color_FAFBFD);
         initView();
         //判断验证码秒数是否超过一分钟
         checkTime();
@@ -56,6 +64,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         etMobile.setFocusableInTouchMode(true);
         etMobile.setInPutType(InputType.TYPE_CLASS_PHONE);
         etCode.setInPutType(InputType.TYPE_CLASS_PHONE);
+        etMobile.setMaxLength(11);
         tvSendCode.setOnClickListener(this);
         tvLogin.setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
@@ -68,9 +77,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.tv_al_sendCode:
                  mobile=etMobile.getText().toString().trim();
                  if(TextUtils.isEmpty(mobile)){
-                     showMsg("请输入手机号码!");
+                     showMsg("请输入手机号!");
                  }else if(mobile.length()<11){
-                     showMsg("请输入完整的手机号码!");
+                     showMsg("请输入完整的手机号!");
                  }else{
                      showProgress("获取验证码",false);
                      HttpMethod.sendCode(mobile,mHandler);
@@ -80,13 +89,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                  mobile=etMobile.getText().toString().trim();
                  code=etCode.getText().toString().trim();
                  if(TextUtils.isEmpty(mobile)){
-                    showMsg("请输入手机号码!");
+                    showMsg("请输入手机号!");
                  }else if(mobile.length()<11){
-                    showMsg("请输入完整的手机号码!");
+                    showMsg("请输入完整的手机号!");
                  }else if(TextUtils.isEmpty(code)){
                      showMsg("请输入验证码!");
                  }else{
-                     showProgress("登陆中",false);
+                     showProgress("登录中",false);
                      HttpMethod.login(mobile,code,mHandler);
                  }
                  break;

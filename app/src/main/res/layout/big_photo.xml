@@ -6,11 +6,10 @@
     <include layout="@layout/head"/>
 
 
-    <ImageView
+    <com.youmai.project.view.TouchImageView
         android:id="@+id/img_big_photo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

@@ -6,15 +6,14 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.http.HttpConstant;
 import com.youmai.project.utils.photo.Bimp;
+import com.youmai.project.view.TouchImageView;
 
 import java.util.ArrayList;
 
@@ -24,9 +23,8 @@ import java.util.ArrayList;
  */
 
 public class BigPhotoActivity extends Activity {
-    private ArrayList<View> listViews = null;
     private ArrayList<Bitmap> bitList = new ArrayList<>();
-    private ImageView bigImage;
+    private TouchImageView bigImage;
     private int id;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -37,20 +35,10 @@ public class BigPhotoActivity extends Activity {
         id = intent.getIntExtra("ID", 0);
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("选择图片");
-        TextView tvRight=(TextView)findViewById(R.id.tv_right);
-        tvRight.setText("删除");
-        bigImage = (ImageView) findViewById(R.id.img_big_photo);
+        bigImage = (TouchImageView) findViewById(R.id.img_big_photo);
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
-            }
-        });
-        tvRight.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                    {
-                        Bimp.selectBitmap.remove(id);
-                        finish();
-                }
             }
         });
         for (int i = 0; i < Bimp.selectBitmap.size(); i++) {
@@ -63,18 +51,5 @@ public class BigPhotoActivity extends Activity {
                 }
             }
         }
-    }
-    @Override
-    protected void onStop() {
-        if (listViews != null) {
-            for (int i = 0, len = bitList.size(); i < len; i++) {
-                Bitmap b = bitList.get(i);
-                if (b != null && !b.isRecycled()) {
-                    b.isRecycled();
-                    b = null;
-                }
-            }
-        }
-        super.onStop();
     }
 }

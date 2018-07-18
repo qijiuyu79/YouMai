@@ -29,6 +29,7 @@
     <color name="color_dbd8d8">#dbd8d8</color>
     <color name="color_e80000">#e80000</color>
     <color name="color_FFFCFC">#FFFCFC</color>
+    <color name="color_FAFBFD">#FAFBFD</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
 </resources>

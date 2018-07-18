@@ -140,13 +140,13 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                  break;
             //我的
             case R.id.lin_tab_user:
-                 tabHost.setCurrentTabByTag("我的");
-                 imgUser.setImageDrawable(getResources().getDrawable(R.mipmap.tab_user_click_icon));
-                 tvUser.setTextColor(getResources().getColor(R.color.color_FF4081));
                  if(TextUtils.isEmpty(MyApplication.spUtil.getString(SPUtil.ACCESS_TOKEN))){
                      Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
                      startActivity(intent);
                  }else{
+                     tabHost.setCurrentTabByTag("我的");
+                     imgUser.setImageDrawable(getResources().getDrawable(R.mipmap.tab_user_click_icon));
+                     tvUser.setTextColor(getResources().getColor(R.color.color_FF4081));
                      updateColor(3);
                  }
                  break;
