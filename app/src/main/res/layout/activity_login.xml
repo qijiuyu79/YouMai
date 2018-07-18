@@ -1,12 +1,10 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:background="@color/color_F5F5F5">
-
 
     <LinearLayout android:id="@+id/lin_back"
         android:layout_width="45dp"
@@ -21,42 +19,24 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:text="用户登陆"
-        android:textSize="22dp"
-        android:textColor="@color/color_666666"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:text="使用此账户登录获得更多内容和服务"
-        android:textSize="12dp"
-        android:textColor="@color/color_666666"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="2dp"
-        android:gravity="center"/>
-
-
     <com.youmai.project.view.MeterailEditText
         android:id="@+id/et_al_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/lin_back"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:maxLength="11"
-        app:hint="输入手机号码">
+        app:hint="请输入手机号码">
 
     </com.youmai.project.view.MeterailEditText>
 
     <RelativeLayout
+        android:id="@+id/rel_al"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/et_al_mobile"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
@@ -64,7 +44,7 @@
             android:id="@+id/et_al_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hint="输入验证码">
+            app:hint="请输入验证码">
         </com.youmai.project.view.MeterailEditText>
 
         <com.youmai.project.view.ClickTextView
@@ -73,10 +53,10 @@
             android:layout_height="40dp"
             android:layout_marginRight="15dp"
             android:text="发送验证码"
-            android:textColor="@android:color/white"
+            android:textColor="@color/color_FF4081"
             android:gravity="center"
             android:textSize="15sp"
-            android:background="@drawable/bg_tabs"
+            android:background="@drawable/bg_recommended_buy"
             android:layout_alignParentRight="true"
             android:layout_alignBottom="@id/et_al_code"
             android:layout_marginBottom="5dp"/>
@@ -87,6 +67,7 @@
         android:id="@+id/tv_al_login"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@id/rel_al"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
@@ -100,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
@@ -117,4 +98,4 @@
             android:layout_gravity="center"/>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

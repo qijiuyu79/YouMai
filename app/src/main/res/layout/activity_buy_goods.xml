@@ -195,9 +195,9 @@
             android:id="@+id/tv_abg_money2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="实付款：100"
             android:textSize="15sp"
             android:gravity="center"
+            android:textColor="@color/color_33333"
             android:layout_marginLeft="20dp"/>
 
         <com.youmai.project.view.ClickTextView

@@ -52,6 +52,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         ImageView imageView=(ImageView)findViewById(R.id.img_abg_goods);
         TextView tvContent=(TextView)findViewById(R.id.tv_abg_content);
         TextView tvMoney=(TextView)findViewById(R.id.tv_abg_money);
+        TextView tvMoney2=(TextView)findViewById(R.id.tv_abg_money2);
         imgBalance=(ImageView)findViewById(R.id.img_abg_balance_select);
         imgWeixin=(ImageView)findViewById(R.id.img_abg_wei_select);
         imgZhifu=(ImageView)findViewById(R.id.img_abg_zhi_select);
@@ -69,6 +70,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             Glide.with(mContext).load(mainBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
             tvContent.setText(mainBean.getDescription());
             tvMoney.setText("¥"+ Util.setDouble(mainBean.getPresentPrice()/100));
+            tvMoney2.setText("实付款："+Util.setDouble(mainBean.getPresentPrice()/100)+"元");
         }
     }
 
