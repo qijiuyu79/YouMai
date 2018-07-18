@@ -81,7 +81,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
                     listView.addHeaderView(new View(getActivity()));
-                    HttpMethod.getLocationGoods("USED",page,mHandler);
+                    HttpMethod.getLocationGoods(MainActivity.keyList.get(MainActivity.index),page,mHandler);
                 }
             }, 0);
         }

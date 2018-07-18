@@ -76,6 +76,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         // 初始化听写Dialog,如果只使用有UI听写功能,无需创建SpeechRecognizer
         iatDialog = new RecognizerDialog(this, IatSettings.mInitListener);
         mSharedPreferences = getSharedPreferences(IatSettings.PREFER_NAME, Context.MODE_PRIVATE);
+
+        keyList.add("USED");
+        keyList.add("NEW");
+        keyList.add("PET");
     }
 
     /**

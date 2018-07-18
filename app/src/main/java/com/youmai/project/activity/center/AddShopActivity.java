@@ -167,7 +167,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                      showMsg("请选择商品图片！");
                  }else{
                      showProgress("图片压缩中...",false);
-                     LogUtils.e(Bimp.selectBitmap.size()+"++++++++++++++");
                      mHandler.postDelayed(new Runnable() {
                          public void run() {
                              final List<String> imgAddress=new ArrayList<>();
@@ -182,7 +181,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                                      }
                                  }
                              }
-                             showProgress("数据上传中...",false);
+                             showProgress("添加宝贝中...",false);
                              HttpMethod.addGoods(content,oldMoney,newMoney,type,tvAddress.getText().toString().trim(),listFile,mHandler);
                          }
                      },100);
