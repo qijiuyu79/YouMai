@@ -112,6 +112,7 @@ public class HttpMethod extends BaseRequst {
         map.put("min_distance","0");
         map.put("max_distance","5000");
         map.put("page",page+"");
+        map.put("row","20");
         Http.getRetrofit().create(HttpApi.class).getLocationGoods(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

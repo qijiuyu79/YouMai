@@ -150,7 +150,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
             }else{
                 recommendedAdapter.notifyDataSetChanged();
             }
-            if(list.size()<10){
+            if(list.size()<20){
                 isTotal=true;
                 swipeLayout.setFooter(isTotal);
             }

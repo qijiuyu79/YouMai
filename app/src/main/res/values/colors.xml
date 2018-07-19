@@ -30,6 +30,8 @@
     <color name="color_e80000">#e80000</color>
     <color name="color_FFFCFC">#FFFCFC</color>
     <color name="color_FAFBFD">#FAFBFD</color>
+    <color name="color_020202">#020202</color>
+    <color name="color_bab7b7">#bab7b7</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
 </resources>
