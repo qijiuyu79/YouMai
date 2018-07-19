@@ -1,7 +1,10 @@
 package com.youmai.project.activity.user;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.center.AddShopActivity;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.Login;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.http.HandlerConstant;
@@ -41,7 +45,7 @@ import java.util.List;
 public class UserActivity extends BaseActivity implements View.OnClickListener{
 
     private CircleImageView imgUserPic;
-    private TextView tvNickName;
+    private TextView tvNickName,tvBalance,tvIngetral,tvCredit;
     private String nickName;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_user);
         initView();
+        register();//注册广播
     }
 
 
@@ -58,6 +63,9 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
     private void initView(){
         imgUserPic=(CircleImageView)findViewById(R.id.img_ri_pic);
         tvNickName=(TextView)findViewById(R.id.tv_au_nickName);
+        tvBalance=(TextView)findViewById(R.id.tv_au_balance);
+        tvIngetral=(TextView)findViewById(R.id.tv_au_integral);
+        tvCredit=(TextView)findViewById(R.id.tv_au_credit);
         imgUserPic.setOnClickListener(this);
         findViewById(R.id.rel_myAddress).setOnClickListener(this);
         findViewById(R.id.rel_au_cer).setOnClickListener(this);
@@ -127,17 +135,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
             clearTask();
             String message;
             switch (msg.what){
-                //获取用户信息返回
-                case HandlerConstant.GET_USERINFO_SUCCESS:
-                     UserInfo userInfo= (UserInfo) msg.obj;
-                     if(null==userInfo){
-                         return;
-                     }
-                     if(userInfo.isSussess()){
-                         Glide.with(mContext).load(userInfo.getData().getHead()).error(R.mipmap.ic_pic_icon).into(imgUserPic);
-                         tvNickName.setText(userInfo.getData().getNickname());
-                     }
-                     break;
                 //设置头像返回
                 case HandlerConstant.SET_USERPIC_SUCCESS:
                      message= (String) msg.obj;
@@ -176,6 +173,15 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     };
+
+
+    /**
+     * 更新用户界面信息
+     */
+    private void updateUserInfo(){
+//        Glide.with(mContext).load(userInfo.getData().getHead()).error(R.mipmap.ic_pic_icon).into(imgUserPic);
+//        tvNickName.setText(userInfo.getData().getNickname());
+    }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -231,9 +237,39 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
+    /**
+     * 注册广播
+     */
+    private void register() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(UPDATE_USER_INFO);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(UPDATE_USER_INFO)) {
+                //更新用户信息
+                Glide.with(mContext).load(MyApplication.userInfoBean.getHead()).error(R.mipmap.ic_pic_icon).into(imgUserPic);
+                tvNickName.setText(MyApplication.userInfoBean.getNickname());
+                tvBalance.setText("¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100));
+                tvIngetral.setText(MyApplication.userInfoBean.getIntegral()+"");
+                tvCredit.setText(MyApplication.userInfoBean.getCredit()+"");
+            }
+        }
+    };
+
     @Override
     protected void onResume() {
         super.onResume();
-        HttpMethod.getUserInfo(mHandler);
+        //获取用户信息
+        getUserInfo();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
     }
 }

@@ -147,6 +147,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                      if(login.isSussess()){
                          MyApplication.spUtil.addString(SPUtil.AUTH_TOKEN,login.getData().getAuth_token());
                          MyApplication.spUtil.addString(SPUtil.ACCESS_TOKEN,login.getData().getAccess_token());
+                         //获取用户信息
+                         getUserInfo();
                          finish();
                      }else{
                          showMsg(login.getMsg());

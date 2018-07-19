@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
+import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.bean.MainBean;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.ClickTextView;
@@ -76,6 +77,11 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvBuy.setTag(mainBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					if(!Util.isLogin(context)){
+						Intent intent=new Intent(context, LoginActivity.class);
+						context.startActivity(intent);
+						return;
+					}
 					if(v.getTag()!=null){
 						MainBean mainBean1= (MainBean) v.getTag();
 						if(mainBean1!=null){

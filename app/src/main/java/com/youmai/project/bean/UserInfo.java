@@ -22,6 +22,9 @@ public class UserInfo extends HttpBaseBean {
         private String head;
         private String nickname;
         private String user_id;
+        private int credit;
+        private int integral;
+        private double balance;
 
         public String getHead() {
             return head;
@@ -45,6 +48,30 @@ public class UserInfo extends HttpBaseBean {
 
         public void setUser_id(String user_id) {
             this.user_id = user_id;
+        }
+
+        public int getCredit() {
+            return credit;
+        }
+
+        public void setCredit(int credit) {
+            this.credit = credit;
+        }
+
+        public int getIntegral() {
+            return integral;
+        }
+
+        public void setIntegral(int integral) {
+            this.integral = integral;
+        }
+
+        public double getBalance() {
+            return balance;
+        }
+
+        public void setBalance(double balance) {
+            this.balance = balance;
         }
     }
 }

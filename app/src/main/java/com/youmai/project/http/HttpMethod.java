@@ -342,16 +342,14 @@ public class HttpMethod extends BaseRequst {
 
     /**
      * 购买商品
-     * @param res_type
      * @param payment
-     * @param res_id
+     * @param goods_id
      * @param handler
      */
-    public static void buy(String res_type,String payment,String res_id,final Handler handler) {
+    public static void buy(String payment,String goods_id,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("res_type",res_type);
         map.put("payment",payment);
-        map.put("res_id",res_id);
+        map.put("goods_id",goods_id);
         Http.getRetrofit().create(HttpApi.class).buy(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

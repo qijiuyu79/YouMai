@@ -33,7 +33,7 @@ public class HttpConstant {
 
     public static final String SET_NICKNAME="/user/nickname";
 
-    public static final String GET_USERINFO="/user";
+    public static final String GET_USERINFO="/user/info";
 
     public static final String RECHARGE="/user/recharge";
 

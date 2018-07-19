@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -21,8 +24,16 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.youmai.project.R;
+import com.youmai.project.application.MyApplication;
+import com.youmai.project.bean.UserInfo;
+import com.youmai.project.http.HandlerConstant;
+import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.error.CockroachUtil;
+
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2017/10/26 0026.
@@ -30,6 +41,7 @@ import com.youmai.project.utils.error.CockroachUtil;
 
 public class BaseActivity extends FragmentActivity {
 
+    public static final String UPDATE_USER_INFO = "update_user_info";
     private ProgressDialog progressDialog = null;
     protected Context mContext = this;
     public Dialog baseDialog;
@@ -149,6 +161,33 @@ public class BaseActivity extends FragmentActivity {
         Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
     }
 
+
+    /**
+     * 获取用户信息
+     */
+    public void getUserInfo(){
+        HttpMethod.getUserInfo(mHandler);
+    }
+
+    private Handler mHandler=new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                //获取用户信息返回
+                case HandlerConstant.GET_USERINFO_SUCCESS:
+                     UserInfo userInfo= (UserInfo) msg.obj;
+                     if(null==userInfo){
+                        return;
+                     }
+                     MyApplication.userInfoBean=userInfo.getData();
+                     MyApplication.spUtil.addString(SPUtil.USER_INFO, MyApplication.gson.toJson(userInfo.getData()));
+                     mContext.sendBroadcast(new Intent(UPDATE_USER_INFO));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onResume() {

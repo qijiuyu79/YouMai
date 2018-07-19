@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -330,5 +331,19 @@ public class Util extends ClassLoader {
         Pattern   p   =   Pattern.compile(regEx);
         Matcher   m   =   p.matcher(str);
         return   m.matches();
+    }
+
+
+    /**
+     * 判断是否登陆
+     * @param context
+     * @return
+     */
+    public static boolean isLogin(Context context){
+        final String auth_token= MyApplication.spUtil.getString(SPUtil.AUTH_TOKEN);
+        if(!TextUtils.isEmpty(auth_token)){
+            return true;
+        }
+        return false;
     }
 }

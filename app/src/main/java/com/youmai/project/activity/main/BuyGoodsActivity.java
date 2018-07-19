@@ -16,10 +16,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.MainBean;
 import com.youmai.project.bean.PayResult;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.PayUtils;
 import com.youmai.project.utils.Util;
 import org.json.JSONObject;
@@ -53,6 +55,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         TextView tvContent=(TextView)findViewById(R.id.tv_abg_content);
         TextView tvMoney=(TextView)findViewById(R.id.tv_abg_money);
         TextView tvMoney2=(TextView)findViewById(R.id.tv_abg_money2);
+        TextView tvBalance=(TextView)findViewById(R.id.tv_abg_balance);
         imgBalance=(ImageView)findViewById(R.id.img_abg_balance_select);
         imgWeixin=(ImageView)findViewById(R.id.img_abg_wei_select);
         imgZhifu=(ImageView)findViewById(R.id.img_abg_zhi_select);
@@ -66,6 +69,9 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             mainBean= (MainBean) bundle.getSerializable("MainBean");
             if(null==mainBean){
                 return;
+            }
+            if(MyApplication.userInfoBean!=null){
+                tvBalance.setText("(余额¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100)+")");
             }
             Glide.with(mContext).load(mainBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
             tvContent.setText(mainBean.getDescription());
@@ -101,7 +107,8 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             //支付
             case R.id.tv_abg_buy:
                  showProgress("购买中...",false);
-                 HttpMethod.buy("GOODS",payStr,mainBean.getId(),mHandler);
+                LogUtils.e(mainBean.getId()+"+++++++++++++");
+                 HttpMethod.buy(payStr,mainBean.getId(),mHandler);
                  break;
             case R.id.lin_back:
                  finish();
