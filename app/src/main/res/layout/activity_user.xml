@@ -11,28 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp">
+        android:background="@mipmap/bg_user">
 
         <com.youmai.project.view.CircleImageView
             android:id="@+id/img_ri_pic"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="72.5dp"
+            android:layout_height="72.5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
             android:src="@mipmap/ic_pic_icon"/>
 
         <TextView android:id="@+id/tv_au_nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/color_FF4081"
-            android:layout_gravity="center"/>
+            android:textSize="16sp"
+            android:layout_marginLeft="17dp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
 
         <com.youmai.project.view.ClickImageView
             android:id="@+id/img_au_setName"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@mipmap/update_name"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/edit_name"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"/>
 
@@ -48,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="钱包"
-        android:textSize="13sp"
+        android:textSize="15sp"
         android:textColor="@color/color_333333"
         android:layout_marginLeft="20dp"/>
 
@@ -56,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="¥ 522.00"
-        android:textSize="25sp"
+        android:textSize="35sp"
         android:textColor="@color/color_E51C23"
         android:textStyle="bold"
         android:gravity="center"/>
@@ -71,7 +73,7 @@
         <com.youmai.project.view.ClickTextView
             android:id="@+id/tv_au_recharge"
             android:layout_width="65dp"
-            android:layout_height="25dp"
+            android:layout_height="26.5dp"
             android:layout_gravity="left"
             android:layout_marginRight="10dp"
             android:background="@drawable/bg_recommended_buy"
@@ -83,7 +85,7 @@
 
         <TextView
             android:layout_width="65dp"
-            android:layout_height="25dp"
+            android:layout_height="26.5dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="25dp"
             android:background="@drawable/bg_user"
@@ -93,10 +95,11 @@
             android:textSize="13sp" />
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="12.5dp"
             android:src="@mipmap/help_icon" />
 
     </RelativeLayout>
@@ -107,14 +110,6 @@
         android:background="@color/color_F5F5F5"
         android:layout_margin="20dp"></View>
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="会员"
-        android:textSize="13sp"
-        android:textColor="@color/color_333333"
-        android:layout_marginLeft="20dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -128,35 +123,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="积分"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:textColor="@color/color_333333"/>
 
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:text=" 6666526"
-            android:textSize="12sp"
-            android:textColor="@color/color_139E91"
-            android:drawableLeft="@mipmap/credit_icon"/>
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@mipmap/help_icon"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
-
         <TextView
-            android:layout_width="65dp"
+            android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:text="升级"
-            android:textColor="@color/color_B7B7B7"
-            android:textSize="13sp"
+            android:text="1000"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
             android:gravity="center"
-            android:layout_marginRight="45dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/bg_user"/>
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 
@@ -179,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="信用"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:textColor="@color/color_333333"/>
 
         <LinearLayout
@@ -196,11 +174,13 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:layout_marginLeft="5dp"
                 android:src="@mipmap/xing_icon"/>
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:layout_marginLeft="5dp"
                 android:src="@mipmap/xing_icon"/>
 
         </LinearLayout>
@@ -209,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:text="1000"
-            android:textColor="@color/color_B7B7B7"
+            android:textColor="@color/color_333333"
             android:textSize="13sp"
             android:gravity="center"
             android:layout_marginRight="20dp"

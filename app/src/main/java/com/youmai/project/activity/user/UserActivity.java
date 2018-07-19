@@ -17,10 +17,12 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.center.AddShopActivity;
+import com.youmai.project.bean.Login;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.LogUtils;
+import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.photo.PicturesUtil;
 import com.youmai.project.view.CircleImageView;
@@ -44,6 +46,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_user);
         initView();
     }
@@ -67,7 +70,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             //设置用户头像
             case R.id.img_ri_pic:
-//                 PicturesUtil.selectPhoto(UserActivity.this,2);
+                 PicturesUtil.selectPhoto(UserActivity.this,2);
                  break;
             //设置昵称
             case R.id.img_au_setName:
@@ -131,7 +134,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                          return;
                      }
                      if(userInfo.isSussess()){
-                         Glide.with(mContext).load(userInfo.getData().getHead()).error(R.mipmap.icon).into(imgUserPic);
+                         Glide.with(mContext).load(userInfo.getData().getHead()).error(R.mipmap.ic_pic_icon).into(imgUserPic);
                          tvNickName.setText(userInfo.getData().getNickname());
                      }
                      break;
