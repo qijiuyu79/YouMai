@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="更新版本"
+            android:textSize="16.5sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"/>
+
+        <ListView android:id="@+id/list_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+        </ListView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/color_D4D4D4"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
+            <TextView android:id="@+id/tv_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="取消"
+                android:textSize="15sp"
+                android:textColor="@color/color_FF4081"
+                android:gravity="center"
+                android:background="@drawable/dialog_selector"/>
+
+            <View android:id="@+id/view"
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_D4D4D4"/>
+
+            <TextView android:id="@+id/tv_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="确定"
+                android:textSize="15sp"
+                android:textColor="@color/color_FF4081"
+                android:gravity="center"
+                android:background="@drawable/dialog_selector"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

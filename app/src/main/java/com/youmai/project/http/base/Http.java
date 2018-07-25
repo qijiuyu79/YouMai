@@ -147,7 +147,7 @@ public class Http {
                     if (null != mHandler) {
                         format.setMinimumFractionDigits(0);// 设置小数位
                         Message msg = new Message();
-//                        msg.what = HandlerConstant1.DOWNLOAD_PRORESS;
+                        msg.what = HandlerConstant.DOWNLOAD_PRORESS;
                         msg.obj = format.format((float) l / (float) length);
                         mHandler.sendMessage(msg);
                     }

@@ -3,6 +3,7 @@ package com.youmai.project.http;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
 import com.youmai.project.bean.UserInfo;
+import com.youmai.project.bean.Version;
 
 import java.util.Map;
 
@@ -126,5 +127,16 @@ public interface HttpApi {
     @FormUrlEncoded
     @POST(HttpConstant.BUY)
     Call<ResponseBody> buy(@FieldMap Map<String, String> map);
+
+
+
+    /**
+     * 查询版本
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_VERSION)
+    Call<Version> getVersion(@FieldMap Map<String, String> map);
 
 }

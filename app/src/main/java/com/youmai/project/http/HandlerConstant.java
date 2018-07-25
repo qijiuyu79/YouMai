@@ -20,4 +20,7 @@ public class HandlerConstant {
     public static final int GET_USERINFO_SUCCESS=1121;
     public static final int RECHARGE_SUCCESS=1122;
     public static final int BUY_SUCCESS=1123;
+    public static final int GET_VERSION_SUCCESS=1124;
+    public static final int DOWNLOAD_SUCCESS=1125;
+    public static final int DOWNLOAD_PRORESS=1126;
 }

@@ -38,4 +38,6 @@ public class HttpConstant {
     public static final String RECHARGE="/user/recharge";
 
     public static final String BUY="/user/pay";
+
+    public static final String GET_VERSION="/version/update";
 }

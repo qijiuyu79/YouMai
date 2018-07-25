@@ -33,6 +33,7 @@ import com.youmai.project.utils.GetLocation;
 import com.youmai.project.utils.IatSettings;
 import com.youmai.project.utils.JsonParser;
 import com.youmai.project.utils.SPUtil;
+import com.youmai.project.utils.UpdateVersionUtils;
 import com.youmai.project.view.PagerSlidingTabStrip;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -58,6 +59,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         initView();
         //开始定位
         getLocation();
+        //查询版本
+        new UpdateVersionUtils().getVersion(MainActivity.this);
     }
 
 

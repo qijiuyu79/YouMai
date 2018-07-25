@@ -2,9 +2,11 @@ package com.youmai.project.http;
 
 import android.os.Handler;
 
+import com.youmai.project.bean.DownLoad;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
 import com.youmai.project.bean.UserInfo;
+import com.youmai.project.bean.Version;
 import com.youmai.project.http.base.BaseRequst;
 import com.youmai.project.http.base.Http;
 
@@ -362,6 +364,47 @@ public class HttpMethod extends BaseRequst {
 
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询版本
+     * @return
+     */
+    public static void getVersion(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi.class).getVersion(map).enqueue(new Callback<Version>() {
+            public void onResponse(Call<Version> call, Response<Version> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_VERSION_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Version> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 文件下载
+     * @param handler
+     */
+    public static void download(final DownLoad downLoad, final Handler handler) {
+        Http.dowload(downLoad.getDownPath(), downLoad.getSavePath(),handler, new okhttp3.Callback() {
+            public void onFailure(okhttp3.Call call, IOException e) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                if(response.isSuccessful()){
+                    sendMessage(handler, HandlerConstant.DOWNLOAD_SUCCESS, downLoad);
+                }
             }
         });
     }
