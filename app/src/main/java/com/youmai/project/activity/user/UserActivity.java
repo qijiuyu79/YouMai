@@ -175,15 +175,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
     };
 
 
-    /**
-     * 更新用户界面信息
-     */
-    private void updateUserInfo(){
-//        Glide.with(mContext).load(userInfo.getData().getHead()).error(R.mipmap.ic_pic_icon).into(imgUserPic);
-//        tvNickName.setText(userInfo.getData().getNickname());
-    }
-
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {

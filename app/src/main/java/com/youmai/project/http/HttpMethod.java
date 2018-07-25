@@ -5,6 +5,7 @@ import android.os.Handler;
 import com.youmai.project.bean.DownLoad;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
+import com.youmai.project.bean.MyGoods;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.bean.Version;
 import com.youmai.project.http.base.BaseRequst;
@@ -405,6 +406,30 @@ public class HttpMethod extends BaseRequst {
                 if(response.isSuccessful()){
                     sendMessage(handler, HandlerConstant.DOWNLOAD_SUCCESS, downLoad);
                 }
+            }
+        });
+    }
+
+
+    /**
+     * 查询已支付订单
+     * @param handler
+     */
+    public static void getPayOrderList(int stated,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("stated",stated+"");
+        Http.getRetrofit().create(HttpApi.class).getPayOrderList(map).enqueue(new Callback<MyGoods>() {
+            public void onResponse(Call<MyGoods> call, Response<MyGoods> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_PAY_ORDER, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MyGoods> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
             }
         });
     }

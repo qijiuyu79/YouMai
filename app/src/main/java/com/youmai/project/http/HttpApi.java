@@ -2,6 +2,7 @@ package com.youmai.project.http;
 
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
+import com.youmai.project.bean.MyGoods;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.bean.Version;
 
@@ -138,5 +139,15 @@ public interface HttpApi {
     @FormUrlEncoded
     @POST(HttpConstant.GET_VERSION)
     Call<Version> getVersion(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询已支付订单
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.PAY_SUCCESS_ORDER)
+    Call<MyGoods> getPayOrderList(@FieldMap Map<String, String> map);
 
 }

@@ -40,4 +40,6 @@ public class HttpConstant {
     public static final String BUY="/user/pay";
 
     public static final String GET_VERSION="/version/update";
+
+    public static final String PAY_SUCCESS_ORDER="/user/order/list";
 }
