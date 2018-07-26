@@ -148,6 +148,6 @@ public interface HttpApi {
      */
     @FormUrlEncoded
     @POST(HttpConstant.PAY_SUCCESS_ORDER)
-    Call<MyGoods> getPayOrderList(@FieldMap Map<String, String> map);
+    Call<ResponseBody> getPayOrderList(@FieldMap Map<String, String> map);
 
 }

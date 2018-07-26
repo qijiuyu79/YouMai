@@ -97,6 +97,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                      swipeLayout.setRefreshing(false);
                      break;
                 case HandlerConstant.REQUST_ERROR:
+                     showMsg(getString(R.string.http_error));
                      break ;
                 default:
                     break;

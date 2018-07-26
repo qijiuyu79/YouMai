@@ -1,19 +1,25 @@
 package com.youmai.project.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.youmai.project.R;
-import com.youmai.project.activity.order.ChatActivity;
 import com.youmai.project.adapter.PaySuccessAdapter;
+import com.youmai.project.bean.MyGoods;
+import com.youmai.project.http.HandlerConstant;
+import com.youmai.project.http.HttpMethod;
 import com.youmai.project.view.RefreshLayout;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 推荐的fragment
@@ -25,6 +31,8 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
     private RefreshLayout swipeLayout;
     private ListView listView;
     private PaySuccessAdapter paySuccessAdapter;
+    private List<MyGoods> listBeanAll=new ArrayList<>();
+    private boolean isTotal=false;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -49,19 +57,89 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
         swipeLayout.postDelayed(new Runnable() {
             public void run() {
                 listView.addHeaderView(new View(getActivity()));
-                paySuccessAdapter=new PaySuccessAdapter(getActivity());
-                listView.setAdapter(paySuccessAdapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent=new Intent(getActivity(), ChatActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                swipeLayout.setRefreshing(false);
+                //查询订单列表
+                getOrderList();
 
             }
         }, 200);
         return view;
+    }
+
+
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case HandlerConstant.GET_PAY_ORDER_SUCCESS:
+                     final String message= (String) msg.obj;
+                     refresh(message);
+                     swipeLayout.setRefreshing(false);
+                     break;
+                case HandlerConstant.REQUST_ERROR:
+                    showMsg(getString(R.string.http_error));
+                    break ;
+                default:
+                    break;
+            }
+        }
+    };
+
+
+    /**
+     * 解析并刷新数据
+     */
+    private void refresh(String message){
+        if(TextUtils.isEmpty(message)){
+            return;
+        }
+        try {
+            final JSONObject jsonObject=new JSONObject(message);
+            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
+            List<MyGoods> list=new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
+                MyGoods myGoods=new MyGoods();
+                myGoods.setAddress(jsonObject2.getString("address"));
+                myGoods.setDescription(jsonObject2.getString("description"));
+                myGoods.setId(jsonObject2.getString("id"));
+                myGoods.setOriginalPrice(jsonObject2.getDouble("originalPrice"));
+                myGoods.setPresentPrice(jsonObject2.getDouble("presentPrice"));
+                List<String> imgList=new ArrayList<>();
+
+                //解析图片
+                final JSONArray jsonArray1=new JSONArray(jsonObject2.getString("images"));
+                for (int j = 0; j < jsonArray1.length(); j++) {
+                    imgList.add(jsonArray1.getString(j));
+                }
+                myGoods.setImgList(imgList);
+
+                //解析经纬度
+                final JSONArray jsonArray2=new JSONArray(jsonObject2.getString("location"));
+                for (int k = 0; k < jsonArray2.length(); k++) {
+                    if(k==0){
+                        myGoods.setLongitude(jsonArray2.getDouble(k));
+                    }else{
+                        myGoods.setLatitude(jsonArray2.getDouble(k));
+                    }
+                }
+                list.add(myGoods);
+            }
+            listBeanAll.addAll(list);
+            if(null==paySuccessAdapter){
+                paySuccessAdapter=new PaySuccessAdapter(getActivity(),listBeanAll);
+                listView.setAdapter(paySuccessAdapter);
+            }else{
+                paySuccessAdapter.notifyDataSetChanged();
+            }
+            if(list.size()<20){
+                isTotal=true;
+                swipeLayout.setFooter(isTotal);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -72,5 +150,13 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
     @Override
     public void onLoad() {
 
+    }
+
+
+    /**
+     * 查询订单列表
+     */
+    private void getOrderList(){
+        HttpMethod.getPayOrderList(1,mHandler);
     }
 }

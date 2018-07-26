@@ -418,17 +418,17 @@ public class HttpMethod extends BaseRequst {
     public static void getPayOrderList(int stated,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("stated",stated+"");
-        Http.getRetrofit().create(HttpApi.class).getPayOrderList(map).enqueue(new Callback<MyGoods>() {
-            public void onResponse(Call<MyGoods> call, Response<MyGoods> response) {
+        Http.getRetrofit().create(HttpApi.class).getPayOrderList(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.GET_PAY_ORDER, response.body());
+                    sendMessage(handler, HandlerConstant.GET_PAY_ORDER_SUCCESS, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<MyGoods> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
             }
         });
