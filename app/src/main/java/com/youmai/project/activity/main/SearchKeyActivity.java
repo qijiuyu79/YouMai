@@ -5,9 +5,12 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechError;
@@ -57,6 +60,16 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         // 初始化听写Dialog,如果只使用有UI听写功能,无需创建SpeechRecognizer
         iatDialog = new RecognizerDialog(this, IatSettings.mInitListener);
         mSharedPreferences = getSharedPreferences(IatSettings.PREFER_NAME, Context.MODE_PRIVATE);
+
+        etKeys.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    showMsg("111");
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
