@@ -346,4 +346,15 @@ public class Util extends ClassLoader {
         }
         return false;
     }
+
+
+    /**
+     * 去掉标点符号
+     * @param s
+     * @return
+     */
+    public static String format(String s){
+        String str=s.replaceAll("[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……& amp;*（）——+|{}【】‘；：”“’。，、？|-]", "");
+        return str;
+    }
 }

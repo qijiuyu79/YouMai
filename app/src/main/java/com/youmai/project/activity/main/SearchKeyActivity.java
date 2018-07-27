@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.iflytek.cloud.RecognizerResult;
@@ -25,14 +26,18 @@ import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.IatSettings;
 import com.youmai.project.utils.JsonParser;
+import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
+import com.youmai.project.utils.Util;
 import com.youmai.project.view.RefreshLayout;
+import com.youmai.project.view.TagLayoutView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,12 +45,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchKeyActivity extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener{
+/**
+ * 按关键字搜索
+ */
+public class SearchKeyActivity extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener,TextView.OnEditorActionListener{
 
 
+    private RelativeLayout relTags;
     private EditText etKeys;
     private RefreshLayout swipeLayout;
     private ListView listView;
+    private TagLayoutView tagLayoutView;
     private boolean isTotal=false;
     private SpeechRecognizer mIat;
     // 语音听写UI
@@ -53,6 +63,8 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     private SharedPreferences mSharedPreferences;
     private RecommendedAdapter recommendedAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
+    //输入的关键字
+    private String strKey;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +77,9 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
-        initView();
+        initView();//初始化控件
+        initSpeech();//初始化语音转文字
+        showTags();//显示历史搜索记录
     }
 
 
@@ -73,9 +87,10 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
      * 初始化控件
      */
     private void initView(){
+        relTags=(RelativeLayout)findViewById(R.id.rel_ask_tag);
         etKeys=(EditText)findViewById(R.id.et_am_keys);
+        tagLayoutView=(TagLayoutView)findViewById(R.id.tag_as);
         findViewById(R.id.img_am_apeck).setOnClickListener(this);
-
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -85,29 +100,76 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                 R.color.color_bule3);
         swipeLayout.setOnRefreshListener(SearchKeyActivity.this);
         swipeLayout.setOnLoadListener(SearchKeyActivity.this);
-        swipeLayout.post(new Thread(new Runnable() {
-            public void run() {
-                swipeLayout.setRefreshing(true);
-            }
-        }));
+        etKeys.setOnEditorActionListener(this);
+    }
 
+
+    /**
+     * 初始化语音转文字
+     */
+    private void initSpeech(){
         // 初始化识别对象
         mIat = SpeechRecognizer.createRecognizer(this, IatSettings.mInitListener);
         // 初始化听写Dialog,如果只使用有UI听写功能,无需创建SpeechRecognizer
         iatDialog = new RecognizerDialog(this, IatSettings.mInitListener);
         mSharedPreferences = getSharedPreferences(IatSettings.PREFER_NAME, Context.MODE_PRIVATE);
+    }
 
-        etKeys.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH){
-                    //查询数据
-                    getGoods();
-                    return true;
-                }
+    /**
+     * 显示历史搜索记录
+     */
+    private void showTags(){
+        List<String> lable = new ArrayList<>();
+        final String keys=MyApplication.spUtil.getString(SPUtil.TAG_KEY);
+        String[] str=keys.split("&");
+        if(null==str){
+            return;
+        }
+        for(int i=0;i<str.length;i++){
+            if(!TextUtils.isEmpty(str[i])){
+                lable.add(str[i]);
+            }
+        }
+        //设置标签
+        tagLayoutView.setLables(lable, true);
+    }
+
+
+    /**
+     * 搜索键触发事件
+     */
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH){
+            strKey= Util.format(etKeys.getText().toString().trim());
+            if(TextUtils.isEmpty(strKey)){
+                showMsg("请输入要搜索的关键字！");
                 return false;
             }
-        });
+            //保存搜索过的关键字
+            String keys= MyApplication.spUtil.getString(SPUtil.TAG_KEY);
+            keys+="&"+strKey;
+            MyApplication.spUtil.addString(SPUtil.TAG_KEY,keys);
+
+            //清空之前搜索过的列表
+            listBeanAll.clear();
+            swipeLayout.post(new Thread(new Runnable() {
+                public void run() {
+                    swipeLayout.setRefreshing(true);
+                }
+            }));
+            swipeLayout.postDelayed(new Runnable() {
+                public void run() {
+                    listView.addHeaderView(new View(SearchKeyActivity.this));
+                    //查询数据
+                    getGoods();
+                }
+            }, 0);
+            return true;
+        }
+        return false;
     }
+
 
 
     private Handler mHandler=new Handler(){
@@ -175,6 +237,11 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
             }else{
                 recommendedAdapter.notifyDataSetChanged();
             }
+            if(listBeanAll.size()>0){
+                relTags.setVisibility(View.GONE);
+            }else{
+                showMsg("没有搜索到任何数据！");
+            }
             if(list.size()<20){
                 isTotal=true;
                 swipeLayout.setFooter(isTotal);
@@ -224,8 +291,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
      * 查询数据
      */
     private void getGoods(){
-        final String key=etKeys.getText().toString().trim().replace(",","").replace(".","").replace("!","");
-        HttpMethod.getGoodsByKey(key,mHandler);
+        HttpMethod.getGoodsByKey(strKey,mHandler);
     }
 
     @Override

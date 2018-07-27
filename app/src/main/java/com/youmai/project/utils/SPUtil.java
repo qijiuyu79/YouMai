@@ -20,6 +20,8 @@ public class SPUtil {
     public final static String LOCATION_ADDRESS="location_address";
     //用户信息
     public final static String USER_INFO="user_info";
+    //搜索的标签
+    public final static String TAG_KEY="tag_key";
     private static SPUtil sharUtil = null;
     private SPUtil(Context context, String sharname) {
         shar = context.getSharedPreferences(sharname, Context.MODE_PRIVATE + Context.MODE_APPEND);

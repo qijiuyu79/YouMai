@@ -33,6 +33,7 @@
     <color name="color_020202">#020202</color>
     <color name="color_bab7b7">#bab7b7</color>
     <color name="color_eeeeee">#eeeeee</color>
+    <color name="color_F0F0F0">#F0F0F0</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
 </resources>
