@@ -11,7 +11,6 @@
         android:background="@color/color_FF4081">
 
         <RelativeLayout
-            android:id="@+id/rel_am_search"
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:background="@drawable/bg_search"
@@ -25,6 +24,16 @@
                 android:src="@mipmap/search_icon"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:id="@+id/et_am_keys"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="54dp"
+                android:background="@null"
+                android:textSize="15sp"
+                android:textColor="@color/color_333333"/>
 
             <ImageView
                 android:layout_width="34dp"
@@ -48,22 +57,6 @@
 
     </RelativeLayout>
 
-    <com.youmai.project.view.PagerSlidingTabStrip
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        android:background="@android:color/white" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_ececec"/>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

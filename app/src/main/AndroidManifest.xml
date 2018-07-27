@@ -66,6 +66,7 @@
         <activity android:name=".activity.user.CertificationActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.LoginActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.RechargeActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.main.SearchKeyActivity"  android:screenOrientation="portrait"/>
 
 
         <!-- QQ、QQ空间所需权限 -->
