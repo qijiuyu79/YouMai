@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.application.MyApplication;
-import com.youmai.project.bean.MainBean;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.PayResult;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
@@ -34,7 +34,7 @@ import org.json.JSONObject;
 public class BuyGoodsActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView imgBalance,imgWeixin,imgZhifu;
-    private MainBean mainBean;
+    private GoodsBean goodsBean;
     private String payStr="BALANCE";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,17 +66,17 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.tv_abg_buy).setOnClickListener(this);
         final Bundle bundle=getIntent().getExtras();
         if(bundle!=null){
-            mainBean= (MainBean) bundle.getSerializable("MainBean");
-            if(null==mainBean){
+            goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+            if(null==goodsBean){
                 return;
             }
             if(MyApplication.userInfoBean!=null){
                 tvBalance.setText("(余额¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100)+")");
             }
-            Glide.with(mContext).load(mainBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
-            tvContent.setText(mainBean.getDescription());
-            tvMoney.setText("¥"+ Util.setDouble(mainBean.getPresentPrice()/100));
-            tvMoney2.setText("实付款："+Util.setDouble(mainBean.getPresentPrice()/100)+"元");
+            Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
+            tvContent.setText(goodsBean.getDescription());
+            tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
+            tvMoney2.setText("实付款："+Util.setDouble(goodsBean.getPresentPrice()/100)+"元");
         }
     }
 
@@ -107,8 +107,8 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             //支付
             case R.id.tv_abg_buy:
                  showProgress("购买中...",false);
-                LogUtils.e(mainBean.getId()+"+++++++++++++");
-                 HttpMethod.buy(payStr,mainBean.getId(),mHandler);
+                LogUtils.e(goodsBean.getId()+"+++++++++++++");
+                 HttpMethod.buy(payStr,goodsBean.getId(),mHandler);
                  break;
             case R.id.lin_back:
                  finish();

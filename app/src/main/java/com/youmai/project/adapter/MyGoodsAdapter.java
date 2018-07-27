@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
-import com.youmai.project.bean.MyGoods;
-import com.youmai.project.utils.LogUtils;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
 
 import java.util.List;
@@ -20,9 +19,9 @@ import java.util.List;
 public class MyGoodsAdapter extends BaseAdapter{
 
 	private Context context;
-	private List<MyGoods> list;
-	private MyGoods myGoods;
-	public MyGoodsAdapter(Context context,List<MyGoods> list) {
+	private List<GoodsBean> list;
+	private GoodsBean myGoods;
+	public MyGoodsAdapter(Context context,List<GoodsBean> list) {
 		super();
 		this.context = context;
 		this.list=list;

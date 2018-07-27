@@ -56,9 +56,9 @@
             android:layout_marginRight="15dp"
             android:layout_centerVertical="true"/>
 
-
     </RelativeLayout>
 
 
+    <include layout="@layout/listview"/>
 
 </LinearLayout>

@@ -14,10 +14,9 @@ import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.MainActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
-import com.youmai.project.bean.MainBean;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.RefreshLayout;
 
 import org.json.JSONArray;
@@ -36,7 +35,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     private RefreshLayout swipeLayout;
     private ListView listView;
     private RecommendedAdapter recommendedAdapter;
-    private List<MainBean> listBeanAll=new ArrayList<>();
+    private List<GoodsBean> listBeanAll=new ArrayList<>();
     private int page=1;
     private boolean isTotal=false;
     //fragment是否可见
@@ -67,8 +66,6 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         }));
         //查询数据
         loadData();
-        recommendedAdapter=new RecommendedAdapter(getActivity(),listBeanAll);
-        listView.setAdapter(recommendedAdapter);
         return view;
     }
 
@@ -115,15 +112,15 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         try {
             final JSONObject jsonObject=new JSONObject(message);
             final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            List<MainBean> list=new ArrayList<>();
+            List<GoodsBean> list=new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                  JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                 MainBean mainBean=new MainBean();
-                 mainBean.setAddress(jsonObject1.getString("address"));
-                 mainBean.setDescription(jsonObject1.getString("description"));
-                 mainBean.setId(jsonObject1.getString("id"));
-                 mainBean.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
-                 mainBean.setPresentPrice(jsonObject1.getDouble("presentPrice"));
+                GoodsBean goodsBean=new GoodsBean();
+                 goodsBean.setAddress(jsonObject1.getString("address"));
+                 goodsBean.setDescription(jsonObject1.getString("description"));
+                 goodsBean.setId(jsonObject1.getString("id"));
+                 goodsBean.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
+                 goodsBean.setPresentPrice(jsonObject1.getDouble("presentPrice"));
                  List<String> imgList=new ArrayList<>();
 
                 //解析图片
@@ -131,18 +128,18 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                 for (int j = 0; j < jsonArray1.length(); j++) {
                      imgList.add(jsonArray1.getString(j));
                 }
-                mainBean.setImgList(imgList);
+                goodsBean.setImgList(imgList);
 
                 //解析经纬度
                 final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
                 for (int k = 0; k < jsonArray2.length(); k++) {
                      if(k==0){
-                         mainBean.setLongitude(jsonArray2.getDouble(k));
+                         goodsBean.setLongitude(jsonArray2.getDouble(k));
                      }else{
-                         mainBean.setLatitude(jsonArray2.getDouble(k));
+                         goodsBean.setLatitude(jsonArray2.getDouble(k));
                      }
                 }
-                list.add(mainBean);
+                list.add(goodsBean);
             }
             listBeanAll.addAll(list);
             if(null==recommendedAdapter){

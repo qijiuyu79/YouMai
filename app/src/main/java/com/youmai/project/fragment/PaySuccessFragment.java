@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.adapter.PaySuccessAdapter;
-import com.youmai.project.bean.MyGoods;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.view.RefreshLayout;
@@ -31,7 +31,7 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
     private RefreshLayout swipeLayout;
     private ListView listView;
     private PaySuccessAdapter paySuccessAdapter;
-    private List<MyGoods> listBeanAll=new ArrayList<>();
+    private List<GoodsBean> listBeanAll=new ArrayList<>();
     private boolean isTotal=false;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,11 +96,11 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
         try {
             final JSONObject jsonObject=new JSONObject(message);
             final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            List<MyGoods> list=new ArrayList<>();
+            List<GoodsBean> list=new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
                 JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
-                MyGoods myGoods=new MyGoods();
+                GoodsBean myGoods=new GoodsBean();
                 myGoods.setAddress(jsonObject2.getString("address"));
                 myGoods.setDescription(jsonObject2.getString("description"));
                 myGoods.setId(jsonObject2.getString("id"));

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.user.LoginActivity;
-import com.youmai.project.bean.MainBean;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.ClickTextView;
 
@@ -25,9 +24,9 @@ import java.util.List;
 public class RecommendedAdapter extends BaseAdapter{
 
 	private Context context;
-	private List<MainBean> list;
-	private MainBean mainBean;
-	public RecommendedAdapter(Context context,List<MainBean> list) {
+	private List<GoodsBean> list;
+	private GoodsBean goodsBean;
+	public RecommendedAdapter(Context context,List<GoodsBean> list) {
 		super();
 		this.context = context;
 		this.list=list;
@@ -64,17 +63,17 @@ public class RecommendedAdapter extends BaseAdapter{
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		mainBean=list.get(position);
-		if(mainBean!=null){
-			holder.tvContext.setText(mainBean.getDescription());
-			holder.tvLocation.setText(mainBean.getAddress());
-			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(mainBean.getPresentPrice()/100));
-			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(mainBean.getOriginalPrice()/100));
+		goodsBean=list.get(position);
+		if(goodsBean!=null){
+			holder.tvContext.setText(goodsBean.getDescription());
+			holder.tvLocation.setText(goodsBean.getAddress());
+			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
+			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-			if(null!=mainBean.getImgList() && mainBean.getImgList().size()>0){
-				Glide.with(context).load(mainBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imgIcon);
+			if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
+				Glide.with(context).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imgIcon);
 			}
-			holder.tvBuy.setTag(mainBean);
+			holder.tvBuy.setTag(goodsBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(!Util.isLogin(context)){
@@ -83,11 +82,11 @@ public class RecommendedAdapter extends BaseAdapter{
 						return;
 					}
 					if(v.getTag()!=null){
-						MainBean mainBean1= (MainBean) v.getTag();
-						if(mainBean1!=null){
+						GoodsBean goodsBean= (GoodsBean) v.getTag();
+						if(goodsBean!=null){
 							Intent intent=new Intent(context, BuyGoodsActivity.class);
 							Bundle bundle=new Bundle();
-							bundle.putSerializable("MainBean",mainBean1);
+							bundle.putSerializable("goodsBean",goodsBean);
 							intent.putExtras(bundle);
 							context.startActivity(intent);
 						}

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Administrator on 2018/5/28 0028.
  */
 
-public class MyGoods implements Serializable {
+public class GoodsBean implements Serializable {
 
     private String address;
     private String description;

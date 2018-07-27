@@ -2,7 +2,6 @@ package com.youmai.project.http;
 
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
-import com.youmai.project.bean.MyGoods;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.bean.Version;
 
@@ -149,5 +148,15 @@ public interface HttpApi {
     @FormUrlEncoded
     @POST(HttpConstant.PAY_SUCCESS_ORDER)
     Call<ResponseBody> getPayOrderList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 根据关键字搜索
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.SEARCH_GOODS_BY_KEY)
+    Call<ResponseBody> getGoodsByKey(@FieldMap Map<String, String> map);
 
 }

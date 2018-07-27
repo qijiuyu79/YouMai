@@ -13,10 +13,9 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.youmai.project.R;
-import com.youmai.project.bean.MyGoods;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.fragment.BuyerSpeakFragment;
 import com.youmai.project.fragment.MyGoodsFragment;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.PagerSlidingTabStrip;
 
 public class CenterActivity extends FragmentActivity {
@@ -118,7 +117,7 @@ public class CenterActivity extends FragmentActivity {
                  if(bundle==null){
                      return;
                  }
-                 MyGoods myGoods= (MyGoods) bundle.getSerializable("myGoods");
+                 GoodsBean myGoods= (GoodsBean) bundle.getSerializable("myGoods");
                  if(null!=myGoods){
                      myGoodsFragment.addGoods(myGoods);
                  }

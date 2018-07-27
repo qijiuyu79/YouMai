@@ -1,7 +1,6 @@
 package com.youmai.project.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
-import com.youmai.project.bean.MyGoods;
+import com.youmai.project.bean.GoodsBean;
 
 import java.util.List;
 
 public class PaySuccessAdapter extends BaseAdapter{
 
 	private Context context;
-	private List<MyGoods> list;
-	private  MyGoods myGoods;
-	public PaySuccessAdapter(Context context,List<MyGoods> list) {
+	private List<GoodsBean> list;
+	private GoodsBean myGoods;
+	public PaySuccessAdapter(Context context,List<GoodsBean> list) {
 		super();
 		this.context = context;
 		this.list=list;

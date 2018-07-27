@@ -18,7 +18,7 @@ import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.photo.BigPhotoActivity;
 import com.youmai.project.adapter.photo.GridImageAdapter;
-import com.youmai.project.bean.MyGoods;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.BitMapUtils;
@@ -241,7 +241,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                          final JSONObject jsonObject=new JSONObject(message);
                          if(jsonObject.getInt("code")==200){
                              final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
-                             MyGoods myGoods=new MyGoods();
+                             GoodsBean myGoods=new GoodsBean();
                              myGoods.setAddress(jsonObject1.getString("address"));
                              myGoods.setDescription(jsonObject1.getString("description"));
                              myGoods.setId(jsonObject1.getString("id"));

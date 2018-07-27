@@ -1,6 +1,5 @@
 package com.youmai.project.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.adapter.MyGoodsAdapter;
-import com.youmai.project.adapter.RecommendedAdapter;
-import com.youmai.project.bean.MainBean;
-import com.youmai.project.bean.MyGoods;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.view.RefreshLayout;
@@ -36,7 +33,7 @@ public class MyGoodsFragment extends BaseFragment  implements SwipeRefreshLayout
     private RefreshLayout swipeLayout;
     private ListView listView;
     private MyGoodsAdapter myGoodsAdapter;
-    private List<MyGoods> listAll=new ArrayList<>();
+    private List<GoodsBean> listAll=new ArrayList<>();
     private int page=1;
     private boolean isTotal=false;
     public void onCreate(Bundle savedInstanceState) {
@@ -99,9 +96,9 @@ public class MyGoodsFragment extends BaseFragment  implements SwipeRefreshLayout
         try {
             JSONObject jsonObject=new JSONObject(message);
             JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            List<MyGoods> list=new ArrayList<>();
+            List<GoodsBean> list=new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
-                 MyGoods myGoods=new MyGoods();
+                 GoodsBean myGoods=new GoodsBean();
                  JSONObject jsonObject1=jsonArray.getJSONObject(i);
                  myGoods.setAddress(jsonObject1.getString("address"));
                  myGoods.setDescription(jsonObject1.getString("description"));
@@ -167,7 +164,7 @@ public class MyGoodsFragment extends BaseFragment  implements SwipeRefreshLayout
     }
 
 
-    public void addGoods(MyGoods myGoods){
+    public void addGoods(GoodsBean myGoods){
         listAll.add(0,myGoods);
         if(null==myGoodsAdapter){
             myGoodsAdapter=new MyGoodsAdapter(getActivity(),listAll);

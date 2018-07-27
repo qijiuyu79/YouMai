@@ -5,7 +5,6 @@ import android.os.Handler;
 import com.youmai.project.bean.DownLoad;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
-import com.youmai.project.bean.MyGoods;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.bean.Version;
 import com.youmai.project.http.base.BaseRequst;
@@ -433,4 +432,32 @@ public class HttpMethod extends BaseRequst {
             }
         });
     }
+
+
+
+    /**
+     * 根据关键字搜索
+     * @param handler
+     */
+    public static void getGoodsByKey(String key,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("key",key);
+        map.put("min_distance","0");
+        map.put("max_distance","5000");
+        Http.getRetrofit().create(HttpApi.class).getGoodsByKey(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.SEARCH_BOODS_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

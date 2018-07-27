@@ -24,4 +24,5 @@ public class HandlerConstant {
     public static final int DOWNLOAD_SUCCESS=1125;
     public static final int DOWNLOAD_PRORESS=1126;
     public static final int GET_PAY_ORDER_SUCCESS=1127;
+    public static final int SEARCH_BOODS_SUCCESS=1128;
 }
