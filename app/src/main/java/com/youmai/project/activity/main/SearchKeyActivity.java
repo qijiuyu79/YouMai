@@ -8,12 +8,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,6 +59,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     private RefreshLayout swipeLayout;
     private ListView listView;
     private TagLayoutView tagLayoutView;
+    private ImageView imgClear;
     private boolean isTotal=false;
     private SpeechRecognizer mIat;
     // 语音听写UI
@@ -90,7 +94,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         relTags=(RelativeLayout)findViewById(R.id.rel_ask_tag);
         etKeys=(EditText)findViewById(R.id.et_am_keys);
         tagLayoutView=(TagLayoutView)findViewById(R.id.tag_as);
-        findViewById(R.id.img_am_apeck).setOnClickListener(this);
+        imgClear=(ImageView)findViewById(R.id.img_clear_et);
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -101,6 +105,30 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         swipeLayout.setOnRefreshListener(SearchKeyActivity.this);
         swipeLayout.setOnLoadListener(SearchKeyActivity.this);
         etKeys.setOnEditorActionListener(this);
+        findViewById(R.id.img_am_apeck).setOnClickListener(this);
+        findViewById(R.id.img_as_clear).setOnClickListener(this);
+        imgClear.setOnClickListener(this);
+        etKeys.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                final int length=s.toString().length();
+                if(length>0){
+                    imgClear.setVisibility(View.VISIBLE);
+                }else{
+                    imgClear.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 
@@ -153,6 +181,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
 
             //清空之前搜索过的列表
             listBeanAll.clear();
+            swipeLayout.setVisibility(View.VISIBLE);
             swipeLayout.post(new Thread(new Runnable() {
                 public void run() {
                     swipeLayout.setRefreshing(true);
@@ -255,6 +284,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //开启语音转文字
             case R.id.img_am_apeck:
                 IatSettings.setParam(mSharedPreferences, mIat);
                 boolean isShowDialog = mSharedPreferences.getBoolean("iat_show", true);
@@ -264,6 +294,17 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                     iatDialog.show();
                 }
                 break;
+            //情况搜索历史
+            case R.id.img_as_clear:
+                 MyApplication.spUtil.removeMessage(SPUtil.TAG_KEY);
+                 tagLayoutView.removeAllViews();
+                 break;
+            //清空搜索框
+            case R.id.img_clear_et:
+                 etKeys.setText(null);
+                 swipeLayout.setVisibility(View.GONE);
+                 relTags.setVisibility(View.VISIBLE);
+                 break;
             default:
                 break;
         }
@@ -276,7 +317,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     private RecognizerDialogListener recognizerDialogListener = new RecognizerDialogListener() {
         public void onResult(RecognizerResult results, boolean isLast) {
             String text = JsonParser.parseIatResult(results.getResultString());
-            etKeys.append(text);
+            etKeys.append(Util.format(text));
         }
         /**
          * 识别回调错误.
