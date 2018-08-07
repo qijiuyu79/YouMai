@@ -194,8 +194,8 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                 Toast.makeText(getApplicationContext(),"再按一次退出程序!",Toast.LENGTH_LONG).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                ActivitysLifecycle.getInstance().exit();
                 GetLocation.getInstance().stopLocation();
+                ActivitysLifecycle.getInstance().exit();
             }
             return false;
         }

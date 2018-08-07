@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
-import com.youmai.project.activity.main.MainActivity;
+import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.fragment.BaseFragment;
@@ -161,7 +161,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
                     listView.addHeaderView(new View(getActivity()));
-                    HttpMethod.getPayOrderList(1,mHandler);
+                    HttpMethod.getPayOrderList(OrderActivity.keyList.get(OrderActivity.index),mHandler);
                 }
             }, 0);
         }
