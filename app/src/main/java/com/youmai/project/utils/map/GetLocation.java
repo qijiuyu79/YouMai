@@ -1,14 +1,23 @@
-package com.youmai.project.utils;
+package com.youmai.project.utils.map;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ZoomControls;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.MyLocationData;
 import com.youmai.project.application.MyApplication;
+import com.youmai.project.utils.SPUtil;
+import com.youmai.project.view.DialogView;
 
 /**
  * 定位
@@ -21,7 +30,7 @@ public class GetLocation {
     private LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
     private Handler handler;
-    private static boolean isLocation=false;
+    private Context mContext;
     public static GetLocation getInstance() {
         if (null == getLocation) {
             getLocation = new GetLocation();
@@ -33,6 +42,7 @@ public class GetLocation {
      * 设置定位
      */
     public void setLocation(Context mContext, Handler handler) {
+        this.mContext=mContext;
         this.handler = handler;
         mLocClient = new LocationClient(mContext.getApplicationContext());
         mLocClient.registerLocationListener(myListener);
@@ -67,16 +77,41 @@ public class GetLocation {
                 MyApplication.spUtil.addString(SPUtil.LOCATION_LONG, longtitude + "");
                 MyApplication.spUtil.addString(SPUtil.LOCATION_ADDRESS,location.getAddrStr());
             }
-            if(!isLocation){
-                isLocation=true;
-                Message message = new Message();
-                message.what = 0x00;
-                handler.sendMessage(message);
-            }
+            Message message = new Message();
+            message.what = 0x00;
+            handler.sendMessage(message);
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
         }
+    }
+
+
+    /**
+     * 开启定位权限
+     */
+    private DialogView dialogView;
+    public void openLocation() {
+        if (null != dialogView) {
+            return;
+        }
+        dialogView = new DialogView(mContext, "无法定位，请开启定位权限或者打开GPS！", "去打开", "取消", new View.OnClickListener() {
+            public void onClick(View v) {
+                dialogView.dismiss();
+                dialogView=null;
+                stopLocation();
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + mContext.getPackageName()));
+                mContext.startActivity(intent);
+            }
+        }, new View.OnClickListener(){
+            public void onClick(View v) {
+                dialogView.dismiss();
+                dialogView=null;
+                stopLocation();
+            }
+        });
+        dialogView.show();
     }
 
     /**

@@ -12,20 +12,19 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.youmai.project.activity.map.MapActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.main.MainActivity;
 import com.youmai.project.activity.order.OrderActivity;
-import com.youmai.project.activity.shop.ShoppingActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.activity.user.UserActivity;
 import com.youmai.project.utils.ActivitysLifecycle;
-import com.youmai.project.utils.GetLocation;
+import com.youmai.project.utils.map.GetLocation;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         if(tabHost!=null){
             spec=tabHost.newTabSpec("首页").setIndicator("首页").setContent(new Intent(this, MainActivity.class));
             tabHost.addTab(spec);
-            spec=tabHost.newTabSpec("逛街").setIndicator("逛街").setContent(new Intent(this, ShoppingActivity.class));
+            spec=tabHost.newTabSpec("逛街").setIndicator("逛街").setContent(new Intent(this, MapActivity.class));
             tabHost.addTab(spec);
             spec=tabHost.newTabSpec("发布").setIndicator("发布").setContent(new Intent(this, CenterActivity.class));
             tabHost.addTab(spec);

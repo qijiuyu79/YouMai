@@ -6,10 +6,10 @@ package com.youmai.project.http;
 
 public class HttpConstant {
 
-    public static  String APP_ID = "wx5411a364cc5bd8fc";
+    public static  String APP_ID = "wx051a09f44f2d2420";
 
     // 商户号
-    public static  String MCH_ID = "1312537901";
+    public static  String MCH_ID = "1509305871";
 
     public static final String IP="http://api.thcos.com";
 

@@ -21,7 +21,7 @@ import com.youmai.project.bean.ViewPagerCallBack;
 import com.youmai.project.fragment.RecommendedFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.GetLocation;
+import com.youmai.project.utils.map.GetLocation;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.UpdateVersionUtils;
 import com.youmai.project.view.PagerSlidingTabStrip;
@@ -37,6 +37,8 @@ public class MainActivity extends BaseActivity{
     private ViewPager pager;
     //切换fragment的位置
     public static int index;
+    //是否定位成功
+    private boolean isFirst=false;
     public static List<String> keyList=new ArrayList<>();
     public static List<String> valList=new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,9 +146,12 @@ public class MainActivity extends BaseActivity{
             switch (msg.what){
                 //定位成功
                 case 0x00:
+                    if(isFirst){
+                        return;
+                    }
+                    isFirst=true;
                      //获取商品分类
 //                     getGoodsType();
-
                     pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
                     pager.setOffscreenPageLimit(3);
                     tabs.setViewPager(pager);

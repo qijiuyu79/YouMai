@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
+import com.youmai.project.activity.main.MainActivity;
 import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.fragment.BaseFragment;
@@ -34,14 +35,17 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private OrderAdapter orderAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
     private boolean isTotal=false;
+    //fragment是否可见
+    private boolean isVisibleToUser=false;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recommended, container, false);
+        view = inflater.inflate(R.layout.fragment_recommended, container, false);
         swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
         listView=(ListView)view.findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -56,14 +60,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 swipeLayout.setRefreshing(true);
             }
         }));
-        swipeLayout.postDelayed(new Runnable() {
-            public void run() {
-                listView.addHeaderView(new View(getActivity()));
-                //查询订单列表
-                getOrderList();
-
-            }
-        }, 200);
+        //查询订单列表
+        getOrderList();
         return view;
     }
 
@@ -159,6 +157,21 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 查询订单列表
      */
     private void getOrderList(){
-        HttpMethod.getPayOrderList(1,mHandler);
+        if(isVisibleToUser && view!=null && listBeanAll.size()==0){
+            swipeLayout.postDelayed(new Runnable() {
+                public void run() {
+                    listView.addHeaderView(new View(getActivity()));
+                    HttpMethod.getPayOrderList(1,mHandler);
+                }
+            }, 0);
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser=isVisibleToUser;
+        //查询订单列表
+        getOrderList();
     }
 }
