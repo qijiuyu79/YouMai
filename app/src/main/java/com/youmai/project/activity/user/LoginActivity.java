@@ -18,6 +18,7 @@ import com.youmai.project.bean.Login;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.SPUtil;
+import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.view.ClickTextView;
 import com.youmai.project.view.MeterailEditText;
@@ -39,6 +40,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private int time = 0;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_login);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
             setTranslucentStatus(true);

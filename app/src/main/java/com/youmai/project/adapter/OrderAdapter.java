@@ -14,12 +14,12 @@ import com.youmai.project.bean.GoodsBean;
 
 import java.util.List;
 
-public class PaySuccessAdapter extends BaseAdapter{
+public class OrderAdapter extends BaseAdapter{
 
 	private Context context;
 	private List<GoodsBean> list;
 	private GoodsBean myGoods;
-	public PaySuccessAdapter(Context context,List<GoodsBean> list) {
+	public OrderAdapter(Context context, List<GoodsBean> list) {
 		super();
 		this.context = context;
 		this.list=list;
@@ -45,7 +45,7 @@ public class PaySuccessAdapter extends BaseAdapter{
 		ViewHolder holder = null;
 		if(view==null){
 			holder = new ViewHolder(); 
-			view = LayoutInflater.from(context).inflate(R.layout.pay_success_item, null);
+			view = LayoutInflater.from(context).inflate(R.layout.order_item, null);
 			holder.imageView=(ImageView)view.findViewById(R.id.img_psi_icon);
 			holder.tv_psi_des=(TextView)view.findViewById(R.id.tv_psi_des);
 			view.setTag(holder);

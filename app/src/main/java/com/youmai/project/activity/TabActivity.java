@@ -23,6 +23,7 @@ import com.youmai.project.activity.user.UserActivity;
 import com.youmai.project.utils.ActivitysLifecycle;
 import com.youmai.project.utils.GetLocation;
 import com.youmai.project.utils.SPUtil;
+import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.tag_host);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
             setTranslucentStatus(true);

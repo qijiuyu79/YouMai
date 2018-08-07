@@ -1,6 +1,5 @@
 package com.youmai.project.activity.order;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +10,14 @@ import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import com.youmai.project.R;
-import com.youmai.project.fragment.CompleteFragment;
-import com.youmai.project.fragment.PaySuccessFragment;
+import com.youmai.project.fragment.order.OrderFragment;
 import com.youmai.project.view.PagerSlidingTabStrip;
 
+/**
+ * 我的订单
+ */
 public class OrderActivity extends FragmentActivity {
 
-    private PaySuccessFragment paySuccessFragment;
-    private CompleteFragment completeFragment;
     private PagerSlidingTabStrip tabs;
     private DisplayMetrics dm;
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +27,7 @@ public class OrderActivity extends FragmentActivity {
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        pager.setOffscreenPageLimit(4);
         tabs.setViewPager(pager);
         setTabsValue();
     }
@@ -64,7 +64,7 @@ public class OrderActivity extends FragmentActivity {
             super(fm);
         }
 
-        private final String[] titles = { "已支付","已完成"};
+        private final String[] titles = { "全部","待交易","已完成","已取消"};
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -78,17 +78,7 @@ public class OrderActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position==0){
-                if(paySuccessFragment==null){
-                    paySuccessFragment=new PaySuccessFragment();
-                }
-                return paySuccessFragment;
-            }else{
-                if(completeFragment==null){
-                    completeFragment=new CompleteFragment();
-                }
-                return completeFragment;
-            }
+            return new OrderFragment();
         }
 
     }

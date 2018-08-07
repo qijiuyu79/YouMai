@@ -34,6 +34,8 @@
     <color name="color_bab7b7">#bab7b7</color>
     <color name="color_eeeeee">#eeeeee</color>
     <color name="color_F0F0F0">#F0F0F0</color>
+    <color name="color_707070">#707070</color>
+    <color name="color_f8f8f8">#f8f8f8</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
 </resources>

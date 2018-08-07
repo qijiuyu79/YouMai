@@ -39,6 +39,7 @@ import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
+import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import com.youmai.project.view.TagLayoutView;
 
@@ -281,6 +282,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     }
 
 
+    private DialogView dialogView;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -294,10 +296,17 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                     iatDialog.show();
                 }
                 break;
-            //情况搜索历史
+            //清空搜索历史
             case R.id.img_as_clear:
-                 MyApplication.spUtil.removeMessage(SPUtil.TAG_KEY);
-                 tagLayoutView.removeAllViews();
+                 dialogView = new DialogView(dialogView, mContext, "确定清空搜索历史吗？",
+                        "确定", "取消", new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialogView.dismiss();
+                        MyApplication.spUtil.removeMessage(SPUtil.TAG_KEY);
+                        tagLayoutView.removeAllViews();
+                    }
+                }, null);
+                dialogView.show();
                  break;
             //清空搜索框
             case R.id.img_clear_et:

@@ -1,4 +1,4 @@
-package com.youmai.project.fragment;
+package com.youmai.project.fragment.order;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
-import com.youmai.project.adapter.PaySuccessAdapter;
+import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.view.RefreshLayout;
@@ -26,11 +27,11 @@ import java.util.List;
  * Created by Administrator on 2018/1/3 0003.
  */
 
-public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
+public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
     private RefreshLayout swipeLayout;
     private ListView listView;
-    private PaySuccessAdapter paySuccessAdapter;
+    private OrderAdapter orderAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
     private boolean isTotal=false;
     public void onCreate(Bundle savedInstanceState) {
@@ -43,12 +44,13 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
         View view = inflater.inflate(R.layout.fragment_recommended, container, false);
         swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
         listView=(ListView)view.findViewById(R.id.list);
+        listView.setDividerHeight(0);
         swipeLayout.setColorSchemeResources(R.color.color_bule2,
                 R.color.color_bule,
                 R.color.color_bule2,
                 R.color.color_bule3);
-        swipeLayout.setOnRefreshListener(PaySuccessFragment.this);
-        swipeLayout.setOnLoadListener(PaySuccessFragment.this);
+        swipeLayout.setOnRefreshListener(OrderFragment.this);
+        swipeLayout.setOnLoadListener(OrderFragment.this);
         swipeLayout.post(new Thread(new Runnable() {
             public void run() {
                 swipeLayout.setRefreshing(true);
@@ -72,10 +74,10 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
             super.handleMessage(msg);
             switch (msg.what){
                 case HandlerConstant.GET_PAY_ORDER_SUCCESS:
-                     final String message= (String) msg.obj;
-                     refresh(message);
-                     swipeLayout.setRefreshing(false);
-                     break;
+                    final String message= (String) msg.obj;
+                    refresh(message);
+                    swipeLayout.setRefreshing(false);
+                    break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     break ;
@@ -127,11 +129,11 @@ public class PaySuccessFragment extends BaseFragment  implements SwipeRefreshLay
                 list.add(myGoods);
             }
             listBeanAll.addAll(list);
-            if(null==paySuccessAdapter){
-                paySuccessAdapter=new PaySuccessAdapter(getActivity(),listBeanAll);
-                listView.setAdapter(paySuccessAdapter);
+            if(null==orderAdapter){
+                orderAdapter=new OrderAdapter(getActivity(),listBeanAll);
+                listView.setAdapter(orderAdapter);
             }else{
-                paySuccessAdapter.notifyDataSetChanged();
+                orderAdapter.notifyDataSetChanged();
             }
             if(list.size()<20){
                 isTotal=true;
