@@ -52,6 +52,7 @@
 
         <activity android:name=".activity.main.MainActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.main.BuyGoodsActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.main.BuyGoodSuccessActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.map.MapActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.order.OrderActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.center.CenterActivity"  android:screenOrientation="portrait"/>

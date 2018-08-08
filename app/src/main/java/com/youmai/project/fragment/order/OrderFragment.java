@@ -17,6 +17,7 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.RefreshLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -161,6 +162,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
                     listView.addHeaderView(new View(getActivity()));
+                    LogUtils.e(OrderActivity.keyList.get(OrderActivity.index)+"+++++++++++");
                     HttpMethod.getPayOrderList(OrderActivity.keyList.get(OrderActivity.index),mHandler);
                 }
             }, 0);

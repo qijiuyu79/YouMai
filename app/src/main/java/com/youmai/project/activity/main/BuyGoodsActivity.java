@@ -50,7 +50,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
      */
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
-        tvHead.setText("商品支付");
+        tvHead.setText("购买宝贝");
         ImageView imageView=(ImageView)findViewById(R.id.img_abg_goods);
         TextView tvContent=(TextView)findViewById(R.id.tv_abg_content);
         TextView tvMoney=(TextView)findViewById(R.id.tv_abg_money);
@@ -133,8 +133,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
                         if(jsonObject.getInt("code")==200){
                             switch (payStr){
                                 case "BALANCE":
-                                     showMsg("购买成功！");
-                                     finish();
+                                     paySuccess();
                                      break;
                                 case "WECHAT":
                                      PayUtils.getInstance(BuyGoodsActivity.this).weipay(jsonObject.getString("data"),mHandler);
@@ -157,7 +156,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
                     String resultStatus = payResult.getResultStatus();
                     if (TextUtils.equals(resultStatus, "9000")) {
                         showMsg(getString(R.string.payment_success));
-                        finish();
+                        paySuccess();
                     } else {
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
@@ -197,10 +196,24 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             String action = intent.getAction();
             final int type=intent.getIntExtra("type",0);
             if (action.equals("PAY_ACTION") && type==1) {
-                BuyGoodsActivity.this.finish();
+                paySuccess();
             }
         }
     };
+
+
+    /**
+     * 支付成功后跳转
+     */
+    private void paySuccess(){
+        Intent intent=new Intent(mContext,BuyGoodSuccessActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("goodsBean",goodsBean);
+        bundle.putString("payType",payStr);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        BuyGoodsActivity.this.finish();
+    }
 
 
     @Override
