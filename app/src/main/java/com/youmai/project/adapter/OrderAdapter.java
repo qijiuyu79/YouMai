@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.TradingPlay;
+import com.youmai.project.view.ClickTextView;
 
 import java.util.List;
 
@@ -18,7 +20,8 @@ public class OrderAdapter extends BaseAdapter{
 
 	private Context context;
 	private List<GoodsBean> list;
-	private GoodsBean myGoods;
+	private GoodsBean goodsBean;
+	private TradingPlay tradingPlay;
 	public OrderAdapter(Context context, List<GoodsBean> list) {
 		super();
 		this.context = context;
@@ -48,22 +51,50 @@ public class OrderAdapter extends BaseAdapter{
 			view = LayoutInflater.from(context).inflate(R.layout.order_item, null);
 			holder.imageView=(ImageView)view.findViewById(R.id.img_psi_icon);
 			holder.tv_psi_des=(TextView)view.findViewById(R.id.tv_psi_des);
+			holder.tvComplete=(ClickTextView)view.findViewById(R.id.tv_oi_complete);
+			holder.tvCancle=(ClickTextView)view.findViewById(R.id.tv_oi_cancle);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		myGoods=list.get(position);
-		if(null!=myGoods){
-			if(null!=myGoods.getImgList() && myGoods.getImgList().size()>0){
-				Glide.with(context).load(myGoods.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);
+		goodsBean=list.get(position);
+		if(null!=goodsBean){
+			if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
+				Glide.with(context).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);
 			}
-			holder.tv_psi_des.setText(myGoods.getDescription());
+			holder.tv_psi_des.setText(goodsBean.getDescription());
+			holder.tvComplete.setTag(goodsBean.getId());
+			holder.tvCancle.setTag(goodsBean.getId());
+			holder.tvComplete.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					final String orderId=v.getTag().toString();
+					tradingPlay.complete(orderId);
+				}
+			});
+			holder.tvCancle.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					final String orderId=v.getTag().toString();
+					tradingPlay.cancle(orderId);
+				}
+			});
 		}
 		return view;
+	}
+
+
+	public void setCallBack(TradingPlay tradingPlay){
+		this.tradingPlay=tradingPlay;
 	}
 	
 	private class ViewHolder{
 		private ImageView imageView;
 		private TextView tv_psi_des;
+		private ClickTextView tvComplete,tvCancle;
 	 }
 }

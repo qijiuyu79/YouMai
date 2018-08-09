@@ -14,10 +14,11 @@ import com.youmai.project.R;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.TradingPlay;
 import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
+import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +39,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private boolean isTotal=false;
     //fragment是否可见
     private boolean isVisibleToUser=false;
+    private DialogView dialogView;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -134,6 +136,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             }else{
                 orderAdapter.notifyDataSetChanged();
             }
+            orderAdapter.setCallBack(tradingPlay);
             if(list.size()<20){
                 isTotal=true;
                 swipeLayout.setFooter(isTotal);
@@ -142,6 +145,51 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             e.printStackTrace();
         }
     }
+
+
+    private TradingPlay tradingPlay=new TradingPlay() {
+        /**
+         * 交易完成
+         * @param orderId
+         */
+        public void complete(String orderId) {
+            if(TextUtils.isEmpty(orderId)){
+                return;
+            }
+            dialogView = new DialogView(dialogView, getActivity(), "确定完成交易吗？",
+                    "确定", "取消", new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialogView.dismiss();
+                }
+            }, null);
+            dialogView.show();
+        }
+
+        /**
+         * 交易取消
+         * @param orderId
+         */
+        public void cancle(String orderId) {
+            if(TextUtils.isEmpty(orderId)){
+                return;
+            }
+            dialogView = new DialogView(dialogView, getActivity(), "确定取消交易吗？",
+                    "确定", "取消", new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialogView.dismiss();
+                }
+            }, null);
+            dialogView.show();
+        }
+
+        /**
+         * 联系卖家
+         * @param phone
+         */
+        public void playPhon(String phone) {
+
+        }
+    };
 
     @Override
     public void onRefresh() {
@@ -162,7 +210,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
                     listView.addHeaderView(new View(getActivity()));
-                    LogUtils.e(OrderActivity.keyList.get(OrderActivity.index)+"+++++++++++");
                     HttpMethod.getPayOrderList(OrderActivity.keyList.get(OrderActivity.index),mHandler);
                 }
             }, 0);

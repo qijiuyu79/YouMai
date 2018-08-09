@@ -37,6 +37,8 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
     private ImageView imgBalance,imgWeixin,imgZhifu;
     private GoodsBean goodsBean;
     private String payStr="BALANCE";
+    //购买成功后的广播
+    public final static String ACTION_GOODS_PAYSUCCESS = "net.youmai.adminapp.action.goods.paysuccess";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_goods);
@@ -213,6 +215,10 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         bundle.putString("payType",payStr);
         intent.putExtras(bundle);
         startActivity(intent);
+        //发送广播
+        Intent broadcastIntent=new Intent(ACTION_GOODS_PAYSUCCESS);
+        broadcastIntent.putExtra("goodId",goodsBean.getId());
+        sendBroadcast(broadcastIntent);
         BuyGoodsActivity.this.finish();
     }
 

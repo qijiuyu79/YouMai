@@ -1,5 +1,9 @@
 package com.youmai.project.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,11 +16,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.youmai.project.R;
+import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.MainActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.RefreshLayout;
 
 import org.json.JSONArray;
@@ -64,6 +70,8 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                 swipeLayout.setRefreshing(true);
             }
         }));
+        //注册广播
+        registerReceiver();
         //查询数据
         loadData();
         return view;
@@ -184,11 +192,51 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
 
     }
 
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS);
+        // 注册广播监听
+        getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                //商品购买成功后的广播
+                case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
+                     final String goodId=intent.getStringExtra("goodId");
+                     if(TextUtils.isEmpty(goodId)){
+                         return;
+                     }
+                     for(int i=0,len=listBeanAll.size();i<len;i++){
+                         if(listBeanAll.get(i).getId().equals(goodId)){
+                             listBeanAll.remove(i);
+                             break;
+                         }
+                     }
+                    recommendedAdapter.notifyDataSetChanged();
+                     break;
+            }
+        }
+    };
+
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser=isVisibleToUser;
         //查询数据
         loadData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mBroadcastReceiver);
     }
 }

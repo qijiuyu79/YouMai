@@ -94,7 +94,7 @@
                 android:textColor="@color/color_020202"
                 android:textSize="13sp"
                 android:layout_marginRight="10dp"
-                android:lineSpacingExtra="1dp"
+                android:lineSpacingExtra="0.5dp"
                 android:lineSpacingMultiplier="1.5"/>
 
             <TextView
