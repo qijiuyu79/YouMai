@@ -44,4 +44,6 @@ public class HttpConstant {
     public static final String PAY_SUCCESS_ORDER="/user/order/list";
 
     public static final String SEARCH_GOODS_BY_KEY="/goods/search";
+
+    public static final String ORDER_COMPLETE="/user/order/complete";
 }

@@ -252,11 +252,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
         
-        <LinearLayout
+        <com.youmai.project.view.ClickLinearLayout
             android:id="@+id/lin_abgs_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -277,7 +277,7 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="10dp"/>
 
-        </LinearLayout>
+        </com.youmai.project.view.ClickLinearLayout>
 
         <View
             android:layout_width="1dp"
@@ -286,7 +286,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"/>
 
-        <LinearLayout
+        <com.youmai.project.view.ClickLinearLayout
             android:id="@+id/lin_abgs_contact"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -307,7 +307,7 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="10dp"/>
 
-        </LinearLayout>
+        </com.youmai.project.view.ClickLinearLayout>
         
     </LinearLayout>
 

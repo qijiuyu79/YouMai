@@ -5,18 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.bean.GoodsBean;
-import com.youmai.project.bean.PayResult;
-import com.youmai.project.http.HandlerConstant;
-import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.PayUtils;
 import com.youmai.project.utils.Util;
-
-import org.json.JSONObject;
 
 /**
  * 支付成功

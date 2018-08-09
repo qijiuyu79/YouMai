@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -76,7 +77,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
             tvContent.setText(goodsBean.getDescription());
             tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
-            tvMoney2.setText("实付款："+Util.setDouble(goodsBean.getPresentPrice()/100)+"元");
+            tvMoney2.setText("实付款："+ Html.fromHtml("<font color='#FF4181'>"+Util.setDouble(goodsBean.getPresentPrice()/100)+"元</font>"));
         }
     }
 
