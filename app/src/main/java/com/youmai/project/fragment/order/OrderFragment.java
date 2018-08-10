@@ -36,19 +36,14 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private RefreshLayout swipeLayout;
     private ListView listView;
-    private OrderAdapter beanAdapter,completeAdapter,cancleAdapter,waitAdapter;
+    private OrderAdapter orderAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
-    private List<GoodsBean> listComplete=new ArrayList<>();
-    private List<GoodsBean> listCancle=new ArrayList<>();
-    private List<GoodsBean> listWait=new ArrayList<>();
     private List<String> keyList=new ArrayList<>();
     private boolean isTotal=false;
     //fragment是否可见
     private boolean isVisibleToUser=false;
     //订单ID
     private String orderId;
-    //fragment的下标
-    private int index;
     private DialogView dialogView;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,24 +93,17 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                     break;
                  //交易完成
                  case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
+                 //交易取消
+                case HandlerConstant.SET_ORDER_CANCLE_SUCCESS:
                      HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
                      if(null==httpBaseBean){
                          return;
                      }
                      if(httpBaseBean.isSussess()){
-                         //更新全部
                          for(int i=0;i<listBeanAll.size();i++){
                              if(orderId.equals(listBeanAll.get(i).getOrderId())){
-                                 listBeanAll.get(i).setStated(2);
-                                 beanAdapter.notifyDataSetChanged();
-                                 break;
-                             }
-                         }
-                         //更新待交易
-                         for(int i=0;i<listWait.size();i++){
-                             if(orderId.equals(listWait.get(i).getOrderId())){
-                                 listWait.remove(i);
-                                 waitAdapter.notifyDataSetChanged();
+                                 listBeanAll.remove(i);
+                                 orderAdapter.notifyDataSetChanged();
                                  break;
                              }
                          }
@@ -173,63 +161,15 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 }
                 list.add(myGoods);
             }
-            switch (index){
-                case 0:
-                    listBeanAll.addAll(list);
-                    break;
-                case 1:
-                    listWait.addAll(list);
-                    break;
-                case 2:
-                    listComplete.addAll(list);
-                    break;
-                case 3:
-                    listCancle.addAll(list);
-                    break;
-                default:
-                    break;
+            listBeanAll.addAll(list);
+            if(null==orderAdapter){
+                orderAdapter=new OrderAdapter(getActivity(),listBeanAll);
+                listView.setAdapter(orderAdapter);
+            }else{
+                orderAdapter.notifyDataSetChanged();
             }
+            orderAdapter.setCallBack(tradingPlay);
 
-            switch (index){
-                case 0:
-                    if(null==beanAdapter){
-                        beanAdapter=new OrderAdapter(getActivity(),listBeanAll);
-                    }else{
-                        beanAdapter.notifyDataSetChanged();
-                    }
-                    beanAdapter.setCallBack(tradingPlay);
-                    listView.setAdapter(beanAdapter);
-                    break;
-                case 1:
-                    if(null==waitAdapter){
-                        waitAdapter=new OrderAdapter(getActivity(),listWait);
-                    }else{
-                        waitAdapter.notifyDataSetChanged();
-                    }
-                    waitAdapter.setCallBack(tradingPlay);
-                    listView.setAdapter(waitAdapter);
-                    break;
-                case 2:
-                    if(null==completeAdapter){
-                        completeAdapter=new OrderAdapter(getActivity(),listComplete);
-                    }else{
-                        completeAdapter.notifyDataSetChanged();
-                    }
-                    completeAdapter.setCallBack(tradingPlay);
-                    listView.setAdapter(completeAdapter);
-                    break;
-                case 3:
-                    if(null==cancleAdapter){
-                        cancleAdapter=new OrderAdapter(getActivity(),listCancle);
-                    }else{
-                        cancleAdapter.notifyDataSetChanged();
-                    }
-                    cancleAdapter.setCallBack(tradingPlay);
-                    listView.setAdapter(cancleAdapter);
-                    break;
-                default:
-                    break;
-            }
             if(list.size()<20){
                 isTotal=true;
                 swipeLayout.setFooter(isTotal);
@@ -265,7 +205,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
          * 交易取消
          * @param orderId
          */
-        public void cancle(String orderId) {
+        public void cancle(final String orderId) {
             if(TextUtils.isEmpty(orderId)){
                 return;
             }
@@ -274,6 +214,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                     "确定", "取消", new View.OnClickListener() {
                 public void onClick(View v) {
                     dialogView.dismiss();
+                    showProgress("设置中...");
+                    HttpMethod.setOrderCancle(orderId,mHandler);
                 }
             }, null);
             dialogView.show();
@@ -303,43 +245,14 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 查询订单列表
      */
     private void getOrderList(){
-        if(isVisibleToUser && view!=null){
-            index=OrderActivity.index;
-            switch (index){
-                case 0:
-                     if(listBeanAll.size()==0){
-                         getData(index);
-                     }
-                     break;
-                case 1:
-                    if(listWait.size()==0){
-                        getData(index);
-                    }
-                     break;
-                case 2:
-                    if(listComplete.size()==0){
-                        getData(index);
-                    }
-                     break;
-                case 3:
-                    if(listCancle.size()==0){
-                        getData(index);
-                    }
-                     break;
-                default:
-                      break;
-            }
+        if(isVisibleToUser && view!=null && listBeanAll.size()==0){
+            swipeLayout.postDelayed(new Runnable() {
+                public void run() {
+                    listView.addHeaderView(new View(getActivity()));
+                    HttpMethod.getPayOrderList(keyList.get(OrderActivity.index),mHandler);
+                }
+            }, 0);
         }
-    }
-
-
-    private void getData(final int index){
-        swipeLayout.postDelayed(new Runnable() {
-            public void run() {
-                listView.addHeaderView(new View(getActivity()));
-                HttpMethod.getPayOrderList(keyList.get(index),mHandler);
-            }
-        }, 0);
     }
 
     @Override

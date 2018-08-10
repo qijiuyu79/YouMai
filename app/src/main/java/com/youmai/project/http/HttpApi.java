@@ -169,4 +169,14 @@ public interface HttpApi {
     @POST(HttpConstant.ORDER_COMPLETE)
     Call<HttpBaseBean> setOrderComplete(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 设置交易取消
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ORDER_CANCLE)
+    Call<HttpBaseBean> setOrderCancle(@FieldMap Map<String, String> map);
+
 }

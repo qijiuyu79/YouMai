@@ -469,11 +469,36 @@ public class HttpMethod extends BaseRequst {
      */
     public static void setOrderComplete(String orderId,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("orderId",orderId);
+        map.put("order_id",orderId);
         Http.getRetrofit().create(HttpApi.class).setOrderComplete(map).enqueue(new Callback<HttpBaseBean>() {
             public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
                 try {
                     sendMessage(handler, HandlerConstant.SET_ORDER_COMPLETE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+
+    /**
+     * 设置交易取消
+     * @return
+     */
+    public static void setOrderCancle(String orderId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("order_id",orderId);
+        Http.getRetrofit().create(HttpApi.class).setOrderCancle(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.SET_ORDER_CANCLE_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
