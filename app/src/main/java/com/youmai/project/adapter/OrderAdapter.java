@@ -50,6 +50,7 @@ public class OrderAdapter extends BaseAdapter{
 			holder = new ViewHolder(); 
 			view = LayoutInflater.from(context).inflate(R.layout.order_item, null);
 			holder.imageView=(ImageView)view.findViewById(R.id.img_psi_icon);
+			holder.imgType=(ImageView)view.findViewById(R.id.img_oi_type);
 			holder.tv_psi_des=(TextView)view.findViewById(R.id.tv_psi_des);
 			holder.tvComplete=(ClickTextView)view.findViewById(R.id.tv_oi_complete);
 			holder.tvCancle=(ClickTextView)view.findViewById(R.id.tv_oi_cancle);
@@ -63,8 +64,21 @@ public class OrderAdapter extends BaseAdapter{
 				Glide.with(context).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);
 			}
 			holder.tv_psi_des.setText(goodsBean.getDescription());
-			holder.tvComplete.setTag(goodsBean.getId());
-			holder.tvCancle.setTag(goodsBean.getId());
+			switch (goodsBean.getStated()){
+				case 1:
+					 holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yizhifu));
+					 break;
+				case 2:
+					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiwancheng));
+					break;
+				case 4:
+					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));
+					break;
+					default:
+						break;
+			}
+			holder.tvComplete.setTag(goodsBean.getOrderId());
+			holder.tvCancle.setTag(goodsBean.getOrderId());
 			holder.tvComplete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
@@ -93,7 +107,7 @@ public class OrderAdapter extends BaseAdapter{
 	}
 	
 	private class ViewHolder{
-		private ImageView imageView;
+		private ImageView imageView,imgType;
 		private TextView tv_psi_des;
 		private ClickTextView tvComplete,tvCancle;
 	 }

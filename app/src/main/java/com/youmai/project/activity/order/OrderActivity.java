@@ -25,7 +25,6 @@ public class OrderActivity extends FragmentActivity {
     private DisplayMetrics dm;
     //切换fragment的位置
     public static int index;
-    public static List<String> keyList=new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
@@ -37,10 +36,6 @@ public class OrderActivity extends FragmentActivity {
      * 初始化
      */
     private void initView(){
-        keyList.add(null);
-        keyList.add("1");
-        keyList.add("2");
-        keyList.add("4");
         dm = getResources().getDisplayMetrics();
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);

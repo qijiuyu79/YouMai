@@ -171,4 +171,13 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/img_oi_type"
+        android:layout_width="121dp"
+        android:layout_height="122dp"
+        android:src="@mipmap/yiwancheng"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="19dp"/>
+
 </RelativeLayout>

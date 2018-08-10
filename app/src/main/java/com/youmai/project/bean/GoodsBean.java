@@ -18,6 +18,8 @@ public class GoodsBean implements Serializable {
     private Double longitude=0.0;
     private double originalPrice;
     private double presentPrice;
+    private String orderId;
+    private int stated;
 
     public String getAddress() {
         return address;
@@ -81,5 +83,21 @@ public class GoodsBean implements Serializable {
 
     public void setPresentPrice(double presentPrice) {
         this.presentPrice = presentPrice;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getStated() {
+        return stated;
+    }
+
+    public void setStated(int stated) {
+        this.stated = stated;
     }
 }

@@ -159,4 +159,14 @@ public interface HttpApi {
     @POST(HttpConstant.SEARCH_GOODS_BY_KEY)
     Call<ResponseBody> getGoodsByKey(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 设置交易完成
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ORDER_COMPLETE)
+    Call<HttpBaseBean> setOrderComplete(@FieldMap Map<String, String> map);
+
 }

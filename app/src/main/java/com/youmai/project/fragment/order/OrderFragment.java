@@ -14,10 +14,12 @@ import com.youmai.project.R;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.TradingPlay;
 import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import org.json.JSONArray;
@@ -34,14 +36,28 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private RefreshLayout swipeLayout;
     private ListView listView;
-    private OrderAdapter orderAdapter;
+    private OrderAdapter beanAdapter,completeAdapter,cancleAdapter,waitAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
+    private List<GoodsBean> listComplete=new ArrayList<>();
+    private List<GoodsBean> listCancle=new ArrayList<>();
+    private List<GoodsBean> listWait=new ArrayList<>();
+    private List<String> keyList=new ArrayList<>();
     private boolean isTotal=false;
     //fragment是否可见
     private boolean isVisibleToUser=false;
+    //订单ID
+    private String orderId;
+    //fragment的下标
+    private int index;
     private DialogView dialogView;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(keyList.size()==0){
+            keyList.add(null);
+            keyList.add("1");
+            keyList.add("2");
+            keyList.add("4");
+        }
     }
 
     View view;
@@ -73,12 +89,38 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            clearTask();
             switch (msg.what){
                 case HandlerConstant.GET_PAY_ORDER_SUCCESS:
                     final String message= (String) msg.obj;
                     refresh(message);
                     swipeLayout.setRefreshing(false);
                     break;
+                 //交易完成
+                 case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
+                     HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                     if(null==httpBaseBean){
+                         return;
+                     }
+                     if(httpBaseBean.isSussess()){
+                         //更新全部
+                         for(int i=0;i<listBeanAll.size();i++){
+                             if(orderId.equals(listBeanAll.get(i).getOrderId())){
+                                 listBeanAll.get(i).setStated(2);
+                                 beanAdapter.notifyDataSetChanged();
+                                 break;
+                             }
+                         }
+                         //更新待交易
+                         for(int i=0;i<listWait.size();i++){
+                             if(orderId.equals(listWait.get(i).getOrderId())){
+                                 listWait.remove(i);
+                                 waitAdapter.notifyDataSetChanged();
+                                 break;
+                             }
+                         }
+                     }
+                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     break ;
@@ -104,6 +146,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
                 JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
                 GoodsBean myGoods=new GoodsBean();
+                myGoods.setOrderId(jsonObject1.getString("id"));
+                myGoods.setStated(jsonObject1.getInt("stated"));
                 myGoods.setAddress(jsonObject2.getString("address"));
                 myGoods.setDescription(jsonObject2.getString("description"));
                 myGoods.setId(jsonObject2.getString("id"));
@@ -129,14 +173,63 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 }
                 list.add(myGoods);
             }
-            listBeanAll.addAll(list);
-            if(null==orderAdapter){
-                orderAdapter=new OrderAdapter(getActivity(),listBeanAll);
-                listView.setAdapter(orderAdapter);
-            }else{
-                orderAdapter.notifyDataSetChanged();
+            switch (index){
+                case 0:
+                    listBeanAll.addAll(list);
+                    break;
+                case 1:
+                    listWait.addAll(list);
+                    break;
+                case 2:
+                    listComplete.addAll(list);
+                    break;
+                case 3:
+                    listCancle.addAll(list);
+                    break;
+                default:
+                    break;
             }
-            orderAdapter.setCallBack(tradingPlay);
+
+            switch (index){
+                case 0:
+                    if(null==beanAdapter){
+                        beanAdapter=new OrderAdapter(getActivity(),listBeanAll);
+                    }else{
+                        beanAdapter.notifyDataSetChanged();
+                    }
+                    beanAdapter.setCallBack(tradingPlay);
+                    listView.setAdapter(beanAdapter);
+                    break;
+                case 1:
+                    if(null==waitAdapter){
+                        waitAdapter=new OrderAdapter(getActivity(),listWait);
+                    }else{
+                        waitAdapter.notifyDataSetChanged();
+                    }
+                    waitAdapter.setCallBack(tradingPlay);
+                    listView.setAdapter(waitAdapter);
+                    break;
+                case 2:
+                    if(null==completeAdapter){
+                        completeAdapter=new OrderAdapter(getActivity(),listComplete);
+                    }else{
+                        completeAdapter.notifyDataSetChanged();
+                    }
+                    completeAdapter.setCallBack(tradingPlay);
+                    listView.setAdapter(completeAdapter);
+                    break;
+                case 3:
+                    if(null==cancleAdapter){
+                        cancleAdapter=new OrderAdapter(getActivity(),listCancle);
+                    }else{
+                        cancleAdapter.notifyDataSetChanged();
+                    }
+                    cancleAdapter.setCallBack(tradingPlay);
+                    listView.setAdapter(cancleAdapter);
+                    break;
+                default:
+                    break;
+            }
             if(list.size()<20){
                 isTotal=true;
                 swipeLayout.setFooter(isTotal);
@@ -152,14 +245,17 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
          * 交易完成
          * @param orderId
          */
-        public void complete(String orderId) {
+        public void complete(final String orderId) {
             if(TextUtils.isEmpty(orderId)){
                 return;
             }
+            OrderFragment.this.orderId=orderId;
             dialogView = new DialogView(dialogView, getActivity(), "确定完成交易吗？",
                     "确定", "取消", new View.OnClickListener() {
                 public void onClick(View v) {
                     dialogView.dismiss();
+                    showProgress("设置中...");
+                    HttpMethod.setOrderComplete(orderId,mHandler);
                 }
             }, null);
             dialogView.show();
@@ -173,6 +269,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             if(TextUtils.isEmpty(orderId)){
                 return;
             }
+            OrderFragment.this.orderId=orderId;
             dialogView = new DialogView(dialogView, getActivity(), "确定取消交易吗？",
                     "确定", "取消", new View.OnClickListener() {
                 public void onClick(View v) {
@@ -206,14 +303,43 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 查询订单列表
      */
     private void getOrderList(){
-        if(isVisibleToUser && view!=null && listBeanAll.size()==0){
-            swipeLayout.postDelayed(new Runnable() {
-                public void run() {
-                    listView.addHeaderView(new View(getActivity()));
-                    HttpMethod.getPayOrderList(OrderActivity.keyList.get(OrderActivity.index),mHandler);
-                }
-            }, 0);
+        if(isVisibleToUser && view!=null){
+            index=OrderActivity.index;
+            switch (index){
+                case 0:
+                     if(listBeanAll.size()==0){
+                         getData(index);
+                     }
+                     break;
+                case 1:
+                    if(listWait.size()==0){
+                        getData(index);
+                    }
+                     break;
+                case 2:
+                    if(listComplete.size()==0){
+                        getData(index);
+                    }
+                     break;
+                case 3:
+                    if(listCancle.size()==0){
+                        getData(index);
+                    }
+                     break;
+                default:
+                      break;
+            }
         }
+    }
+
+
+    private void getData(final int index){
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                listView.addHeaderView(new View(getActivity()));
+                HttpMethod.getPayOrderList(keyList.get(index),mHandler);
+            }
+        }, 0);
     }
 
     @Override
