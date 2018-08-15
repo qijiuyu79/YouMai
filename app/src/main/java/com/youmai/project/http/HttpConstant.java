@@ -48,4 +48,6 @@ public class HttpConstant {
     public static final String ORDER_COMPLETE="/user/order/complete";
 
     public static final String ORDER_CANCLE="/user/order/cancell";
+
+    public static final String NEAR_STORE="/store/list";
 }

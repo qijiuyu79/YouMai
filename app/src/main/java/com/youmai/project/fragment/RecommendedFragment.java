@@ -123,7 +123,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
             List<GoodsBean> list=new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                  JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                GoodsBean goodsBean=new GoodsBean();
+                 GoodsBean goodsBean=new GoodsBean();
                  goodsBean.setAddress(jsonObject1.getString("address"));
                  goodsBean.setDescription(jsonObject1.getString("description"));
                  goodsBean.setId(jsonObject1.getString("id"));

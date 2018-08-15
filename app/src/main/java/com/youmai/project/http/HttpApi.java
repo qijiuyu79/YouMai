@@ -179,4 +179,14 @@ public interface HttpApi {
     @POST(HttpConstant.ORDER_CANCLE)
     Call<HttpBaseBean> setOrderCancle(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 查询附近店铺
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.NEAR_STORE)
+    Call<ResponseBody> getNearStore(@FieldMap Map<String, String> map);
+
 }
