@@ -59,7 +59,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 		}
 		myGoods=list.get(position);
 		holder.tvAddress.setText(myGoods.getAddress());
-		holder.tvTime.setText(DateUtil.getData(myGoods.getCreateTime()));
+		holder.tvTime.setText("发布："+DateUtil.getData(myGoods.getCreateTime()));
 		if(null!=myGoods){
 			if(null!=myGoods.getImgList() && myGoods.getImgList().size()>0){
 				Glide.with(context).load(myGoods.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);

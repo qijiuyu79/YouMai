@@ -1,5 +1,9 @@
 package com.youmai.project.activity.order;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,11 +11,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import com.youmai.project.R;
+import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.bean.ViewPagerCallBack;
 import com.youmai.project.fragment.order.OrderFragment;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +32,12 @@ public class OrderActivity extends FragmentActivity {
     private DisplayMetrics dm;
     //切换fragment的位置
     public static int index;
+    private ViewPager pager;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         initView();
+        setIntent();
     }
 
 
@@ -37,13 +46,24 @@ public class OrderActivity extends FragmentActivity {
      */
     private void initView(){
         dm = getResources().getDisplayMetrics();
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         pager.setOffscreenPageLimit(4);
         tabs.setViewPagerCallBack(viewPagerCallBack);
         tabs.setViewPager(pager);
         setTabsValue();
+    }
+
+
+    /**
+     * 设置跳转
+     */
+    private void setIntent(){
+        final int type=getIntent().getIntExtra("type",-1);
+        if(type!=-1){
+            pager.setCurrentItem(type);
+        }
     }
 
     /**
@@ -100,8 +120,15 @@ public class OrderActivity extends FragmentActivity {
 
     private ViewPagerCallBack viewPagerCallBack=new ViewPagerCallBack() {
         public void PageSelected(int position) {
+            LogUtils.e("position="+position);
             OrderActivity.index=position;
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        index=0;
+    }
 }
 
