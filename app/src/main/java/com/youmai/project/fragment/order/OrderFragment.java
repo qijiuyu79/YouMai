@@ -159,6 +159,14 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                         myGoods.setLatitude(jsonArray2.getDouble(k));
                     }
                 }
+                //解析用户信息
+                JSONObject jsonObject3=new JSONObject(jsonObject2.getString("seller"));
+                if(!jsonObject3.isNull("head")){
+                    myGoods.setHead(jsonObject3.getString("head"));
+                }
+                if(!jsonObject3.isNull("nickname")){
+                    myGoods.setNickname(jsonObject3.getString("nickname"));
+                }
                 list.add(myGoods);
             }
             listBeanAll.addAll(list);

@@ -2,6 +2,7 @@ package com.youmai.project.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;

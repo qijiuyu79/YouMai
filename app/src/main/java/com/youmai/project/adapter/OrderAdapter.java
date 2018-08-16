@@ -54,6 +54,7 @@ public class OrderAdapter extends BaseAdapter{
 			holder.tv_psi_des=(TextView)view.findViewById(R.id.tv_psi_des);
 			holder.tvComplete=(ClickTextView)view.findViewById(R.id.tv_oi_complete);
 			holder.tvCancle=(ClickTextView)view.findViewById(R.id.tv_oi_cancle);
+			holder.tvName=(TextView)view.findViewById(R.id.tv_psi_name);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -63,16 +64,23 @@ public class OrderAdapter extends BaseAdapter{
 			if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
 				Glide.with(context).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);
 			}
+			holder.tvName.setText(goodsBean.getNickname());
 			holder.tv_psi_des.setText(goodsBean.getDescription());
 			switch (goodsBean.getStated()){
 				case 1:
 					 holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yizhifu));
+					 holder.tvCancle.setVisibility(View.VISIBLE);
+					 holder.tvComplete.setText("交易完成");
 					 break;
 				case 2:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiwancheng));
+					holder.tvCancle.setVisibility(View.GONE);
+					holder.tvComplete.setText("评价晒单");
 					break;
 				case 4:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));
+					holder.tvCancle.setVisibility(View.GONE);
+					holder.tvComplete.setText("重新购买");
 					break;
 					default:
 						break;
@@ -108,7 +116,7 @@ public class OrderAdapter extends BaseAdapter{
 	
 	private class ViewHolder{
 		private ImageView imageView,imgType;
-		private TextView tv_psi_des;
+		private TextView tvName,tv_psi_des;
 		private ClickTextView tvComplete,tvCancle;
 	 }
 }
