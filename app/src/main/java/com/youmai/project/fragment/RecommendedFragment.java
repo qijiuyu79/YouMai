@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.MainActivity;
@@ -22,12 +21,9 @@ import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.RefreshLayout;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,29 +73,21 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         return view;
     }
 
-
-    /**
-     * 查询数据
-     */
-    private void loadData(){
-        if(isVisibleToUser && view!=null && listBeanAll.size()==0){
-            swipeLayout.postDelayed(new Runnable() {
-                public void run() {
-                    listView.addHeaderView(new View(getActivity()));
-                    HttpMethod.getLocationGoods(MainActivity.keyList.get(MainActivity.index),page,mHandler);
-                }
-            }, 0);
-        }
-    }
-
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            String message;
             switch (msg.what){
                 case HandlerConstant.GET_LOCATION_GOODS_SUCCESS:
-                     final String message= (String) msg.obj;
+                     message= (String) msg.obj;
+                     listBeanAll.clear();
                      refresh(message);
                      swipeLayout.setRefreshing(false);
+                     break;
+                case HandlerConstant.GET_LOCATION_GOODS_SUCCESS2:
+                     message= (String) msg.obj;
+                     refresh(message);
+                     swipeLayout.setLoading(false);
                      break;
                 case HandlerConstant.REQUST_ERROR:
                      showMsg(getString(R.string.http_error));
@@ -181,7 +169,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                 page=1;
                 isTotal=false;
                 swipeLayout.setFooter(isTotal);
-                loadData();
+                getDataList(HandlerConstant.GET_LOCATION_GOODS_SUCCESS);
             }
         }, 200);
     }
@@ -195,10 +183,34 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         swipeLayout.postDelayed(new Runnable() {
             public void run() {
                 page++;
-                loadData();
+                getDataList(HandlerConstant.GET_LOCATION_GOODS_SUCCESS2);
             }
         }, 200);
 
+    }
+
+
+    /**
+     * 查询数据
+     */
+    private void loadData(){
+        if(isVisibleToUser && view!=null && listBeanAll.size()==0){
+            swipeLayout.postDelayed(new Runnable() {
+                public void run() {
+                    listView.addHeaderView(new View(getActivity()));
+                    getDataList(HandlerConstant.GET_LOCATION_GOODS_SUCCESS);
+                }
+            }, 0);
+        }
+    }
+
+
+    /**
+     * 查询商品列表
+     * @param index
+     */
+    private void getDataList(int index){
+        HttpMethod.getLocationGoods(MainActivity.keyList.get(MainActivity.index),page,index,mHandler);
     }
 
 

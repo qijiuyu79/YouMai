@@ -1,9 +1,5 @@
 package com.youmai.project.activity.order;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,18 +7,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import com.youmai.project.R;
-import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.bean.ViewPagerCallBack;
 import com.youmai.project.fragment.order.OrderFragment;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.PagerSlidingTabStrip;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 我的订单
  */
@@ -120,7 +111,6 @@ public class OrderActivity extends FragmentActivity {
 
     private ViewPagerCallBack viewPagerCallBack=new ViewPagerCallBack() {
         public void PageSelected(int position) {
-            LogUtils.e("position="+position);
             OrderActivity.index=position;
         }
     };

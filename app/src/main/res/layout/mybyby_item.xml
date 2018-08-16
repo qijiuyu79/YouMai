@@ -7,7 +7,7 @@
         <ImageView
             android:layout_width="14dp"
             android:layout_height="17dp"
-            android:src="@mipmap/location_icon"
+            android:src="@mipmap/black_location"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="13dp"/>
 

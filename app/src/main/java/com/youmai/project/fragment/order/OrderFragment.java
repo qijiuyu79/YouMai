@@ -249,7 +249,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
                     listView.addHeaderView(new View(getActivity()));
-                    LogUtils.e(OrderActivity.index+"+++++++++++++++");
                     HttpMethod.getPayOrderList(keyList.get(OrderActivity.index),mHandler);
                 }
             }, 0);

@@ -108,7 +108,7 @@ public class HttpMethod extends BaseRequst {
      * @param type
      * @param handler
      */
-    public static void getLocationGoods(String type,int page,final Handler handler) {
+    public static void getLocationGoods(String type, int page, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("type",type);
         map.put("min_distance","0");
@@ -118,7 +118,7 @@ public class HttpMethod extends BaseRequst {
         Http.getRetrofit().create(HttpApi.class).getLocationGoods(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.GET_LOCATION_GOODS_SUCCESS, response.body().string());
+                    sendMessage(handler, index, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);

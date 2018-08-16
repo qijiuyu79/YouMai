@@ -29,4 +29,5 @@ public class HandlerConstant {
     public static final int SET_ORDER_CANCLE_SUCCESS=1130;
     public static final int GET_NEAR_STORE_SUCCESS=11311;
     public static final int GET_GOOD_BYID_SUCCESS=11312;
+    public static final int GET_LOCATION_GOODS_SUCCESS2=11313;
 }
