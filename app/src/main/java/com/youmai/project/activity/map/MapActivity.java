@@ -81,6 +81,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         // 根据经纬度搜索
         mSearch = GeoCoder.newInstance();
         mSearch.setOnGetGeoCodeResultListener(this);
+        mBaiduMap.setOnMarkerClickListener(this);
         // 注册触摸事件
         mBaiduMap.setOnMapStatusChangeListener(new Maptouch());
         //去除百度logo
@@ -132,6 +133,9 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                      //解析数据并设置mark
                      setMark(msg.obj.toString());
                      break;
+                //根据店铺id查询店铺信息
+                case HandlerConstant.GET_GOOD_BYID_SUCCESS:
+                     break;
                  default:
                      break;
             }
@@ -169,6 +173,12 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     public boolean onMarkerClick(Marker marker) {
         if (null != marker) {
             final int index = marker.getZIndex();
+            final Store store=list.get(index);
+            if(null==store){
+                return false;
+            }
+            showProgress("店铺查询中...",true);
+            HttpMethod.getGoodById(store.getId(),mHandler);
         }
         return true;
     }

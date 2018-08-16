@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.utils.DateUtil;
 import com.youmai.project.utils.Util;
 
 import java.util.List;
@@ -48,29 +49,28 @@ public class MyGoodsAdapter extends BaseAdapter{
 		if(view==null){
 			holder = new ViewHolder(); 
 			view = LayoutInflater.from(context).inflate(R.layout.mybyby_item, null);
+			holder.tvAddress=(TextView)view.findViewById(R.id.tv_mi_address);
 			holder.imageView=(ImageView)view.findViewById(R.id.img_mi_icon);
 			holder.tvDes=(TextView)view.findViewById(R.id.tv_mi_des);
-			holder.tvNewMoney=(TextView)view.findViewById(R.id.tv_mi_newMoney);
-			holder.tvOldMoney=(TextView)view.findViewById(R.id.tv_mi_oldMoney);
+			holder.tvTime=(TextView)view.findViewById(R.id.tv_mi_creatTime);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
 		myGoods=list.get(position);
+		holder.tvAddress.setText(myGoods.getAddress());
+		holder.tvTime.setText(DateUtil.getData(myGoods.getCreateTime()));
 		if(null!=myGoods){
 			if(null!=myGoods.getImgList() && myGoods.getImgList().size()>0){
 				Glide.with(context).load(myGoods.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);
-				holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			}
 			holder.tvDes.setText(myGoods.getDescription());
-			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(myGoods.getPresentPrice()/100));
-			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(myGoods.getOriginalPrice()/100));
 		}
 		return view;
 	}
 	
 	private class ViewHolder{
 		private ImageView imageView;
-		private TextView tvDes,tvNewMoney,tvOldMoney;
+		private TextView tvAddress,tvDes,tvTime;
 	 }
 }

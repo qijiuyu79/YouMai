@@ -257,7 +257,7 @@
            android:layout_alignParentRight="true"
            android:layout_marginRight="20dp"
            android:layout_centerVertical="true"
-           android:src="@mipmap/next_icon"/>
+           android:src="@mipmap/right_next"/>
 
     </RelativeLayout>
 

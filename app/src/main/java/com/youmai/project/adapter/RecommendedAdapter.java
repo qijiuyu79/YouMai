@@ -15,8 +15,10 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.user.LoginActivity;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
+import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.ClickTextView;
 
 import java.util.List;
@@ -59,6 +61,8 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvNewMoney=(TextView)view.findViewById(R.id.tv_ri_newMoney);
 			holder.imgIcon=(ImageView)view.findViewById(R.id.img_ri_icon);
 			holder.tvBuy=(ClickTextView)view.findViewById(R.id.tv_ri_buy);
+			holder.circleImageView=(CircleImageView)view.findViewById(R.id.img_ri_pic);
+			holder.tvNickName=(TextView)view.findViewById(R.id.tv_ri_name);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -73,6 +77,8 @@ public class RecommendedAdapter extends BaseAdapter{
 			if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
 				Glide.with(context).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imgIcon);
 			}
+			Glide.with(context).load(goodsBean.getHead()).error(R.mipmap.icon).into(holder.circleImageView);
+			holder.tvNickName.setText(goodsBean.getNickname());
 			holder.tvBuy.setTag(goodsBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -98,8 +104,9 @@ public class RecommendedAdapter extends BaseAdapter{
 	}
 	
 	private class ViewHolder{
-		private TextView tvContext,tvLocation,tvNewMoney,tvOldMoney;
+		private TextView tvContext,tvLocation,tvNewMoney,tvOldMoney,tvNickName;
 		private ClickTextView tvBuy;
 		private ImageView imgIcon;
+		private CircleImageView circleImageView;
 	 }
 }

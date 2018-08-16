@@ -1,48 +1,210 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="18dp"
+        android:src="@mipmap/dianpu_icon"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView android:id="@+id/tv_ac_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="10dp"
+        android:text="漫步生活馆"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/color_707070"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/tv_ac_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="13dp">
+
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="14dp"
+            android:src="@mipmap/xing_icon"/>
+
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="8dp"
+            android:src="@mipmap/xing_icon"/>
+
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="8dp"
+            android:src="@mipmap/xing_icon"/>
+
+    </LinearLayout>
+
+    <com.youmai.project.view.ClickTextView
+        android:id="@+id/tv_ac_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加宝贝"
+        android:textColor="@color/color_FF4081"
+        android:textSize="15sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:id="@+id/view_ac1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tv_ac_add"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_b6b6b6"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_ac1"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="13dp"
+        android:text="卖家宝贝"
+        android:textSize="14sp"
+        android:textColor="@color/color_707070"/>
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="13dp"
+        android:src="@mipmap/right_next"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/view_ac1"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="13dp"/>
+
+    <TextView
+        android:id="@+id/tv_ac_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_ac1"
+        android:layout_marginRight="31dp"
+        android:layout_marginTop="13dp"
+        android:text="全部订单"
+        android:textSize="14sp"
+        android:textColor="@color/color_707070"
+        android:layout_alignParentRight="true"/>
+
+    <View
+        android:id="@+id/view_ac2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tv_ac_order"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_b6b6b6"/>
+
+    <LinearLayout
+        android:id="@+id/lin_ac"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/view_ac2"
+        android:layout_marginTop="20dp">
+
+        <com.youmai.project.view.ClickLinearLayout
+            android:id="@+id/lin_ac_jiaoyi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:src="@mipmap/dai_jiaoyi"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="待交易"
+                android:textColor="@color/color_777777"
+                android:textSize="15sp"
+                android:layout_marginTop="23dp"
+                android:gravity="center"/>
+
+        </com.youmai.project.view.ClickLinearLayout>
+
+        <com.youmai.project.view.ClickLinearLayout
+            android:id="@+id/lin_ac_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:src="@mipmap/yi_wancheng"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="已完成"
+                android:textColor="@color/color_777777"
+                android:textSize="15sp"
+                android:layout_marginTop="23dp"
+                android:gravity="center"/>
+
+        </com.youmai.project.view.ClickLinearLayout>
+
+        <com.youmai.project.view.ClickLinearLayout
+            android:id="@+id/lin_ac_cancle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:src="@mipmap/yi_quxiao"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="已取消"
+                android:textColor="@color/color_777777"
+                android:textSize="15sp"
+                android:layout_marginTop="23dp"
+                android:gravity="center"/>
+
+        </com.youmai.project.view.ClickLinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_ac3"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/lin_ac"
+        android:background="@color/color_F5F5F5"
+        android:layout_marginTop="15dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@android:color/white">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_ac3">
 
-        <LinearLayout android:id="@+id/lin_ac_add"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_alignParentRight="true">
-
-            <ImageView android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@mipmap/add_icon"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"/>
-
-        </LinearLayout>
-
-        <com.youmai.project.view.PagerSlidingTabStrip
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:background="@android:color/white"
-            android:layout_toLeftOf="@id/lin_ac_add"/>
+        <include layout="@layout/listview"/>
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_ececec"/>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</RelativeLayout>

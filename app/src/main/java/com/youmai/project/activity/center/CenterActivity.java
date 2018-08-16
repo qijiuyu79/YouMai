@@ -1,105 +1,196 @@
 package com.youmai.project.activity.center;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
-
+import android.widget.ListView;
 import com.youmai.project.R;
+import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.adapter.MyGoodsAdapter;
 import com.youmai.project.bean.GoodsBean;
-import com.youmai.project.fragment.BuyerSpeakFragment;
-import com.youmai.project.fragment.MyGoodsFragment;
-import com.youmai.project.view.PagerSlidingTabStrip;
+import com.youmai.project.http.HandlerConstant;
+import com.youmai.project.http.HttpMethod;
+import com.youmai.project.view.RefreshLayout;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CenterActivity extends FragmentActivity {
+/**
+ * 添加tag页面
+ */
+public class CenterActivity extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
-    private MyGoodsFragment myGoodsFragment;
-    private BuyerSpeakFragment buyerSpeakFragment;
-    private PagerSlidingTabStrip tabs;
-    private DisplayMetrics dm;
+    private RefreshLayout swipeLayout;
+    private ListView listView;
+    private MyGoodsAdapter myGoodsAdapter;
+    private List<GoodsBean> listAll=new ArrayList<>();
+    private int page=1;
+    private boolean isTotal=false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center);
-        dm = getResources().getDisplayMetrics();
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-        tabs.setViewPager(pager);
-        setTabsValue();
+        initView();
     }
+
 
     /**
-     * 对PagerSlidingTabStrip的各项属性进行赋值。
+     * 初始化控件
      */
-    private void setTabsValue() {
-        // 设置Tab是自动填充满屏幕的
-        tabs.setShouldExpand(true);
-        // 设置Tab的分割线是透明的
-        tabs.setDividerColor(Color.TRANSPARENT);
-        // 设置Tab底部线的高度
-        tabs.setUnderlineHeight((int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 1, dm));
-        // 设置Tab Indicator的高度
-        tabs.setIndicatorHeight((int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 2, dm));
-        // 设置Tab标题文字的大小
-        tabs.setTextSize((int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_SP, 14, dm));
-        // 设置Tab Indicator的颜色
-        tabs.setIndicatorColorResource(R.color.color_FF4081);
-        // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        tabs.setTextColorResource(R.color.color_525252);
-        tabs.setSelectedTextColorResource(R.color.color_FF4081);
-        // 取消点击Tab时的背景色
-        tabs.setTabBackground(0);
-
-        findViewById(R.id.lin_ac_add).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent=new Intent(CenterActivity.this,AddShopActivity.class);
-                startActivityForResult(intent,1);
+    private void initView(){
+        swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
+        listView=(ListView)findViewById(R.id.list);
+        listView.setDividerHeight(0);
+        swipeLayout.setColorSchemeResources(R.color.color_bule2,
+                R.color.color_bule,
+                R.color.color_bule2,
+                R.color.color_bule3);
+        swipeLayout.setOnRefreshListener(CenterActivity.this);
+        swipeLayout.setOnLoadListener(CenterActivity.this);
+        swipeLayout.post(new Thread(new Runnable() {
+            public void run() {
+                swipeLayout.setRefreshing(true);
             }
-        });
+        }));
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                listView.addHeaderView(new View(CenterActivity.this));
+                getMyGoodsList();
+            }
+        }, 0);
+        findViewById(R.id.tv_ac_add).setOnClickListener(this);
+        findViewById(R.id.tv_ac_order).setOnClickListener(this);
+        findViewById(R.id.lin_ac_jiaoyi).setOnClickListener(this);
+        findViewById(R.id.lin_ac_complete).setOnClickListener(this);
+        findViewById(R.id.lin_ac_cancle).setOnClickListener(this);
     }
 
-    public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            //添加宝贝
+            case R.id.tv_ac_add:
+                 Intent intent=new Intent(CenterActivity.this,AddShopActivity.class);
+                 startActivityForResult(intent,1);
+                 break;
+            //全部订单
+            case R.id.tv_ac_order:
+                 break;
+            //待交易
+            case R.id.lin_ac_jiaoyi:
+                 break;
+             //已完成
+            case R.id.lin_ac_complete:
+                 break;
+             //已取消
+            case R.id.lin_ac_cancle:
+                 break;
+                 default:
+                     break;
         }
 
-        private final String[] titles = { "我的宝贝","买家留言"};
+    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles[position];
-        }
 
-        @Override
-        public int getCount() {
-            return titles.length;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            if(position==0){
-                if(myGoodsFragment==null){
-                    myGoodsFragment=new MyGoodsFragment();
-                }
-                return myGoodsFragment;
-            }else{
-                if(buyerSpeakFragment==null){
-                    buyerSpeakFragment=new BuyerSpeakFragment();
-                }
-                return buyerSpeakFragment;
+    private Handler mHandler=new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case HandlerConstant.GET_MYGOODS_SUCCESS:
+                    final String message= (String) msg.obj;
+                    refresh(message);
+                    swipeLayout.setRefreshing(false);
+                    break;
+                case HandlerConstant.REQUST_ERROR:
+                    showMsg(getString(R.string.http_error));
+                    break ;
+                default:
+                    break;
             }
         }
+    };
+
+
+    /**
+     * 解析并刷新数据
+     */
+    private void refresh(String message){
+        if(TextUtils.isEmpty(message)){
+            return;
+        }
+        try {
+            JSONObject jsonObject=new JSONObject(message);
+            JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
+            List<GoodsBean> list=new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                GoodsBean myGoods=new GoodsBean();
+                JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                myGoods.setAddress(jsonObject1.getString("address"));
+                myGoods.setCreateTime(jsonObject1.getLong("createTime"));
+                myGoods.setDescription(jsonObject1.getString("description"));
+                myGoods.setId(jsonObject1.getString("id"));
+                myGoods.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
+                myGoods.setPresentPrice(jsonObject1.getDouble("presentPrice"));
+
+                //解析图片
+                List<String> imgList=new ArrayList<>();
+                JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
+                for (int j = 0; j < jsonArray1.length(); j++) {
+                    imgList.add(jsonArray1.getString(j));
+                }
+                myGoods.setImgList(imgList);
+
+                //解析经纬度
+                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
+                if(null==jsonObject2){
+                    return;
+                }
+                JSONArray jsonArray2=new JSONArray(jsonObject2.getString("coordinates"));
+                for (int k = 0; k < jsonArray2.length(); k++) {
+                    if(k==0){
+                        myGoods.setLongitude(jsonArray2.getDouble(k));
+                    }else{
+                        myGoods.setLatitude(jsonArray2.getDouble(k));
+                    }
+                }
+                list.add(myGoods);
+            }
+            listAll.addAll(list);
+            if(null==myGoodsAdapter){
+                myGoodsAdapter=new MyGoodsAdapter(CenterActivity.this,listAll);
+                listView.setAdapter(myGoodsAdapter);
+            }else{
+                myGoodsAdapter.notifyDataSetChanged();
+            }
+            if(list.size()<10){
+                isTotal=true;
+                swipeLayout.setFooter(isTotal);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 获取我的商品
+     */
+    private void getMyGoodsList(){
+        HttpMethod.getMyGoodsList(mHandler);
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoad() {
 
     }
 
@@ -113,15 +204,21 @@ public class CenterActivity extends FragmentActivity {
         switch (requestCode){
             //添加商品后的返回
             case 1:
-                 Bundle bundle=data.getExtras();
-                 if(bundle==null){
-                     return;
-                 }
-                 GoodsBean myGoods= (GoodsBean) bundle.getSerializable("myGoods");
-                 if(null!=myGoods){
-                     myGoodsFragment.addGoods(myGoods);
-                 }
-                 break;
+                Bundle bundle=data.getExtras();
+                if(bundle==null){
+                    return;
+                }
+                GoodsBean myGoods= (GoodsBean) bundle.getSerializable("myGoods");
+                if(null!=myGoods){
+                    listAll.add(0,myGoods);
+                    if(null==myGoodsAdapter){
+                        myGoodsAdapter=new MyGoodsAdapter(CenterActivity.this,listAll);
+                        listView.setAdapter(myGoodsAdapter);
+                    }else{
+                        myGoodsAdapter.notifyDataSetChanged();
+                    }
+                }
+                break;
             default:
                 break;
         }

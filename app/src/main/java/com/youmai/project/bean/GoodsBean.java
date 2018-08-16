@@ -11,6 +11,7 @@ import java.util.List;
 public class GoodsBean implements Serializable {
 
     private String address;
+    private long createTime;
     private String description;
     private String id;
     private List<String> imgList;
@@ -20,6 +21,8 @@ public class GoodsBean implements Serializable {
     private double presentPrice;
     private String orderId;
     private int stated;
+    private String head;
+    private String nickname;
 
     public String getAddress() {
         return address;
@@ -99,5 +102,29 @@ public class GoodsBean implements Serializable {
 
     public void setStated(int stated) {
         this.stated = stated;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }

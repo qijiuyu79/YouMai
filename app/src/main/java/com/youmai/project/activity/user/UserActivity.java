@@ -243,7 +243,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
             String action = intent.getAction();
             if (action.equals(UPDATE_USER_INFO)) {
                 //更新用户信息
-                Glide.with(mContext).load(MyApplication.userInfoBean.getHead()).error(R.mipmap.ic_pic_icon).into(imgUserPic);
+                Glide.with(mContext).load(MyApplication.userInfoBean.getHead()).error(R.mipmap.icon).into(imgUserPic);
                 tvNickName.setText(MyApplication.userInfoBean.getNickname());
                 tvBalance.setText("¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100));
                 tvIngetral.setText(MyApplication.userInfoBean.getIntegral()+"");

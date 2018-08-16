@@ -1,64 +1,104 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:paddingBottom="10dp"
-        android:background="@android:color/white">
-
-       <ImageView android:id="@+id/img_mi_icon"
-           android:layout_width="120dp"
-           android:layout_height="180dp"
-           android:layout_marginLeft="12dp"
-           android:layout_marginTop="7dp"/>
-
-        <TextView android:id="@+id/tv_mi_des"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_mi_icon"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="13dp"
-            android:textColor="@color/color_333333"
-            android:textSize="13sp"/>
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
         <ImageView
+            android:layout_width="14dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/location_icon"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="13dp"/>
+
+        <TextView
+            android:id="@+id/tv_mi_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="北京市昌平区"
+            android:textSize="14sp"
+            android:textColor="@color/color_707070"
+            android:layout_marginLeft="39dp"
+            android:layout_marginTop="13dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@mipmap/share_icon"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            android:src="@mipmap/zhifu_type_icon"/>
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="13dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_toRightOf="@id/img_mi_icon"
-            android:layout_marginLeft="13dp"
-            android:layout_alignParentBottom="true">
+        <RelativeLayout
+            android:id="@+id/rel_mi"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@color/color_f8f8f8"
+            android:layout_below="@id/tv_mi_address"
+            android:layout_marginTop="13dp"
+            android:padding="15dp">
 
-            <TextView android:id="@+id/tv_mi_newMoney"
+            <ImageView android:id="@+id/img_mi_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <TextView android:id="@+id/tv_mi_des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="现价：￥100.00"
+                android:layout_toRightOf="@id/img_mi_icon"
+                android:layout_marginLeft="13dp"
+                android:textColor="@color/color_020202"
                 android:textSize="13sp"
-                android:textColor="@color/color_E51C23"/>
+                android:maxLines="3"
+                android:lineSpacingExtra="0.5dp"
+                android:lineSpacingMultiplier="1.5"/>
 
-            <TextView android:id="@+id/tv_mi_oldMoney"
+            <TextView
+                android:id="@+id/tv_mi_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="原价：￥120.00"
-                android:textSize="11sp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_toRightOf="@id/img_mi_icon"
+                android:layout_alignBottom="@id/img_mi_icon"
+                android:layout_marginLeft="13dp"
+                android:textSize="15sp"
+                android:textColor="@color/color_FF4081"/>
 
-        </LinearLayout>
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_mi2"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/rel_mi">
+
+        <TextView
+            android:id="@+id/tv_mi_creatTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:textColor="@color/color_747872"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"/>
+
+        <com.youmai.project.view.ClickTextView
+            android:id="@+id/tv_mi_delete"
+            android:layout_width="65dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:text="删除"
+            android:textColor="@color/color_FF4081"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:background="@drawable/bg_recommended_buy"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp" />
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/rel_mi2"
+        android:background="@color/color_F5F5F5"/>
 
 </RelativeLayout>

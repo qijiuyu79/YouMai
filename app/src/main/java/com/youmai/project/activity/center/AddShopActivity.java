@@ -243,6 +243,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                              final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
                              GoodsBean myGoods=new GoodsBean();
                              myGoods.setAddress(jsonObject1.getString("address"));
+                             myGoods.setCreateTime(jsonObject1.getLong("createTime"));
                              myGoods.setDescription(jsonObject1.getString("description"));
                              myGoods.setId(jsonObject1.getString("id"));
                              myGoods.setOriginalPrice(jsonObject1.getDouble("originalPrice"));

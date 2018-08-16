@@ -147,6 +147,15 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                          goodsBean.setLatitude(jsonArray2.getDouble(k));
                      }
                 }
+
+                //解析用户信息
+                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("seller"));
+                if(!jsonObject2.isNull("head")){
+                    goodsBean.setHead(jsonObject2.getString("head"));
+                }
+                if(!jsonObject2.isNull("nickname")){
+                    goodsBean.setNickname(jsonObject2.getString("nickname"));
+                }
                 list.add(goodsBean);
             }
             listBeanAll.addAll(list);

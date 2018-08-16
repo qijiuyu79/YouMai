@@ -38,6 +38,8 @@
     <color name="color_f8f8f8">#f8f8f8</color>
     <color name="color_01c12d">#01c12d</color>
     <color name="color_010101">#010101</color>
+    <color name="color_b6b6b6">#b6b6b6</color>
+    <color name="color_747872">#747872</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
 </resources>
