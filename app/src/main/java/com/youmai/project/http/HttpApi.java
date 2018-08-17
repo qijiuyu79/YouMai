@@ -189,4 +189,14 @@ public interface HttpApi {
     @POST(HttpConstant.NEAR_STORE)
     Call<ResponseBody> getNearStore(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 删除宝贝
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_BABY)
+    Call<HttpBaseBean> deleteBaby(@FieldMap Map<String, String> map);
+
 }

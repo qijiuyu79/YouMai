@@ -12,9 +12,12 @@ import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.MyGoodsAdapter;
+import com.youmai.project.bean.DeleteBabyCallBack;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,6 +35,9 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
     private List<GoodsBean> listAll=new ArrayList<>();
     private int page=1;
     private boolean isTotal=false;
+    //宝贝id
+    private String goodsId;
+    private DialogView dialogView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center);
@@ -114,6 +120,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            clearTask();
             String message;
             switch (msg.what){
                 case HandlerConstant.GET_MYGOODS_SUCCESS:
@@ -127,6 +134,23 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                     refresh(message);
                     swipeLayout.setLoading(false);
                     break;
+                 //删除宝贝
+                case HandlerConstant.DELETE_BABY_SUCCESS:
+                     HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                     if(null==httpBaseBean){
+                         return;
+                     }
+                     if(httpBaseBean.isSussess()){
+                         for(int i=0;i<listAll.size();i++){
+                             if(listAll.get(i).getId().equals(goodsId)){
+                                 listAll.remove(i);
+                                 myGoodsAdapter.notifyDataSetChanged();
+                                 break;
+                             }
+                         }
+                         showMsg("删除成功！");
+                     }
+                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     break ;
@@ -188,6 +212,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
             }else{
                 myGoodsAdapter.notifyDataSetChanged();
             }
+            myGoodsAdapter.setCallBack(deleteBabyCallBack);
             if(list.size()<20){
                 isTotal=true;
                 swipeLayout.setFooter(isTotal);
@@ -197,6 +222,28 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+
+    DeleteBabyCallBack deleteBabyCallBack=new DeleteBabyCallBack() {
+        /**
+         * 删除我的宝贝回调
+         * @param goodsId
+         */
+        public void deleteBaby(final String goodsId) {
+            if(TextUtils.isEmpty(goodsId)){
+                return;
+            }
+            CenterActivity.this.goodsId=goodsId;
+            dialogView = new DialogView(dialogView,mContext, "确定删除宝贝吗？",
+                    "确定", "取消", new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialogView.dismiss();
+                    showProgress("删除中...",true);
+                    HttpMethod.deleteBaby(goodsId,mHandler);
+                }
+            }, null);
+            dialogView.show();
+        }
+    };
 
     /**
      * 获取我的商品

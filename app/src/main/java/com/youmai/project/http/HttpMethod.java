@@ -565,4 +565,29 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 删除宝贝
+     * @param goodsId
+     * @param handler
+     */
+    public static void deleteBaby(String goodsId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("goodsId",goodsId);
+        Http.getRetrofit().create(HttpApi.class).deleteBaby(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.DELETE_BABY_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }
