@@ -414,15 +414,17 @@ public class HttpMethod extends BaseRequst {
      * 查询已支付订单
      * @param handler
      */
-    public static void getPayOrderList(String stated,final Handler handler) {
+    public static void getPayOrderList(String stated, int page, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         if(null!=stated){
             map.put("stated",stated);
         }
+        map.put("page",page+"");
+        map.put("row","20");
         Http.getRetrofit().create(HttpApi.class).getPayOrderList(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.GET_PAY_ORDER_SUCCESS, response.body().string());
+                    sendMessage(handler, index, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);

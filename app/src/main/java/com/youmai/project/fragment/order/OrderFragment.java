@@ -44,6 +44,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private boolean isVisibleToUser=false;
     //订单ID
     private String orderId;
+    //页码
+    private int page=1;
     private DialogView dialogView;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,11 +87,18 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
+            String message;
             switch (msg.what){
                 case HandlerConstant.GET_PAY_ORDER_SUCCESS:
-                    final String message= (String) msg.obj;
+                    message= (String) msg.obj;
+                    listBeanAll.clear();
                     refresh(message);
                     swipeLayout.setRefreshing(false);
+                    break;
+                case HandlerConstant.GET_PAY_ORDER_SUCCESS2:
+                    message= (String) msg.obj;
+                    refresh(message);
+                    swipeLayout.setLoading(false);
                     break;
                  //交易完成
                  case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
@@ -240,11 +249,28 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page=1;
+                isTotal=false;
+                swipeLayout.setFooter(isTotal);
+                getData(HandlerConstant.GET_PAY_ORDER_SUCCESS);
+            }
+        }, 200);
     }
 
     @Override
     public void onLoad() {
+        if(isTotal){
+            swipeLayout.setLoading(false);
+            return;
+        }
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page++;
+                getData(HandlerConstant.GET_PAY_ORDER_SUCCESS2);
+            }
+        }, 200);
 
     }
 
@@ -257,10 +283,15 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
                     listView.addHeaderView(new View(getActivity()));
-                    HttpMethod.getPayOrderList(keyList.get(OrderActivity.index),mHandler);
+                    getData(HandlerConstant.GET_PAY_ORDER_SUCCESS);
+
                 }
             }, 0);
         }
+    }
+
+    private void getData(int index){
+        HttpMethod.getPayOrderList(keyList.get(OrderActivity.index),page,index,mHandler);
     }
 
     @Override
