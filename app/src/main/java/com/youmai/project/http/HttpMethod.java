@@ -196,12 +196,14 @@ public class HttpMethod extends BaseRequst {
      * 获取我的商品
      * @param handler
      */
-    public static void getMyGoodsList(final Handler handler) {
+    public static void getMyGoodsList(int page,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
+        map.put("page",page+"");
+        map.put("row","20");
         Http.getRetrofit().create(HttpApi.class).getMyGoodsList(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.GET_MYGOODS_SUCCESS, response.body().string());
+                    sendMessage(handler, index, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);

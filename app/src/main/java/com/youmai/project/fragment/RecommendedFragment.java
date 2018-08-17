@@ -120,11 +120,13 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                  List<String> imgList=new ArrayList<>();
 
                 //解析图片
-                final JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
-                for (int j = 0; j < jsonArray1.length(); j++) {
-                     imgList.add(jsonArray1.getString(j));
+                if(!jsonObject1.isNull("images")){
+                    final JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
+                    for (int j = 0; j < jsonArray1.length(); j++) {
+                        imgList.add(jsonArray1.getString(j));
+                    }
+                    goodsBean.setImgList(imgList);
                 }
-                goodsBean.setImgList(imgList);
 
                 //解析经纬度
                 final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));

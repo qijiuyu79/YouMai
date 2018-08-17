@@ -60,7 +60,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         swipeLayout.postDelayed(new Runnable() {
             public void run() {
                 listView.addHeaderView(new View(CenterActivity.this));
-                getMyGoodsList();
+                getMyGoodsList(HandlerConstant.GET_MYGOODS_SUCCESS);
             }
         }, 0);
         findViewById(R.id.tv_ac_add).setOnClickListener(this);
@@ -114,11 +114,18 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            String message;
             switch (msg.what){
                 case HandlerConstant.GET_MYGOODS_SUCCESS:
-                    final String message= (String) msg.obj;
+                    message= (String) msg.obj;
+                    listAll.clear();
                     refresh(message);
                     swipeLayout.setRefreshing(false);
+                    break;
+                case HandlerConstant.GET_MYGOODS_SUCCESS2:
+                    message= (String) msg.obj;
+                    refresh(message);
+                    swipeLayout.setLoading(false);
                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
@@ -181,7 +188,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
             }else{
                 myGoodsAdapter.notifyDataSetChanged();
             }
-            if(list.size()<10){
+            if(list.size()<20){
                 isTotal=true;
                 swipeLayout.setFooter(isTotal);
             }
@@ -194,17 +201,34 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
     /**
      * 获取我的商品
      */
-    private void getMyGoodsList(){
-        HttpMethod.getMyGoodsList(mHandler);
+    private void getMyGoodsList(int index){
+        HttpMethod.getMyGoodsList(page,index,mHandler);
     }
 
     @Override
     public void onRefresh() {
-
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page=1;
+                isTotal=false;
+                swipeLayout.setFooter(isTotal);
+                getMyGoodsList(HandlerConstant.GET_MYGOODS_SUCCESS);
+            }
+        }, 200);
     }
 
     @Override
     public void onLoad() {
+        if(isTotal){
+            swipeLayout.setLoading(false);
+            return;
+        }
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page++;
+                getMyGoodsList(HandlerConstant.GET_MYGOODS_SUCCESS2);
+            }
+        }, 200);
 
     }
 

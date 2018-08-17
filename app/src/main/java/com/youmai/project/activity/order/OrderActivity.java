@@ -53,6 +53,7 @@ public class OrderActivity extends FragmentActivity {
     private void setIntent(){
         final int type=getIntent().getIntExtra("type",-1);
         if(type!=-1){
+            index=type;
             pager.setCurrentItem(type);
         }
     }
@@ -115,10 +116,5 @@ public class OrderActivity extends FragmentActivity {
         }
     };
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        index=0;
-    }
 }
 
