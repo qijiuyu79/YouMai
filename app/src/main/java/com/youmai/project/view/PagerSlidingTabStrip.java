@@ -40,8 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.youmai.project.R;
-import com.youmai.project.bean.ViewPagerCallBack;
-import com.youmai.project.utils.LogUtils;
+import com.youmai.project.callback.ViewPagerCallBack;
 
 import java.util.Locale;
 

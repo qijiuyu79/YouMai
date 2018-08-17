@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.bean.GoodsBean;
-import com.youmai.project.bean.TradingPlay;
+import com.youmai.project.callback.TradingPlay;
 import com.youmai.project.view.ClickTextView;
 
 import java.util.List;

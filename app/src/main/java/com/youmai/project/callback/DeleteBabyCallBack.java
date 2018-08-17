@@ -1,4 +1,4 @@
-package com.youmai.project.bean;
+package com.youmai.project.callback;
 
 /**
  * 删除宝贝的回调函数

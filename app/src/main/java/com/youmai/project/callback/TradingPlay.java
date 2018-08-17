@@ -1,4 +1,4 @@
-package com.youmai.project.bean;
+package com.youmai.project.callback;
 
 /**
  * 交易操作的回调

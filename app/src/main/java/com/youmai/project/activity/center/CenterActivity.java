@@ -12,7 +12,7 @@ import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.MyGoodsAdapter;
-import com.youmai.project.bean.DeleteBabyCallBack;
+import com.youmai.project.callback.DeleteBabyCallBack;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;

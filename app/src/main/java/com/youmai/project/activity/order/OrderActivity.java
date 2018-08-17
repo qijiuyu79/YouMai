@@ -10,9 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import com.youmai.project.R;
-import com.youmai.project.bean.ViewPagerCallBack;
+import com.youmai.project.callback.ViewPagerCallBack;
 import com.youmai.project.fragment.order.OrderFragment;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.PagerSlidingTabStrip;
 /**
  * 我的订单

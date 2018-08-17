@@ -1,7 +1,6 @@
 package com.youmai.project.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
-import com.youmai.project.bean.DeleteBabyCallBack;
+import com.youmai.project.callback.DeleteBabyCallBack;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.DateUtil;
-import com.youmai.project.utils.Util;
 
 import java.util.List;
 

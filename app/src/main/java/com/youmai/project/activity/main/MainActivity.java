@@ -17,7 +17,7 @@ import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.bean.Login;
-import com.youmai.project.bean.ViewPagerCallBack;
+import com.youmai.project.callback.ViewPagerCallBack;
 import com.youmai.project.fragment.RecommendedFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
