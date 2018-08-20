@@ -1,0 +1,168 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <RelativeLayout android:id="@+id/rel_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
+
+        <LinearLayout android:id="@+id/lin_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="30dp"
+            android:layout_marginLeft="10dp">
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/ic_black_back"/>
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="宝贝详情"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/dianpu_icon"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="11dp"/>
+
+            <TextView
+                android:id="@+id/tv_agd_nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/color_707070"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="41dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_toRightOf="@id/tv_agd_nickName"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="13dp">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/xing_icon"/>
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/xing_icon"/>
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/xing_icon"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_agd"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dbd8d8"
+                android:layout_below="@id/tv_agd_nickName"
+                android:layout_marginTop="10dp"/>
+            
+            <ImageView
+                android:id="@+id/img_agd_img"
+                android:layout_width="375dp"
+                android:layout_height="283dp"
+                android:layout_below="@id/view_agd"
+                android:layout_marginTop="10dp"/>
+            
+            <TextView
+                android:id="@+id/tv_agd_count"
+                android:layout_width="43dp"
+                android:layout_height="21dp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_below="@id/view_agd"
+                android:layout_marginTop="250dp"
+                android:background="@drawable/bg_img_count"/>
+
+            <View
+                android:id="@+id/view_agd2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dbd8d8"
+                android:layout_below="@id/img_agd_img"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_agd_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_010101"
+                android:textSize="14sp"
+                android:layout_margin="10dp"
+                android:layout_below="@id/view_agd2"/>
+
+            <TextView
+                android:id="@+id/tv_agd_presentPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_E51C23"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="11dp"
+                android:layout_below="@id/tv_agd_content"/>
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="17dp"
+                android:src="@mipmap/location_icon"
+                android:layout_below="@id/tv_agd_presentPrice"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView android:id="@+id/tv_agd_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_FF4081"
+                android:textSize="14sp"
+                android:layout_below="@id/tv_agd_presentPrice"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

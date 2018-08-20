@@ -18,6 +18,7 @@ import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.ClickTextView;
@@ -75,8 +76,14 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-			if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
-				Glide.with(context).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imgIcon);
+			if(goodsBean.getImgList().size()>0){
+				String imgUrl=goodsBean.getImgList().get(0);
+				holder.imgIcon.setTag(R.id.imageid,imgUrl);
+				if(holder.imgIcon.getTag(R.id.imageid)!=null && imgUrl==holder.imgIcon.getTag(R.id.imageid)){
+					Glide.with(context).load(goodsBean.getImgList().get(0)).centerCrop().error(R.mipmap.icon).into(holder.imgIcon);
+				}
+			}else{
+				holder.imgIcon.setImageDrawable(null);
 			}
 			Glide.with(context).load(goodsBean.getHead()).error(R.mipmap.icon).into(holder.circleImageView);
 			holder.tvNickName.setText(goodsBean.getNickname());

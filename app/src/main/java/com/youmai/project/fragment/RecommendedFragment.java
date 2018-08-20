@@ -13,14 +13,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
+import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.activity.main.MainActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.RefreshLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,7 +35,7 @@ import java.util.List;
  * Created by Administrator on 2018/1/3 0003.
  */
 
-public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
+public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener,AdapterView.OnItemClickListener {
 
     private RefreshLayout swipeLayout;
     private ListView listView;
@@ -55,6 +58,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
         listView=(ListView)view.findViewById(R.id.list);
         listView.setDividerHeight(0);
+        listView.setOnItemClickListener(this);
         swipeLayout.setColorSchemeResources(R.color.color_bule2,
                 R.color.color_bule,
                 R.color.color_bule2,
@@ -164,6 +168,28 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         }
     }
 
+
+    /**
+     * item点击事件
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        LogUtils.e("position="+position);
+        GoodsBean goodsBean=listBeanAll.get(--position);
+        if(null==goodsBean){
+            return;
+        }
+        Intent intent=new Intent(getActivity(), GoodDetailsActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("goodsBean",goodsBean);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     @Override
     public void onRefresh() {
         swipeLayout.postDelayed(new Runnable() {
@@ -262,4 +288,5 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         super.onDestroy();
         getActivity().unregisterReceiver(mBroadcastReceiver);
     }
+
 }

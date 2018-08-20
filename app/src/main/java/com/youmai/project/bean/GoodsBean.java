@@ -1,6 +1,7 @@
 package com.youmai.project.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class GoodsBean implements Serializable {
     private long createTime;
     private String description;
     private String id;
-    private List<String> imgList;
+    private List<String> imgList=new ArrayList<>();
     private Double latitude=0.0;
     private Double longitude=0.0;
     private double originalPrice;
@@ -22,7 +23,7 @@ public class GoodsBean implements Serializable {
     private String orderId;
     private int stated;
     private String head;
-    private String nickname;
+    private String nickname="";
 
     public String getAddress() {
         return address;
