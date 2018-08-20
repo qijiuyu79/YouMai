@@ -71,6 +71,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         findViewById(R.id.rel_au_cer).setOnClickListener(this);
         findViewById(R.id.img_au_setName).setOnClickListener(this);
         findViewById(R.id.tv_au_recharge).setOnClickListener(this);
+        findViewById(R.id.tv_au_transfer).setOnClickListener(this);
     }
 
     @Override
@@ -113,6 +114,10 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
             //充值
             case R.id.tv_au_recharge:
                  setClass(RechargeActivity.class);
+                 break;
+            //转账
+            case R.id.tv_au_transfer:
+                setClass(WithdrawalActivity.class);
                  break;
             //我的地址
             case R.id.rel_myAddress:

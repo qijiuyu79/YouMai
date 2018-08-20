@@ -1,0 +1,209 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout android:id="@+id/rel_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
+
+        <LinearLayout android:id="@+id/lin_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="30dp"
+            android:layout_marginLeft="10dp">
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/ic_black_back"/>
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="转账"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="余额"
+        android:textSize="15sp"
+        android:textColor="@color/color_444444"
+        android:layout_below="@id/rel_head"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="23dp"/>
+
+    <TextView
+        android:id="@+id/tv_aw_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_FF4081"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_below="@id/rel_head"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="21dp"
+        android:layout_marginRight="27dp"/>
+
+
+   <View
+       android:id="@+id/view_aw"
+       android:layout_width="match_parent"
+       android:layout_height="10dp"
+       android:layout_below="@id/tv_aw_balance"
+       android:background="@color/color_F5F5F5"
+       android:layout_marginTop="22dp" />
+
+    <LinearLayout
+        android:id="@+id/lin_aw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/view_aw"
+        android:layout_marginTop="52dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="47dp"
+                android:src="@mipmap/with_wx"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="转账到微信"
+                android:textSize="15sp"
+                android:textColor="@color/color_464646"
+                android:gravity="center"
+                android:layout_marginTop="33dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="（收取1%服务费）"
+                android:textSize="12sp"
+                android:textColor="@color/color_a2a0a0"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="127dp"
+            android:background="@color/color_dbd8d8"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="47dp"
+                android:src="@mipmap/with_zfb"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="转账到支付宝"
+                android:textSize="15sp"
+                android:textColor="@color/color_464646"
+                android:gravity="center"
+                android:layout_marginTop="33dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="（收取1%服务费）"
+                android:textSize="12sp"
+                android:textColor="@color/color_a2a0a0"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_aw2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/lin_aw"
+        android:background="@color/color_F5F5F5"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="转账金额"
+        android:textColor="@color/color_464646"
+        android:textSize="15sp"
+        android:layout_below="@id/view_aw2"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="25dp"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥"
+        android:textSize="40sp"
+        android:layout_below="@id/view_aw2"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="34dp"
+        android:textColor="@android:color/black"/>
+
+    <EditText
+        android:id="@+id/et_aw_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="40sp"
+        android:layout_below="@id/view_aw2"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="34dp"
+        android:inputType="phone"/>
+
+    <View
+        android:id="@+id/view_aw3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_dbd8d8"
+        android:layout_below="@id/et_aw_money"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="转账金额将在7个工作日之内到达您的微信或支付宝账户"
+        android:textSize="13sp"
+        android:textColor="@color/color_b7b5b5"
+        android:layout_below="@id/view_aw3"
+        android:layout_marginTop="10dp"
+        android:gravity="center"/>
+
+</RelativeLayout>

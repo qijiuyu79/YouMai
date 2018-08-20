@@ -40,6 +40,9 @@
     <color name="color_010101">#010101</color>
     <color name="color_b6b6b6">#b6b6b6</color>
     <color name="color_747872">#747872</color>
+    <color name="color_464646">#464646</color>
+    <color name="color_a2a0a0">#a2a0a0</color>
+    <color name="color_b7b5b5">#b7b5b5</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
 </resources>
