@@ -375,10 +375,9 @@ public class Util extends ClassLoader {
 
     /**
      * 判断是否登陆
-     * @param context
      * @return
      */
-    public static boolean isLogin(Context context){
+    public static boolean isLogin(){
         final String auth_token= MyApplication.spUtil.getString(SPUtil.AUTH_TOKEN);
         if(!TextUtils.isEmpty(auth_token)){
             return true;

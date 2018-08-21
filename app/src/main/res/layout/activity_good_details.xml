@@ -105,6 +105,7 @@
                 android:layout_width="375dp"
                 android:layout_height="283dp"
                 android:layout_below="@id/view_agd"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"/>
 
             <TextView

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.youmai.project.R;
+import com.youmai.project.callback.TabClickCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class TagLayoutView extends ViewGroup {
 	//自定义属性
 	private int LEFT_RIGHT_SPACE; //dip
 	private int ROW_SPACE;
+	private TabClickCallBack tabClickCallBack;
 
 	public TagLayoutView(Context context) {
 		this(context, null);
@@ -67,6 +69,7 @@ public class TagLayoutView extends ViewGroup {
 				//获取标签布局
 				final TextView tv = (TextView) inflater.inflate(R.layout.item_lable, null);
 				tv.setText(lable);
+				tv.setTag(lable);
 				//设置选中效果
 //				if (lableSelected.contains(lable)) {
 //					//选中
@@ -90,6 +93,10 @@ public class TagLayoutView extends ViewGroup {
 //							tv.setTextColor(getResources().getColor(R.color.tv_gray));
 //							lableSelected.remove(lable);
 //						}
+						if(null==v.getTag()){
+							return;
+						}
+						tabClickCallBack.tabClick(v.getTag().toString().trim());
 					}
 				});
 				//将标签添加到容器中
@@ -186,4 +193,7 @@ public class TagLayoutView extends ViewGroup {
 		}
 	}
 
+	public void setCallBack(TabClickCallBack tabClickCallBack){
+		this.tabClickCallBack=tabClickCallBack;
+	}
 }

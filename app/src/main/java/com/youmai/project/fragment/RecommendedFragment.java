@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
@@ -24,6 +26,7 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +134,11 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GoodsBean goodsBean=listBeanAll.get(--position);
+        TextView textView=(TextView)view.findViewById(R.id.tv_ri_content);
+        if(null==textView.getTag()){
+            return;
+        }
+        GoodsBean goodsBean= (GoodsBean) textView.getTag();
         if(null==goodsBean){
             return;
         }

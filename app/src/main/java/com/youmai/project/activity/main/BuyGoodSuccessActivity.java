@@ -1,5 +1,6 @@
 package com.youmai.project.activity.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.TabActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
 
@@ -71,6 +73,9 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         switch (v.getId()){
             //查看订单
             case R.id.lin_abgs_order:
+                 Intent intent=new Intent(TabActivity.ACTION_INTENT_ACTIVITY);
+                 intent.putExtra("type",3);
+                 sendBroadcast(intent);
                  break;
             //联系卖家
             case R.id.lin_abgs_contact:

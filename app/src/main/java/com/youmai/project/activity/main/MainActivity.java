@@ -31,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 public class MainActivity extends BaseActivity{
 
-
     private PagerSlidingTabStrip tabs;
     private DisplayMetrics dm;
     private ViewPager pager;

@@ -1,6 +1,9 @@
 package com.youmai.project.activity.main;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,11 +35,13 @@ import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.callback.TabClickCallBack;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.IatSettings;
 import com.youmai.project.utils.JsonParser;
 import com.youmai.project.utils.JsonUtils;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
@@ -44,7 +50,10 @@ import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import com.youmai.project.view.TagLayoutView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 按关键字搜索
@@ -82,6 +91,8 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         initView();//初始化控件
         initSpeech();//初始化语音转文字
         showTags();//显示历史搜索记录
+        //注册广播
+        registerReceiver();
     }
 
 
@@ -145,20 +156,36 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
      * 显示历史搜索记录
      */
     private void showTags(){
-        List<String> lable = new ArrayList<>();
-        final String keys=MyApplication.spUtil.getString(SPUtil.TAG_KEY);
-        String[] str=keys.split("&");
-        if(null==str){
-            return;
-        }
-        for(int i=0;i<str.length;i++){
-            if(!TextUtils.isEmpty(str[i])){
-                lable.add(str[i]);
+        tagLayoutView.removeAllViews();
+        final String keyStr=MyApplication.spUtil.getString(SPUtil.TAG_KEY);
+        if(!TextUtils.isEmpty(keyStr)){
+            List<String> lable = new ArrayList<>();
+            Map<String,String> keyMap=MyApplication.gson.fromJson(keyStr,Map.class);
+            Set<String> keys = keyMap.keySet();
+            for (String key : keys) {
+                lable.add(keyMap.get(key));
             }
+            //设置标签
+            tagLayoutView.setLables(lable, true);
+            tagLayoutView.setCallBack(tabClickCallBack);
         }
-        //设置标签
-        tagLayoutView.setLables(lable, true);
     }
+
+
+    TabClickCallBack tabClickCallBack=new TabClickCallBack() {
+        /**
+         * 标签点击事件
+         * @param name
+         */
+        public void tabClick(String name) {
+            if(TextUtils.isEmpty(name)){
+                return;
+            }
+            etKeys.setText(name);
+            //按关键字搜索
+            searchByKeys(name);
+        }
+    };
 
 
     /**
@@ -167,6 +194,8 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH){
+            //隐藏软键盘
+            lockKey(etKeys);
             strKey= Util.format(etKeys.getText().toString().trim());
             if(TextUtils.isEmpty(strKey)){
                 showMsg("请输入要搜索的关键字！");
@@ -174,27 +203,44 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
             }
             //保存搜索过的关键字
             String keys= MyApplication.spUtil.getString(SPUtil.TAG_KEY);
-            keys+="&"+strKey;
-            MyApplication.spUtil.addString(SPUtil.TAG_KEY,keys);
+            Map<String,String> keyMap;
+            if(!TextUtils.isEmpty(keys)){
+                keyMap=MyApplication.gson.fromJson(keys,Map.class);
+            }else{
+                keyMap=new HashMap<>();
+            }
+            keyMap.put(strKey,strKey);
+            MyApplication.spUtil.addString(SPUtil.TAG_KEY,MyApplication.gson.toJson(keyMap));
 
-            //清空之前搜索过的列表
-            listBeanAll.clear();
-            swipeLayout.setVisibility(View.VISIBLE);
-            swipeLayout.post(new Thread(new Runnable() {
-                public void run() {
-                    swipeLayout.setRefreshing(true);
-                }
-            }));
-            swipeLayout.postDelayed(new Runnable() {
-                public void run() {
-                    listView.addHeaderView(new View(SearchKeyActivity.this));
-                    //查询数据
-                    getGoods();
-                }
-            }, 0);
+            //按关键字搜索
+            searchByKeys(strKey);
             return true;
         }
         return false;
+    }
+
+    /**
+     * 按关键字搜索
+     */
+    private void searchByKeys(final String key){
+        //清空之前搜索过的列表
+        listBeanAll.clear();
+        if(null!=recommendedAdapter){
+            recommendedAdapter.notifyDataSetChanged();
+        }
+        swipeLayout.setVisibility(View.VISIBLE);
+        swipeLayout.post(new Thread(new Runnable() {
+            public void run() {
+                swipeLayout.setRefreshing(true);
+            }
+        }));
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                listView.addHeaderView(new View(SearchKeyActivity.this));
+                //查询数据
+                getGoods(key);
+            }
+        }, 0);
     }
 
 
@@ -230,6 +276,23 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         }else{
             recommendedAdapter.notifyDataSetChanged();
         }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               TextView textView=(TextView)view.findViewById(R.id.tv_ri_content);
+               if(null==textView.getTag()){
+                   return;
+               }
+                GoodsBean goodsBean= (GoodsBean) textView.getTag();
+                if(null==goodsBean){
+                    return;
+                }
+                Intent intent=new Intent(mContext, GoodDetailsActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("goodsBean",goodsBean);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         if(listBeanAll.size()>0){
             relTags.setVisibility(View.GONE);
         }else{
@@ -273,6 +336,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                  etKeys.setText(null);
                  swipeLayout.setVisibility(View.GONE);
                  relTags.setVisibility(View.VISIBLE);
+                 showTags();//显示历史搜索记录
                  break;
             default:
                 break;
@@ -300,8 +364,8 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     /**
      * 查询数据
      */
-    private void getGoods(){
-        HttpMethod.getGoodsByKey(strKey,mHandler);
+    private void getGoods(String key){
+        HttpMethod.getGoodsByKey(key,mHandler);
     }
 
     @Override
@@ -314,10 +378,45 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
 
     }
 
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                //商品购买成功后的广播
+                case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
+                    final String goodId=intent.getStringExtra("goodId");
+                    if(TextUtils.isEmpty(goodId)){
+                        return;
+                    }
+                    for(int i=0,len=listBeanAll.size();i<len;i++){
+                        if(listBeanAll.get(i).getId().equals(goodId)){
+                            listBeanAll.remove(i);
+                            break;
+                        }
+                    }
+                    recommendedAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
+
+
     protected void onDestroy() {
         super.onDestroy();
         // 退出时释放连接
         mIat.cancel();
         mIat.destroy();
+        unregisterReceiver(mBroadcastReceiver);
     }
 }

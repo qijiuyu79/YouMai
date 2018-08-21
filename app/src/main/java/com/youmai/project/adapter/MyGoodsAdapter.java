@@ -20,7 +20,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 
 	private Context context;
 	private List<GoodsBean> list;
-	private GoodsBean myGoods;
+	private GoodsBean goodsBean;
 	private DeleteBabyCallBack deleteBabyCallBack;
 	public MyGoodsAdapter(Context context,List<GoodsBean> list) {
 		super();
@@ -58,15 +58,19 @@ public class MyGoodsAdapter extends BaseAdapter{
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		myGoods=list.get(position);
-		if(null!=myGoods){
-			if(null!=myGoods.getImgList() && myGoods.getImgList().size()>0){
-				Glide.with(context).load(myGoods.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);
+		goodsBean=list.get(position);
+		if(null!=goodsBean){
+			if(goodsBean.getImgList().size()>0){
+				String imgUrl=goodsBean.getImgList().get(0);
+				holder.imageView.setTag(R.id.imageid,imgUrl);
+				if(holder.imageView.getTag(R.id.imageid)!=null && imgUrl==holder.imageView.getTag(R.id.imageid)){
+					Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).into(holder.imageView);
+				}
 			}
-			holder.tvDes.setText(myGoods.getDescription());
-			holder.tvAddress.setText(myGoods.getAddress());
-			holder.tvTime.setText("发布："+DateUtil.getData(myGoods.getCreateTime()));
-			holder.tvDel.setTag(myGoods.getId());
+			holder.tvDes.setText(goodsBean.getDescription());
+			holder.tvAddress.setText(goodsBean.getAddress());
+			holder.tvTime.setText("发布："+DateUtil.getData(goodsBean.getCreateTime()));
+			holder.tvDel.setTag(goodsBean.getId());
 			holder.tvDel.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){

@@ -1,9 +1,11 @@
 package com.youmai.project.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -13,7 +15,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.youmai.project.activity.map.MapActivity;
-import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.main.MainActivity;
@@ -21,8 +22,8 @@ import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.activity.user.UserActivity;
 import com.youmai.project.utils.ActivitysLifecycle;
+import com.youmai.project.utils.Util;
 import com.youmai.project.utils.map.GetLocation;
-import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import java.util.ArrayList;
@@ -41,18 +42,22 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     private List<TextView> tvList=new ArrayList<>();
     // 按两次退出
     protected long exitTime = 0;
+    public final static String ACTION_INTENT_ACTIVITY = "net.youmai.adminapp.action.intent.activity";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.tag_host);
 
-        initView(); if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
             setTranslucentStatus(true);
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
+        initView();
+        //注册广播
+        registerReceiver();
     }
 
     private void setTranslucentStatus(boolean on) {
@@ -129,7 +134,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                  break;
             //中心
             case R.id.lin_tab_center:
-                if(TextUtils.isEmpty(MyApplication.spUtil.getString(SPUtil.ACCESS_TOKEN))){
+                if(!Util.isLogin()){
                     Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
                 }else{
@@ -139,7 +144,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                  break;
             //订单
             case R.id.lin_tab_order:
-                if(TextUtils.isEmpty(MyApplication.spUtil.getString(SPUtil.ACCESS_TOKEN))){
+                if(!Util.isLogin()){
                     Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
                 }else{
@@ -151,7 +156,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                  break;
             //我的
             case R.id.lin_tab_user:
-                 if(TextUtils.isEmpty(MyApplication.spUtil.getString(SPUtil.ACCESS_TOKEN))){
+                if(!Util.isLogin()){
                      Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
                      startActivity(intent);
                  }else{
@@ -198,12 +203,34 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         }
     }
 
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(ACTION_INTENT_ACTIVITY);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            final int type=intent.getIntExtra("type",-1);
+            if (action.equals(ACTION_INTENT_ACTIVITY) && type!=-1) {
+                tabHost.setCurrentTab(type);
+            }
+        }
+    };
+
+
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(getApplicationContext(),"再按一次退出程序!",Toast.LENGTH_LONG).show();
                 exitTime = System.currentTimeMillis();
             } else {
+                unregisterReceiver(mBroadcastReceiver);
                 GetLocation.getInstance().stopLocation();
                 ActivitysLifecycle.getInstance().exit();
             }

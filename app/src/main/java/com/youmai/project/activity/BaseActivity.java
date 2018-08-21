@@ -184,6 +184,17 @@ public class BaseActivity extends FragmentActivity {
         }
     };
 
+
+    /**
+     * 删除handler中的消息
+     * @param mHandler
+     */
+    public void removeHandler(Handler mHandler){
+        if(null!=mHandler){
+            mHandler.removeCallbacksAndMessages(null);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

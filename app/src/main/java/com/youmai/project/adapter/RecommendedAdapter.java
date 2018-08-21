@@ -71,6 +71,7 @@ public class RecommendedAdapter extends BaseAdapter{
 		}
 		goodsBean=list.get(position);
 		if(goodsBean!=null){
+			holder.tvContext.setTag(goodsBean);
 			holder.tvContext.setText(goodsBean.getDescription());
 			holder.tvLocation.setText(goodsBean.getAddress());
 			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
@@ -80,7 +81,7 @@ public class RecommendedAdapter extends BaseAdapter{
 				String imgUrl=goodsBean.getImgList().get(0);
 				holder.imgIcon.setTag(R.id.imageid,imgUrl);
 				if(holder.imgIcon.getTag(R.id.imageid)!=null && imgUrl==holder.imgIcon.getTag(R.id.imageid)){
-					Glide.with(context).load(goodsBean.getImgList().get(0)).centerCrop().error(R.mipmap.icon).into(holder.imgIcon);
+					Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).into(holder.imgIcon);
 				}
 			}else{
 				holder.imgIcon.setImageDrawable(null);
@@ -90,7 +91,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvBuy.setTag(goodsBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					if(!Util.isLogin(context)){
+					if(!Util.isLogin()){
 						Intent intent=new Intent(context, LoginActivity.class);
 						context.startActivity(intent);
 						return;

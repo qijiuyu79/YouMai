@@ -70,7 +70,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         myGridView=(MyGridView)findViewById(R.id.mg_agd_goods);
         tvNickName.setText(goodsBean.getNickname());
         if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
-            Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
+            Glide.with(mContext).load(goodsBean.getImgList().get(0)).centerCrop().error(R.mipmap.icon).into(imageView);
         }
         tvCount.setText("1/"+goodsBean.getImgList().size());
         tvContent.setText(goodsBean.getDescription());

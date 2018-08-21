@@ -61,8 +61,12 @@ public class OrderAdapter extends BaseAdapter{
 		}
 		goodsBean=list.get(position);
 		if(null!=goodsBean){
-			if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
-				Glide.with(context).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(holder.imageView);
+			if(goodsBean.getImgList().size()>0){
+				String imgUrl=goodsBean.getImgList().get(0);
+				holder.imageView.setTag(R.id.imageid,imgUrl);
+				if(holder.imageView.getTag(R.id.imageid)!=null && imgUrl==holder.imageView.getTag(R.id.imageid)){
+					Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).into(holder.imageView);
+				}
 			}
 			holder.tvName.setText(goodsBean.getNickname());
 			holder.tv_psi_des.setText(goodsBean.getDescription());
