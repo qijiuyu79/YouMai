@@ -150,6 +150,9 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                 if(!jsonObject2.isNull("nickname")){
                     goodsBean.setNickname(jsonObject2.getString("nickname"));
                 }
+                if(!jsonObject2.isNull("storeId")){
+                    goodsBean.setStoreId(jsonObject2.getString("storeId"));
+                }
                 list.add(goodsBean);
             }
             listBeanAll.addAll(list);

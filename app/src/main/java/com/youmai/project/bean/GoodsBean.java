@@ -24,6 +24,7 @@ public class GoodsBean implements Serializable {
     private int stated;
     private String head;
     private String nickname="";
+    private String storeId;
 
     public String getAddress() {
         return address;
@@ -127,5 +128,13 @@ public class GoodsBean implements Serializable {
 
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 }

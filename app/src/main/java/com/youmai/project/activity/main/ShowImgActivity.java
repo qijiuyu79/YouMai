@@ -130,9 +130,4 @@ public class ShowImgActivity extends BaseActivity {
             return view == object;
         }
     }
-
-
-    public void setImages(List<String> list){
-        this.listImg=list;
-    }
 }
