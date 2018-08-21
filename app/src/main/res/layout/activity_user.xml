@@ -18,8 +18,7 @@
             android:layout_width="72.5dp"
             android:layout_height="72.5dp"
             android:layout_marginLeft="20dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_pic_icon"/>
+            android:layout_gravity="center"/>
 
         <TextView android:id="@+id/tv_au_nickName"
             android:layout_width="wrap_content"

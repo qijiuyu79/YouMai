@@ -46,13 +46,13 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.tag_host);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
+
+        initView(); if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
             setTranslucentStatus(true);
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
-        initView();
     }
 
     private void setTranslucentStatus(boolean on) {
@@ -129,15 +129,25 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                  break;
             //中心
             case R.id.lin_tab_center:
-                 tabHost.setCurrentTabByTag("发布");
-                 updateColor(5);
+                if(TextUtils.isEmpty(MyApplication.spUtil.getString(SPUtil.ACCESS_TOKEN))){
+                    Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                }else{
+                    tabHost.setCurrentTabByTag("发布");
+                    updateColor(5);
+                }
                  break;
             //订单
             case R.id.lin_tab_order:
-                 tabHost.setCurrentTabByTag("订单");
-                 imgOrder.setImageDrawable(getResources().getDrawable(R.mipmap.tab_car_click_icon));
-                 tvOrder.setTextColor(getResources().getColor(R.color.color_FF4081));
-                 updateColor(2);
+                if(TextUtils.isEmpty(MyApplication.spUtil.getString(SPUtil.ACCESS_TOKEN))){
+                    Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                }else{
+                    tabHost.setCurrentTabByTag("订单");
+                    imgOrder.setImageDrawable(getResources().getDrawable(R.mipmap.tab_car_click_icon));
+                    tvOrder.setTextColor(getResources().getColor(R.color.color_FF4081));
+                    updateColor(2);
+                }
                  break;
             //我的
             case R.id.lin_tab_user:

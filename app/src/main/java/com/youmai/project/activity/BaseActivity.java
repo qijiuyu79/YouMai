@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,7 +46,7 @@ public class BaseActivity extends FragmentActivity {
     public static final String UPDATE_USER_INFO = "update_user_info";
     private ProgressDialog progressDialog = null;
     protected Context mContext = this;
-    public Dialog baseDialog;
+    public PopupWindow mPopuwindow;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -96,34 +98,27 @@ public class BaseActivity extends FragmentActivity {
 
 
     /**
-     * dialog弹框
-     *
-     * @param view
+     * @功能描述：从底部弹出
+     * @@param parent
+     * @@param x
+     * @@param y
+     * @@param view
+     * @@param parameter
      */
-    public Dialog dialogPop(View view, boolean b) {
-        baseDialog = new Dialog(this, R.style.ActionSheetDialogStyle);
-        baseDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        baseDialog.setTitle(null);
-        baseDialog.setCancelable(b);
-        baseDialog.setContentView(view);
-        Window window = baseDialog.getWindow();
-        window.setGravity(Gravity.CENTER);  //此处可以设置dialog显示的位置
-//        window.setWindowAnimations(R.style.mystyle);  //添加动画
-        //设置dialog全屏
-        WindowManager m = getWindowManager();
-        Display d = m.getDefaultDisplay();  //为获取屏幕宽、高
-        android.view.WindowManager.LayoutParams params = baseDialog.getWindow().getAttributes();  //获取对话框当前的参数值、
-        params.width = (int) (d.getWidth());    //宽度设置全屏宽度
-        baseDialog.getWindow().setAttributes(params);     //设置生效
-        baseDialog.show();
-        return baseDialog;
+    protected void bottomPopupWindow(int x, int y, View view) {
+        mPopuwindow = new PopupWindow(view,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        ColorDrawable cd = new ColorDrawable(Color.argb(0, 0, 0, 0));
+        mPopuwindow.setBackgroundDrawable(cd);
+        mPopuwindow.setOutsideTouchable(true);
+        mPopuwindow.setFocusable(true);
+        mPopuwindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        mPopuwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        mPopuwindow.setAnimationStyle(R.style.animation);
+        mPopuwindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, x, y);
     }
 
-    public void closeDialog() {
-        if (baseDialog != null) {
-            baseDialog.dismiss();
-        }
-    }
 
     /**
      * 确保系统字体大小不会影响app中字体大小

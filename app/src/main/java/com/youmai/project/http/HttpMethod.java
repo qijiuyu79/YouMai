@@ -540,32 +540,6 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
-
-    /**
-     * 根据店铺id查询
-     * @param storeId
-     * @param handler
-     */
-    public static void getGoodById(String storeId,final Handler handler) {
-        Map<String, String> map = new HashMap<>();
-        map.put("storeId",storeId);
-        Http.getRetrofit().create(HttpApi.class).getLocationGoods(map).enqueue(new Callback<ResponseBody>() {
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    sendMessage(handler, HandlerConstant.GET_GOOD_BYID_SUCCESS, response.body().string());
-                }catch (Exception e){
-                    e.printStackTrace();
-                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
-                }
-            }
-
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
-            }
-        });
-    }
-
-
     /**
      * 删除宝贝
      * @param goodsId
@@ -596,9 +570,10 @@ public class HttpMethod extends BaseRequst {
      * @param storeId
      * @param handler
      */
-    public static void getGoodsByStoreId(String storeId, final Handler handler) {
+    public static void getGoodsByStoreId(int page,String storeId, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("storeId",storeId);
+        map.put("page",page+"");
         map.put("row","20");
         Http.getRetrofit().create(HttpApi.class).getLocationGoods(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

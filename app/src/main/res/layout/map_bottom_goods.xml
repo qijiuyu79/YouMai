@@ -1,0 +1,84 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_mbg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="19dp"
+            android:src="@mipmap/dianpu_icon"
+            android:layout_below="@id/view_agd3"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="11dp"/>
+
+        <TextView
+            android:id="@+id/tv_am_nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/color_707070"
+            android:layout_below="@id/view_agd3"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="41dp"/>
+
+        <LinearLayout
+            android:id="@+id/lin_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_agd3"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="11dp"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="进入店铺"
+                android:textColor="@color/color_707070"
+                android:textSize="14sp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:src="@mipmap/right_next"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_am"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/color_F5F5F5"
+            android:layout_below="@id/lin_search"
+            android:layout_marginTop="15dp"/>
+
+        <com.youmai.project.view.MyGridView
+            android:id="@+id/mg_am_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:horizontalSpacing="7dp"
+            android:numColumns="3"
+            android:background="@color/color_F5F5F5"
+            android:cacheColorHint="#00000000"
+            android:listSelector="#00000000"
+            android:scrollbars="none"
+            android:layout_below="@id/view_am">
+        </com.youmai.project.view.MyGridView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

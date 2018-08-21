@@ -22,4 +22,13 @@
 
     </FrameLayout>
 
+    <com.youmai.project.view.ClickImageView
+        android:id="@+id/img_am_location"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/location_main"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="33dp"
+        android:layout_marginLeft="20dp"/>
+
 </RelativeLayout>

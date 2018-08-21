@@ -35,6 +35,7 @@ import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.IatSettings;
 import com.youmai.project.utils.JsonParser;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
@@ -42,10 +43,6 @@ import com.youmai.project.utils.Util;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import com.youmai.project.view.TagLayoutView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,59 +222,22 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
      * 解析并刷新数据
      */
     private void refresh(String message){
-        if(TextUtils.isEmpty(message)){
-            return;
+        List<GoodsBean> list= JsonUtils.getGoods(message);
+        listBeanAll.addAll(list);
+        if(null==recommendedAdapter){
+            recommendedAdapter=new RecommendedAdapter(mContext,listBeanAll);
+            listView.setAdapter(recommendedAdapter);
+        }else{
+            recommendedAdapter.notifyDataSetChanged();
         }
-        try {
-            final JSONObject jsonObject=new JSONObject(message);
-            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            List<GoodsBean> list=new ArrayList<>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                GoodsBean goodsBean=new GoodsBean();
-                goodsBean.setAddress(jsonObject1.getString("address"));
-                goodsBean.setDescription(jsonObject1.getString("description"));
-                goodsBean.setId(jsonObject1.getString("id"));
-                goodsBean.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
-                goodsBean.setPresentPrice(jsonObject1.getDouble("presentPrice"));
-                List<String> imgList=new ArrayList<>();
-
-                //解析图片
-                final JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
-                for (int j = 0; j < jsonArray1.length(); j++) {
-                    imgList.add(jsonArray1.getString(j));
-                }
-                goodsBean.setImgList(imgList);
-
-                //解析经纬度
-                final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
-                for (int k = 0; k < jsonArray2.length(); k++) {
-                    if(k==0){
-                        goodsBean.setLongitude(jsonArray2.getDouble(k));
-                    }else{
-                        goodsBean.setLatitude(jsonArray2.getDouble(k));
-                    }
-                }
-                list.add(goodsBean);
-            }
-            listBeanAll.addAll(list);
-            if(null==recommendedAdapter){
-                recommendedAdapter=new RecommendedAdapter(mContext,listBeanAll);
-                listView.setAdapter(recommendedAdapter);
-            }else{
-                recommendedAdapter.notifyDataSetChanged();
-            }
-            if(listBeanAll.size()>0){
-                relTags.setVisibility(View.GONE);
-            }else{
-                showMsg("没有搜索到任何数据！");
-            }
-            if(list.size()<20){
-                isTotal=true;
-                swipeLayout.setFooter(isTotal);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        if(listBeanAll.size()>0){
+            relTags.setVisibility(View.GONE);
+        }else{
+            showMsg("没有搜索到任何数据！");
+        }
+        if(list.size()<20){
+            isTotal=true;
+            swipeLayout.setFooter(isTotal);
         }
     }
 

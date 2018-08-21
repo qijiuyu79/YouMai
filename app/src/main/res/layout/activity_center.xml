@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="41dp"
         android:layout_marginTop="10dp"
-        android:text="漫步生活馆"
         android:textSize="15sp"
         android:textStyle="bold"
         android:textColor="@color/color_707070"/>

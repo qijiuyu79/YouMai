@@ -396,4 +396,19 @@ public class Util extends ClassLoader {
         String str=s.replaceAll("[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……& amp;*（）——+|{}【】‘；：”“’。，、？|-]", "");
         return str;
     }
+
+
+    /**
+     * 经纬度校验
+     * 经度longitude: (?:[0-9]|[1-9][0-9]|1[0-7][0-9]|180)\\.([0-9]{6})
+     * 纬度latitude：  (?:[0-9]|[1-8][0-9]|90)\\.([0-9]{6})
+     * @return
+     */
+    public static boolean checkItude(String longitude,String latitude){
+        String reglo = "((?:[0-9]|[1-9][0-9]|1[0-7][0-9])\\.([0-9]{0,6}))|((?:180)\\.([0]{0,6}))";
+        String regla = "((?:[0-9]|[1-8][0-9])\\.([0-9]{0,6}))|((?:90)\\.([0]{0,6}))";
+        longitude = longitude.trim();
+        latitude = latitude.trim();
+        return longitude.matches(reglo)==true?latitude.matches(regla):false;
+    }
 }

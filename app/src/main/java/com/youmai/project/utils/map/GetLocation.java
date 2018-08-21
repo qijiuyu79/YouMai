@@ -17,6 +17,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.MyLocationData;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.utils.SPUtil;
+import com.youmai.project.utils.Util;
 import com.youmai.project.view.DialogView;
 
 /**
@@ -73,9 +74,11 @@ public class GetLocation {
 
                 final Double longtitude = location.getLongitude();
                 final Double latitude = location.getLatitude();
-                MyApplication.spUtil.addString(SPUtil.LOCATION_LAT, latitude + "");
-                MyApplication.spUtil.addString(SPUtil.LOCATION_LONG, longtitude + "");
-                MyApplication.spUtil.addString(SPUtil.LOCATION_ADDRESS,location.getAddrStr());
+                if(Util.checkItude(longtitude + "",latitude + "")){
+                    MyApplication.spUtil.addString(SPUtil.LOCATION_LAT, latitude + "");
+                    MyApplication.spUtil.addString(SPUtil.LOCATION_LONG, longtitude + "");
+                    MyApplication.spUtil.addString(SPUtil.LOCATION_ADDRESS,location.getAddrStr());
+                }
             }
             Message message = new Message();
             message.what = 0x00;

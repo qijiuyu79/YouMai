@@ -5,9 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ZoomControls;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -27,26 +29,28 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.adapter.MapGoodsListAdapter;
 import com.youmai.project.application.MyApplication;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.Store;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.map.GetLocation;
 import com.youmai.project.utils.map.MyOrientationListener;
-
+import com.youmai.project.view.MyGridView;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 逛街
  */
-public class MapActivity extends BaseActivity implements OnGetGeoCoderResultListener,BaiduMap.OnMarkerClickListener {
+public class MapActivity extends BaseActivity implements OnGetGeoCoderResultListener,BaiduMap.OnMarkerClickListener,View.OnClickListener {
 
     private MapView mapView;
     public BaiduMap mBaiduMap;
@@ -67,7 +71,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         setContentView(R.layout.activity_map);
         initView();
         initOritationListener();
-        startLocation();
+        byLatLocation();
     }
 
 
@@ -94,6 +98,18 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         }
         //隐藏缩放按钮
         mapView.showZoomControls(false);
+        findViewById(R.id.img_am_location).setOnClickListener(this);
+    }
+
+    /**
+     * 根据经纬度定位
+     */
+    private void byLatLocation(){
+        final String latitude= MyApplication.spUtil.getString(SPUtil.LOCATION_LAT);
+        final String longtitude= MyApplication.spUtil.getString(SPUtil.LOCATION_LONG);
+        finishLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longtitude));
+        //根据经纬度去定位
+        mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(finishLng));
     }
 
 
@@ -130,38 +146,33 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                     break;
                 //查询附近的店铺
                 case HandlerConstant.GET_NEAR_STORE_SUCCESS:
+                     clearTask();
                      //解析数据并设置mark
                      setMark(msg.obj.toString());
                      break;
-                //根据店铺id查询店铺信息
-                case HandlerConstant.GET_GOOD_BYID_SUCCESS:
+                //根据店铺id查询商品信息
+                case HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS:
+                     clearTask();
+                     List<GoodsBean> list= JsonUtils.getGoods(msg.obj.toString());
+                     if(list.size()>0){
+                         View view= LayoutInflater.from(mContext).inflate(R.layout.map_bottom_goods,null);
+                         TextView tvNickName=(TextView)view.findViewById(R.id.tv_am_nickName);
+                         MyGridView myGridView=(MyGridView)view.findViewById(R.id.mg_am_goods);
+                         view.findViewById(R.id.rel_mbg).setOnClickListener(new View.OnClickListener() {
+                             public void onClick(View v) {
+                                 mPopuwindow.dismiss();
+                             }
+                         });
+                         bottomPopupWindow(0,0,view);
+                         MapGoodsListAdapter mapGoodsListAdapter=new MapGoodsListAdapter(mContext,list);
+                         myGridView.setAdapter(mapGoodsListAdapter);
+                     }
                      break;
                  default:
                      break;
             }
         }
     };
-
-
-    /**
-     * 定位回调
-     * @param geoCodeResult
-     */
-    public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-
-    }
-
-    @Override
-    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
-        clearTask();
-        if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
-            return;
-        }
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(reverseGeoCodeResult.getLocation()));
-        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(18f), 500);
-        //查询附近的店铺
-        getStore();
-    }
 
 
     /**
@@ -177,37 +188,20 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             if(null==store){
                 return false;
             }
-            showProgress("店铺查询中...",true);
-            HttpMethod.getGoodById(store.getId(),mHandler);
+            showProgress("商品查询中...",true);
+            HttpMethod.getGoodsByStoreId(1,store.getId(),mHandler);
         }
         return true;
     }
 
-
-    /**
-     * 地图触摸状态改变监听(地图移动获取坐标)
-     */
-    public class Maptouch implements BaiduMap.OnMapStatusChangeListener {
-        public void onMapStatusChange(MapStatus mapStatus) {
-        }
-
-        public void onMapStatusChangeFinish(MapStatus mapStatus) {
-            LatLng finishLng2 = mapStatus.target;// 获取地图中心点坐标
-            // 计算距离
-            Double distance = Util.GetShortDistance(finishLng.longitude, finishLng.latitude, finishLng2.longitude, finishLng2.latitude);
-            if(distance>500){
-                //查询附近的店铺
-                getStore();
-            }
-            return;
-        }
-
-        public void onMapStatusChangeStart(MapStatus arg0) {
-        }
-
-        @Override
-        public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            //重新定位
+            case R.id.img_am_location:
+                isFirst=false;
+                startLocation();
+                break;
         }
     }
 
@@ -216,6 +210,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
      * 查询附近的店铺
      */
     private void getStore(){
+        showProgress("店铺查询中...",true);
         HttpMethod.getNearStore(mHandler);
     }
 
@@ -227,6 +222,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     private void setMark(String msg){
         try {
             list.clear();
+            mBaiduMap.clear();
             final JSONObject jsonObject=new JSONObject(msg);
             final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -254,6 +250,51 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * 定位回调
+     * @param geoCodeResult
+     */
+    public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+    }
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+        clearTask();
+        if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+            return;
+        }
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(reverseGeoCodeResult.getLocation()));
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(18f), 500);
+        //查询附近的店铺
+        getStore();
+    }
+
+    /**
+     * 地图触摸状态改变监听(地图移动获取坐标)
+     */
+    public class Maptouch implements BaiduMap.OnMapStatusChangeListener {
+        public void onMapStatusChange(MapStatus mapStatus) {
+        }
+
+        public void onMapStatusChangeFinish(MapStatus mapStatus) {
+            LatLng finishLng2 = mapStatus.target;// 获取地图中心点坐标
+            // 计算距离
+            Double distance = Util.GetShortDistance(finishLng.longitude, finishLng.latitude, finishLng2.longitude, finishLng2.latitude);
+            if(distance>500){
+                //查询附近的店铺
+                getStore();
+            }
+            return;
+        }
+
+        public void onMapStatusChangeStart(MapStatus arg0) {
+        }
+
+        @Override
+        public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
+
+        }
     }
 
     /**

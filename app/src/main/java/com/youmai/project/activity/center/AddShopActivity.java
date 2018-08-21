@@ -169,16 +169,15 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                      showProgress("图片压缩中...",false);
                      mHandler.postDelayed(new Runnable() {
                          public void run() {
-                             final List<String> imgAddress=new ArrayList<>();
                              for (int i=0;i<Bimp.selectBitmap.size();i++){
                                  final File file=new File(Bimp.selectBitmap.get(i).getImagePath());
-                                 if(null!=file){
-                                     final String newPath=BitMapUtils.compressBitMap(file);
-                                     final File file1=new File(newPath);
-                                     if(null!=file1){
-                                         imgAddress.add(newPath);
-                                         listFile.add(file1);
-                                     }
+                                 if(!file.isFile()){
+                                     return;
+                                 }
+                                 final String newPath=BitMapUtils.compressBitMap(file);
+                                 final File file1=new File(newPath);
+                                 if(file1.isFile()){
+                                     listFile.add(file1);
                                  }
                              }
                              showProgress("添加宝贝中...",false);
@@ -288,6 +287,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
+                    listFile.clear();
                     break;
                 default:
                     break;

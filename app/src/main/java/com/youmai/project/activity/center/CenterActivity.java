@@ -8,10 +8,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.MyGoodsAdapter;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.callback.DeleteBabyCallBack;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.HttpBaseBean;
@@ -49,6 +52,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
      * 初始化控件
      */
     private void initView(){
+        TextView tvNickName=(TextView)findViewById(R.id.tv_ac_name);
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -69,6 +73,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                 getMyGoodsList(HandlerConstant.GET_MYGOODS_SUCCESS);
             }
         }, 0);
+        tvNickName.setText(MyApplication.userInfoBean.getNickname());
         findViewById(R.id.tv_ac_add).setOnClickListener(this);
         findViewById(R.id.tv_ac_order).setOnClickListener(this);
         findViewById(R.id.lin_ac_jiaoyi).setOnClickListener(this);

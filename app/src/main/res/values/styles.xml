@@ -60,4 +60,11 @@
         <!-- 半透明 -->
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <!-- popupwindow 动画 -->
+    <style name="animation">
+        <item name="android:windowEnterAnimation">@anim/enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/out_anim</item>
+    </style>
+
 </resources>

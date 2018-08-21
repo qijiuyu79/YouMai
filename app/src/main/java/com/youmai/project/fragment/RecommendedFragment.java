@@ -23,10 +23,8 @@ import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.view.RefreshLayout;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,65 +107,17 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         if(TextUtils.isEmpty(message)){
             return;
         }
-        try {
-            final JSONObject jsonObject=new JSONObject(message);
-            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            List<GoodsBean> list=new ArrayList<>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                 GoodsBean goodsBean=new GoodsBean();
-                 goodsBean.setAddress(jsonObject1.getString("address"));
-                 goodsBean.setDescription(jsonObject1.getString("description"));
-                 goodsBean.setId(jsonObject1.getString("id"));
-                 goodsBean.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
-                 goodsBean.setPresentPrice(jsonObject1.getDouble("presentPrice"));
-                 List<String> imgList=new ArrayList<>();
-
-                //解析图片
-                if(!jsonObject1.isNull("images")){
-                    final JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
-                    for (int j = 0; j < jsonArray1.length(); j++) {
-                        imgList.add(jsonArray1.getString(j));
-                    }
-                    goodsBean.setImgList(imgList);
-                }
-
-                //解析经纬度
-                final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
-                for (int k = 0; k < jsonArray2.length(); k++) {
-                     if(k==0){
-                         goodsBean.setLongitude(jsonArray2.getDouble(k));
-                     }else{
-                         goodsBean.setLatitude(jsonArray2.getDouble(k));
-                     }
-                }
-
-                //解析用户信息
-                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("seller"));
-                if(!jsonObject2.isNull("head")){
-                    goodsBean.setHead(jsonObject2.getString("head"));
-                }
-                if(!jsonObject2.isNull("nickname")){
-                    goodsBean.setNickname(jsonObject2.getString("nickname"));
-                }
-                if(!jsonObject2.isNull("storeId")){
-                    goodsBean.setStoreId(jsonObject2.getString("storeId"));
-                }
-                list.add(goodsBean);
-            }
-            listBeanAll.addAll(list);
-            if(null==recommendedAdapter){
-                recommendedAdapter=new RecommendedAdapter(getActivity(),listBeanAll);
-                listView.setAdapter(recommendedAdapter);
-            }else{
-                recommendedAdapter.notifyDataSetChanged();
-            }
-            if(list.size()<20){
-                isTotal=true;
-                swipeLayout.setFooter(isTotal);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        List<GoodsBean> list=JsonUtils.getGoods(message);
+        listBeanAll.addAll(list);
+        if(null==recommendedAdapter){
+            recommendedAdapter=new RecommendedAdapter(getActivity(),listBeanAll);
+            listView.setAdapter(recommendedAdapter);
+        }else{
+            recommendedAdapter.notifyDataSetChanged();
+        }
+        if(list.size()<20){
+            isTotal=true;
+            swipeLayout.setFooter(isTotal);
         }
     }
 
@@ -181,7 +131,6 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LogUtils.e("position="+position);
         GoodsBean goodsBean=listBeanAll.get(--position);
         if(null==goodsBean){
             return;

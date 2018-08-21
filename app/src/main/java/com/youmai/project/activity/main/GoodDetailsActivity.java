@@ -6,30 +6,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.GoodsListAdapter;
-import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.MyGridView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +77,8 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         tvPresentPrice.setText("现价："+ Util.setDouble(goodsBean.getPresentPrice()/100));
         tvAddress.setText(goodsBean.getAddress());
         imageView.setOnClickListener(this);
-
+        findViewById(R.id.tv_agd_buy).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
 
@@ -111,68 +105,31 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
      * @param msg
      */
     private void parsingData(String msg){
-        if(TextUtils.isEmpty(msg)){
-            return;
-        }
-        try {
-            final JSONObject jsonObject=new JSONObject(msg);
-            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                GoodsBean goodsBean=new GoodsBean();
-                goodsBean.setAddress(jsonObject1.getString("address"));
-                goodsBean.setDescription(jsonObject1.getString("description"));
-                goodsBean.setId(jsonObject1.getString("id"));
-                goodsBean.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
-                goodsBean.setPresentPrice(jsonObject1.getDouble("presentPrice"));
-                List<String> imgList=new ArrayList<>();
-
-                //解析图片
-                if(!jsonObject1.isNull("images")){
-                    final JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
-                    for (int j = 0; j < jsonArray1.length(); j++) {
-                        imgList.add(jsonArray1.getString(j));
-                    }
-                    goodsBean.setImgList(imgList);
-                }
-
-                //解析经纬度
-                final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
-                for (int k = 0; k < jsonArray2.length(); k++) {
-                    if(k==0){
-                        goodsBean.setLongitude(jsonArray2.getDouble(k));
-                    }else{
-                        goodsBean.setLatitude(jsonArray2.getDouble(k));
-                    }
-                }
-
-                //解析用户信息
-                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("seller"));
-                if(!jsonObject2.isNull("head")){
-                    goodsBean.setHead(jsonObject2.getString("head"));
-                }
-                if(!jsonObject2.isNull("nickname")){
-                    goodsBean.setNickname(jsonObject2.getString("nickname"));
-                }
-                if(!jsonObject2.isNull("storeId")){
-                    goodsBean.setStoreId(jsonObject2.getString("storeId"));
-                }
-                listBeanAll.add(goodsBean);
-            }
-            goodsListAdapter=new GoodsListAdapter(mContext,listBeanAll);
-            myGridView.setAdapter(goodsListAdapter);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        List<GoodsBean> list= JsonUtils.getGoods(msg);
+        listBeanAll.addAll(list);
+        goodsListAdapter=new GoodsListAdapter(mContext,listBeanAll);
+        myGridView.setAdapter(goodsListAdapter);
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent=new Intent();
         switch (v.getId()){
             case R.id.img_agd_img:
-                 Intent intent=new Intent(mContext,ShowImgActivity.class);
+                 intent.setClass(mContext,ShowImgActivity.class);
                  intent.putExtra("imgs", MyApplication.gson.toJson(goodsBean.getImgList()));
                  startActivity(intent);
+                 break;
+            //购买
+            case R.id.tv_agd_buy:
+                 intent.setClass(mContext,BuyGoodsActivity.class);
+                 Bundle bundle=new Bundle();
+                 bundle.putSerializable("goodsBean",goodsBean);
+                 intent.putExtras(bundle);
+                 startActivity(intent);
+                 break;
+            case R.id.lin_back:
+                 finish();
                  break;
              default:
                  break;
@@ -187,6 +144,6 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         if(null==goodsBean){
             return;
         }
-        HttpMethod.getGoodsByStoreId(goodsBean.getStoreId(),mHandler);
+        HttpMethod.getGoodsByStoreId(1,goodsBean.getStoreId(),mHandler);
     }
 }
