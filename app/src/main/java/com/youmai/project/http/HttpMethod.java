@@ -445,15 +445,15 @@ public class HttpMethod extends BaseRequst {
      * 根据关键字搜索
      * @param handler
      */
-    public static void getGoodsByKey(String key,final Handler handler) {
+    public static void getGoodsByKey(String key,int page,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("key",key);
-        map.put("min_distance","0");
-        map.put("max_distance","5000");
+        map.put("page",page+"");
+        map.put("row","20");
         Http.getRetrofit().create(HttpApi.class).getGoodsByKey(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.SEARCH_BOODS_SUCCESS, response.body().string());
+                    sendMessage(handler, index, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
@@ -570,7 +570,7 @@ public class HttpMethod extends BaseRequst {
      * @param storeId
      * @param handler
      */
-    public static void getGoodsByStoreId(int page,String storeId, final Handler handler) {
+    public static void getGoodsByStoreId(int page,String storeId, final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("storeId",storeId);
         map.put("page",page+"");
@@ -578,7 +578,7 @@ public class HttpMethod extends BaseRequst {
         Http.getRetrofit().create(HttpApi.class).getLocationGoods(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS, response.body().string());
+                    sendMessage(handler, index, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);

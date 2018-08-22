@@ -189,7 +189,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                 return false;
             }
             showProgress("商品查询中...",true);
-            HttpMethod.getGoodsByStoreId(1,store.getId(),mHandler);
+            HttpMethod.getGoodsByStoreId(1,store.getId(),HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS,mHandler);
         }
         return true;
     }

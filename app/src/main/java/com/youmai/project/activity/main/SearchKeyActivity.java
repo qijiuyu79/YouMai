@@ -76,6 +76,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     private List<GoodsBean> listBeanAll=new ArrayList<>();
     //输入的关键字
     private String strKey;
+    private int page=1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +108,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
+        swipeLayout.setVisibility(View.GONE);
         swipeLayout.setColorSchemeResources(R.color.color_bule2,
                 R.color.color_bule,
                 R.color.color_bule2,
@@ -172,6 +174,9 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     }
 
 
+    /**
+     * 点击标签的回调
+     */
     TabClickCallBack tabClickCallBack=new TabClickCallBack() {
         /**
          * 标签点击事件
@@ -182,8 +187,10 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                 return;
             }
             etKeys.setText(name);
+            strKey=name;
+            page=1;
             //按关键字搜索
-            searchByKeys(name);
+            searchByKeys();
         }
     };
 
@@ -213,7 +220,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
             MyApplication.spUtil.addString(SPUtil.TAG_KEY,MyApplication.gson.toJson(keyMap));
 
             //按关键字搜索
-            searchByKeys(strKey);
+            searchByKeys();
             return true;
         }
         return false;
@@ -222,12 +229,9 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     /**
      * 按关键字搜索
      */
-    private void searchByKeys(final String key){
-        //清空之前搜索过的列表
-        listBeanAll.clear();
-        if(null!=recommendedAdapter){
-            recommendedAdapter.notifyDataSetChanged();
-        }
+    private void searchByKeys(){
+        //页数设置为1
+        page=1;
         swipeLayout.setVisibility(View.VISIBLE);
         swipeLayout.post(new Thread(new Runnable() {
             public void run() {
@@ -238,7 +242,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
             public void run() {
                 listView.addHeaderView(new View(SearchKeyActivity.this));
                 //查询数据
-                getGoods(key);
+                getGoods(HandlerConstant.SEARCH_BOODS_SUCCESS);
             }
         }, 0);
     }
@@ -251,6 +255,11 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
             switch (msg.what){
                 case HandlerConstant.SEARCH_BOODS_SUCCESS:
                     final String message= (String) msg.obj;
+                    //清空之前搜索过的列表
+                    listBeanAll.clear();
+                    if(null!=recommendedAdapter){
+                        recommendedAdapter.notifyDataSetChanged();
+                    }
                     refresh(message);
                     swipeLayout.setRefreshing(false);
                     break;
@@ -275,6 +284,10 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
             listView.setAdapter(recommendedAdapter);
         }else{
             recommendedAdapter.notifyDataSetChanged();
+        }
+        if(list.size()<20){
+            isTotal=true;
+            swipeLayout.setFooter(isTotal);
         }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -364,17 +377,34 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     /**
      * 查询数据
      */
-    private void getGoods(String key){
-        HttpMethod.getGoodsByKey(key,mHandler);
+    private void getGoods(int index){
+        HttpMethod.getGoodsByKey(strKey,page,index,mHandler);
     }
 
     @Override
     public void onRefresh() {
-
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page=1;
+                isTotal=false;
+                swipeLayout.setFooter(isTotal);
+                getGoods(HandlerConstant.SEARCH_BOODS_SUCCESS);
+            }
+        }, 200);
     }
 
     @Override
     public void onLoad() {
+        if(isTotal){
+            swipeLayout.setLoading(false);
+            return;
+        }
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                page++;
+                getGoods(HandlerConstant.SEARCH_BOODS_SUCCESS2);
+            }
+        }, 200);
 
     }
 

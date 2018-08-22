@@ -67,7 +67,7 @@ public class TagLayoutView extends ViewGroup {
 			LayoutInflater inflater = LayoutInflater.from(getContext());
 			for (final String lable : lables) {
 				//获取标签布局
-				final TextView tv = (TextView) inflater.inflate(R.layout.item_lable, null);
+				final ClickTextView tv = (ClickTextView) inflater.inflate(R.layout.item_lable, null);
 				tv.setText(lable);
 				tv.setTag(lable);
 				//设置选中效果

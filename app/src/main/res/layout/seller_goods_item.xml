@@ -1,0 +1,113 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/black_location"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="13dp"/>
+
+        <TextView
+            android:id="@+id/tv_sgi_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/color_707070"
+            android:layout_marginLeft="39dp"
+            android:layout_marginTop="13dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@mipmap/share_icon"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="13dp"/>
+
+        <RelativeLayout
+            android:id="@+id/rel_sgi"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@color/color_f8f8f8"
+            android:layout_below="@id/tv_sgi_address"
+            android:layout_marginTop="13dp"
+            android:padding="15dp">
+
+            <ImageView android:id="@+id/img_sgi_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <TextView android:id="@+id/tv_sgi_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/img_sgi_icon"
+                android:layout_marginLeft="13dp"
+                android:textColor="@color/color_020202"
+                android:textSize="13sp"
+                android:maxLines="3"
+                android:lineSpacingExtra="0.5dp"
+                android:lineSpacingMultiplier="1.5"/>
+
+            <TextView
+                android:id="@+id/tv_sgi_presentPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/img_sgi_icon"
+                android:layout_alignBottom="@id/img_sgi_icon"
+                android:layout_marginLeft="13dp"
+                android:textSize="15sp"
+                android:textColor="@color/color_FF4081"/>
+
+            <TextView
+                android:id="@+id/tv_sgi_originalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_sgi_presentPrice"
+                android:layout_alignBottom="@id/tv_sgi_presentPrice"
+                android:layout_marginLeft="13dp"
+                android:textSize="12sp"
+                android:textColor="@color/color_999999"/>
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_sgi2"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/rel_sgi">
+
+        <TextView
+            android:id="@+id/tv_sgi_creatTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:textColor="@color/color_747872"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"/>
+
+        <com.youmai.project.view.ClickTextView
+            android:id="@+id/tv_sgi_buy"
+            android:layout_width="65dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:text="购买"
+            android:textColor="@color/color_FF4081"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:background="@drawable/bg_recommended_buy"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/rel_sgi2"
+        android:background="@color/color_F5F5F5"/>
+
+</RelativeLayout>

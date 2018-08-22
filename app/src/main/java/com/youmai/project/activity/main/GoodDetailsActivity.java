@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.map.SellerGoodsActivity;
 import com.youmai.project.adapter.GoodsListAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
@@ -78,6 +79,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         tvAddress.setText(goodsBean.getAddress());
         imageView.setOnClickListener(this);
         findViewById(R.id.tv_agd_buy).setOnClickListener(this);
+        findViewById(R.id.lin_search).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -114,6 +116,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent intent=new Intent();
+        Bundle bundle=new Bundle();
         switch (v.getId()){
             case R.id.img_agd_img:
                  intent.setClass(mContext,ShowImgActivity.class);
@@ -123,7 +126,13 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
             //购买
             case R.id.tv_agd_buy:
                  intent.setClass(mContext,BuyGoodsActivity.class);
-                 Bundle bundle=new Bundle();
+                 bundle.putSerializable("goodsBean",goodsBean);
+                 intent.putExtras(bundle);
+                 startActivity(intent);
+                 break;
+            //查看更多的卖家商品
+            case R.id.lin_search:
+                 intent.setClass(mContext, SellerGoodsActivity.class);
                  bundle.putSerializable("goodsBean",goodsBean);
                  intent.putExtras(bundle);
                  startActivity(intent);
@@ -144,6 +153,6 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         if(null==goodsBean){
             return;
         }
-        HttpMethod.getGoodsByStoreId(1,goodsBean.getStoreId(),mHandler);
+        HttpMethod.getGoodsByStoreId(1,goodsBean.getStoreId(),HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS,mHandler);
     }
 }

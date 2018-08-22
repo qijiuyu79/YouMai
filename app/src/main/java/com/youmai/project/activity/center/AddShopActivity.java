@@ -287,6 +287,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
+                    deleteImg();
                     listFile.clear();
                     break;
                 default:

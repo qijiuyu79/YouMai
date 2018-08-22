@@ -136,6 +136,9 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         }
         try {
             final JSONObject jsonObject=new JSONObject(message);
+            if(jsonObject.getInt("code")!=200){
+                return;
+            }
             final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
             List<GoodsBean> list=new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
