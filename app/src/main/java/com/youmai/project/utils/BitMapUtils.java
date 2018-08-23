@@ -1,6 +1,9 @@
 package com.youmai.project.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.widget.ScrollView;
 
 import com.youmai.project.utils.photo.PicturesUtil;
 
@@ -42,5 +45,22 @@ public class BitMapUtils {
             bitmap=null;
         }
         return newPath;
+    }
+
+
+
+    /**
+     * 截屏webview
+     */
+    public static Bitmap screenshot(ScrollView scrollView) {
+        int h = 0;
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+            scrollView.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        Bitmap bitmap= Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.RGB_565);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+        return bitmap;
     }
 }

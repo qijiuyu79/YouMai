@@ -8,4 +8,16 @@
     <string name="payment_has_been_cancelled">已取消支付！</string>
     <string name="payment_confirming">支付结果确认中</string>
     <string name="Please_install_alipay_client_first">请先安装支付宝客户端</string>
+    <string name="share_to">分享到</string>
+    <string name="share_wei">微信好友</string>
+    <string name="share_peng">朋友圈</string>
+    <string name="share_qq">QQ好友</string>
+    <string name="share_bo">新浪微博</string>
+    <string name="share_kong">QQ空间</string>
+    <string name="collect_success">收藏成功</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_failed_install_qq">分享失败，请安装QQ客户端</string>
+    <string name="share_failed">分享失败</string>
+    <string name="share_canceled">分享取消</string>
+    <string name="share_failed_install_wechat">分享失败，请安装微信客户端</string>
 </resources>

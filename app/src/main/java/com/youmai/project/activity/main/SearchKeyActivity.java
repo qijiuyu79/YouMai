@@ -232,7 +232,6 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     private void searchByKeys(){
         //页数设置为1
         page=1;
-        swipeLayout.setVisibility(View.VISIBLE);
         swipeLayout.post(new Thread(new Runnable() {
             public void run() {
                 swipeLayout.setRefreshing(true);
@@ -285,6 +284,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         }else{
             recommendedAdapter.notifyDataSetChanged();
         }
+        swipeLayout.setVisibility(View.VISIBLE);
         if(list.size()<20){
             isTotal=true;
             swipeLayout.setFooter(isTotal);

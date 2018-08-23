@@ -7,18 +7,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Toast;
+
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
+import com.youmai.project.R;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.http.HttpConstant;
+import com.youmai.project.utils.LogUtils;
+import com.youmai.project.utils.Util;
 
 public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHandler {
     private IWXAPI api;
     // 用于存储获取到的用户code
     private String myCode = "";
+    private Context mContext = MyApplication.application;
+    public static final String share_success="net.edaibu.easywalking.SHARE_SUCCESS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,7 @@ public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHa
 
     @Override
     public void onResp(BaseResp resp) {
+        LogUtils.e("111111111111111");
         if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
             if (resp instanceof SendAuth.Resp) {
                 SendAuth.Resp newResp = (SendAuth.Resp) resp;
@@ -43,6 +52,10 @@ public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHa
                 intent.putExtra("auth_code", myCode);
                 sendBroadcast(intent);
             } else {
+                if (!Util.isFastClick()) {
+                    return;
+                }
+                Toast.makeText(mContext, mContext.getString(R.string.share_success), Toast.LENGTH_SHORT).show();
             }
         } else {
             //一定要加super，实现我们的方法，否则不能回调
@@ -52,3 +65,4 @@ public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHa
     }
 
 }
+

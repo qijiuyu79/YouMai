@@ -227,7 +227,9 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                              break;
                          }
                      }
-                    recommendedAdapter.notifyDataSetChanged();
+                     if(null!=recommendedAdapter){
+                         recommendedAdapter.notifyDataSetChanged();
+                     }
                      break;
             }
         }

@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.TabActivity;
+import com.youmai.project.activity.center.CenterActivity;
+import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
 
@@ -48,7 +50,9 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
             if(null==goodsBean){
                 return;
             }
-            Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
+            if(goodsBean.getImgList().size()>0){
+                Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
+            }
             tvContent.setText(goodsBean.getDescription());
             tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
             tvMoney2.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
@@ -73,9 +77,9 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         switch (v.getId()){
             //查看订单
             case R.id.lin_abgs_order:
-                 Intent intent=new Intent(TabActivity.ACTION_INTENT_ACTIVITY);
-                 intent.putExtra("type",3);
-                 sendBroadcast(intent);
+                 Intent intent=new Intent(BuyGoodSuccessActivity.this,OrderActivity.class);
+                 intent.putExtra("type",0);
+                 startActivity(intent);
                  break;
             //联系卖家
             case R.id.lin_abgs_contact:

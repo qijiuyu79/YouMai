@@ -1,5 +1,6 @@
 package com.youmai.project.activity.map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -63,6 +64,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     private List<Store> list=new ArrayList<>();
     //店铺图标
     private BitmapDescriptor bitmap;
+    private Store store;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,15 +159,34 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                      if(list.size()>0){
                          View view= LayoutInflater.from(mContext).inflate(R.layout.map_bottom_goods,null);
                          TextView tvNickName=(TextView)view.findViewById(R.id.tv_am_nickName);
+                         tvNickName.setText(store.getNickname());
                          MyGridView myGridView=(MyGridView)view.findViewById(R.id.mg_am_goods);
+                         bottomPopupWindow(0,0,view);
+                         MapGoodsListAdapter mapGoodsListAdapter=new MapGoodsListAdapter(mContext,list);
+                         myGridView.setAdapter(mapGoodsListAdapter);
+
+                         //查看更多商品
+                         view.findViewById(R.id.lin_search).setOnClickListener(new View.OnClickListener() {
+                             public void onClick(View v) {
+                                 Intent intent=new Intent();
+                                 Bundle bundle=new Bundle();
+                                 intent.setClass(mContext, SellerGoodsActivity.class);
+                                 GoodsBean goodsBean=new GoodsBean();
+                                 goodsBean.setStoreId(store.getId());
+                                 goodsBean.setNickname(store.getNickname());
+                                 bundle.putSerializable("goodsBean",goodsBean);
+                                 intent.putExtras(bundle);
+                                 startActivity(intent);
+
+                             }
+                         });
+
+                         //关闭弹框
                          view.findViewById(R.id.rel_mbg).setOnClickListener(new View.OnClickListener() {
                              public void onClick(View v) {
                                  mPopuwindow.dismiss();
                              }
                          });
-                         bottomPopupWindow(0,0,view);
-                         MapGoodsListAdapter mapGoodsListAdapter=new MapGoodsListAdapter(mContext,list);
-                         myGridView.setAdapter(mapGoodsListAdapter);
                      }
                      break;
                  default:
@@ -184,7 +205,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     public boolean onMarkerClick(Marker marker) {
         if (null != marker) {
             final int index = marker.getZIndex();
-            final Store store=list.get(index);
+            store=list.get(index);
             if(null==store){
                 return false;
             }
@@ -229,6 +250,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
                 Store store=new Store();
                 store.setId(jsonObject1.getString("id"));
+                store.setNickname(jsonObject1.getString("nickname"));
                 //解析经纬度
                 JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
                 if(null==jsonObject2){

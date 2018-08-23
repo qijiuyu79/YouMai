@@ -20,16 +20,16 @@
             android:layout_marginLeft="10dp">
 
             <ImageView
-                android:layout_width="9dp"
-                android:layout_height="16dp"
-                android:src="@mipmap/ic_black_back"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_next_icon"/>
 
         </LinearLayout>
 
         <TextView android:id="@+id/tv_head"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="宝贝详情"
+            android:text="卖家宝贝"
             android:textSize="18sp"
             android:textColor="@android:color/white"
             android:layout_centerInParent="true"

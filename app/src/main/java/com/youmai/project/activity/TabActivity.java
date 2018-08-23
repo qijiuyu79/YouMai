@@ -1,9 +1,6 @@
 package com.youmai.project.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -42,7 +39,6 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     private List<TextView> tvList=new ArrayList<>();
     // 按两次退出
     protected long exitTime = 0;
-    public final static String ACTION_INTENT_ACTIVITY = "net.youmai.adminapp.action.intent.activity";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -56,8 +52,6 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
         initView();
-        //注册广播
-        registerReceiver();
     }
 
     private void setTranslucentStatus(boolean on) {
@@ -203,34 +197,12 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         }
     }
 
-    /**
-     * 注册广播
-     */
-    private void registerReceiver() {
-        IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction(ACTION_INTENT_ACTIVITY);
-        // 注册广播监听
-        registerReceiver(mBroadcastReceiver, myIntentFilter);
-    }
-
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            final int type=intent.getIntExtra("type",-1);
-            if (action.equals(ACTION_INTENT_ACTIVITY) && type!=-1) {
-                tabHost.setCurrentTab(type);
-            }
-        }
-    };
-
-
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(getApplicationContext(),"再按一次退出程序!",Toast.LENGTH_LONG).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                unregisterReceiver(mBroadcastReceiver);
                 GetLocation.getInstance().stopLocation();
                 ActivitysLifecycle.getInstance().exit();
             }

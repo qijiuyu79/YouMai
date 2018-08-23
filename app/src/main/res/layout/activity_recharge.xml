@@ -1,118 +1,180 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:background="@color/color_F5F5F5">
+    android:fitsSystemWindows="true">
 
-    <include layout="@layout/head"/>
+    <RelativeLayout android:id="@+id/rel_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
+
+        <LinearLayout android:id="@+id/lin_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="30dp"
+            android:layout_marginLeft="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_next_icon"/>
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="充值"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_aw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/rel_head"
+        android:layout_marginTop="52dp">
+
+        <com.youmai.project.view.ClickLinearLayout
+            android:id="@+id/lin_ar_wx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="47dp"
+                android:src="@mipmap/with_wx"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="微信"
+                android:textSize="15sp"
+                android:textColor="@color/color_464646"
+                android:gravity="center"
+                android:layout_marginTop="33dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="赠送0积分"
+                android:textSize="12sp"
+                android:textColor="@color/color_a2a0a0"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+        </com.youmai.project.view.ClickLinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="127dp"
+            android:background="@color/color_dbd8d8"/>
+
+        <com.youmai.project.view.ClickLinearLayout
+            android:id="@+id/lin_ar_zfb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="47dp"
+                android:src="@mipmap/with_zfb"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="支付宝"
+                android:textSize="15sp"
+                android:textColor="@color/color_464646"
+                android:gravity="center"
+                android:layout_marginTop="33dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="赠送0积分"
+                android:textSize="12sp"
+                android:textColor="@color/color_a2a0a0"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+        </com.youmai.project.view.ClickLinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_aw2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/lin_aw"
+        android:background="@color/color_F5F5F5"
+        android:layout_marginTop="32dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="22dp"
-        android:text="充值"
-        android:textSize="22sp"
-        android:textColor="@color/color_666666"/>
+        android:text="充值金额"
+        android:textColor="@color/color_464646"
+        android:textSize="15sp"
+        android:layout_below="@id/view_aw2"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥"
+        android:textSize="40sp"
+        android:layout_below="@id/view_aw2"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="34dp"
+        android:textColor="@android:color/black"/>
+
+    <EditText
+        android:id="@+id/et_ar_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="40sp"
+        android:layout_below="@id/view_aw2"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="34dp"
+        android:inputType="phone"/>
+
+    <View
+        android:id="@+id/view_aw3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_dbd8d8"
+        android:layout_below="@id/et_ar_money"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
+        android:text="充值成功后会赠送相应金额的用户积分"
+        android:textSize="13sp"
+        android:textColor="@color/color_b7b5b5"
+        android:layout_below="@id/view_aw3"
         android:layout_marginTop="10dp"
-        android:text="充值成功会赠送相应金额的用户积分"
-        android:textSize="12sp"
-        android:textColor="@color/color_666666"/>
+        android:gravity="center"/>
 
-
-    <com.youmai.project.view.MeterailEditText
-        android:id="@+id/et_ar_money"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:maxLength="11"
-        app:hint="充值金额">
-
-    </com.youmai.project.view.MeterailEditText>
-
-    <RelativeLayout
-        android:id="@+id/rel_abg_weixin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:text="微信"
-            android:textColor="@color/color_33333"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:id="@+id/img_abg_wei_select"
-            android:layout_width="18dp"
-            android:layout_height="19dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/select_yes" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="13dp"
-        android:background="@color/color_ececec"/>
-
-    <RelativeLayout
-        android:id="@+id/rel_abg_zhi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="支付宝"
-            android:textColor="@color/color_33333"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:id="@+id/img_abg_zhi_select"
-            android:layout_width="18dp"
-            android:layout_height="19dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/select_no" />
-
-    </RelativeLayout>
-
-    <com.youmai.project.view.ClickTextView
-        android:id="@+id/tv_ar_recharge"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/bg_tabs"
-        android:gravity="center"
-        android:text="充值"
-        android:textColor="@android:color/white"
-        android:textSize="15sp" />
-
-
-</LinearLayout>
+</RelativeLayout>

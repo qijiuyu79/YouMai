@@ -4,14 +4,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.Window;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
@@ -19,7 +20,8 @@ import com.youmai.project.bean.PayResult;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.PayUtils;
-import com.youmai.project.view.MeterailEditText;
+import com.youmai.project.utils.StatusBarUtils;
+import com.youmai.project.utils.SystemBarTintManager;
 
 import org.json.JSONObject;
 
@@ -30,13 +32,20 @@ import org.json.JSONObject;
 
 public class RechargeActivity extends BaseActivity implements View.OnClickListener{
 
-    private MeterailEditText etMoney;
-    private ImageView imgWeixin,imgZhifu;
-    private String payStr="WECHAT";
-    @Override
+    private EditText etMoney;
+    //充值方式
+    private String payStr;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_recharge);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
+            setTranslucentStatus(true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.color_FF4081);
         initView();
         //注册广播
         registerReceiver();
@@ -49,50 +58,48 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         TextView tvHead = (TextView) findViewById(R.id.tv_head);
         tvHead.setText("充值");
-        etMoney=(MeterailEditText)findViewById(R.id.et_ar_money);
-        etMoney.setInPutType(InputType.TYPE_CLASS_PHONE);
+        etMoney=(EditText) findViewById(R.id.et_ar_money);
         etMoney.setFocusable(true);
         etMoney.setFocusableInTouchMode(true);
-        imgWeixin=(ImageView)findViewById(R.id.img_abg_wei_select);
-        imgZhifu=(ImageView)findViewById(R.id.img_abg_zhi_select);
+        findViewById(R.id.lin_ar_wx).setOnClickListener(this);
+        findViewById(R.id.lin_ar_zfb).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
-        findViewById(R.id.rel_abg_weixin).setOnClickListener(this);
-        findViewById(R.id.rel_abg_zhi).setOnClickListener(this);
-        findViewById(R.id.tv_ar_recharge).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             //微信支付
-            case R.id.rel_abg_weixin:
+            case R.id.lin_ar_wx:
                 payStr="WECHAT";
-                imgWeixin.setImageDrawable(getResources().getDrawable(R.mipmap.select_yes));
-                imgZhifu.setImageDrawable(getResources().getDrawable(R.mipmap.select_no));
+                recharge();
                 break;
             //支付宝支付
-            case R.id.rel_abg_zhi:
+            case R.id.lin_ar_zfb:
                 payStr="ALIPAY";
-                imgWeixin.setImageDrawable(getResources().getDrawable(R.mipmap.select_no));
-                imgZhifu.setImageDrawable(getResources().getDrawable(R.mipmap.select_yes));
+                recharge();
                 break;
-            case R.id.tv_ar_recharge:
-                 final String money=etMoney.getText().toString().trim();
-                 if(TextUtils.isEmpty(money)){
-                     showMsg("请输入要充值的金额！");
-                 }else if(Double.parseDouble(money)==0){
-                     showMsg("金额不能小于0元！");
-                 }else{
-                     showProgress("充值中...",false);
-                     HttpMethod.recharge(money,payStr,mHandler);
-                 }
-                 break;
             case R.id.lin_back:
                  finish();
                  break;
             default:
                 break;
 
+        }
+    }
+
+    /**
+     * 开始充值
+     */
+    private void recharge(){
+        final String money=etMoney.getText().toString().trim();
+        if(TextUtils.isEmpty(money)){
+            showMsg("请输入要充值的金额！");
+        }else if(Double.parseDouble(money)==0){
+            showMsg("金额不能小于0元！");
+        }else{
+            showProgress("充值中...",false);
+            HttpMethod.recharge(money,payStr,mHandler);
         }
     }
 

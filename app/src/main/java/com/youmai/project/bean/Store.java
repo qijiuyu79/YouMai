@@ -10,6 +10,7 @@ public class Store implements Serializable {
     private String id;
     private Double latitude=0.0;
     private Double longitude=0.0;
+    private String nickname;
 
     public String getId() {
         return id;
@@ -33,5 +34,13 @@ public class Store implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

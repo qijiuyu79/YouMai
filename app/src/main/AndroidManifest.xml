@@ -150,6 +150,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <!--配置友盟appkey -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5b10f2c9b27b0a0709000034" />

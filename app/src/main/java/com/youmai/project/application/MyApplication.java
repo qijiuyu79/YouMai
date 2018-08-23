@@ -7,6 +7,8 @@ import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.utils.ActivitysLifecycle;
 import com.youmai.project.utils.SPUtil;
@@ -27,6 +29,10 @@ public class MyApplication extends Application {
         gson = new Gson();
         spUtil = SPUtil.getInstance(this);
 
+        //初始化友盟
+        UMShareAPI.get(this);
+        com.umeng.socialize.Config.DEBUG = false;
+
         String str=spUtil.getString(SPUtil.USER_INFO);
         if(!TextUtils.isEmpty(str)) {
             userInfoBean = gson.fromJson(str, UserInfo.UserInfoBean.class);
@@ -39,5 +45,20 @@ public class MyApplication extends Application {
         SpeechUtility.createUtility(this, SpeechConstant.APPID +"=55d54ce6");
 
         registerActivityLifecycleCallbacks(ActivitysLifecycle.getInstance());
+    }
+
+
+    /**
+     * 设置分享
+     */
+
+    {
+        //微信
+        PlatformConfig.setWeixin("wx1a322841c0378eab", "3b0df5e49906d4d129721920aef465a1");
+        //新浪微博
+        PlatformConfig.setSinaWeibo("620570357", "d7bed770e0574a2d92f083883179edc8", "http://sns.whalecloud.com");
+        /*最新的版本需要加上这个回调地址，可以在微博开放平台申请的应用获取，必须要有*/
+        //QQ
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
 }

@@ -9,6 +9,7 @@ import com.youmai.project.bean.UserInfo;
 import com.youmai.project.bean.Version;
 import com.youmai.project.http.base.BaseRequst;
 import com.youmai.project.http.base.Http;
+import com.youmai.project.utils.LogUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -176,7 +177,9 @@ public class HttpMethod extends BaseRequst {
         Http.upLoadFile(HttpConstant.ADD_GOODS,"images", list, map, new okhttp3.Callback() {
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 try {
-                    sendMessage(handler, HandlerConstant.ADD_GOODS_SUCCESS, response.body().string());
+                    final String str=response.body().string();
+                    LogUtils.e(str+"__________________");
+                    sendMessage(handler, HandlerConstant.ADD_GOODS_SUCCESS, str);
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
