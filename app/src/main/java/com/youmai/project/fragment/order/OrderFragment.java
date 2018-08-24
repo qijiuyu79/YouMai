@@ -55,7 +55,9 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private DialogView dialogView;
     //此刻是第几个fragment
     private int fragmentIndex;
+    //交易完成广播
     private final static String ACTION_GOODS_COMPLETE_SUCCESS = "net.youmai.adminapp.action.goods.complete.success";
+    //交易取消广播
     private final static String ACTION_GOODS_CANCEL_SUCCESS = "net.youmai.adminapp.action.goods.cancel.success";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -458,6 +460,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(mBroadcastReceiver);
+        mActivity.unregisterReceiver(mBroadcastReceiver);
     }
 }

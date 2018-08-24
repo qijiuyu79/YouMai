@@ -113,7 +113,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         List<GoodsBean> list=JsonUtils.getGoods(message);
         listBeanAll.addAll(list);
         if(null==recommendedAdapter){
-            recommendedAdapter=new RecommendedAdapter(getActivity(),listBeanAll);
+            recommendedAdapter=new RecommendedAdapter(mActivity,listBeanAll);
             listView.setAdapter(recommendedAdapter);
         }else{
             recommendedAdapter.notifyDataSetChanged();
@@ -142,7 +142,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         if(null==goodsBean){
             return;
         }
-        Intent intent=new Intent(getActivity(), GoodDetailsActivity.class);
+        Intent intent=new Intent(mActivity, GoodDetailsActivity.class);
         Bundle bundle=new Bundle();
         bundle.putSerializable("goodsBean",goodsBean);
         intent.putExtras(bundle);
@@ -184,7 +184,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         if(isVisibleToUser && view!=null && listBeanAll.size()==0){
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
-                    listView.addHeaderView(new View(getActivity()));
+                    listView.addHeaderView(new View(mActivity));
                     getDataList(HandlerConstant.GET_LOCATION_GOODS_SUCCESS);
                 }
             }, 0);
@@ -208,7 +208,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS);
         // 注册广播监听
-        getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
+        mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -251,7 +251,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(mBroadcastReceiver);
+        mActivity.unregisterReceiver(mBroadcastReceiver);
     }
 
 }
