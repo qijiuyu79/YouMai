@@ -223,12 +223,16 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             switch (action){
                 //商品购买成功后的广播
                 case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                    final String goodId=intent.getStringExtra("goodId");
-                    if(TextUtils.isEmpty(goodId)){
+                    final Bundle bundle=intent.getExtras();
+                    if(null==bundle){
+                        return;
+                    }
+                    final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+                    if(null==goodsBean){
                         return;
                     }
                     for(int i=0,len=listAll.size();i<len;i++){
-                        if(listAll.get(i).getId().equals(goodId)){
+                        if(listAll.get(i).getId().equals(goodsBean.getId())){
                             listAll.remove(i);
                             break;
                         }

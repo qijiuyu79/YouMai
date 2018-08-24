@@ -217,7 +217,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         startActivity(intent);
         //发送广播
         Intent broadcastIntent=new Intent(ACTION_GOODS_PAYSUCCESS);
-        broadcastIntent.putExtra("goodId",goodsBean.getId());
+        broadcastIntent.putExtras(bundle);
         sendBroadcast(broadcastIntent);
         BuyGoodsActivity.this.finish();
     }

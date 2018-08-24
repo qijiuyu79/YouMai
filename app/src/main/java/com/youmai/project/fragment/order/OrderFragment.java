@@ -282,23 +282,34 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             switch (action){
                 //商品购买成功后的广播
                 case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                     final String goodId=intent.getStringExtra("goodId");
-                     if(TextUtils.isEmpty(goodId)){
+                    final Bundle bundle=intent.getExtras();
+                    if(null==bundle){
                         return;
-                     }
+                    }
+                    final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+                    if(null==goodsBean){
+                        return;
+                    }
                      //删除已取消集合该商品对象
                      for(int i=0,len=listCancle.size();i<len;i++){
-                        if(listCancle.get(i).getId().equals(goodId)){
+                        if(listCancle.get(i).getId().equals(goodsBean.getId())){
                             listCancle.remove(i);
                             break;
                         }
                      }
                     //修改全部订单集合中该商品的状态
+                    int num=-1;
                     for(int i=0,len=listBeanAll.size();i<len;i++){
-                        if(listBeanAll.get(i).getId().equals(goodId)){
-                            listBeanAll.get(i).setStated(1);
+                        if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
+                            num=i;
                             break;
                         }
+                    }
+                    if(num==-1){
+                        goodsBean.setStated(1);
+                        listBeanAll.add(0,goodsBean);
+                    }else{
+                        listBeanAll.get(num).setStated(1);
                     }
                     if(null!=orderAdapter){
                         orderAdapter.notifyDataSetChanged();
@@ -331,12 +342,26 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         }
         if(type==1){
             if(listComplete.size()>0){
+                goodsBean.setStated(2);
                 listComplete.add(0,goodsBean);
+            }
+            for(int i=0;i<listBeanAll.size();i++){
+                if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
+                    listBeanAll.get(i).setStated(2);
+                    break;
+                }
             }
         }
         if(type==2){
             if(listCancle.size()>0){
+                goodsBean.setStated(4);
                 listCancle.add(0,goodsBean);
+            }
+            for(int i=0;i<listBeanAll.size();i++){
+                if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
+                    listBeanAll.get(i).setStated(4);
+                    break;
+                }
             }
         }
         if(null!=orderAdapter){
