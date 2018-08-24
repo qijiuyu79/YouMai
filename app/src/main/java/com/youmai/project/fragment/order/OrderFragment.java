@@ -54,7 +54,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private int page=1;
     private DialogView dialogView;
     //此刻是第几个fragment
-    private int index;
+    private int fragmentIndex;
     private final static String ACTION_GOODS_COMPLETE_SUCCESS = "net.youmai.adminapp.action.goods.complete.success";
     private final static String ACTION_GOODS_CANCEL_SUCCESS = "net.youmai.adminapp.action.goods.cancel.success";
     public void onCreate(Bundle savedInstanceState) {
@@ -163,7 +163,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
 
     private void setDataByIndex(int type){
-        switch (index){
+        switch (fragmentIndex){
             case 0:
                 if(type==0){
                     listBeanAll.addAll(list);
@@ -418,18 +418,18 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 查询订单列表
      */
     private void getOrderList(){
-        index=OrderActivity.index;
+        fragmentIndex=OrderActivity.index;
         if(isVisibleToUser && view!=null){
-            if(index==0 && listBeanAll.size()>0){
+            if(fragmentIndex==0 && listBeanAll.size()>0){
                 return;
 
-            }else if(index==1 && listWait.size()>0){
+            }else if(fragmentIndex==1 && listWait.size()>0){
                 return;
 
-            }else if(index==2 && listComplete.size()>0){
+            }else if(fragmentIndex==2 && listComplete.size()>0){
                 return;
 
-            }else if(index==3 && listCancle.size()>0){
+            }else if(fragmentIndex==3 && listCancle.size()>0){
                 return;
             }
             swipeLayout.postDelayed(new Runnable() {
@@ -442,7 +442,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
     private void getData(int handlerIndex){
-        HttpMethod.getPayOrderList(keyList.get(index),page,handlerIndex,mHandler);
+        HttpMethod.getPayOrderList(keyList.get(fragmentIndex),page,handlerIndex,mHandler);
     }
 
     @Override
