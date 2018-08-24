@@ -1,5 +1,9 @@
 package com.youmai.project.fragment.order;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
+import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
@@ -19,10 +24,9 @@ import com.youmai.project.callback.TradingPlay;
 import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +41,22 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private ListView listView;
     private OrderAdapter orderAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
+    private List<GoodsBean> listComplete=new ArrayList<>();
+    private List<GoodsBean> listCancle=new ArrayList<>();
+    private List<GoodsBean> listWait=new ArrayList<>();
     private List<String> keyList=new ArrayList<>();
     private boolean isTotal=false;
     //fragment是否可见
     private boolean isVisibleToUser=false;
-    //订单ID
-    private String orderId;
+    //订单对象
+    private GoodsBean goodsBean;
     //页码
     private int page=1;
     private DialogView dialogView;
+    //此刻是第几个fragment
+    private int index;
+    private final static String ACTION_GOODS_COMPLETE_SUCCESS = "net.youmai.adminapp.action.goods.complete.success";
+    private final static String ACTION_GOODS_CANCEL_SUCCESS = "net.youmai.adminapp.action.goods.cancel.success";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(keyList.size()==0){
@@ -54,6 +65,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             keyList.add("2");
             keyList.add("4");
         }
+        //注册广播
+        registerReceiver();
     }
 
     View view;
@@ -90,7 +103,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             switch (msg.what){
                 case HandlerConstant.GET_PAY_ORDER_SUCCESS:
                     message= (String) msg.obj;
-                    listBeanAll.clear();
+                    setDataByIndex(1);
                     refresh(message);
                     swipeLayout.setRefreshing(false);
                     break;
@@ -103,18 +116,19 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                  case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
                  //交易取消
                 case HandlerConstant.SET_ORDER_CANCLE_SUCCESS:
-                     HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
-                     if(null==httpBaseBean){
+                      HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                      if(null==httpBaseBean){
                          return;
                      }
-                     if(httpBaseBean.isSussess()){
-                         for(int i=0;i<listBeanAll.size();i++){
-                             if(orderId.equals(listBeanAll.get(i).getOrderId())){
-                                 listBeanAll.remove(i);
-                                 orderAdapter.notifyDataSetChanged();
-                                 break;
-                             }
-                         }
+                     if(!httpBaseBean.isSussess()){
+                         return;
+
+                     }
+                     if(msg.what==HandlerConstant.SET_ORDER_COMPLETE_SUCCESS){
+                       mActivity.sendBroadcast(new Intent(ACTION_GOODS_COMPLETE_SUCCESS));
+                     }
+                     if(msg.what==HandlerConstant.SET_ORDER_CANCLE_SUCCESS){
+                         mActivity.sendBroadcast(new Intent(ACTION_GOODS_CANCEL_SUCCESS));
                      }
                      break;
                 case HandlerConstant.REQUST_ERROR:
@@ -130,111 +144,111 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     /**
      * 解析并刷新数据
      */
+    List<GoodsBean> list;
     private void refresh(String message){
-        if(TextUtils.isEmpty(message)){
-            return;
+        list= JsonUtils.getGoods2(message);
+        setDataByIndex(0);
+        if(null==orderAdapter){
+            setDataByIndex(2);
+            listView.setAdapter(orderAdapter);
+        }else{
+            orderAdapter.notifyDataSetChanged();
         }
-        try {
-            final JSONObject jsonObject=new JSONObject(message);
-            if(jsonObject.getInt("code")!=200){
-                return;
-            }
-            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            List<GoodsBean> list=new ArrayList<>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
-                GoodsBean myGoods=new GoodsBean();
-                myGoods.setOrderId(jsonObject1.getString("id"));
-                myGoods.setStated(jsonObject1.getInt("stated"));
-                myGoods.setAddress(jsonObject2.getString("address"));
-                myGoods.setDescription(jsonObject2.getString("description"));
-                myGoods.setId(jsonObject2.getString("id"));
-                myGoods.setOriginalPrice(jsonObject2.getDouble("originalPrice"));
-                myGoods.setPresentPrice(jsonObject2.getDouble("presentPrice"));
-                List<String> imgList=new ArrayList<>();
-
-                //解析图片
-                final JSONArray jsonArray1=new JSONArray(jsonObject2.getString("images"));
-                for (int j = 0; j < jsonArray1.length(); j++) {
-                    imgList.add(jsonArray1.getString(j));
-                }
-                myGoods.setImgList(imgList);
-
-                //解析经纬度
-                final JSONArray jsonArray2=new JSONArray(jsonObject2.getString("location"));
-                for (int k = 0; k < jsonArray2.length(); k++) {
-                    if(k==0){
-                        myGoods.setLongitude(jsonArray2.getDouble(k));
-                    }else{
-                        myGoods.setLatitude(jsonArray2.getDouble(k));
-                    }
-                }
-                //解析用户信息
-                JSONObject jsonObject3=new JSONObject(jsonObject2.getString("seller"));
-                if(!jsonObject3.isNull("head")){
-                    myGoods.setHead(jsonObject3.getString("head"));
-                }
-                if(!jsonObject3.isNull("nickname")){
-                    myGoods.setNickname(jsonObject3.getString("nickname"));
-                }
-                list.add(myGoods);
-            }
-            listBeanAll.addAll(list);
-            if(null==orderAdapter){
-                orderAdapter=new OrderAdapter(getActivity(),listBeanAll);
-                listView.setAdapter(orderAdapter);
-            }else{
-                orderAdapter.notifyDataSetChanged();
-            }
-            orderAdapter.setCallBack(tradingPlay);
-
-            if(list.size()<20){
-                isTotal=true;
-                swipeLayout.setFooter(isTotal);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        orderAdapter.setCallBack(tradingPlay);
+        if(list.size()<20){
+            isTotal=true;
+            swipeLayout.setFooter(isTotal);
         }
     }
 
 
+    private void setDataByIndex(int type){
+        switch (index){
+            case 0:
+                if(type==0){
+                    listBeanAll.addAll(list);
+                }else if(type==1){
+                    listBeanAll.clear();
+                }else if(type==2){
+                    orderAdapter=new OrderAdapter(mActivity,listBeanAll);
+                }
+                break;
+            case 1:
+                if(type==0){
+                    listWait.addAll(list);
+                }else if(type==1){
+                    listWait.clear();
+                }else if(type==2){
+                    orderAdapter=new OrderAdapter(mActivity,listWait);
+                }
+                break;
+            case 2:
+                if(type==0){
+                    listComplete.addAll(list);
+                }else if(type==1){
+                    listComplete.clear();
+                }else if(type==2){
+                    orderAdapter=new OrderAdapter(mActivity,listComplete);
+                }
+                break;
+            case 3:
+                if(type==0){
+                    listCancle.addAll(list);
+                }else if(type==1){
+                    listCancle.clear();
+                }else if(type==2){
+                    orderAdapter=new OrderAdapter(mActivity,listCancle);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private TradingPlay tradingPlay=new TradingPlay() {
         /**
-         * 交易完成
-         * @param orderId
+         * 交易完成或者重新购买
+         * @param goodsBean
          */
-        public void complete(final String orderId) {
-            if(TextUtils.isEmpty(orderId)){
+        public void complete(final GoodsBean goodsBean) {
+            if(null==goodsBean){
                 return;
             }
-            OrderFragment.this.orderId=orderId;
-            dialogView = new DialogView(dialogView, getActivity(), "确定完成交易吗？",
-                    "确定", "取消", new View.OnClickListener() {
-                public void onClick(View v) {
-                    dialogView.dismiss();
-                    showProgress("设置中...");
-                    HttpMethod.setOrderComplete(orderId,mHandler);
-                }
-            }, null);
-            dialogView.show();
+            OrderFragment.this.goodsBean=goodsBean;
+            if(goodsBean.getStated()==1){
+                dialogView = new DialogView(dialogView, mActivity, "确定完成交易吗？",
+                        "确定", "取消", new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialogView.dismiss();
+                        showProgress("设置中...");
+                        HttpMethod.setOrderComplete(goodsBean.getOrderId(),mHandler);
+                    }
+                }, null);
+                dialogView.show();
+            }else if(goodsBean.getStated()==4){
+                Intent intent=new Intent(mActivity, BuyGoodsActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("goodsBean",goodsBean);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
         }
 
         /**
          * 交易取消
-         * @param orderId
+         * @param goodsBean
          */
-        public void cancle(final String orderId) {
-            if(TextUtils.isEmpty(orderId)){
+        public void cancle(final GoodsBean goodsBean) {
+            if(null==goodsBean){
                 return;
             }
-            OrderFragment.this.orderId=orderId;
-            dialogView = new DialogView(dialogView, getActivity(), "确定取消交易吗？",
+            OrderFragment.this.goodsBean=goodsBean;
+            dialogView = new DialogView(dialogView, mActivity, "确定取消交易吗？",
                     "确定", "取消", new View.OnClickListener() {
                 public void onClick(View v) {
                     dialogView.dismiss();
                     showProgress("设置中...");
-                    HttpMethod.setOrderCancle(orderId,mHandler);
+                    HttpMethod.setOrderCancle(goodsBean.getOrderId(),mHandler);
                 }
             }, null);
             dialogView.show();
@@ -249,7 +263,91 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         }
     };
 
-    @Override
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS);
+        myIntentFilter.addAction(ACTION_GOODS_COMPLETE_SUCCESS);
+        myIntentFilter.addAction(ACTION_GOODS_CANCEL_SUCCESS);
+        // 注册广播监听
+        mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                //商品购买成功后的广播
+                case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
+                     final String goodId=intent.getStringExtra("goodId");
+                     if(TextUtils.isEmpty(goodId)){
+                        return;
+                     }
+                     //删除已取消集合该商品对象
+                     for(int i=0,len=listCancle.size();i<len;i++){
+                        if(listCancle.get(i).getId().equals(goodId)){
+                            listCancle.remove(i);
+                            break;
+                        }
+                     }
+                    //修改全部订单集合中该商品的状态
+                    for(int i=0,len=listBeanAll.size();i<len;i++){
+                        if(listBeanAll.get(i).getId().equals(goodId)){
+                            listBeanAll.get(i).setStated(1);
+                            break;
+                        }
+                    }
+                    if(null!=orderAdapter){
+                        orderAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                //交易完成
+                case ACTION_GOODS_COMPLETE_SUCCESS:
+                     setList(1);
+                     break;
+                //交易取消
+                case ACTION_GOODS_CANCEL_SUCCESS:
+                     setList(2);
+                     break;
+                    default:
+                        break;
+            }
+        }
+    };
+
+
+    /**
+     * 交易完成或取消后更新列表
+     */
+    private void setList(int type){
+        for(int i=0;i<listWait.size();i++){
+            if(goodsBean.getOrderId().equals(listWait.get(i).getOrderId())){
+                listWait.remove(i);
+                break;
+            }
+        }
+        if(type==1){
+            if(listComplete.size()>0){
+                listComplete.add(0,goodsBean);
+            }
+        }
+        if(type==2){
+            if(listCancle.size()>0){
+                listCancle.add(0,goodsBean);
+            }
+        }
+        if(null!=orderAdapter){
+            orderAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    /**
+     * 下拉刷新
+     */
     public void onRefresh() {
         swipeLayout.postDelayed(new Runnable() {
             public void run() {
@@ -261,7 +359,10 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         }, 200);
     }
 
-    @Override
+
+    /**
+     * 上啦加载更多
+     */
     public void onLoad() {
         if(isTotal){
             swipeLayout.setLoading(false);
@@ -281,19 +382,31 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 查询订单列表
      */
     private void getOrderList(){
+        index=OrderActivity.index;
         if(isVisibleToUser && view!=null && listBeanAll.size()==0){
+            if(index==0 && listBeanAll.size()>0){
+                return;
+
+            }else if(index==1 && listWait.size()>0){
+                return;
+
+            }else if(index==2 && listComplete.size()>0){
+                return;
+
+            }else if(index==3 && listCancle.size()>0){
+                return;
+            }
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
-                    listView.addHeaderView(new View(getActivity()));
+                    listView.addHeaderView(new View(mActivity));
                     getData(HandlerConstant.GET_PAY_ORDER_SUCCESS);
-
                 }
             }, 0);
         }
     }
 
-    private void getData(int index){
-        HttpMethod.getPayOrderList(keyList.get(OrderActivity.index),page,index,mHandler);
+    private void getData(int handlerIndex){
+        HttpMethod.getPayOrderList(keyList.get(index),page,handlerIndex,mHandler);
     }
 
     @Override
@@ -302,5 +415,11 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         this.isVisibleToUser=isVisibleToUser;
         //查询订单列表
         getOrderList();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mBroadcastReceiver);
     }
 }

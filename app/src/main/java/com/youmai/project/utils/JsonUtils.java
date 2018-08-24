@@ -77,4 +77,61 @@ public class JsonUtils {
        }
        return list;
    }
+
+
+    public static List<GoodsBean> getGoods2(String msg){
+        List<GoodsBean> list=new ArrayList<>();
+        if(TextUtils.isEmpty(msg)){
+            return list;
+        }
+        try {
+            final JSONObject jsonObject=new JSONObject(msg);
+            if(jsonObject.getInt("code")!=200){
+                return list;
+            }
+            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
+                GoodsBean myGoods=new GoodsBean();
+                myGoods.setOrderId(jsonObject1.getString("id"));
+                myGoods.setStated(jsonObject1.getInt("stated"));
+                myGoods.setAddress(jsonObject2.getString("address"));
+                myGoods.setDescription(jsonObject2.getString("description"));
+                myGoods.setId(jsonObject2.getString("id"));
+                myGoods.setOriginalPrice(jsonObject2.getDouble("originalPrice"));
+                myGoods.setPresentPrice(jsonObject2.getDouble("presentPrice"));
+                List<String> imgList=new ArrayList<>();
+
+                //解析图片
+                final JSONArray jsonArray1=new JSONArray(jsonObject2.getString("images"));
+                for (int j = 0; j < jsonArray1.length(); j++) {
+                    imgList.add(jsonArray1.getString(j));
+                }
+                myGoods.setImgList(imgList);
+
+                //解析经纬度
+                final JSONArray jsonArray2=new JSONArray(jsonObject2.getString("location"));
+                for (int k = 0; k < jsonArray2.length(); k++) {
+                    if(k==0){
+                        myGoods.setLongitude(jsonArray2.getDouble(k));
+                    }else{
+                        myGoods.setLatitude(jsonArray2.getDouble(k));
+                    }
+                }
+                //解析用户信息
+                JSONObject jsonObject3=new JSONObject(jsonObject2.getString("seller"));
+                if(!jsonObject3.isNull("head")){
+                    myGoods.setHead(jsonObject3.getString("head"));
+                }
+                if(!jsonObject3.isNull("nickname")){
+                    myGoods.setNickname(jsonObject3.getString("nickname"));
+                }
+                list.add(myGoods);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

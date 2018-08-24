@@ -1,5 +1,7 @@
 package com.youmai.project.callback;
 
+import com.youmai.project.bean.GoodsBean;
+
 /**
  * 交易操作的回调
  */
@@ -7,15 +9,15 @@ public interface TradingPlay {
 
     /**
      * 交易完成
-     * @param orderId
+     * @param goodsBean
      */
-    public void complete(String orderId);
+    public void complete(GoodsBean goodsBean);
 
     /**
      * 交易取消
-     * @param orderId
+     * @param goodsBean
      */
-    public void cancle(String orderId);
+    public void cancle(GoodsBean goodsBean);
 
     /**
      * 联系卖家

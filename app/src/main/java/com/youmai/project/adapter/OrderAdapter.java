@@ -89,15 +89,14 @@ public class OrderAdapter extends BaseAdapter{
 					default:
 						break;
 			}
-			holder.tvComplete.setTag(goodsBean.getOrderId());
-			holder.tvCancle.setTag(goodsBean.getOrderId());
+			holder.tvComplete.setTag(goodsBean);
+			holder.tvCancle.setTag(goodsBean);
 			holder.tvComplete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
 						return;
 					}
-					final String orderId=v.getTag().toString();
-					tradingPlay.complete(orderId);
+					tradingPlay.complete((GoodsBean) v.getTag());
 				}
 			});
 			holder.tvCancle.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +104,7 @@ public class OrderAdapter extends BaseAdapter{
 					if(null==v.getTag()){
 						return;
 					}
-					final String orderId=v.getTag().toString();
-					tradingPlay.cancle(orderId);
+					tradingPlay.cancle((GoodsBean) v.getTag());
 				}
 			});
 		}

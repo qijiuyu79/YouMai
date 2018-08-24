@@ -1,6 +1,8 @@
 package com.youmai.project.fragment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,9 +15,16 @@ import com.youmai.project.utils.error.CockroachUtil;
 
 public class BaseFragment extends Fragment {
 
+    protected Activity mActivity;
     protected ProgressDialog progressDialog = null;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
     }
 
     protected void setClass(Class<?> cls) {
@@ -75,6 +84,11 @@ public class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
         CockroachUtil.install();
+    }
+
+    public void onDetach(){
+        super.onDetach();
+        mActivity = null;
     }
 
     public void onDestroy() {
