@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
+import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.adapter.SellerGoodsAdapter;
 import com.youmai.project.bean.GoodsBean;
@@ -145,6 +147,23 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         }else{
             sellerGoodsAdapter.notifyDataSetChanged();
         }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView=(TextView)view.findViewById(R.id.tv_sgi_address);
+                if(null==textView.getTag()){
+                    return;
+                }
+                GoodsBean goodsBean= (GoodsBean) textView.getTag();
+                if(null==goodsBean){
+                    return;
+                }
+                Intent intent=new Intent(mContext, GoodDetailsActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("goodsBean",goodsBean);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         if(list.size()<20){
             isTotal=true;
             swipeLayout.setFooter(isTotal);

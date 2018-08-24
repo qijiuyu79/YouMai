@@ -36,6 +36,7 @@ import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
+import com.youmai.project.view.ExpandView;
 import com.youmai.project.view.MyGridView;
 
 import java.io.File;
@@ -212,11 +213,13 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
     private void shareWindow() {
         View shareView = LayoutInflater.from(GoodDetailsActivity.this).inflate(R.layout.share, null);
         bottomPopupWindow(0, 0, shareView);
+        ExpandView expandView=(ExpandView)shareView.findViewById(R.id.ex_share);
         TextView tvWei = (TextView) shareView.findViewById(R.id.tv_acd_wei);
         TextView tvPeng = (TextView) shareView.findViewById(R.id.tv_acd_peng);
         TextView tvQQ = (TextView) shareView.findViewById(R.id.tv_acd_qq);
         TextView tvBo = (TextView) shareView.findViewById(R.id.tv_acd_bo);
         TextView tvKong = (TextView) shareView.findViewById(R.id.tv_acd_kong);
+        expandView.expand();
         tvWei.setOnClickListener(this);
         tvPeng.setOnClickListener(this);
         tvQQ.setOnClickListener(this);

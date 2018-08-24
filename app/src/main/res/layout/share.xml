@@ -19,62 +19,70 @@
         android:textColor="@color/color_010101"
         android:textSize="17sp" />
 
-    <LinearLayout
+    <com.youmai.project.view.ExpandView
+        android:id="@+id/ex_share"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:padding="10dp">
-        <TextView
-            android:id="@+id/tv_acd_wei"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/share_wei"
-            android:gravity="center"
-            android:text="@string/share_wei"
-            android:textSize="13sp" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/tv_acd_peng"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/share_peng"
-            android:gravity="center"
-            android:text="@string/share_peng"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/tv_acd_wei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/share_wei"
+                android:gravity="center"
+                android:text="@string/share_wei"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/tv_acd_qq"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/share_qq"
-            android:gravity="center"
-            android:text="@string/share_qq"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/tv_acd_peng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/share_peng"
+                android:gravity="center"
+                android:text="@string/share_peng"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/tv_acd_bo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/share_bo"
-            android:gravity="center"
-            android:text="@string/share_bo"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/tv_acd_qq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/share_qq"
+                android:gravity="center"
+                android:text="@string/share_qq"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/tv_acd_kong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/share_kong"
-            android:gravity="center"
-            android:text="@string/share_kong"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/tv_acd_bo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/share_bo"
+                android:gravity="center"
+                android:text="@string/share_bo"
+                android:textSize="13sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_acd_kong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/share_kong"
+                android:gravity="center"
+                android:text="@string/share_kong"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </com.youmai.project.view.ExpandView>
 
 </LinearLayout>

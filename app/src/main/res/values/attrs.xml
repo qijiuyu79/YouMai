@@ -16,4 +16,5 @@
         <!--标签行距-->
         <attr name="rowSpace" format="dimension" />
     </declare-styleable>
+
 </resources>

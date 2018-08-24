@@ -45,4 +45,7 @@
     <color name="color_b7b5b5">#b7b5b5</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
+    <!-- 半透明 -->
+    <color name="half_transparent">#b0000000</color>
+
 </resources>
