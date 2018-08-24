@@ -76,7 +76,7 @@ public class SellerGoodsAdapter extends BaseAdapter{
 				holder.imageView.setImageDrawable(null);
 			}
 			holder.tvAddress.setText(goodsBean.getAddress());
-			holder.tvNewMoney.setText("¥ "+Util.setDouble(goodsBean.getPresentPrice()/100));
+			holder.tvNewMoney.setText("¥"+Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvOldMoney.setText("¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			holder.tvDes.setText(goodsBean.getDescription());

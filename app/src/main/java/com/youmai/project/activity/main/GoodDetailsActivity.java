@@ -24,6 +24,7 @@ import com.umeng.socialize.media.UMWeb;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.map.SellerGoodsActivity;
+import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.adapter.GoodsListAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
@@ -144,6 +145,11 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
                  break;
             //购买
             case R.id.tv_agd_buy:
+                if(!Util.isLogin()){
+                    intent.setClass(mContext, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                  intent.setClass(mContext,BuyGoodsActivity.class);
                  bundle.putSerializable("goodsBean",goodsBean);
                  intent.putExtras(bundle);

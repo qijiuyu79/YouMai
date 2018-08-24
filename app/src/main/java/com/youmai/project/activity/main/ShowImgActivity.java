@@ -92,9 +92,9 @@ public class ShowImgActivity extends BaseActivity {
             imageView.setLayoutParams(params);
             //设置小圆点样式
             if (position==i){
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.point_white));
-            }else {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.point_gray));
+            }else {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.point_white));
             }
             layoutPoint.addView(imageView);
         }

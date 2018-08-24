@@ -95,8 +95,7 @@
             android:layout_marginLeft="19dp"
             android:textColor="@color/color_FF4081"
             android:textSize="14sp"
-            android:layout_toLeftOf="@+id/tv_ri_buy"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="95dp"
             android:singleLine="true"
             android:ellipsize="end"/>
 
