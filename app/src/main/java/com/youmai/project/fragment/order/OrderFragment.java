@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
@@ -297,6 +297,13 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                             break;
                         }
                      }
+
+                     //待交易集合添加该商品对象
+                     if(listWait.size()>0){
+                        goodsBean.setStated(1);
+                        listWait.add(0,goodsBean);
+                     }
+
                     //修改全部订单集合中该商品的状态
                     int num=-1;
                     for(int i=0,len=listBeanAll.size();i<len;i++){
@@ -334,6 +341,10 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 交易完成或取消后更新列表
      */
     private void setList(int type){
+        if(null==goodsBean){
+            return;
+        }
+        //删除待交易集合中该商品对象
         for(int i=0;i<listWait.size();i++){
             if(goodsBean.getOrderId().equals(listWait.get(i).getOrderId())){
                 listWait.remove(i);
@@ -351,12 +362,12 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                     break;
                 }
             }
-        }
-        if(type==2){
+        }else{
             if(listCancle.size()>0){
                 goodsBean.setStated(4);
                 listCancle.add(0,goodsBean);
             }
+
             for(int i=0;i<listBeanAll.size();i++){
                 if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
                     listBeanAll.get(i).setStated(4);
@@ -408,7 +419,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     private void getOrderList(){
         index=OrderActivity.index;
-        if(isVisibleToUser && view!=null && listBeanAll.size()==0){
+        if(isVisibleToUser && view!=null){
             if(index==0 && listBeanAll.size()>0){
                 return;
 
