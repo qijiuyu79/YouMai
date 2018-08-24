@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,7 +46,8 @@ import java.util.List;
 public class UserActivity extends BaseActivity implements View.OnClickListener{
 
     private CircleImageView imgUserPic;
-    private TextView tvNickName,tvBalance,tvIngetral,tvCredit;
+    private RelativeLayout relCertifcation;
+    private TextView tvNickName,tvBalance,tvIngetral,tvCredit,tvCertifcation;
     private String nickName;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +68,11 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         tvBalance=(TextView)findViewById(R.id.tv_au_balance);
         tvIngetral=(TextView)findViewById(R.id.tv_au_integral);
         tvCredit=(TextView)findViewById(R.id.tv_au_credit);
+        tvCertifcation=(TextView)findViewById(R.id.tv_au_certification);
+        relCertifcation=(RelativeLayout)findViewById(R.id.rel_au_cer);
         imgUserPic.setOnClickListener(this);
+        relCertifcation.setOnClickListener(this);
         findViewById(R.id.rel_myAddress).setOnClickListener(this);
-        findViewById(R.id.rel_au_cer).setOnClickListener(this);
         findViewById(R.id.img_au_setName).setOnClickListener(this);
         findViewById(R.id.tv_au_recharge).setOnClickListener(this);
         findViewById(R.id.tv_au_transfer).setOnClickListener(this);
@@ -247,12 +251,22 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(UPDATE_USER_INFO)) {
+                if(null==MyApplication.userInfoBean){
+                    return;
+                }
                 //更新用户信息
                 Glide.with(mContext).load(MyApplication.userInfoBean.getHead()).error(R.mipmap.icon).into(imgUserPic);
                 tvNickName.setText(MyApplication.userInfoBean.getNickname());
                 tvBalance.setText("¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100));
                 tvIngetral.setText(MyApplication.userInfoBean.getIntegral()+"");
                 tvCredit.setText(MyApplication.userInfoBean.getCredit()+"");
+                if(MyApplication.userInfoBean.isReal()){
+                    tvCertifcation.setText("已认证");
+                    relCertifcation.setClickable(false);
+                }else{
+                    tvCertifcation.setText("未认证");
+                }
+
             }
         }
     };

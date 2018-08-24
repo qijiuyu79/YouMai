@@ -1,66 +1,104 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/head"/>
+    <RelativeLayout android:id="@+id/rel_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="实名认证"
-        android:textSize="18sp"
-        android:textColor="@color/color_777777"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"/>
+        <LinearLayout android:id="@+id/lin_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="30dp"
+            android:layout_marginLeft="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="实名认证必须为您本人的真实身份信息"
-        android:textSize="12sp"
-        android:textColor="@color/color_777777"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_next_icon"/>
 
-    <com.youmai.project.view.MeterailEditText
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="实名认证"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <EditText
         android:id="@+id/et_ac_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:maxLength="11"
-        app:hint="我的姓名">
+        android:hint="我的姓名"
+        android:textSize="15sp"
+        android:textColor="@color/color_464646"
+        android:layout_below="@id/rel_head"
+        android:background="@null"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:maxLines="1"
+        android:layout_marginTop="22dp"/>
 
-    </com.youmai.project.view.MeterailEditText>
+    <View
+        android:id="@+id/view_ac"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/et_ac_name"
+        android:background="@color/color_dbd8d8"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"/>
 
-    <com.youmai.project.view.MeterailEditText
+    <EditText
         android:id="@+id/et_ac_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:maxLength="18"
-        app:hint="身份证号">
+        android:hint="身份证号码"
+        android:textSize="15sp"
+        android:textColor="@color/color_464646"
+        android:layout_below="@id/view_ac"
+        android:background="@null"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:maxLines="1"
+        android:layout_marginTop="30dp"
+        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:maxLength="18"/>
 
-    </com.youmai.project.view.MeterailEditText>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/et_ac_code"
+        android:background="@color/color_dbd8d8"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"/>
 
     <com.youmai.project.view.ClickTextView
         android:id="@+id/tv_ac_submit"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/bg_tabs"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/color_FF4081"
         android:gravity="center"
         android:text="认证"
         android:textColor="@android:color/white"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"/>
 
 
-</LinearLayout>
+</RelativeLayout>

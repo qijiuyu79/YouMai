@@ -8,16 +8,14 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.TextView;
-
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SystemBarTintManager;
-import com.youmai.project.view.MeterailEditText;
-
+import com.youmai.project.utils.Util;
 import org.json.JSONObject;
 
 /**
@@ -27,7 +25,7 @@ import org.json.JSONObject;
 
 public class CertificationActivity extends BaseActivity implements View.OnClickListener{
 
-    private MeterailEditText etName,etCode;
+    private EditText etName,etCode;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -47,11 +45,8 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("实名认证");
-        etName=(MeterailEditText)findViewById(R.id.et_ac_name);
-        etCode=(MeterailEditText)findViewById(R.id.et_ac_code);
-        etName.setFocusable(true);
-        etName.setFocusableInTouchMode(true);
-        etCode.setDigits("0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        etName=(EditText)findViewById(R.id.et_ac_name);
+        etCode=(EditText)findViewById(R.id.et_ac_code);
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.tv_ac_submit).setOnClickListener(this);
     }
@@ -64,6 +59,8 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                  final String code=etCode.getText().toString().trim();
                  if(TextUtils.isEmpty(name)){
                      showMsg("请输入您的姓名！");
+                 }else if(Util.isEmoji(name)){
+                     showMsg("姓名不支持表情符号！");
                  }else if(TextUtils.isEmpty(code)){
                      showMsg("请输入您的身份证号码！");
                  }else{
@@ -73,6 +70,8 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                  break;
             case R.id.lin_back:
                   finish();
+                  break;
+             default:
                   break;
         }
     }
