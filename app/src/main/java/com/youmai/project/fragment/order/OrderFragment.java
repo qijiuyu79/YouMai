@@ -124,12 +124,17 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                          return;
 
                      }
-                     if(msg.what==HandlerConstant.SET_ORDER_COMPLETE_SUCCESS){
-                       mActivity.sendBroadcast(new Intent(ACTION_GOODS_COMPLETE_SUCCESS));
-                     }
+                      Intent intent=new Intent();
+                      Bundle bundle=new Bundle();
+                      bundle.putSerializable("goodsBean",goodsBean);
+                      intent.putExtras(bundle);
+                      if(msg.what==HandlerConstant.SET_ORDER_COMPLETE_SUCCESS){
+                         intent.setAction(ACTION_GOODS_COMPLETE_SUCCESS);
+                      }
                      if(msg.what==HandlerConstant.SET_ORDER_CANCLE_SUCCESS){
-                         mActivity.sendBroadcast(new Intent(ACTION_GOODS_CANCEL_SUCCESS));
+                         intent.setAction(ACTION_GOODS_CANCEL_SUCCESS);
                      }
+                     mActivity.sendBroadcast(intent);
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
@@ -278,18 +283,18 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
+            final Bundle bundle=intent.getExtras();
+            if(null==bundle){
+                return;
+            }
+            goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+            if(null==goodsBean){
+                return;
+            }
+            final String action = intent.getAction();
             switch (action){
                 //商品购买成功后的广播
                 case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                    final Bundle bundle=intent.getExtras();
-                    if(null==bundle){
-                        return;
-                    }
-                    final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-                    if(null==goodsBean){
-                        return;
-                    }
                      //删除已取消集合该商品对象
                      for(int i=0,len=listCancle.size();i<len;i++){
                         if(listCancle.get(i).getId().equals(goodsBean.getId())){
@@ -341,9 +346,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 交易完成或取消后更新列表
      */
     private void setList(int type){
-        if(null==goodsBean){
-            return;
-        }
         //删除待交易集合中该商品对象
         for(int i=0;i<listWait.size();i++){
             if(goodsBean.getOrderId().equals(listWait.get(i).getOrderId())){
