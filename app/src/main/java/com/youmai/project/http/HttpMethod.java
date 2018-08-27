@@ -176,6 +176,7 @@ public class HttpMethod extends BaseRequst {
         map.put("address",address);
         Http.upLoadFile(HttpConstant.ADD_GOODS,"images", list, map, new okhttp3.Callback() {
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                LogUtils.e("1111111111111111111111111111");
                 try {
                     final String str=response.body().string();
                     LogUtils.e(str+"__________________");

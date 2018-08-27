@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
+import com.youmai.project.activity.order.EvaluateActivity;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
@@ -222,22 +223,34 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 return;
             }
             OrderFragment.this.goodsBean=goodsBean;
-            if(goodsBean.getStated()==1){
-                dialogView = new DialogView(dialogView, mActivity, "确定完成交易吗？",
-                        "确定", "取消", new View.OnClickListener() {
-                    public void onClick(View v) {
-                        dialogView.dismiss();
-                        showProgress("设置中...");
-                        HttpMethod.setOrderComplete(goodsBean.getOrderId(),mHandler);
-                    }
-                }, null);
-                dialogView.show();
-            }else if(goodsBean.getStated()==4){
-                Intent intent=new Intent(mActivity, BuyGoodsActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("goodsBean",goodsBean);
-                intent.putExtras(bundle);
-                startActivity(intent);
+            Intent intent=new Intent();
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("goodsBean",goodsBean);
+            intent.putExtras(bundle);
+            switch (goodsBean.getStated()){
+                case 1:
+                    dialogView = new DialogView(dialogView, mActivity, "确定完成交易吗？",
+                            "确定", "取消", new View.OnClickListener() {
+                        public void onClick(View v) {
+                            dialogView.dismiss();
+                            showProgress("设置中...");
+                            HttpMethod.setOrderComplete(goodsBean.getOrderId(),mHandler);
+                        }
+                    }, null);
+                    dialogView.show();
+                     break;
+                //评价晒单
+                case 2:
+                    intent.setClass(mActivity, EvaluateActivity.class);
+                    startActivity(intent);
+                     break;
+                //重新购买
+                case 4:
+                     intent.setClass(mActivity, BuyGoodsActivity.class);
+                     startActivity(intent);
+                     break;
+                default:
+                    break;
             }
         }
 
@@ -297,14 +310,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             switch (action){
                 //商品购买成功后的广播
                 case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                     //删除已取消集合该商品对象
-                     for(int i=0,len=listCancle.size();i<len;i++){
-                        if(listCancle.get(i).getId().equals(goodsBean.getId())){
-                            listCancle.remove(i);
-                            break;
-                        }
-                     }
-
                      //待交易集合添加该商品对象
                      if(listWait.size()>0){
                         goodsBean.setStated(1);

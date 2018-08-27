@@ -80,7 +80,7 @@ public class Http {
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if(null!=list){
             for (int i=0;i<list.size();i++){
-                RequestBody body = RequestBody.create(MediaType.parse("image/png"), list.get(i));
+                RequestBody body = RequestBody.create(MediaType.parse("application/octet-stream"), list.get(i));
                 builder.addFormDataPart(fileKey, list.get(i).getName(), body);
             }
         }

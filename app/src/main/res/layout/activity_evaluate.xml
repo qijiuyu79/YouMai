@@ -1,0 +1,162 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout android:id="@+id/rel_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
+
+        <LinearLayout android:id="@+id/lin_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="30dp"
+            android:layout_marginLeft="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_next_icon"/>
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="评价晒单"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+
+
+    <ImageView
+        android:id="@+id/img_ae_img"
+        android:layout_width="73dp"
+        android:layout_height="73dp"
+        android:layout_below="@id/rel_head"
+        android:src="@mipmap/icon"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="宝贝评分"
+        android:textColor="@color/color_444444"
+        android:textSize="15sp"
+        android:layout_below="@id/rel_head"
+        android:layout_toRightOf="@id/img_ae_img"
+        android:layout_marginTop="29dp"
+        android:layout_marginLeft="18dp"/>
+
+    <ImageView
+        android:id="@+id/img_ae_xing1"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:src="@mipmap/no_select_x"
+        android:layout_below="@id/rel_head"
+        android:layout_toRightOf="@id/img_ae_img"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="62dp"/>
+
+    <ImageView
+        android:id="@+id/img_ae_xing2"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:src="@mipmap/no_select_x"
+        android:layout_below="@id/rel_head"
+        android:layout_toRightOf="@id/img_ae_xing1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="62dp"/>
+
+    <ImageView
+        android:id="@+id/img_ae_xing3"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:src="@mipmap/no_select_x"
+        android:layout_below="@id/rel_head"
+        android:layout_toRightOf="@id/img_ae_xing2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="62dp"/>
+    <ImageView
+        android:id="@+id/img_ae_xing4"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:src="@mipmap/no_select_x"
+        android:layout_below="@id/rel_head"
+        android:layout_toRightOf="@id/img_ae_xing3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="62dp"/>
+
+    <ImageView
+        android:id="@+id/img_ae_xing5"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:src="@mipmap/no_select_x"
+        android:layout_below="@id/rel_head"
+        android:layout_toRightOf="@id/img_ae_xing4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="62dp"/>
+
+    <EditText
+        android:id="@+id/et_ae_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="描述一下宝贝的外观设计和功能使用的感受吧～您的评价将会影响到卖家的信用，请认真评价哦～"
+        android:textColorHint="@color/color_b7b5b5"
+        android:textColor="@color/color_444444"
+        android:textSize="13sp"
+        android:layout_below="@id/img_ae_xing4"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@null"
+        android:minLines="7"
+        android:gravity="top"/>
+
+    <com.youmai.project.view.MyGridView
+        android:id="@+id/mg_addshop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_ae_des"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:numColumns="3"
+        android:verticalSpacing="5dp">
+    </com.youmai.project.view.MyGridView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_e0e0e0"
+        android:layout_below="@id/mg_addshop"
+        android:layout_marginTop="10dp"/>
+
+    <com.youmai.project.view.ClickTextView
+        android:id="@+id/tv_ae_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/color_FF4081"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:text="评价"
+        android:textColor="@android:color/white"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>
