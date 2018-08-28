@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.SystemBarTintManager;
@@ -90,6 +91,9 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                      try {
                          final JSONObject jsonObject=new JSONObject(message);
                          if(jsonObject.getInt("code")==200){
+                             if(null== MyApplication.userInfoBean){
+                                 MyApplication.userInfoBean.setReal(true);
+                             }
                              showMsg("认证成功！");
                              finish();
                          }else{

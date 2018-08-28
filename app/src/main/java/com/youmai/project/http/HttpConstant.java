@@ -52,4 +52,6 @@ public class HttpConstant {
     public static final String NEAR_STORE="/store/list";
 
     public static final String DELETE_BABY="/user/goods/delete";
+
+    public static final String M_ORDER_LIST="/user/order/list/seller";
 }

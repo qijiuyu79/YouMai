@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.youmai.project.R;
+import com.youmai.project.activity.center.AddShopActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.activity.main.MainActivity;
@@ -27,6 +28,7 @@ import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.LogUtils;
+import com.youmai.project.view.ClickLinearLayout;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ import java.util.List;
 
 public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener,AdapterView.OnItemClickListener {
 
+    private ClickLinearLayout linAddShop;
     private RefreshLayout swipeLayout;
     private ListView listView;
     private RecommendedAdapter recommendedAdapter;
@@ -56,6 +59,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_recommended, container, false);
+        linAddShop=(ClickLinearLayout)view.findViewById(R.id.lin_addShop);
         swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
         listView=(ListView)view.findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -121,6 +125,18 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
         if(list.size()<20){
             isTotal=true;
             swipeLayout.setFooter(isTotal);
+        }
+
+        //判断是否展示添加商品按钮
+        if(listBeanAll.size()>0){
+            linAddShop.setVisibility(View.GONE);
+        }else{
+            linAddShop.setVisibility(View.VISIBLE);
+            linAddShop.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    setClass(AddShopActivity.class);
+                }
+            });
         }
     }
 

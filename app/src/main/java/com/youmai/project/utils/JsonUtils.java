@@ -92,8 +92,37 @@ public class JsonUtils {
             final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
                 GoodsBean myGoods=new GoodsBean();
+
+                //解析用户信息
+                if(!jsonObject1.isNull("seller")){
+                    JSONObject jsonObject3=new JSONObject(jsonObject1.getString("seller"));
+                    if(!jsonObject3.isNull("head")){
+                        myGoods.setHead(jsonObject3.getString("head"));
+                    }
+                    if(!jsonObject3.isNull("nickname")){
+                        myGoods.setNickname(jsonObject3.getString("nickname"));
+                    }
+                    if(!jsonObject3.isNull("mobile")){
+                        myGoods.setMobile(jsonObject3.getString("mobile"));
+                    }
+                }
+
+                //解析用户信息
+                if(!jsonObject1.isNull("buyer")){
+                    JSONObject jsonObject3=new JSONObject(jsonObject1.getString("buyer"));
+                    if(!jsonObject3.isNull("head")){
+                        myGoods.setHead(jsonObject3.getString("head"));
+                    }
+                    if(!jsonObject3.isNull("nickname")){
+                        myGoods.setNickname(jsonObject3.getString("nickname"));
+                    }
+                    if(!jsonObject3.isNull("mobile")){
+                        myGoods.setMobile(jsonObject3.getString("mobile"));
+                    }
+                }
+
+                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
                 myGoods.setOrderId(jsonObject1.getString("id"));
                 myGoods.setStated(jsonObject1.getInt("stated"));
                 myGoods.setAddress(jsonObject2.getString("address"));
@@ -104,11 +133,13 @@ public class JsonUtils {
                 List<String> imgList=new ArrayList<>();
 
                 //解析图片
-                final JSONArray jsonArray1=new JSONArray(jsonObject2.getString("images"));
-                for (int j = 0; j < jsonArray1.length(); j++) {
-                    imgList.add(jsonArray1.getString(j));
+                if(!jsonObject2.isNull("images")){
+                    final JSONArray jsonArray1=new JSONArray(jsonObject2.getString("images"));
+                    for (int j = 0; j < jsonArray1.length(); j++) {
+                        imgList.add(jsonArray1.getString(j));
+                    }
+                    myGoods.setImgList(imgList);
                 }
-                myGoods.setImgList(imgList);
 
                 //解析经纬度
                 final JSONArray jsonArray2=new JSONArray(jsonObject2.getString("location"));
@@ -118,14 +149,6 @@ public class JsonUtils {
                     }else{
                         myGoods.setLatitude(jsonArray2.getDouble(k));
                     }
-                }
-                //解析用户信息
-                JSONObject jsonObject3=new JSONObject(jsonObject2.getString("seller"));
-                if(!jsonObject3.isNull("head")){
-                    myGoods.setHead(jsonObject3.getString("head"));
-                }
-                if(!jsonObject3.isNull("nickname")){
-                    myGoods.setNickname(jsonObject3.getString("nickname"));
                 }
                 list.add(myGoods);
             }

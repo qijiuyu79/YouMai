@@ -25,6 +25,7 @@ public class GoodsBean implements Serializable {
     private String head;
     private String nickname="";
     private String storeId;
+    private String mobile;
 
     public String getAddress() {
         return address;
@@ -136,5 +137,13 @@ public class GoodsBean implements Serializable {
 
     public void setStoreId(String storeId) {
         this.storeId = storeId;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

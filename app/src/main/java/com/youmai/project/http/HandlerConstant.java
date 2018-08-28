@@ -36,4 +36,6 @@ public class HandlerConstant {
     public static final int GET_GOODS_BY_STOREID_SUCCESS=1137;
     public static final int SEARCH_BOODS_SUCCESS2=1138;
     public static final int GET_GOODS_BY_STOREID_SUCCESS2=1139;
+    public static final int GET_M_ORDER_SUCCESS=1140;
+    public static final int GET_M_ORDER_SUCCESS2=1141;
 }

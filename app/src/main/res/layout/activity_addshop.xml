@@ -133,7 +133,7 @@
                     android:layout_width="65dp"
                     android:layout_height="28dp"
                     android:layout_marginLeft="10dp"
-                    android:text="宠物"
+                    android:text="植物"
                     android:textColor="@color/color_666666"
                     android:textSize="13sp"
                     android:gravity="center"

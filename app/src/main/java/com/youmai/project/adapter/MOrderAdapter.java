@@ -10,23 +10,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.bean.GoodsBean;
-import com.youmai.project.callback.TradingPlay;
 import com.youmai.project.utils.Util;
-import com.youmai.project.view.ClickTextView;
-
 import java.util.List;
 
-public class OrderAdapter extends BaseAdapter{
+/**
+ * 卖家订单
+ */
+public class MOrderAdapter extends BaseAdapter{
 
 	private Context context;
 	private List<GoodsBean> list;
 	private GoodsBean goodsBean;
-	private TradingPlay tradingPlay;
-	public OrderAdapter(Context context, List<GoodsBean> list) {
+	public MOrderAdapter(Context context, List<GoodsBean> list) {
 		super();
 		this.context = context;
 		this.list=list;
@@ -52,12 +50,10 @@ public class OrderAdapter extends BaseAdapter{
 		ViewHolder holder = null;
 		if(view==null){
 			holder = new ViewHolder(); 
-			view = LayoutInflater.from(context).inflate(R.layout.order_item, null);
+			view = LayoutInflater.from(context).inflate(R.layout.m_order_item, null);
 			holder.imageView=(ImageView)view.findViewById(R.id.img_psi_icon);
 			holder.imgType=(ImageView)view.findViewById(R.id.img_oi_type);
 			holder.tv_psi_des=(TextView)view.findViewById(R.id.tv_psi_des);
-			holder.tvComplete=(ClickTextView)view.findViewById(R.id.tv_oi_complete);
-			holder.tvCancle=(ClickTextView)view.findViewById(R.id.tv_oi_cancle);
 			holder.tvName=(TextView)view.findViewById(R.id.tv_psi_name);
 			holder.tvMoney=(TextView)view.findViewById(R.id.tv_oi_money);
 			holder.tvPhone=(TextView)view.findViewById(R.id.tv_oi_phone);
@@ -79,41 +75,17 @@ public class OrderAdapter extends BaseAdapter{
 			holder.tv_psi_des.setText(goodsBean.getDescription());
 			switch (goodsBean.getStated()){
 				case 1:
-					 holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yizhifu));
-					 holder.tvCancle.setVisibility(View.VISIBLE);
-					 holder.tvComplete.setText("交易完成");
-					 break;
+					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yizhifu));
+					break;
 				case 2:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiwancheng));
-					holder.tvCancle.setVisibility(View.GONE);
-					holder.tvComplete.setText("评价晒单");
 					break;
 				case 4:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));
-					holder.tvCancle.setVisibility(View.GONE);
-					holder.tvComplete.setText("重新购买");
 					break;
-					default:
-						break;
+				default:
+					break;
 			}
-			holder.tvComplete.setTag(goodsBean);
-			holder.tvCancle.setTag(goodsBean);
-			holder.tvComplete.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					if(null==v.getTag()){
-						return;
-					}
-					tradingPlay.complete((GoodsBean) v.getTag());
-				}
-			});
-			holder.tvCancle.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					if(null==v.getTag()){
-						return;
-					}
-					tradingPlay.cancle((GoodsBean) v.getTag());
-				}
-			});
 			holder.tvPhone.setTag(goodsBean.getMobile());
 			holder.tvPhone.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -131,14 +103,8 @@ public class OrderAdapter extends BaseAdapter{
 		return view;
 	}
 
-
-	public void setCallBack(TradingPlay tradingPlay){
-		this.tradingPlay=tradingPlay;
-	}
-	
 	private class ViewHolder{
 		private ImageView imageView,imgType;
 		private TextView tvName,tv_psi_des,tvMoney,tvPhone;
-		private ClickTextView tvComplete,tvCancle;
 	 }
 }

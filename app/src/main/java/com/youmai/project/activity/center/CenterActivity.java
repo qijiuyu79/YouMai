@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.order.MOrderActivity;
 import com.youmai.project.activity.order.OrderActivity;
+import com.youmai.project.activity.user.CertificationActivity;
 import com.youmai.project.adapter.MyGoodsAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.callback.DeleteBabyCallBack;
@@ -88,30 +90,41 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()){
             //添加宝贝
             case R.id.tv_ac_add:
+                 if(!MyApplication.userInfoBean.isReal()){
+                     dialogView = new DialogView(dialogView, mContext, "需要实名认证后才可以添加宝贝！",
+                             "去认证", "取消", new View.OnClickListener() {
+                         public void onClick(View v) {
+                             dialogView.dismiss();
+                             setClass(CertificationActivity.class);
+                         }
+                     }, null);
+                     dialogView.show();
+                     return;
+                 }
                  intent.setClass(CenterActivity.this,AddShopActivity.class);
                  startActivityForResult(intent,1);
                  break;
             //全部订单
             case R.id.tv_ac_order:
-                intent.setClass(CenterActivity.this,OrderActivity.class);
+                intent.setClass(CenterActivity.this, MOrderActivity.class);
                 intent.putExtra("type",0);
                 startActivity(intent);
                  break;
             //待交易
             case R.id.lin_ac_jiaoyi:
-                intent.setClass(CenterActivity.this,OrderActivity.class);
+                intent.setClass(CenterActivity.this,MOrderActivity.class);
                 intent.putExtra("type",1);
                 startActivity(intent);
                  break;
              //已完成
             case R.id.lin_ac_complete:
-                 intent.setClass(CenterActivity.this,OrderActivity.class);
+                 intent.setClass(CenterActivity.this,MOrderActivity.class);
                  intent.putExtra("type",2);
                  startActivity(intent);
                  break;
              //已取消
             case R.id.lin_ac_cancle:
-                intent.setClass(CenterActivity.this,OrderActivity.class);
+                intent.setClass(CenterActivity.this,MOrderActivity.class);
                 intent.putExtra("type",3);
                 startActivity(intent);
                  break;

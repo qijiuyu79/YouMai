@@ -596,4 +596,31 @@ public class HttpMethod extends BaseRequst {
     }
 
 
+    /**
+     * 查询卖家的订单
+     * @param handler
+     */
+    public static void getMOrderList(String stated,int page, final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        if(null!=stated){
+            map.put("stated",stated);
+        }
+        map.put("page",page+"");
+        map.put("row","20");
+        Http.getRetrofit().create(HttpApi.class).getMOrderList(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, index, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

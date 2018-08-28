@@ -84,10 +84,10 @@
             android:layout_height="26.5dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="25dp"
-            android:background="@drawable/bg_user"
+            android:background="@drawable/bg_recommended_buy"
             android:gravity="center"
             android:text="转账"
-            android:textColor="@color/color_B7B7B7"
+            android:textColor="@color/color_E51C23"
             android:textSize="13sp" />
 
         <ImageView
@@ -226,6 +226,7 @@
     </RelativeLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="10dp"
@@ -234,6 +235,7 @@
         android:background="@color/color_F5F5F5"></View>
 
     <RelativeLayout android:id="@+id/rel_myAddress"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

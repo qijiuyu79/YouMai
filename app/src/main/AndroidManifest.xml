@@ -65,7 +65,8 @@
         <activity android:name=".activity.map.MapActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.map.SellerGoodsActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.order.OrderActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activity.order.EvaluateActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.order.MOrderActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.order.EvaluateActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.center.CenterActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.UserActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.WithdrawalActivity"  android:screenOrientation="portrait"/>

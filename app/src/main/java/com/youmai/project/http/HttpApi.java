@@ -199,4 +199,14 @@ public interface HttpApi {
     @POST(HttpConstant.DELETE_BABY)
     Call<HttpBaseBean> deleteBaby(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 查询卖家的订单
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.M_ORDER_LIST)
+    Call<ResponseBody> getMOrderList(@FieldMap Map<String, String> map);
+
 }

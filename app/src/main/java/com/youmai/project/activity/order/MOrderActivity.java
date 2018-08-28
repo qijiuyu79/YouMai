@@ -11,12 +11,13 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import com.youmai.project.R;
 import com.youmai.project.callback.ViewPagerCallBack;
-import com.youmai.project.fragment.order.OrderFragment;
+import com.youmai.project.fragment.order.MOrderFragment;
 import com.youmai.project.view.PagerSlidingTabStrip;
+
 /**
- * 我的订单
+ * 卖家订单列表
  */
-public class OrderActivity extends FragmentActivity {
+public class MOrderActivity extends FragmentActivity {
 
     private PagerSlidingTabStrip tabs;
     private DisplayMetrics dm;
@@ -27,6 +28,7 @@ public class OrderActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         initView();
+        setIntent();
     }
 
 
@@ -42,6 +44,18 @@ public class OrderActivity extends FragmentActivity {
         tabs.setViewPagerCallBack(viewPagerCallBack);
         tabs.setViewPager(pager);
         setTabsValue();
+    }
+
+
+    /**
+     * 设置跳转
+     */
+    private void setIntent(){
+        final int type=getIntent().getIntExtra("type",-1);
+        if(type!=-1){
+            index=type;
+            pager.setCurrentItem(type);
+        }
     }
 
     /**
@@ -90,7 +104,7 @@ public class OrderActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new OrderFragment();
+            return new MOrderFragment();
         }
 
     }
@@ -98,7 +112,7 @@ public class OrderActivity extends FragmentActivity {
 
     private ViewPagerCallBack viewPagerCallBack=new ViewPagerCallBack() {
         public void PageSelected(int position) {
-            OrderActivity.index=position;
+            MOrderActivity.index=position;
         }
     };
 
