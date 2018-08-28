@@ -26,6 +26,7 @@ public class UserInfo extends HttpBaseBean {
         private int integral;
         private double balance;
         private boolean real;
+        private int creditLevel;
 
         public String getHead() {
             return head;
@@ -81,6 +82,14 @@ public class UserInfo extends HttpBaseBean {
 
         public void setReal(boolean real) {
             this.real = real;
+        }
+
+        public int getCreditLevel() {
+            return creditLevel;
+        }
+
+        public void setCreditLevel(int creditLevel) {
+            this.creditLevel = creditLevel;
         }
     }
 }

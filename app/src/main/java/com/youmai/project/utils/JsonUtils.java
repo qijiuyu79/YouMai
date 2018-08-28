@@ -70,6 +70,9 @@ public class JsonUtils {
                if(!jsonObject2.isNull("storeId")){
                    goodsBean.setStoreId(jsonObject2.getString("storeId"));
                }
+               if(!jsonObject2.isNull("creditLevel")){
+                   goodsBean.setCreditLevel(jsonObject2.getInt("creditLevel"));
+               }
                list.add(goodsBean);
            }
        }catch (Exception e){
@@ -106,6 +109,9 @@ public class JsonUtils {
                     if(!jsonObject3.isNull("mobile")){
                         myGoods.setMobile(jsonObject3.getString("mobile"));
                     }
+                    if(!jsonObject3.isNull("creditLevel")){
+                        myGoods.setCreditLevel(jsonObject3.getInt("creditLevel"));
+                    }
                 }
 
                 //解析用户信息
@@ -119,6 +125,9 @@ public class JsonUtils {
                     }
                     if(!jsonObject3.isNull("mobile")){
                         myGoods.setMobile(jsonObject3.getString("mobile"));
+                    }
+                    if(!jsonObject3.isNull("creditLevel")){
+                        myGoods.setCreditLevel(jsonObject3.getInt("creditLevel"));
                     }
                 }
 

@@ -51,6 +51,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
     private ScrollView scrollView;
     private GoodsBean goodsBean;
     private MyGridView myGridView;
+    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
     private GoodsListAdapter goodsListAdapter;
     //分享渠道
@@ -88,6 +89,11 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         TextView tvContent=(TextView)findViewById(R.id.tv_agd_content);
         TextView tvPresentPrice=(TextView)findViewById(R.id.tv_agd_presentPrice);
         TextView tvAddress=(TextView)findViewById(R.id.tv_agd_address);
+        imgX1=(ImageView)findViewById(R.id.img_au_x1);
+        imgX2=(ImageView)findViewById(R.id.img_au_x2);
+        imgX3=(ImageView)findViewById(R.id.img_au_x3);
+        imgX4=(ImageView)findViewById(R.id.img_au_x4);
+        imgX5=(ImageView)findViewById(R.id.img_au_x5);
         myGridView=(MyGridView)findViewById(R.id.mg_agd_goods);
         tvNickName.setText(goodsBean.getNickname());
         if(null!=goodsBean.getImgList() && goodsBean.getImgList().size()>0){
@@ -97,11 +103,33 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         tvContent.setText(goodsBean.getDescription());
         tvPresentPrice.setText("现价："+ Util.setDouble(goodsBean.getPresentPrice()/100));
         tvAddress.setText(goodsBean.getAddress());
+        //设置星级
+        setXing(goodsBean.getCreditLevel());
         imageView.setOnClickListener(this);
         findViewById(R.id.tv_agd_buy).setOnClickListener(this);
         findViewById(R.id.lin_search).setOnClickListener(this);
         findViewById(R.id.lin_agd_share).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
+    }
+
+
+    /**
+     * 设置星级
+     */
+    private List<ImageView> imgList=new ArrayList<>();
+    private void setXing(int index){
+        imgList.add(imgX1);
+        imgList.add(imgX2);
+        imgList.add(imgX3);
+        imgList.add(imgX4);
+        imgList.add(imgX5);
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
+        }
     }
 
 

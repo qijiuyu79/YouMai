@@ -23,6 +23,7 @@ import com.youmai.project.utils.Util;
 import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.ClickTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendedAdapter extends BaseAdapter{
@@ -30,6 +31,7 @@ public class RecommendedAdapter extends BaseAdapter{
 	private Context context;
 	private List<GoodsBean> list;
 	private GoodsBean goodsBean;
+	private List<ImageView> imgList=new ArrayList<>();
 	public RecommendedAdapter(Context context,List<GoodsBean> list) {
 		super();
 		this.context = context;
@@ -51,11 +53,11 @@ public class RecommendedAdapter extends BaseAdapter{
 		return position;
 	}
 
+	ViewHolder holder = null;
 	@Override
 	public View getView(int position, View view, ViewGroup parent) {
-		ViewHolder holder = null;
 		if(view==null){
-			holder = new ViewHolder(); 
+			holder = new ViewHolder();
 			view = LayoutInflater.from(context).inflate(R.layout.recommended_item, null);
 			holder.tvContext=(TextView)view.findViewById(R.id.tv_ri_content);
             holder.tvOldMoney=(TextView)view.findViewById(R.id.tv_ri_oldMoney);
@@ -65,6 +67,11 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvBuy=(ClickTextView)view.findViewById(R.id.tv_ri_buy);
 			holder.circleImageView=(CircleImageView)view.findViewById(R.id.img_ri_pic);
 			holder.tvNickName=(TextView)view.findViewById(R.id.tv_ri_name);
+			holder.imgX1=(ImageView)view.findViewById(R.id.img_ri_x1);
+			holder.imgX2=(ImageView)view.findViewById(R.id.img_ri_x2);
+			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
+			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
+			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -88,6 +95,9 @@ public class RecommendedAdapter extends BaseAdapter{
 			}
 			Glide.with(context).load(goodsBean.getHead()).error(R.mipmap.icon).into(holder.circleImageView);
 			holder.tvNickName.setText(goodsBean.getNickname());
+			//设置星级
+			setXing(goodsBean.getCreditLevel());
+
 			holder.tvBuy.setTag(goodsBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -111,11 +121,31 @@ public class RecommendedAdapter extends BaseAdapter{
 		}
 		return view;
 	}
+
+
+	/**
+	 * 设置星级
+	 */
+	private void setXing(int index){
+		imgList.clear();
+		imgList.add(holder.imgX1);
+		imgList.add(holder.imgX2);
+		imgList.add(holder.imgX3);
+		imgList.add(holder.imgX4);
+		imgList.add(holder.imgX5);
+		for (int i=0;i<imgList.size();i++){
+			if(i<index){
+				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.yes_select_x));
+			}else{
+				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.no_select_x));
+			}
+		}
+	}
 	
 	private class ViewHolder{
 		private TextView tvContext,tvLocation,tvNewMoney,tvOldMoney,tvNickName;
 		private ClickTextView tvBuy;
-		private ImageView imgIcon;
+		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5;
 		private CircleImageView circleImageView;
 	 }
 }

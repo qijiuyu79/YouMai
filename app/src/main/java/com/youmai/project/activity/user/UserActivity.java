@@ -14,26 +14,21 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
-import com.youmai.project.activity.center.AddShopActivity;
 import com.youmai.project.application.MyApplication;
-import com.youmai.project.bean.Login;
-import com.youmai.project.bean.UserInfo;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.photo.PicturesUtil;
 import com.youmai.project.view.CircleImageView;
-
 import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +43,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
     private CircleImageView imgUserPic;
     private RelativeLayout relCertifcation;
     private TextView tvNickName,tvBalance,tvIngetral,tvCredit,tvCertifcation;
+    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private String nickName;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +66,11 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         tvCredit=(TextView)findViewById(R.id.tv_au_credit);
         tvCertifcation=(TextView)findViewById(R.id.tv_au_certification);
         relCertifcation=(RelativeLayout)findViewById(R.id.rel_au_cer);
+        imgX1=(ImageView)findViewById(R.id.img_au_x1);
+        imgX2=(ImageView)findViewById(R.id.img_au_x2);
+        imgX3=(ImageView)findViewById(R.id.img_au_x3);
+        imgX4=(ImageView)findViewById(R.id.img_au_x4);
+        imgX5=(ImageView)findViewById(R.id.img_au_x5);
         imgUserPic.setOnClickListener(this);
         relCertifcation.setOnClickListener(this);
         findViewById(R.id.rel_myAddress).setOnClickListener(this);
@@ -260,6 +261,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                 tvBalance.setText("¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100));
                 tvIngetral.setText(MyApplication.userInfoBean.getIntegral()+"");
                 tvCredit.setText(MyApplication.userInfoBean.getCredit()+"");
+                setXing(MyApplication.userInfoBean.getCreditLevel());
                 if(MyApplication.userInfoBean.isReal()){
                     tvCertifcation.setText("已认证");
                     relCertifcation.setClickable(false);
@@ -270,6 +272,26 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     };
+
+
+    /**
+     * 设置星级
+     */
+    private List<ImageView> imgList=new ArrayList<>();
+    private void setXing(int index){
+        imgList.add(imgX1);
+        imgList.add(imgX2);
+        imgList.add(imgX3);
+        imgList.add(imgX4);
+        imgList.add(imgX5);
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
+        }
+    }
 
     @Override
     protected void onResume() {

@@ -14,16 +14,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.sina.weibo.sdk.api.share.Base;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
-import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
-import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.adapter.SellerGoodsAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
@@ -32,7 +29,6 @@ import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.view.RefreshLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +39,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
 
     private RefreshLayout swipeLayout;
     private ListView listView;
+    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private GoodsBean goodsBean;
     private List<GoodsBean> listAll=new ArrayList<>();
     private int page=1;
@@ -75,6 +72,13 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
             TextView tvNickName=(TextView)findViewById(R.id.tv_asg_name);
             tvNickName.setText(goodsBean.getNickname());
+            imgX1=(ImageView)findViewById(R.id.img_au_x1);
+            imgX2=(ImageView)findViewById(R.id.img_au_x2);
+            imgX3=(ImageView)findViewById(R.id.img_au_x3);
+            imgX4=(ImageView)findViewById(R.id.img_au_x4);
+            imgX5=(ImageView)findViewById(R.id.img_au_x5);
+            //设置星级
+            setXing(goodsBean.getCreditLevel());
             swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
             listView=(ListView)findViewById(R.id.list);
             listView.setDividerHeight(0);
@@ -104,6 +108,26 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
                 SellerGoodsActivity.this.finish();
             }
         });
+    }
+
+
+    /**
+     * 设置星级
+     */
+    private List<ImageView> imgList=new ArrayList<>();
+    private void setXing(int index){
+        imgList.add(imgX1);
+        imgList.add(imgX2);
+        imgList.add(imgX3);
+        imgList.add(imgX4);
+        imgList.add(imgX5);
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
+        }
     }
 
 

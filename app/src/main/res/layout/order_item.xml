@@ -41,21 +41,38 @@
                 android:layout_marginLeft="10dp">
 
                 <ImageView
+                    android:id="@+id/img_ri_x1"
                     android:layout_width="13dp"
                     android:layout_height="14dp"
-                    android:src="@mipmap/xing_icon"/>
+                    android:src="@mipmap/no_select_x"/>
 
                 <ImageView
+                    android:id="@+id/img_ri_x2"
                     android:layout_width="13dp"
                     android:layout_height="14dp"
-                    android:layout_marginLeft="8dp"
-                    android:src="@mipmap/xing_icon"/>
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
 
                 <ImageView
+                    android:id="@+id/img_ri_x3"
                     android:layout_width="13dp"
                     android:layout_height="14dp"
-                    android:layout_marginLeft="8dp"
-                    android:src="@mipmap/xing_icon"/>
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
+
+                <ImageView
+                    android:id="@+id/img_ri_x4"
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
+
+                <ImageView
+                    android:id="@+id/img_ri_x5"
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
 
             </LinearLayout>
             

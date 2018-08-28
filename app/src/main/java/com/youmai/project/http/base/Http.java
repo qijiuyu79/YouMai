@@ -95,7 +95,7 @@ public class Http {
                 .url(Http.baseUrl+url)
                 .post(requestBody)
                 .build();
-        Call call = new OkHttpClient.Builder().writeTimeout(500, TimeUnit.SECONDS).build().newCall(request);
+        Call call = new OkHttpClient.Builder().writeTimeout(50, TimeUnit.SECONDS).build().newCall(request);
         call.enqueue(callback);
 
     }

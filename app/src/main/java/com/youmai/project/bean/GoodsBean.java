@@ -26,6 +26,7 @@ public class GoodsBean implements Serializable {
     private String nickname="";
     private String storeId;
     private String mobile;
+    private int creditLevel;
 
     public String getAddress() {
         return address;
@@ -145,5 +146,13 @@ public class GoodsBean implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public int getCreditLevel() {
+        return creditLevel;
+    }
+
+    public void setCreditLevel(int creditLevel) {
+        this.creditLevel = creditLevel;
     }
 }

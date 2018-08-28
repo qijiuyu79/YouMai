@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +26,7 @@ public class MOrderAdapter extends BaseAdapter{
 	private Context context;
 	private List<GoodsBean> list;
 	private GoodsBean goodsBean;
+	private List<ImageView> imgList=new ArrayList<>();
 	public MOrderAdapter(Context context, List<GoodsBean> list) {
 		super();
 		this.context = context;
@@ -45,9 +48,9 @@ public class MOrderAdapter extends BaseAdapter{
 		return position;
 	}
 
+	ViewHolder holder = null;
 	@Override
 	public View getView(int position, View view, ViewGroup parent) {
-		ViewHolder holder = null;
 		if(view==null){
 			holder = new ViewHolder(); 
 			view = LayoutInflater.from(context).inflate(R.layout.m_order_item, null);
@@ -57,6 +60,11 @@ public class MOrderAdapter extends BaseAdapter{
 			holder.tvName=(TextView)view.findViewById(R.id.tv_psi_name);
 			holder.tvMoney=(TextView)view.findViewById(R.id.tv_oi_money);
 			holder.tvPhone=(TextView)view.findViewById(R.id.tv_oi_phone);
+			holder.imgX1=(ImageView)view.findViewById(R.id.img_ri_x1);
+			holder.imgX2=(ImageView)view.findViewById(R.id.img_ri_x2);
+			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
+			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
+			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -73,6 +81,8 @@ public class MOrderAdapter extends BaseAdapter{
 			holder.tvMoney.setText(Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvName.setText(goodsBean.getNickname());
 			holder.tv_psi_des.setText(goodsBean.getDescription());
+			//设置星级
+			setXing(goodsBean.getCreditLevel());
 			switch (goodsBean.getStated()){
 				case 1:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yizhifu));
@@ -103,8 +113,28 @@ public class MOrderAdapter extends BaseAdapter{
 		return view;
 	}
 
+	/**
+	 * 设置星级
+	 */
+	private void setXing(int index){
+		imgList.clear();
+		imgList.add(holder.imgX1);
+		imgList.add(holder.imgX2);
+		imgList.add(holder.imgX3);
+		imgList.add(holder.imgX4);
+		imgList.add(holder.imgX5);
+		for (int i=0;i<imgList.size();i++){
+			if(i<index){
+				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.yes_select_x));
+			}else{
+				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.no_select_x));
+			}
+		}
+	}
+
 	private class ViewHolder{
 		private ImageView imageView,imgType;
+		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5;
 		private TextView tvName,tv_psi_des,tvMoney,tvPhone;
 	 }
 }

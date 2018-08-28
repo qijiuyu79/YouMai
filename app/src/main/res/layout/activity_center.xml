@@ -6,65 +6,91 @@
     android:fitsSystemWindows="true"
     android:background="@android:color/white">
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="18dp"
-        android:src="@mipmap/dianpu_icon"
+    <RelativeLayout
+        android:id="@+id/rel_ac"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
-        android:layout_marginTop="10dp"/>
-
-    <TextView android:id="@+id/tv_ac_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="41dp"
-        android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="@color/color_707070"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_toRightOf="@id/tv_ac_name"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="13dp">
+        android:layout_marginTop="10dp">
 
         <ImageView
-            android:layout_width="13dp"
-            android:layout_height="14dp"
-            android:src="@mipmap/xing_icon"/>
+            android:layout_width="20dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/dianpu_icon" />
 
-        <ImageView
-            android:layout_width="13dp"
-            android:layout_height="14dp"
-            android:layout_marginLeft="8dp"
-            android:src="@mipmap/xing_icon"/>
+        <TextView android:id="@+id/tv_ac_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_707070"/>
 
-        <ImageView
-            android:layout_width="13dp"
-            android:layout_height="14dp"
-            android:layout_marginLeft="8dp"
-            android:src="@mipmap/xing_icon"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/tv_ac_name"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/img_au_x1"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:src="@mipmap/no_select_x"/>
 
-    <com.youmai.project.view.ClickTextView
-        android:id="@+id/tv_ac_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="添加宝贝"
-        android:textColor="@color/color_FF4081"
-        android:textSize="15sp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="10dp"/>
+            <ImageView
+                android:id="@+id/img_au_x2"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x3"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x4"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x5"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+        </LinearLayout>
+
+        <com.youmai.project.view.ClickTextView
+            android:id="@+id/tv_ac_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加宝贝"
+            android:textColor="@color/color_FF4081"
+            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="13dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
 
     <View
         android:id="@+id/view_ac1"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/tv_ac_add"
+        android:layout_below="@id/rel_ac"
         android:layout_marginTop="8dp"
         android:background="@color/color_b6b6b6"/>
 

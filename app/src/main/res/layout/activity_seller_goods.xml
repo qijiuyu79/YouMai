@@ -40,57 +40,81 @@
     </RelativeLayout>
 
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="18dp"
-        android:src="@mipmap/dianpu_icon"
+    <RelativeLayout
+        android:id="@+id/rel_asg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="15dp"
-        android:layout_below="@id/rel_head"/>
-
-    <TextView android:id="@+id/tv_asg_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="41dp"
-        android:layout_marginTop="15dp"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="@color/color_707070"
-        android:layout_below="@id/rel_head"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_toRightOf="@id/tv_asg_name"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="18dp"
         android:layout_below="@id/rel_head">
 
         <ImageView
-            android:layout_width="13dp"
-            android:layout_height="14dp"
-            android:src="@mipmap/xing_icon"/>
+            android:layout_width="20dp"
+            android:layout_height="18dp"
+            android:src="@mipmap/dianpu_icon"
+            android:layout_centerVertical="true"/>
 
-        <ImageView
-            android:layout_width="13dp"
-            android:layout_height="14dp"
-            android:layout_marginLeft="8dp"
-            android:src="@mipmap/xing_icon"/>
+        <TextView android:id="@+id/tv_asg_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_707070"
+            android:layout_centerVertical="true"/>
 
-        <ImageView
-            android:layout_width="13dp"
-            android:layout_height="14dp"
-            android:layout_marginLeft="8dp"
-            android:src="@mipmap/xing_icon"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/tv_asg_name"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/img_au_x1"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x2"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x3"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x4"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x5"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <View
         android:id="@+id/view_asg"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@id/tv_asg_name"
+        android:layout_below="@id/rel_asg"
         android:background="@color/color_F5F5F5"
         android:layout_marginTop="15dp"/>
 
