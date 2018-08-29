@@ -45,8 +45,6 @@ import com.youmai.project.utils.map.GetLocation;
 import com.youmai.project.utils.map.MyOrientationListener;
 import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.MyGridView;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -271,54 +269,39 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
      * 解析数据并设置mark
      * @param msg
      */
+    private View markerView;
+    private ViewHolder holder = null;
     private void setMark(String msg){
-        try {
-            list.clear();
-            mBaiduMap.clear();
-            final JSONObject jsonObject=new JSONObject(msg);
-            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                Store store=new Store();
-                if(!jsonObject1.isNull("creditLevel")){
-                    store.setCreditLevel(jsonObject1.getInt("creditLevel"));
-                }
-                if(!jsonObject1.isNull("head")){
-                    store.setHead(jsonObject1.getString("head"));
-                }
-                if(!jsonObject1.isNull("id")){
-                    store.setId(jsonObject1.getString("id"));
-                }
-                if(!jsonObject1.isNull("nickname")){
-                    store.setNickname(jsonObject1.getString("nickname"));
-                }
-                //解析经纬度
-                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
-                if(null==jsonObject2){
-                    return;
-                }
-                JSONArray jsonArray2=new JSONArray(jsonObject2.getString("coordinates"));
-                for (int k = 0; k < jsonArray2.length(); k++) {
-                    if(k==0){
-                        store.setLongitude(jsonArray2.getDouble(k));
-                    }else{
-                        store.setLatitude(jsonArray2.getDouble(k));
-                    }
-                }
-                View markerView=LayoutInflater.from(mContext).inflate(R.layout.map_marker,null);
-                CircleImageView imgHead=(CircleImageView)markerView.findViewById(R.id.img_head);
-                TextView tvNickName=(TextView)markerView.findViewById(R.id.tv_nickName);
-                tvNickName.setText(store.getNickname());
-                Glide.with(mContext).load(store.getHead()).centerCrop().error(R.mipmap.icon).into(imgHead);
-                bitmap=BitmapDescriptorFactory.fromView(markerView);
-                MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmap).zIndex(i).animateType(MarkerOptions.MarkerAnimateType.grow);
-                mBaiduMap.addOverlay(op);
-                list.add(store);
+        //情况地图
+        mBaiduMap.clear();
+        //解析json数据
+        JsonUtils.getStoreList(msg,list);
+        for (int i=0,len=list.size();i<len;i++){
+            if(null==markerView){
+                holder = new ViewHolder();
+                markerView=LayoutInflater.from(mContext).inflate(R.layout.map_marker,null);
+                holder.imgHead=(CircleImageView)markerView.findViewById(R.id.img_head);
+                holder.tvNickName=(TextView)markerView.findViewById(R.id.tv_nickName);
+                markerView.setTag(holder);
+            }else{
+                holder=(ViewHolder)markerView.getTag();
             }
-        }catch (Exception e){
-            e.printStackTrace();
+            holder.tvNickName.setText(list.get(i).getNickname());
+            final String imgUrl=list.get(i).getHead();
+            holder.imgHead.setTag(R.id.imageid,imgUrl);
+            if(holder.imgHead.getTag(R.id.imageid)!=null && imgUrl==holder.imgHead.getTag(R.id.imageid)){
+                Glide.with(mContext).load(imgUrl).error(R.mipmap.icon).into(holder.imgHead);
+            }
+            bitmap=BitmapDescriptorFactory.fromView(markerView);
+            MarkerOptions op = new MarkerOptions().position(new LatLng(list.get(i).getLatitude(), list.get(i).getLongitude())).icon(bitmap).zIndex(i).animateType(MarkerOptions.MarkerAnimateType.grow);
+            mBaiduMap.addOverlay(op);
         }
+    }
 
+
+    private class ViewHolder{
+        private CircleImageView imgHead;
+        private TextView tvNickName;
     }
 
     /**

@@ -1,8 +1,20 @@
 package com.youmai.project.utils;
 
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.model.LatLng;
+import com.bumptech.glide.Glide;
+import com.youmai.project.R;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.Store;
+import com.youmai.project.view.CircleImageView;
+import com.youmai.project.view.ExpandView;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -165,5 +177,47 @@ public class JsonUtils {
             e.printStackTrace();
         }
         return list;
+    }
+
+
+    public static void getStoreList(String msg,List<Store> list){
+       try {
+           list.clear();
+           final JSONObject jsonObject=new JSONObject(msg);
+           final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
+           for (int i = 0; i < jsonArray.length(); i++) {
+               JSONObject jsonObject1=jsonArray.getJSONObject(i);
+               Store store=new Store();
+               if(!jsonObject1.isNull("creditLevel")){
+                   store.setCreditLevel(jsonObject1.getInt("creditLevel"));
+               }
+               if(!jsonObject1.isNull("head")){
+                   store.setHead(jsonObject1.getString("head"));
+               }
+               if(!jsonObject1.isNull("id")){
+                   store.setId(jsonObject1.getString("id"));
+               }
+               if(!jsonObject1.isNull("nickname")){
+                   store.setNickname(jsonObject1.getString("nickname"));
+               }
+
+               //解析经纬度
+               if(!jsonObject1.isNull("location")){
+                   JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
+
+                   JSONArray jsonArray2=new JSONArray(jsonObject2.getString("coordinates"));
+                   for (int k = 0; k < jsonArray2.length(); k++) {
+                       if(k==0){
+                           store.setLongitude(jsonArray2.getDouble(k));
+                       }else{
+                           store.setLatitude(jsonArray2.getDouble(k));
+                       }
+                   }
+               }
+               list.add(store);
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
     }
 }
