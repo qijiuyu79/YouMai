@@ -188,6 +188,7 @@ public class JsonUtils {
            for (int i = 0; i < jsonArray.length(); i++) {
                JSONObject jsonObject1=jsonArray.getJSONObject(i);
                Store store=new Store();
+               store.setPosition(i);
                if(!jsonObject1.isNull("creditLevel")){
                    store.setCreditLevel(jsonObject1.getInt("creditLevel"));
                }

@@ -9,8 +9,7 @@
    <com.youmai.project.view.CircleImageView
        android:id="@+id/img_head"
        android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:src="@mipmap/icon"/>
+       android:layout_height="50dp"/>
 
     <TextView
         android:id="@+id/tv_nickName"

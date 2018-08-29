@@ -13,6 +13,7 @@ public class Store implements Serializable {
     private String nickname;
     private int creditLevel;
     private String head;
+    private int position;
 
     public String getId() {
         return id;
@@ -60,5 +61,13 @@ public class Store implements Serializable {
 
     public void setHead(String head) {
         this.head = head;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

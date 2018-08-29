@@ -1,6 +1,7 @@
 package com.youmai.project.activity.map;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +30,11 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.MapGoodsListAdapter;
@@ -38,6 +44,7 @@ import com.youmai.project.bean.Store;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
@@ -63,7 +70,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     //附近店铺数据
     private List<Store> list=new ArrayList<>();
     //店铺图标
-    private BitmapDescriptor bitmap;
+    private BitmapDescriptor bitmapDescriptor;
     //店铺对象
     private Store store;
     private List<ImageView> imgList=new ArrayList<>();
@@ -286,15 +293,53 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             }else{
                 holder=(ViewHolder)markerView.getTag();
             }
+            bitmapDescriptor=BitmapDescriptorFactory.fromView(markerView);
+            final Store store=list.get(i);
             holder.tvNickName.setText(list.get(i).getNickname());
             final String imgUrl=list.get(i).getHead();
             holder.imgHead.setTag(R.id.imageid,imgUrl);
+            LogUtils.e("imgUrl="+imgUrl);
             if(holder.imgHead.getTag(R.id.imageid)!=null && imgUrl==holder.imgHead.getTag(R.id.imageid)){
-                Glide.with(mContext).load(imgUrl).error(R.mipmap.icon).into(holder.imgHead);
+                Glide.with(mContext).load(imgUrl).override(50,50).animate(R.anim.item_alpha_in).error(R.mipmap.icon).into(holder.imgHead);
+//                Glide.with(mContext).load(imgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+//                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+//
+//                        MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmapDescriptor).zIndex(store.getPosition()).animateType(MarkerOptions.MarkerAnimateType.grow);
+//                        mBaiduMap.addOverlay(op);
+//                    }
+//
+//                });
+
+                LogUtils.e(imgUrl+"++++++++++++++++");
+                Glide.with(this).load(imgUrl).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        LogUtils.e("aaaaaaaaaaaaa");
+                        //加载异常
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        //加载成功
+                        //view.setImageDrawable(resource);
+                        LogUtils.e("bbbbbbbbbbbbb");
+                        return false;
+                    }
+                }).into(holder.imgHead);
             }
-            bitmap=BitmapDescriptorFactory.fromView(markerView);
-            MarkerOptions op = new MarkerOptions().position(new LatLng(list.get(i).getLatitude(), list.get(i).getLongitude())).icon(bitmap).zIndex(i).animateType(MarkerOptions.MarkerAnimateType.grow);
-            mBaiduMap.addOverlay(op);
+//            MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmapDescriptor).zIndex(store.getPosition()).animateType(MarkerOptions.MarkerAnimateType.grow);
+//            mBaiduMap.addOverlay(op);
+
+//            Store store=list.get(i);
+//            markerView=LayoutInflater.from(mContext).inflate(R.layout.map_marker,null);
+//            CircleImageView imgHead=(CircleImageView)markerView.findViewById(R.id.img_head);
+//        TextView tvNickName=(TextView)markerView.findViewById(R.id.tv_nickName);
+//        tvNickName.setText(store.getNickname());
+//        Glide.with(mContext).load(store.getHead()).centerCrop().error(R.mipmap.icon).into(imgHead);
+//        bitmap=BitmapDescriptorFactory.fromView(markerView);
+//        MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmap).zIndex(i).animateType(MarkerOptions.MarkerAnimateType.grow);
+//        mBaiduMap.addOverlay(op);
         }
     }
 
