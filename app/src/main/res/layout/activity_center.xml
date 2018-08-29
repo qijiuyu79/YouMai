@@ -73,12 +73,12 @@
         </LinearLayout>
 
         <com.youmai.project.view.ClickTextView
-            android:id="@+id/tv_ac_add"
+            android:id="@+id/tv_ac_evaluation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="添加宝贝"
-            android:textColor="@color/color_FF4081"
-            android:textSize="15sp"
+            android:text="123人评价"
+            android:textColor="@color/color_2FA0F3"
+            android:textSize="14sp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="13dp"
             android:layout_centerVertical="true"/>
@@ -92,7 +92,7 @@
         android:layout_height="0.5dp"
         android:layout_below="@id/rel_ac"
         android:layout_marginTop="8dp"
-        android:background="@color/color_b6b6b6"/>
+        android:background="@color/color_F5F5F5"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -111,14 +111,14 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/view_ac1"
         android:layout_marginRight="13dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="13dp"/>
 
     <TextView
         android:id="@+id/tv_ac_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_ac1"
-        android:layout_marginRight="31dp"
+        android:layout_marginRight="28dp"
         android:layout_marginTop="10dp"
         android:text="全部订单"
         android:textSize="14sp"
@@ -131,7 +131,7 @@
         android:layout_height="0.5dp"
         android:layout_below="@id/tv_ac_order"
         android:layout_marginTop="8dp"
-        android:background="@color/color_b6b6b6"/>
+        android:background="@color/color_F5F5F5"/>
 
     <LinearLayout
         android:id="@+id/lin_ac"
@@ -215,18 +215,72 @@
 
     </LinearLayout>
 
+
     <View
         android:id="@+id/view_ac3"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="0.5dp"
         android:layout_below="@id/lin_ac"
-        android:background="@color/color_F5F5F5"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:background="@color/color_F5F5F5"/>
+
+    <com.youmai.project.view.ClickLinearLayout
+        android:id="@+id/lin_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/view_ac3"
+        android:layout_marginLeft="10dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/sign_in"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="签到"
+            android:textSize="14sp"
+            android:textColor="@color/color_FF4081"
+            android:gravity="center"
+            android:layout_marginLeft="6dp"/>
+
+    </com.youmai.project.view.ClickLinearLayout>
+
+    <com.youmai.project.view.ClickLinearLayout
+        android:id="@+id/lin_ac_add"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/view_ac3"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/add_shop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="添加宝贝"
+            android:textSize="14sp"
+            android:textColor="@color/color_FF4081"
+            android:gravity="center"
+            android:layout_marginLeft="6dp"/>
+
+    </com.youmai.project.view.ClickLinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/view_ac3">
+        android:layout_below="@id/lin_ac_add"
+        android:layout_marginTop="5dp">
 
         <include layout="@layout/listview"/>
 

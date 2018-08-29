@@ -76,7 +76,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
             }
         }, 0);
         tvNickName.setText(MyApplication.userInfoBean.getNickname());
-        findViewById(R.id.tv_ac_add).setOnClickListener(this);
+        findViewById(R.id.lin_ac_add).setOnClickListener(this);
         findViewById(R.id.tv_ac_order).setOnClickListener(this);
         findViewById(R.id.lin_ac_jiaoyi).setOnClickListener(this);
         findViewById(R.id.lin_ac_complete).setOnClickListener(this);
@@ -89,7 +89,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         Intent intent=new Intent();
         switch (v.getId()){
             //添加宝贝
-            case R.id.tv_ac_add:
+            case R.id.lin_ac_add:
                  if(!MyApplication.userInfoBean.isReal()){
                      dialogView = new DialogView(dialogView, mContext, "需要实名认证后才可以添加宝贝！",
                              "去认证", "取消", new View.OnClickListener() {

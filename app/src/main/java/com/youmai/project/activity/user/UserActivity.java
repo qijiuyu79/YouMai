@@ -268,7 +268,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                 }else{
                     tvCertifcation.setText("未认证");
                 }
-
             }
         }
     };

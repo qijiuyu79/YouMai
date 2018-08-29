@@ -83,6 +83,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
             goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
         }
         scrollView=(ScrollView)findViewById(R.id.scrollView_agd);
+        scrollView.smoothScrollTo(0,20);
         TextView tvNickName=(TextView)findViewById(R.id.tv_agd_nickName);
         ImageView imageView=(ImageView)findViewById(R.id.img_agd_img);
         TextView tvCount=(TextView)findViewById(R.id.tv_agd_count);

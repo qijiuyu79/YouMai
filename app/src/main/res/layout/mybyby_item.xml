@@ -4,12 +4,18 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-        <ImageView
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_F5F5F5"/>
+
+
+    <ImageView
             android:layout_width="14dp"
             android:layout_height="17dp"
             android:src="@mipmap/black_location"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="13dp"/>
+            android:layout_marginTop="23dp"/>
 
         <TextView
             android:id="@+id/tv_mi_address"
@@ -19,7 +25,7 @@
             android:textSize="14sp"
             android:textColor="@color/color_707070"
             android:layout_marginLeft="39dp"
-            android:layout_marginTop="13dp"/>
+            android:layout_marginTop="23dp"/>
 
         <ImageView
             android:layout_width="22dp"
@@ -27,7 +33,7 @@
             android:src="@mipmap/share_icon"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="13dp"/>
+            android:layout_marginTop="23dp"/>
 
         <RelativeLayout
             android:id="@+id/rel_mi"
@@ -66,7 +72,6 @@
         </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rel_mi2"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_below="@id/rel_mi">
@@ -94,11 +99,5 @@
             android:layout_marginRight="15dp" />
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@id/rel_mi2"
-        android:background="@color/color_F5F5F5"/>
 
 </RelativeLayout>
