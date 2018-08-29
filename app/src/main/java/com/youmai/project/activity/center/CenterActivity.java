@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.order.MOrderActivity;
-import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.activity.user.CertificationActivity;
 import com.youmai.project.adapter.MyGoodsAdapter;
 import com.youmai.project.application.MyApplication;
@@ -77,6 +76,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         }, 0);
         tvNickName.setText(MyApplication.userInfoBean.getNickname());
         findViewById(R.id.lin_ac_add).setOnClickListener(this);
+        findViewById(R.id.lin_sign_in).setOnClickListener(this);
         findViewById(R.id.tv_ac_order).setOnClickListener(this);
         findViewById(R.id.lin_ac_jiaoyi).setOnClickListener(this);
         findViewById(R.id.lin_ac_complete).setOnClickListener(this);
@@ -103,6 +103,11 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                  }
                  intent.setClass(CenterActivity.this,AddShopActivity.class);
                  startActivityForResult(intent,1);
+                 break;
+            //店铺签到
+            case R.id.lin_sign_in:
+                 showProgress("签到中...",false);
+                 HttpMethod.storeEvaluate(mHandler);
                  break;
             //全部订单
             case R.id.tv_ac_order:
@@ -140,6 +145,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
             super.handleMessage(msg);
             clearTask();
             String message;
+            HttpBaseBean httpBaseBean;
             switch (msg.what){
                 case HandlerConstant.GET_MYGOODS_SUCCESS:
                     message= (String) msg.obj;
@@ -152,13 +158,25 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                     refresh(message);
                     swipeLayout.setLoading(false);
                     break;
-                 //删除宝贝
-                case HandlerConstant.DELETE_BABY_SUCCESS:
-                     HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                //店铺签到
+                case HandlerConstant.STORE_EVALUATE_SUCCESS:
+                     httpBaseBean= (HttpBaseBean) msg.obj;
                      if(null==httpBaseBean){
-                         return;
+                        return;
                      }
                      if(httpBaseBean.isSussess()){
+                        showMsg("签到成功！");
+                     }else{
+                         showMsg(httpBaseBean.getMsg());
+                     }
+                     break;
+                 //删除宝贝
+                case HandlerConstant.DELETE_BABY_SUCCESS:
+                      httpBaseBean= (HttpBaseBean) msg.obj;
+                      if(null==httpBaseBean){
+                         return;
+                      }
+                      if(httpBaseBean.isSussess()){
                          for(int i=0;i<listAll.size();i++){
                              if(listAll.get(i).getId().equals(goodsId)){
                                  listAll.remove(i);

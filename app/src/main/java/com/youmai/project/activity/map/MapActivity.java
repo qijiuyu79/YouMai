@@ -28,6 +28,7 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.MapGoodsListAdapter;
@@ -42,6 +43,7 @@ import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.map.GetLocation;
 import com.youmai.project.utils.map.MyOrientationListener;
+import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.MyGridView;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -64,7 +66,9 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     private List<Store> list=new ArrayList<>();
     //店铺图标
     private BitmapDescriptor bitmap;
+    //店铺对象
     private Store store;
+    private List<ImageView> imgList=new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +85,6 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
      * 初始化控件
      */
     private void initView(){
-        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.dianpu_icon);
         mapView=(MapView)findViewById(R.id.mapView);
         mBaiduMap = mapView.getMap();
         // 根据经纬度搜索
@@ -158,10 +161,22 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                      List<GoodsBean> list= JsonUtils.getGoods(msg.obj.toString());
                      if(list.size()>0){
                          View view= LayoutInflater.from(mContext).inflate(R.layout.map_bottom_goods,null);
+                         bottomPopupWindow(0,0,view);
                          TextView tvNickName=(TextView)view.findViewById(R.id.tv_am_nickName);
                          tvNickName.setText(store.getNickname());
+                         ImageView imgX1=(ImageView)view.findViewById(R.id.img_au_x1);
+                         ImageView imgX2=(ImageView)view.findViewById(R.id.img_au_x2);
+                         ImageView imgX3=(ImageView)view.findViewById(R.id.img_au_x3);
+                         ImageView imgX4=(ImageView)view.findViewById(R.id.img_au_x4);
+                         ImageView imgX5=(ImageView)view.findViewById(R.id.img_au_x5);
+                         imgList.add(imgX1);
+                         imgList.add(imgX2);
+                         imgList.add(imgX3);
+                         imgList.add(imgX4);
+                         imgList.add(imgX5);
+                         //设置星级
+                         setXing(store.getCreditLevel());
                          MyGridView myGridView=(MyGridView)view.findViewById(R.id.mg_am_goods);
-                         bottomPopupWindow(0,0,view);
                          MapGoodsListAdapter mapGoodsListAdapter=new MapGoodsListAdapter(mContext,list);
                          myGridView.setAdapter(mapGoodsListAdapter);
 
@@ -197,6 +212,20 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
 
 
     /**
+     * 设置星级
+     */
+    private void setXing(int index){
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
+        }
+    }
+
+
+    /**
      * marker点击事件
      * @param marker
      * @return
@@ -222,6 +251,8 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             case R.id.img_am_location:
                 isFirst=false;
                 startLocation();
+                break;
+            default:
                 break;
         }
     }
@@ -249,8 +280,18 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
                 Store store=new Store();
-                store.setId(jsonObject1.getString("id"));
-                store.setNickname(jsonObject1.getString("nickname"));
+                if(!jsonObject1.isNull("creditLevel")){
+                    store.setCreditLevel(jsonObject1.getInt("creditLevel"));
+                }
+                if(!jsonObject1.isNull("head")){
+                    store.setHead(jsonObject1.getString("head"));
+                }
+                if(!jsonObject1.isNull("id")){
+                    store.setId(jsonObject1.getString("id"));
+                }
+                if(!jsonObject1.isNull("nickname")){
+                    store.setNickname(jsonObject1.getString("nickname"));
+                }
                 //解析经纬度
                 JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
                 if(null==jsonObject2){
@@ -264,6 +305,12 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                         store.setLatitude(jsonArray2.getDouble(k));
                     }
                 }
+                View markerView=LayoutInflater.from(mContext).inflate(R.layout.map_marker,null);
+                CircleImageView imgHead=(CircleImageView)markerView.findViewById(R.id.img_head);
+                TextView tvNickName=(TextView)markerView.findViewById(R.id.tv_nickName);
+                tvNickName.setText(store.getNickname());
+                Glide.with(mContext).load(store.getHead()).centerCrop().error(R.mipmap.icon).into(imgHead);
+                bitmap=BitmapDescriptorFactory.fromView(markerView);
                 MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmap).zIndex(i).animateType(MarkerOptions.MarkerAnimateType.grow);
                 mBaiduMap.addOverlay(op);
                 list.add(store);
@@ -303,7 +350,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             LatLng finishLng2 = mapStatus.target;// 获取地图中心点坐标
             // 计算距离
             Double distance = Util.GetShortDistance(finishLng.longitude, finishLng.latitude, finishLng2.longitude, finishLng2.latitude);
-            if(distance>500){
+            if(distance>2000){
                 //查询附近的店铺
                 getStore();
             }

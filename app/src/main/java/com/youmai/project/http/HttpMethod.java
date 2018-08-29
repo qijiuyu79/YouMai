@@ -188,6 +188,7 @@ public class HttpMethod extends BaseRequst {
             }
 
             public void onFailure(okhttp3.Call call, IOException e) {
+                LogUtils.e(e.getMessage()+"_________");
                 sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
 
             }
@@ -527,7 +528,7 @@ public class HttpMethod extends BaseRequst {
     public static void getNearStore(final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("min_distance","0");
-        map.put("max_distance","500");
+        map.put("max_distance","2000");
         Http.getRetrofit().create(HttpApi.class).getNearStore(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -618,6 +619,29 @@ public class HttpMethod extends BaseRequst {
             }
 
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 店铺签到
+     * @param handler
+     */
+    public static void storeEvaluate(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi.class).storeEvaluate(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.STORE_EVALUATE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
             }
         });

@@ -26,6 +26,7 @@ import com.youmai.project.utils.photo.BitmapCache;
 import com.youmai.project.utils.photo.ImageBucket;
 import com.youmai.project.utils.photo.ImageItem;
 import com.youmai.project.utils.photo.PicturesUtil;
+import com.youmai.project.view.ClickTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class ImageGridActivity extends BaseActivity {
 	private GridView gridView;
 	private ImageGridAdapter adapter;
 	private AlbumHelper helper;
-	private Button bt;
+	private ClickTextView bt;
 	private int count;
 	private LinearLayout linBack;
 	private TextView title;
@@ -81,7 +82,7 @@ public class ImageGridActivity extends BaseActivity {
 				adapter.notifyDataSetChanged();
 			}
 		});
-		bt = (Button) findViewById(R.id.bt);
+		bt = (ClickTextView) findViewById(R.id.bt);
 		if(Bimp.selectBitmap.size() != 0){
 			count = Bimp.selectBitmap.size();
 			bt.setText("确定" + "(" + count + ")");

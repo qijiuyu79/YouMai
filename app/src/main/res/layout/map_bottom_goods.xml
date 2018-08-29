@@ -12,56 +12,105 @@
         android:background="@android:color/white"
         android:clickable="true">
 
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="19dp"
-            android:src="@mipmap/dianpu_icon"
-            android:layout_below="@id/view_agd3"
-            android:layout_marginTop="13dp"
-            android:layout_marginLeft="11dp"/>
-
-        <TextView
-            android:id="@+id/tv_am_nickName"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rel_mbg0"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/color_707070"
-            android:layout_below="@id/view_agd3"
             android:layout_marginTop="13dp"
-            android:layout_marginLeft="41dp"/>
-
-        <LinearLayout
-            android:id="@+id/lin_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view_agd3"
-            android:layout_marginTop="13dp"
-            android:layout_marginRight="11dp"
-            android:layout_alignParentRight="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="进入店铺"
-                android:textColor="@color/color_707070"
-                android:textSize="14sp"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center"/>
+            android:layout_marginLeft="11dp">
 
             <ImageView
-                android:layout_width="8dp"
-                android:layout_height="13dp"
-                android:src="@mipmap/right_next"
-                android:layout_gravity="center"/>
+                android:layout_width="18dp"
+                android:layout_height="19dp"
+                android:src="@mipmap/dianpu_icon"
+                android:layout_centerVertical="true"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_am_nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/color_707070"
+                android:layout_marginLeft="25dp"
+                android:layout_centerVertical="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_toRightOf="@id/tv_am_nickName"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true">
+
+                <ImageView
+                    android:id="@+id/img_au_x1"
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/no_select_x"/>
+
+                <ImageView
+                    android:id="@+id/img_au_x2"
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
+
+                <ImageView
+                    android:id="@+id/img_au_x3"
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
+
+                <ImageView
+                    android:id="@+id/img_au_x4"
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
+
+                <ImageView
+                    android:id="@+id/img_au_x5"
+                    android:layout_width="13dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@mipmap/no_select_x"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_agd3"
+                android:layout_marginRight="11dp"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="进入店铺"
+                    android:textColor="@color/color_707070"
+                    android:textSize="14sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="13dp"
+                    android:src="@mipmap/right_next"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <View
             android:id="@+id/view_am"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@color/color_F5F5F5"
-            android:layout_below="@id/lin_search"
+            android:layout_below="@id/rel_mbg0"
             android:layout_marginTop="15dp"/>
 
         <com.youmai.project.view.MyGridView

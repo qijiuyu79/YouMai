@@ -11,6 +11,8 @@ public class Store implements Serializable {
     private Double latitude=0.0;
     private Double longitude=0.0;
     private String nickname;
+    private int creditLevel;
+    private String head;
 
     public String getId() {
         return id;
@@ -42,5 +44,21 @@ public class Store implements Serializable {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public int getCreditLevel() {
+        return creditLevel;
+    }
+
+    public void setCreditLevel(int creditLevel) {
+        this.creditLevel = creditLevel;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
     }
 }

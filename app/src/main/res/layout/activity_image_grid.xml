@@ -17,17 +17,21 @@
         android:numColumns="3"
         android:scrollbars="none"
         android:verticalSpacing="8dp"
-        android:layout_marginBottom="45dp" >
+        android:layout_marginBottom="70dp" >
     </GridView>
 
-    <Button
+    <com.youmai.project.view.ClickTextView
           android:id="@+id/bt"
           android:layout_width="match_parent"
-          android:layout_height="45dp"
-          android:padding="10dp"
+          android:layout_height="40dp"
+          android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
           android:text="确定"
-          android:textColor="@color/color_333333"
-          android:textSize="20sp"
+          android:textColor="@android:color/white"
+          android:textSize="15sp"
+          android:gravity="center"
+          android:background="@color/color_FF4081"
+        android:layout_marginBottom="10dp"
           android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

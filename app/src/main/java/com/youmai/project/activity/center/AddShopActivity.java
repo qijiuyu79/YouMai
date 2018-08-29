@@ -288,7 +288,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     deleteImg();
-                    listFile.clear();
                     break;
                 default:
                     break;
@@ -306,5 +305,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                  listFile.get(i).delete();
              }
         }
+        listFile.clear();
     }
 }

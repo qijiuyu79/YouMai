@@ -209,4 +209,14 @@ public interface HttpApi {
     @POST(HttpConstant.M_ORDER_LIST)
     Call<ResponseBody> getMOrderList(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 店铺签到
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.STORE_EVALUATE)
+    Call<HttpBaseBean> storeEvaluate(@FieldMap Map<String, String> map);
+
 }
