@@ -22,6 +22,8 @@ import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.ClickTextView;
+import com.youmai.project.view.Shimmer;
+import com.youmai.project.view.ShimmerTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +74,8 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
 			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
+//			holder.shimmerTextView=(ShimmerTextView)view.findViewById(R.id.st_ri);
+//			holder.shimmer=new Shimmer();
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -84,6 +88,8 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+
+//			holder.shimmer.start(holder.shimmerTextView);
 			if(goodsBean.getImgList().size()>0){
 				String imgUrl=goodsBean.getImgList().get(0);
 				holder.imgIcon.setTag(R.id.imageid,imgUrl);
@@ -147,5 +153,7 @@ public class RecommendedAdapter extends BaseAdapter{
 		private ClickTextView tvBuy;
 		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5;
 		private CircleImageView circleImageView;
+//		private ShimmerTextView shimmerTextView;
+//		private Shimmer shimmer;
 	 }
 }

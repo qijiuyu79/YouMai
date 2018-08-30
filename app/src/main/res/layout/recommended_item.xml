@@ -92,6 +92,18 @@
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"/>
 
+    <com.youmai.project.view.ShimmerTextView
+        android:id="@+id/st_ri"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="图片加载中"
+        android:textSize="25sp"
+        android:textColor="@color/color_444444"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:layout_below="@id/tv_ri_content"/>
+
     <RelativeLayout
         android:id="@+id/rel_ri"
         android:layout_width="match_parent"

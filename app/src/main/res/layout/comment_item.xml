@@ -1,0 +1,164 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_F5F5F5"/>
+
+    <RelativeLayout
+        android:id="@+id/rel_asg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/rel_head">
+
+        <com.youmai.project.view.CircleImageView
+            android:id="@+id/img_ci_head"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon" />
+
+        <TextView android:id="@+id/tv_ci_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_707070"
+            android:layout_toRightOf="@id/img_ci_head"
+            android:layout_centerVertical="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/tv_ci_name"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/img_au_x1"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x2"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x3"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x4"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x5"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+        </LinearLayout>
+
+        <com.youmai.project.view.ClickImageView
+            android:id="@+id/img_ci_zan"
+            android:layout_width="24dp"
+            android:layout_height="23dp"
+            android:src="@mipmap/zan_icon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_ci_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_020202"
+        android:textSize="15sp"
+        android:text="如果你无法简洁的表达你的想法，那只说明你还不够了解它"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginRight="13dp"/>
+
+    <TextView
+        android:id="@+id/tv_ci_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_a0a0a0"
+        android:textSize="12sp"
+        android:text="2018-08-21 20:08:48"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="46dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:background="@color/color_f8f8f8"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="15dp"
+        android:padding="10dp">
+
+        <ImageView android:id="@+id/img_mi_icon"
+            android:layout_width="59dp"
+            android:layout_height="59dp"
+            android:src="@mipmap/icon"/>
+
+        <TextView android:id="@+id/tv_mi_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_mi_icon"
+            android:layout_marginLeft="13dp"
+            android:textColor="@color/color_020202"
+            android:textSize="12sp"
+            android:text="10月份京东购买的KAKA牌尤克里里。主要不太会用"
+            android:maxLines="2"
+            android:lineSpacingExtra="0.5dp"/>
+
+        <TextView
+            android:id="@+id/tv_oi_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/img_mi_icon"
+            android:layout_alignParentRight="true"
+            android:text="100"
+            android:textSize="14sp"
+            android:textColor="@color/color_FF4081"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/img_mi_icon"
+            android:layout_toLeftOf="@id/tv_oi_money"
+            android:text="实付款："
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginRight="5dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

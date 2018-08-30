@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.order.CommentActivity;
 import com.youmai.project.activity.order.MOrderActivity;
 import com.youmai.project.activity.user.CertificationActivity;
 import com.youmai.project.adapter.MyGoodsAdapter;
@@ -81,6 +82,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.lin_ac_jiaoyi).setOnClickListener(this);
         findViewById(R.id.lin_ac_complete).setOnClickListener(this);
         findViewById(R.id.lin_ac_cancle).setOnClickListener(this);
+        findViewById(R.id.tv_ac_evaluation).setOnClickListener(this);
     }
 
 
@@ -88,6 +90,10 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         Intent intent=new Intent();
         switch (v.getId()){
+            //评价
+            case R.id.tv_ac_evaluation:
+                 setClass(CommentActivity.class);
+                 break;
             //添加宝贝
             case R.id.lin_ac_add:
                  if(!MyApplication.userInfoBean.isReal()){
