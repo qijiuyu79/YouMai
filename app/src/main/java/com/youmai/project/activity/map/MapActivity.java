@@ -287,49 +287,19 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             if(null==markerView){
                 holder = new ViewHolder();
                 markerView=LayoutInflater.from(mContext).inflate(R.layout.map_marker,null);
-                holder.imgHead=(CircleImageView)markerView.findViewById(R.id.img_head);
                 holder.tvNickName=(TextView)markerView.findViewById(R.id.tv_nickName);
                 markerView.setTag(holder);
             }else{
                 holder=(ViewHolder)markerView.getTag();
             }
-            bitmapDescriptor=BitmapDescriptorFactory.fromView(markerView);
             final Store store=list.get(i);
-            holder.tvNickName.setText(list.get(i).getNickname());
-            final String imgUrl=list.get(i).getHead();
-            holder.imgHead.setTag(R.id.imageid,imgUrl);
-            LogUtils.e("imgUrl="+imgUrl);
-            if(holder.imgHead.getTag(R.id.imageid)!=null && imgUrl==holder.imgHead.getTag(R.id.imageid)){
-                Glide.with(mContext).load(imgUrl).override(50,50).animate(R.anim.item_alpha_in).error(R.mipmap.icon).into(holder.imgHead);
-//                Glide.with(mContext).load(imgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
-//                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
-//
-//                        MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmapDescriptor).zIndex(store.getPosition()).animateType(MarkerOptions.MarkerAnimateType.grow);
-//                        mBaiduMap.addOverlay(op);
-//                    }
-//
-//                });
-
-                LogUtils.e(imgUrl+"++++++++++++++++");
-                Glide.with(this).load(imgUrl).listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        LogUtils.e("aaaaaaaaaaaaa");
-                        //加载异常
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        //加载成功
-                        //view.setImageDrawable(resource);
-                        LogUtils.e("bbbbbbbbbbbbb");
-                        return false;
-                    }
-                }).into(holder.imgHead);
+            if(null==store){
+                return;
             }
-//            MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmapDescriptor).zIndex(store.getPosition()).animateType(MarkerOptions.MarkerAnimateType.grow);
-//            mBaiduMap.addOverlay(op);
+            holder.tvNickName.setText(store.getNickname());
+            bitmapDescriptor=BitmapDescriptorFactory.fromView(markerView);
+            MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmapDescriptor).zIndex(store.getPosition()).animateType(MarkerOptions.MarkerAnimateType.grow);
+            mBaiduMap.addOverlay(op);
 
 //            Store store=list.get(i);
 //            markerView=LayoutInflater.from(mContext).inflate(R.layout.map_marker,null);
@@ -345,7 +315,6 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
 
 
     private class ViewHolder{
-        private CircleImageView imgHead;
         private TextView tvNickName;
     }
 

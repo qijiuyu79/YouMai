@@ -88,7 +88,7 @@ public class RecommendedAdapter extends BaseAdapter{
 				String imgUrl=goodsBean.getImgList().get(0);
 				holder.imgIcon.setTag(R.id.imageid,imgUrl);
 				if(holder.imgIcon.getTag(R.id.imageid)!=null && imgUrl==holder.imgIcon.getTag(R.id.imageid)){
-					Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).into(holder.imgIcon);
+					Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).animate(R.anim.item_alpha_in).into(holder.imgIcon);
 				}
 			}else{
 				holder.imgIcon.setImageDrawable(null);
