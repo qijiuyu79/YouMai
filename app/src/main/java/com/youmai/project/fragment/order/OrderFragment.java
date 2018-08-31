@@ -317,19 +317,22 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                      }
 
                     //修改全部订单集合中该商品的状态
-                    int num=-1;
-                    for(int i=0,len=listBeanAll.size();i<len;i++){
-                        if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
-                            num=i;
-                            break;
+                    if(listBeanAll.size()>0){
+                        int num=-1;
+                        for(int i=0,len=listBeanAll.size();i<len;i++){
+                            if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
+                                num=i;
+                                break;
+                            }
+                        }
+                        if(num==-1){
+                            goodsBean.setStated(1);
+                            listBeanAll.add(0,goodsBean);
+                        }else{
+                            listBeanAll.get(num).setStated(1);
                         }
                     }
-                    if(num==-1){
-                        goodsBean.setStated(1);
-                        listBeanAll.add(0,goodsBean);
-                    }else{
-                        listBeanAll.get(num).setStated(1);
-                    }
+
                     if(null!=orderAdapter){
                         orderAdapter.notifyDataSetChanged();
                     }
