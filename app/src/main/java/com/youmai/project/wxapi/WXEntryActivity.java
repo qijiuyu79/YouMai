@@ -37,7 +37,6 @@ public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHa
 
     @Override
     public void onResp(BaseResp resp) {
-        LogUtils.e("111111111111111");
         if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
             if (resp instanceof SendAuth.Resp) {
                 SendAuth.Resp newResp = (SendAuth.Resp) resp;
