@@ -11,7 +11,7 @@ public class HttpConstant {
     // 商户号
     public static  String MCH_ID = "1509305871";
 
-    public static final String IP="http://api.thcos.com";
+    public static final String IP="https://api.thcos.com";
 
     public static final String SEND_CODE="/sms/send";
 
