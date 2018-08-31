@@ -158,7 +158,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                  final String oldMoney=etOldMoney.getText().toString().trim();
                  final String newMoney=etNewMoney.getText().toString().trim();
                  if(TextUtils.isEmpty(content)){
-                     showMsg("请输入商品描述！");
+                     showMsg("请输入商品详情！");
                  }else if(TextUtils.isEmpty(oldMoney)){
                      showMsg("请输入商品原价！");
                  }else if(TextUtils.isEmpty(newMoney)){
