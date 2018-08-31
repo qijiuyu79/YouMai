@@ -31,7 +31,7 @@ public class MyApplication extends Application {
 
         //初始化友盟
         UMShareAPI.get(this);
-        com.umeng.socialize.Config.DEBUG = false;
+        com.umeng.socialize.Config.DEBUG = true;
 
         String str=spUtil.getString(SPUtil.USER_INFO);
         if(!TextUtils.isEmpty(str)) {
