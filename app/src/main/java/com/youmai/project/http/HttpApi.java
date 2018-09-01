@@ -219,4 +219,14 @@ public interface HttpApi {
     @POST(HttpConstant.STORE_EVALUATE)
     Call<HttpBaseBean> storeEvaluate(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 查询评论列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_COMMENT_LIST)
+    Call<ResponseBody> getCommentList(@FieldMap Map<String, String> map);
+
 }

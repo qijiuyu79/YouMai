@@ -647,4 +647,59 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 添加评论
+     * @param handler
+     */
+    public static void addComment(String payOrderId, String score, String evaluate, List<File> list, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("payOrderId",payOrderId);
+        map.put("score",score);
+        map.put("evaluate",evaluate);
+        Http.upLoadFile(HttpConstant.ADD_COMMENT,"images", list, map, new okhttp3.Callback() {
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                try {
+                    final String str=response.body().string();
+                    LogUtils.e(str+"___________________");
+                    sendMessage(handler, HandlerConstant.ADD_COMMENT_SUCCESS, str);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(okhttp3.Call call, IOException e) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+
+        });
+    }
+
+
+    /**
+     * 查询评论列表
+     * @param handler
+     */
+    public static void getCommentList(String storeId,int page,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("storeId",storeId);
+        map.put("page",page+"");
+        map.put("row","20");
+        Http.getRetrofit().create(HttpApi.class).getCommentList(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, index, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

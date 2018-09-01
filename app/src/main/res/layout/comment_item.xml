@@ -93,12 +93,11 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_ci_des"
+        android:id="@+id/tv_ci_evaluate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/color_020202"
         android:textSize="15sp"
-        android:text="如果你无法简洁的表达你的想法，那只说明你还不够了解它"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="46dp"
         android:layout_marginRight="13dp"/>
@@ -140,7 +139,7 @@
             android:lineSpacingExtra="0.5dp"/>
 
         <TextView
-            android:id="@+id/tv_oi_money"
+            android:id="@+id/tv_ci_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/img_mi_icon"
@@ -153,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/img_mi_icon"
-            android:layout_toLeftOf="@id/tv_oi_money"
+            android:layout_toLeftOf="@id/tv_ci_money"
             android:text="实付款："
             android:textSize="14sp"
             android:textColor="@android:color/black"

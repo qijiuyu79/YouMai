@@ -10,6 +10,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
+import com.youmai.project.bean.Comment;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.Store;
 import com.youmai.project.view.CircleImageView;
@@ -106,8 +107,8 @@ public class JsonUtils {
             }
             final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1=jsonArray.getJSONObject(i);
                 GoodsBean myGoods=new GoodsBean();
+                JSONObject jsonObject1=jsonArray.getJSONObject(i);
 
                 //解析用户信息
                 if(!jsonObject1.isNull("seller")){
@@ -220,5 +221,50 @@ public class JsonUtils {
        }catch (Exception e){
            e.printStackTrace();
        }
+    }
+
+
+    public static List<Comment> getCommentList(String msg){
+        List<Comment> list=new ArrayList<>();
+        if(TextUtils.isEmpty(msg)){
+            return list;
+        }
+        try {
+            final JSONObject jsonObject=new JSONObject(msg);
+            if(jsonObject.getInt("code")!=200){
+                return list;
+            }
+            final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
+            for (int i = 0; i < jsonArray.length(); i++) {
+                 Comment comment=new Comment();
+                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                 comment.setCreateTime(jsonObject1.getLong("createTime"));
+                 comment.setEvaluate(jsonObject1.getString("evaluate"));
+
+                JSONObject jsonObject3=new JSONObject(jsonObject1.getString("goods"));
+                comment.setDescription(jsonObject3.getString("description"));
+
+                //解析图片
+                List<String> imgList=new ArrayList<>();
+                if(!jsonObject3.isNull("images")){
+                    final JSONArray jsonArray1=new JSONArray(jsonObject3.getString("images"));
+                    for (int j = 0; j < jsonArray1.length(); j++) {
+                        imgList.add(jsonArray1.getString(j));
+                    }
+                    comment.setImgList(imgList);
+                }
+                comment.setPresentPrice(jsonObject3.getDouble("presentPrice"));
+
+                JSONObject jsonObject4=new JSONObject(jsonObject3.getString("seller"));
+                comment.setCreditLevel(jsonObject4.getInt("creditLevel"));
+                comment.setHead(jsonObject4.getString("head"));
+                comment.setNickname(jsonObject4.getString("nickname"));
+
+                list.add(comment);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
     }
 }

@@ -56,4 +56,8 @@ public class HttpConstant {
     public static final String M_ORDER_LIST="/user/order/list/seller";
 
     public static final String STORE_EVALUATE="/user/store/punch";
+
+    public static final String ADD_COMMENT="/user/order/comment/add";
+
+    public static final String GET_COMMENT_LIST="/order/comment/list";
 }

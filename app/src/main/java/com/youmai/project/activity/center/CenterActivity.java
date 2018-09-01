@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
-import com.youmai.project.activity.order.CommentActivity;
+import com.youmai.project.activity.order.CommentListActivity;
 import com.youmai.project.activity.order.MOrderActivity;
 import com.youmai.project.activity.user.CertificationActivity;
 import com.youmai.project.adapter.MyGoodsAdapter;
@@ -92,7 +92,13 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()){
             //评价
             case R.id.tv_ac_evaluation:
-                 setClass(CommentActivity.class);
+                 if(listAll.size()==0){
+                     showMsg("请先添加宝贝！");
+                     return;
+                 }
+                 intent.setClass(mContext,CommentListActivity.class);
+                 intent.putExtra("storeId",listAll.get(0).getStoreId());
+                 startActivity(intent);
                  break;
             //添加宝贝
             case R.id.lin_ac_add:
@@ -226,6 +232,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                 myGoods.setId(jsonObject1.getString("id"));
                 myGoods.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
                 myGoods.setPresentPrice(jsonObject1.getDouble("presentPrice"));
+                myGoods.setStoreId(jsonObject1.getString("storeId"));
 
                 //解析图片
                 List<String> imgList=new ArrayList<>();

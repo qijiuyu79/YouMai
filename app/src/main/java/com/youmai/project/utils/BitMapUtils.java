@@ -37,6 +37,9 @@ public class BitMapUtils {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             bos.flush();
             bos.close();
+
+            File file1=new File(newPath);
+            LogUtils.e(FileUtils.getFileSize(file1.length())+"______");
         } catch (IOException e) {
             e.printStackTrace();
         }
