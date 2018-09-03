@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
+import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
@@ -74,6 +75,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
 			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
+			holder.imgShare=(ImageView)view.findViewById(R.id.img_ri_share);
 //			holder.shimmerTextView=(ShimmerTextView)view.findViewById(R.id.st_ri);
 //			holder.shimmer=new Shimmer();
 			view.setTag(holder);
@@ -104,6 +106,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			//设置星级
 			setXing(goodsBean.getCreditLevel());
 
+			//购买
 			holder.tvBuy.setTag(goodsBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -121,6 +124,24 @@ public class RecommendedAdapter extends BaseAdapter{
 							intent.putExtras(bundle);
 							context.startActivity(intent);
 						}
+					}
+				}
+			});
+
+			//分享
+			holder.imgShare.setTag(goodsBean);
+			holder.imgShare.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					GoodsBean goodsBean= (GoodsBean) v.getTag();
+					if(goodsBean!=null){
+						Intent intent=new Intent(context, ShareActivity.class);
+						Bundle bundle=new Bundle();
+						bundle.putSerializable("goodsBean",goodsBean);
+						intent.putExtras(bundle);
+						context.startActivity(intent);
 					}
 				}
 			});
@@ -151,7 +172,7 @@ public class RecommendedAdapter extends BaseAdapter{
 	private class ViewHolder{
 		private TextView tvContext,tvLocation,tvNewMoney,tvOldMoney,tvNickName;
 		private ClickTextView tvBuy;
-		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5;
+		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5,imgShare;
 		private CircleImageView circleImageView;
 //		private ShimmerTextView shimmerTextView;
 //		private Shimmer shimmer;

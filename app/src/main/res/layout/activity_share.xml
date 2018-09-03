@@ -1,30 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-    <View
+    <ScrollView
+        android:id="@+id/sc_sv"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_707070" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp">
 
-    <TextView
+        <LinearLayout
+            android:layout_width="375dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_sv_img"
+                android:layout_width="375dp"
+                android:layout_height="283dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_sv_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_010101"
+                android:textSize="14sp"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_sv_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_E51C23"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"/>
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:src="@mipmap/erweima"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="@string/share_to"
-        android:textColor="@color/color_010101"
-        android:textSize="17sp" />
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_707070" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_alignParentBottom="true"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/tv_acd_wei"
@@ -34,7 +75,8 @@
                 android:drawableTop="@mipmap/share_wei"
                 android:gravity="center"
                 android:text="@string/share_wei"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:drawablePadding="10dp"/>
 
             <TextView
                 android:id="@+id/tv_acd_peng"
@@ -44,7 +86,8 @@
                 android:drawableTop="@mipmap/share_peng"
                 android:gravity="center"
                 android:text="@string/share_peng"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:drawablePadding="10dp"/>
 
             <TextView
                 android:visibility="gone"
@@ -81,4 +124,6 @@
 
         </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

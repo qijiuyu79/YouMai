@@ -76,6 +76,7 @@
             </LinearLayout>
             
             <ImageView
+                android:id="@+id/img_oi_share"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@mipmap/share_icon"

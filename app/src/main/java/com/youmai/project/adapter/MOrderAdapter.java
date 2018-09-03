@@ -3,6 +3,7 @@ package com.youmai.project.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
+import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
 
@@ -65,6 +67,7 @@ public class MOrderAdapter extends BaseAdapter{
 			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
 			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
+			holder.imgShare=(ImageView)view.findViewById(R.id.img_oi_share);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -109,6 +112,22 @@ public class MOrderAdapter extends BaseAdapter{
 					}
 				}
 			});
+			holder.imgShare.setTag(goodsBean);
+			holder.imgShare.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					GoodsBean goodsBean= (GoodsBean) v.getTag();
+					if(goodsBean!=null){
+						Intent intent=new Intent(context, ShareActivity.class);
+						Bundle bundle=new Bundle();
+						bundle.putSerializable("goodsBean",goodsBean);
+						intent.putExtras(bundle);
+						context.startActivity(intent);
+					}
+				}
+			});
 		}
 		return view;
 	}
@@ -133,8 +152,8 @@ public class MOrderAdapter extends BaseAdapter{
 	}
 
 	private class ViewHolder{
-		private ImageView imageView,imgType;
-		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5;
+		private ImageView imageView,imgType,imgShare;
+		private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
 		private TextView tvName,tv_psi_des,tvMoney,tvPhone;
 	 }
 }

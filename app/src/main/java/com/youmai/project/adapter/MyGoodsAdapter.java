@@ -1,6 +1,8 @@
 package com.youmai.project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
+import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.callback.DeleteBabyCallBack;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.DateUtil;
@@ -54,6 +57,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 			holder.tvDes=(TextView)view.findViewById(R.id.tv_mi_des);
 			holder.tvTime=(TextView)view.findViewById(R.id.tv_mi_creatTime);
 			holder.tvDel=(TextView)view.findViewById(R.id.tv_mi_delete);
+			holder.imgShare=(ImageView)view.findViewById(R.id.tv_mi_share);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -79,6 +83,22 @@ public class MyGoodsAdapter extends BaseAdapter{
 					deleteBabyCallBack.deleteBaby(v.getTag().toString());
 				}
 			});
+			holder.imgShare.setTag(goodsBean);
+			holder.imgShare.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					GoodsBean goodsBean= (GoodsBean) v.getTag();
+					if(goodsBean!=null){
+						Intent intent=new Intent(context, ShareActivity.class);
+						Bundle bundle=new Bundle();
+						bundle.putSerializable("goodsBean",goodsBean);
+						intent.putExtras(bundle);
+						context.startActivity(intent);
+					}
+				}
+			});
 		}
 		return view;
 	}
@@ -89,7 +109,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 	}
 	
 	private class ViewHolder{
-		private ImageView imageView;
+		private ImageView imageView,imgShare;
 		private TextView tvAddress,tvDes,tvTime,tvDel;
 	 }
 }

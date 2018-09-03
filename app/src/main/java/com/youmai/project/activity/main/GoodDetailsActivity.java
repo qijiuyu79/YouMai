@@ -1,45 +1,32 @@
 package com.youmai.project.activity.main;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMWeb;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.map.SellerGoodsActivity;
+import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.adapter.GoodsListAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.BitMapUtils;
 import com.youmai.project.utils.JsonUtils;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
-import com.youmai.project.view.ExpandView;
 import com.youmai.project.view.MyGridView;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +41,6 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
     private GoodsListAdapter goodsListAdapter;
-    //分享渠道
-    private SHARE_MEDIA share_media;
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -194,28 +178,11 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
                  break;
             //分享
             case R.id.lin_agd_share:
-                 shareWindow();
+                 intent.setClass(mContext,ShareActivity.class);
+                 bundle.putSerializable("goodsBean",goodsBean);
+                 intent.putExtras(bundle);
+                 startActivity(intent);
                  break;
-            case R.id.tv_acd_wei:
-                share_media = SHARE_MEDIA.WEIXIN;
-                share();
-                break;
-            case R.id.tv_acd_peng:
-                share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
-                share();
-                break;
-            case R.id.tv_acd_qq:
-                share_media = SHARE_MEDIA.QQ;
-                share();
-                break;
-            case R.id.tv_acd_bo:
-                share_media = SHARE_MEDIA.SINA;
-                share();
-                break;
-            case R.id.tv_acd_kong:
-                share_media = SHARE_MEDIA.QZONE;
-                share();
-                break;
             case R.id.lin_back:
                  finish();
                  break;
@@ -233,87 +200,5 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         HttpMethod.getGoodsByStoreId(1,goodsBean.getStoreId(),HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS,mHandler);
-    }
-
-
-    /**
-     * 弹出分享框
-     */
-    private void shareWindow() {
-        View shareView = LayoutInflater.from(GoodDetailsActivity.this).inflate(R.layout.share, null);
-        bottomPopupWindow(0, 0, shareView);
-        ExpandView expandView=(ExpandView)shareView.findViewById(R.id.ex_share);
-        TextView tvWei = (TextView) shareView.findViewById(R.id.tv_acd_wei);
-        TextView tvPeng = (TextView) shareView.findViewById(R.id.tv_acd_peng);
-        TextView tvQQ = (TextView) shareView.findViewById(R.id.tv_acd_qq);
-        TextView tvBo = (TextView) shareView.findViewById(R.id.tv_acd_bo);
-        TextView tvKong = (TextView) shareView.findViewById(R.id.tv_acd_kong);
-        expandView.expand();
-        tvWei.setOnClickListener(this);
-        tvPeng.setOnClickListener(this);
-        tvQQ.setOnClickListener(this);
-        tvBo.setOnClickListener(this);
-        tvKong.setOnClickListener(this);
-    }
-
-
-    //截图分享的图片
-    private Bitmap bitmap;
-    private void share(){
-        bitmap= BitMapUtils.screenshot(scrollView);
-        startShare();
-    }
-
-
-    /**
-     * 分享
-     */
-    private void startShare() {
-        UMImage img = new UMImage(this, bitmap);
-        UMWeb web = new UMWeb("http://www.baidu.com");
-        web.setTitle("有卖");
-        web.setDescription("买卖闲置商品，请选择有卖");
-        web.setThumb(img);
-        new ShareAction(GoodDetailsActivity.this).setPlatform(share_media)
-                .setCallback(umShareListener)
-                .withMedia(web)
-                .share();
-    }
-
-
-    private UMShareListener umShareListener = new UMShareListener() {
-        public void onStart(SHARE_MEDIA share_media) {
-        }
-
-        public void onResult(SHARE_MEDIA platform) {
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-                showMsg(getString(R.string.collect_success));
-            } else {
-                showMsg(getString(R.string.share_success));
-            }
-        }
-
-        public void onError(SHARE_MEDIA platform, Throwable t) {
-            if (t.getMessage().indexOf("2008") != -1) {
-                if (platform.name().equals("WEIXIN") || platform.name().equals("WEIXIN_CIRCLE")) {
-                    showMsg(getString(R.string.share_failed_install_wechat));
-                } else if (platform.name().equals("QQ") || platform.name().equals("QZONE")) {
-                    showMsg(getString(R.string.share_failed_install_qq));
-                }
-            }
-            showMsg(getString(R.string.share_failed));
-        }
-
-        public void onCancel(SHARE_MEDIA platform) {
-            showMsg(getString(R.string.share_canceled));
-        }
-    };
-
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != 0) {
-            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        }
     }
 }
