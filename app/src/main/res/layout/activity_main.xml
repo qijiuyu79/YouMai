@@ -16,7 +16,7 @@
             android:layout_height="28dp"
             android:background="@drawable/bg_search"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="10dp"
             android:layout_centerVertical="true">
 
             <ImageView
@@ -36,15 +36,6 @@
 
         </RelativeLayout>
         
-        <com.youmai.project.view.ClickImageView
-            android:id="@+id/img_am_apeck"
-            android:layout_width="15.5dp"
-            android:layout_height="23dp"
-            android:src="@mipmap/speck_icon"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_centerVertical="true"/>
-
 
     </RelativeLayout>
 

@@ -24,10 +24,14 @@ import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.photo.PicturesUtil;
 import com.youmai.project.view.CircleImageView;
+import com.youmai.project.view.ClickRelativeLayout;
+import com.youmai.project.view.DialogView;
+
 import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
@@ -77,6 +81,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         findViewById(R.id.img_au_setName).setOnClickListener(this);
         findViewById(R.id.tv_au_recharge).setOnClickListener(this);
         findViewById(R.id.tv_au_transfer).setOnClickListener(this);
+        findViewById(R.id.rel_setting).setOnClickListener(this);
     }
 
     @Override
@@ -131,6 +136,10 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
             //实名认证
             case R.id.rel_au_cer:
                 setClass(CertificationActivity.class);
+                 break;
+            //设置
+            case R.id.rel_setting:
+                 setClass(SettingActivity.class);
                  break;
             default:
                 break;

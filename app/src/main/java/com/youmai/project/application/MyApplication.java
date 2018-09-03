@@ -56,9 +56,9 @@ public class MyApplication extends Application {
         //微信
         PlatformConfig.setWeixin("wx051a09f44f2d2420", "ace2054a935ad145f9c51265987d3c9d");
         //新浪微博
-        PlatformConfig.setSinaWeibo("620570357", "d7bed770e0574a2d92f083883179edc8", "http://sns.whalecloud.com");
-        /*最新的版本需要加上这个回调地址，可以在微博开放平台申请的应用获取，必须要有*/
-        //QQ
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+//        PlatformConfig.setSinaWeibo("620570357", "d7bed770e0574a2d92f083883179edc8", "http://sns.whalecloud.com");
+//        /*最新的版本需要加上这个回调地址，可以在微博开放平台申请的应用获取，必须要有*/
+//        //QQ
+//        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
 }
