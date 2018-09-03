@@ -229,4 +229,14 @@ public interface HttpApi {
     @POST(HttpConstant.GET_COMMENT_LIST)
     Call<ResponseBody> getCommentList(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 查询订单详情
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ORDER_DETAILS)
+    Call<ResponseBody> getOrderDetails(@FieldMap Map<String, String> map);
+
 }

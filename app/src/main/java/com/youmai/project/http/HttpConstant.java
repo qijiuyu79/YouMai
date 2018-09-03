@@ -60,4 +60,6 @@ public class HttpConstant {
     public static final String ADD_COMMENT="/user/order/comment/add";
 
     public static final String GET_COMMENT_LIST="/order/comment/list";
+
+    public static final String GET_ORDER_DETAILS="/user/order/detail";
 }

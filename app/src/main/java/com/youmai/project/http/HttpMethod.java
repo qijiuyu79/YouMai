@@ -702,4 +702,28 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 查询订单详情
+     * @param handler
+     */
+    public static void getOrderDetails(String orderId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId",orderId);
+        Http.getRetrofit().create(HttpApi.class).getOrderDetails(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_ORDER_DETAILS_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }
