@@ -37,6 +37,8 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
     private String payStr="BALANCE";
     //购买成功后的广播
     public final static String ACTION_GOODS_PAYSUCCESS = "net.youmai.adminapp.action.goods.paysuccess";
+    //订单id
+    private String orderId;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_goods);
@@ -134,15 +136,17 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
                      try {
                         final JSONObject jsonObject=new JSONObject(message);
                         if(jsonObject.getInt("code")==200){
+                            final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
+                            orderId=jsonObject1.getString("orderId");
                             switch (payStr){
                                 case "BALANCE":
                                      paySuccess();
                                      break;
                                 case "WECHAT":
-                                     PayUtils.getInstance(BuyGoodsActivity.this).weipay(jsonObject.getString("data"),mHandler);
+                                     PayUtils.getInstance(BuyGoodsActivity.this).weipay(jsonObject1.getString("payData"),mHandler);
                                      break;
                                 case "ALIPAY":
-                                     PayUtils.getInstance(BuyGoodsActivity.this).alippay(jsonObject.getString("data"),mHandler);
+                                     PayUtils.getInstance(BuyGoodsActivity.this).alippay(jsonObject1.getString("payData"),mHandler);
                                      break;
                                 default:
                                     break;
@@ -213,6 +217,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         Bundle bundle=new Bundle();
         bundle.putSerializable("goodsBean",goodsBean);
         bundle.putString("payType",payStr);
+        bundle.putString("orderId",orderId);
         intent.putExtras(bundle);
         startActivity(intent);
         //发送广播
