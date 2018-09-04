@@ -23,7 +23,6 @@
         <TextView android:id="@+id/tv_abg_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="漫步生活馆"
             android:textSize="14sp"
             android:textColor="@color/color_777777"
             android:layout_toRightOf="@id/img_abg_goods"
@@ -37,21 +36,38 @@
             android:layout_marginLeft="12dp">
 
             <ImageView
+                android:id="@+id/img_au_x1"
                 android:layout_width="13dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/xing_icon"/>
+                android:src="@mipmap/no_select_x"/>
 
             <ImageView
+                android:id="@+id/img_au_x2"
                 android:layout_width="13dp"
                 android:layout_height="14dp"
                 android:layout_marginLeft="4dp"
-                android:src="@mipmap/xing_icon"/>
+                android:src="@mipmap/no_select_x"/>
 
             <ImageView
+                android:id="@+id/img_au_x3"
                 android:layout_width="13dp"
                 android:layout_height="14dp"
                 android:layout_marginLeft="4dp"
-                android:src="@mipmap/xing_icon"/>
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x4"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
+
+            <ImageView
+                android:id="@+id/img_au_x5"
+                android:layout_width="13dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="4dp"
+                android:src="@mipmap/no_select_x"/>
 
         </LinearLayout>
 

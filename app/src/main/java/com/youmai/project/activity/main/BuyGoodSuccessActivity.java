@@ -22,6 +22,9 @@ import com.youmai.project.utils.Util;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 支付成功
  * Created by Administrator on 2018/5/25 0025.
@@ -29,8 +32,8 @@ import org.json.JSONObject;
 
 public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClickListener{
 
-    private ImageView imageView;
-    private TextView tvContent,tvMoney,tvPayType,tvMoney2;
+    private ImageView imageView,imgX1,imgX2,imgX3,imgX4,imgX5;
+    private TextView tvNickName,tvContent,tvMoney,tvPayType,tvMoney2;
     private GoodsBean goodsBean;
     //订单id和支付方式
     private String orderId,payType;
@@ -57,6 +60,12 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         tvMoney=(TextView)findViewById(R.id.tv_abg_money);
         tvPayType=(TextView)findViewById(R.id.tv_abgs_paytype);
         tvMoney2=(TextView)findViewById(R.id.tv_abg_money2);
+        tvNickName=(TextView)findViewById(R.id.tv_abg_name);
+        imgX1=(ImageView)findViewById(R.id.img_au_x1);
+        imgX2=(ImageView)findViewById(R.id.img_au_x2);
+        imgX3=(ImageView)findViewById(R.id.img_au_x3);
+        imgX4=(ImageView)findViewById(R.id.img_au_x4);
+        imgX5=(ImageView)findViewById(R.id.img_au_x5);
         findViewById(R.id.lin_abgs_order).setOnClickListener(this);
         findViewById(R.id.lin_abgs_contact).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
@@ -96,6 +105,9 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         if(null==goodsBean){
             return;
         }
+        tvNickName.setText(goodsBean.getNickname());
+        //设置星级
+        setXing(goodsBean.getCreditLevel());
         if(goodsBean.getImgList().size()>0){
             Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
         }
@@ -114,6 +126,25 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 设置星级
+     */
+    private List<ImageView> imgList=new ArrayList<>();
+    private void setXing(int index){
+        imgList.add(imgX1);
+        imgList.add(imgX2);
+        imgList.add(imgX3);
+        imgList.add(imgX4);
+        imgList.add(imgX5);
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
         }
     }
 
