@@ -25,6 +25,9 @@ import com.youmai.project.utils.PayUtils;
 import com.youmai.project.utils.Util;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 购买商品
  * Created by Administrator on 2018/5/25 0025.
@@ -33,6 +36,7 @@ import org.json.JSONObject;
 public class BuyGoodsActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView imgBalance,imgWeixin,imgZhifu;
+    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private GoodsBean goodsBean;
     private String payStr="BALANCE";
     //购买成功后的广播
@@ -54,6 +58,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("购买宝贝");
+        TextView tvNickName=(TextView)findViewById(R.id.tv_abg_name);
         ImageView imageView=(ImageView)findViewById(R.id.img_abg_goods);
         TextView tvContent=(TextView)findViewById(R.id.tv_abg_content);
         TextView tvMoney=(TextView)findViewById(R.id.tv_abg_money);
@@ -62,6 +67,11 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         imgBalance=(ImageView)findViewById(R.id.img_abg_balance_select);
         imgWeixin=(ImageView)findViewById(R.id.img_abg_wei_select);
         imgZhifu=(ImageView)findViewById(R.id.img_abg_zhi_select);
+        imgX1=(ImageView)findViewById(R.id.img_au_x1);
+        imgX2=(ImageView)findViewById(R.id.img_au_x2);
+        imgX3=(ImageView)findViewById(R.id.img_au_x3);
+        imgX4=(ImageView)findViewById(R.id.img_au_x4);
+        imgX5=(ImageView)findViewById(R.id.img_au_x5);
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.rel_abg_balance).setOnClickListener(this);
         findViewById(R.id.rel_abg_weixin).setOnClickListener(this);
@@ -76,12 +86,35 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             if(MyApplication.userInfoBean!=null){
                 tvBalance.setText("(余额¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100)+")");
             }
+            tvNickName.setText(goodsBean.getNickname());
+            //设置星级
+            setXing(goodsBean.getCreditLevel());
             if(goodsBean.getImgList().size()>0){
                 Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
             }
             tvContent.setText(goodsBean.getDescription());
             tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
             tvMoney2.setText("实付款："+ Html.fromHtml("<font color='#FF4181'>"+Util.setDouble(goodsBean.getPresentPrice()/100)+"元</font>"));
+        }
+    }
+
+
+    /**
+     * 设置星级
+     */
+    private List<ImageView> imgList=new ArrayList<>();
+    private void setXing(int index){
+        imgList.add(imgX1);
+        imgList.add(imgX2);
+        imgList.add(imgX3);
+        imgList.add(imgX4);
+        imgList.add(imgX5);
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
         }
     }
 
