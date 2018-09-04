@@ -69,4 +69,5 @@ dependencies {
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/open_sdk_r5781.jar')
     compile files('libs/alipaySingle-20160120.jar')
+    compile files('libs/zxing.jar')
 }

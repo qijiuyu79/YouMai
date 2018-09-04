@@ -22,19 +22,25 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.BitMapUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
+import com.youmai.project.utils.ZXingUtils;
+
 /**
  * 分享的类
  */
 public class ShareActivity extends BaseActivity implements View.OnClickListener{
     private ScrollView scShare;
+    private ImageView imgQR;
     //分享渠道
     private SHARE_MEDIA share_media;
+    private GoodsBean goodsBean;
+    private Bitmap bitmap;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_share);
         initView();
+        createQR();
     }
 
     /**
@@ -42,8 +48,9 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
      */
     private void initView(){
         Bundle bundle=getIntent().getExtras();
-        GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+        goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
         scShare=(ScrollView)findViewById(R.id.sc_sv);
+        imgQR=(ImageView)findViewById(R.id.img_qr);
         ImageView imageView=(ImageView)findViewById(R.id.img_sv_img);
         TextView tvDes=(TextView)findViewById(R.id.tv_sv_des);
         TextView tvMoney=(TextView)findViewById(R.id.tv_sv_money);
@@ -54,6 +61,15 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
         Glide.with(mContext).load(goodsBean.getImgList().get(0)).override(375,283).centerCrop().error(R.mipmap.icon).into(imageView);
         tvWei.setOnClickListener(this);
         tvPeng.setOnClickListener(this);
+    }
+
+    /**
+     * 生成二维码
+     */
+    private void createQR(){
+        final String url="http://q.th2w.net/g/${"+goodsBean.getId()+"}";
+        bitmap=ZXingUtils.createQRImage(url,150,150);
+        imgQR.setImageBitmap(bitmap);
     }
 
     @Override
@@ -74,7 +90,6 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
 
 
     //截图分享的图片
-    private Bitmap bitmap;
     private void share(){
         bitmap= BitMapUtils.screenshot(scShare);
         startShare();
@@ -129,6 +144,16 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != 0) {
             UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null!=bitmap){
+            bitmap.recycle();;
+            bitmap=null;
         }
     }
 }
