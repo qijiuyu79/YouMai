@@ -14,8 +14,10 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.handler.UMWXHandler;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.media.WeiXinShareContent;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.bean.GoodsBean;
@@ -100,13 +102,9 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
      */
     private void startShare() {
         UMImage img = new UMImage(this, bitmap);
-        UMWeb web = new UMWeb("http://www.baidu.com");
-        web.setTitle("有卖");
-        web.setDescription("买卖闲置商品，请选择有卖");
-        web.setThumb(img);
         new ShareAction(ShareActivity.this).setPlatform(share_media)
                 .setCallback(umShareListener)
-                .withMedia(web)
+                .withMedia(img)
                 .share();
     }
 
