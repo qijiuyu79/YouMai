@@ -144,7 +144,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
                  break;
             //支付
             case R.id.tv_abg_buy:
-                 showProgress("购买中...",false);
+                 showProgress("购买中...");
                  HttpMethod.buy(payStr,goodsBean.getId(),mHandler);
                  break;
             case R.id.lin_back:

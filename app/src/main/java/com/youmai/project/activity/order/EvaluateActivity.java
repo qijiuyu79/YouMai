@@ -186,7 +186,7 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
                      showMsg("请描述您的评论！");
                      return;
                  }
-                showProgress("图片压缩中...",false);
+                showProgress("图片压缩中...");
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
                         for (int i=0;i<Bimp.selectBitmap.size();i++){
@@ -200,7 +200,7 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
                                 listFile.add(file1);
                             }
                         }
-                        showProgress("添加宝贝中...",false);
+                        showProgress("添加宝贝中...");
                         HttpMethod.addComment(goodsBean.getOrderId(),score+"",content,listFile,mHandler);
                     }
                 },100);

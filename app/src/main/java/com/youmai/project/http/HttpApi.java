@@ -239,4 +239,14 @@ public interface HttpApi {
     @POST(HttpConstant.GET_ORDER_DETAILS)
     Call<ResponseBody> getOrderDetails(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 转账
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.WITHDRAWAL)
+    Call<HttpBaseBean> withdrawal(@FieldMap Map<String, String> map);
+
 }

@@ -127,7 +127,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
      * 开始定位
      */
     private void startLocation(){
-        showProgress("定位中...",true);
+        showProgress("定位中...");
         GetLocation.getInstance().stopLocation();
         GetLocation.getInstance().setLocation(mContext,mHandler);
     }
@@ -243,7 +243,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             if(null==store){
                 return false;
             }
-            showProgress("商品查询中...",true);
+            showProgress("商品查询中...");
             HttpMethod.getGoodsByStoreId(1,store.getId(),HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS,mHandler);
         }
         return true;
@@ -267,7 +267,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
      * 查询附近的店铺
      */
     private void getStore(){
-        showProgress("店铺查询中...",true);
+        showProgress("店铺查询中...");
         HttpMethod.getNearStore(mHandler);
     }
 

@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                  }else if(mobile.length()<11){
                      showMsg("请输入完整的手机号!");
                  }else{
-                     showProgress("获取验证码",false);
+                     showProgress("获取验证码");
                      HttpMethod.sendCode(mobile,mHandler);
                  }
                  break;
@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                  }else if(TextUtils.isEmpty(code)){
                      showMsg("请输入验证码!");
                  }else{
-                     showProgress("登录中",false);
+                     showProgress("登录中");
                      HttpMethod.login(mobile,code,mHandler);
                  }
                  break;

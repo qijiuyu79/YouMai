@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity{
      * 定位
      */
     private void getLocation(){
-        showProgress("定位中",true);
+        showProgress("定位中");
         GetLocation.getInstance().setLocation(MainActivity.this,mHandler);
     }
 
@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity{
      * 获取商品分类
      */
     private void getGoodsType(){
-        showProgress("加载中...",false);
+        showProgress("加载中...");
         HttpMethod.getGoodsType(mHandler);
     }
 

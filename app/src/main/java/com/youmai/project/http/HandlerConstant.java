@@ -43,4 +43,5 @@ public class HandlerConstant {
     public static final int GET_COMMENT_LIST_SUCCESS=1144;
     public static final int GET_COMMENT_LIST_SUCCESS2=1145;
     public static final int GET_ORDER_DETAILS_SUCCESS=1146;
+    public static final int WITHDRAWAL_SUCCESS=1147;
 }

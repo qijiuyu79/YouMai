@@ -166,7 +166,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                  }else if(Bimp.selectBitmap.size()==0){
                      showMsg("请选择商品图片！");
                  }else{
-                     showProgress("图片压缩中...",false);
+                     showProgress("图片压缩中...");
                      mHandler.postDelayed(new Runnable() {
                          public void run() {
                              for (int i=0;i<Bimp.selectBitmap.size();i++){
@@ -180,7 +180,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                                      listFile.add(file1);
                                  }
                              }
-                             showProgress("添加宝贝中...",false);
+                             showProgress("添加宝贝中...");
                              HttpMethod.addGoods(content,oldMoney,newMoney,type,tvAddress.getText().toString().trim(),listFile,mHandler);
                          }
                      },100);

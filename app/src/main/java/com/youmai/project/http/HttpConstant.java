@@ -62,4 +62,6 @@ public class HttpConstant {
     public static final String GET_COMMENT_LIST="/order/comment/list";
 
     public static final String GET_ORDER_DETAILS="/user/order/detail";
+
+    public static final String WITHDRAWAL="/user/transfer";
 }

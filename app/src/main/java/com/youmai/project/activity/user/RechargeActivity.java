@@ -98,7 +98,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
         }else if(Double.parseDouble(money)==0){
             showMsg("金额不能小于0元！");
         }else{
-            showProgress("充值中...",false);
+            showProgress("充值中...");
             HttpMethod.recharge(money,payStr,mHandler);
         }
     }

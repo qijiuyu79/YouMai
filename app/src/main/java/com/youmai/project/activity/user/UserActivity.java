@@ -110,7 +110,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                             showMsg("昵称只能输入中文，字母，数字，* ！");
                         }else {
                             dialogs.dismiss();
-                            showProgress("设置中...",false);
+                            showProgress("设置中...");
                             HttpMethod.setNickName(nickName,mHandler);
                         }
                     }
@@ -218,7 +218,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                 if(null!=f){
                     List<File> list=new ArrayList<>();
                     list.add(f);
-                    showProgress("头像上传中...",false);
+                    showProgress("头像上传中...");
                     HttpMethod.setUserPic(list,mHandler);
                 }
                 break;

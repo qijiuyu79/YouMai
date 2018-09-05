@@ -74,7 +74,7 @@ public class BaseActivity extends FragmentActivity {
     }
 
 
-    public void showProgress(String msg,boolean isCancelable) {
+    public void showProgress(String msg) {
         //如果已经存在并且在显示中就不处理
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.setMessage(msg);
@@ -83,7 +83,7 @@ public class BaseActivity extends FragmentActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(msg);
         progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(isCancelable);
+        progressDialog.setCancelable(true);
         progressDialog.show();
     }
 

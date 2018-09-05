@@ -118,7 +118,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                  break;
             //店铺签到
             case R.id.lin_sign_in:
-                 showProgress("签到中...",false);
+                 showProgress("签到中...");
                  HttpMethod.storeEvaluate(mHandler);
                  break;
             //全部订单
@@ -289,7 +289,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                     "确定", "取消", new View.OnClickListener() {
                 public void onClick(View v) {
                     dialogView.dismiss();
-                    showProgress("删除中...",true);
+                    showProgress("删除中...");
                     HttpMethod.deleteBaby(goodsId,mHandler);
                 }
             }, null);

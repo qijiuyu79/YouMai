@@ -726,4 +726,30 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 转账
+     * @param handler
+     */
+    public static void withdrawal(String amount,String payment,String account,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("amount",amount);
+        map.put("payment",payment);
+        map.put("account",account);
+        Http.getRetrofit().create(HttpApi.class).withdrawal(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.WITHDRAWAL_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

@@ -65,7 +65,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                  }else if(TextUtils.isEmpty(code)){
                      showMsg("请输入您的身份证号码！");
                  }else{
-                     showProgress("认证中...",false);
+                     showProgress("认证中...");
                      HttpMethod.certification(name,code,mHandler);
                  }
                  break;
