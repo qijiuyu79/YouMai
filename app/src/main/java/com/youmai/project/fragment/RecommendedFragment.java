@@ -22,12 +22,14 @@ import com.youmai.project.activity.center.AddShopActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.activity.main.MainActivity;
+import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.LogUtils;
+import com.youmai.project.utils.Util;
 import com.youmai.project.view.ClickLinearLayout;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
@@ -134,6 +136,10 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
             linAddShop.setVisibility(View.VISIBLE);
             linAddShop.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    if(!Util.isLogin()){
+                        setClass(LoginActivity.class);
+                        return;
+                    }
                     setClass(AddShopActivity.class);
                 }
             });
