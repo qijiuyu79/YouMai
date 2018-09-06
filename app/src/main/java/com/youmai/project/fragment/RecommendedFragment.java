@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.youmai.project.R;
 import com.youmai.project.activity.center.AddShopActivity;
+import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.activity.main.MainActivity;
@@ -229,6 +230,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     private void registerReceiver() {
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS);
+        myIntentFilter.addAction(CenterActivity.ACTION_GOODS_DELETE_SUCCESS);
         // 注册广播监听
         mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
@@ -236,27 +238,25 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            switch (action){
-                //商品购买成功后的广播
-                case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                    final Bundle bundle=intent.getExtras();
-                    if(null==bundle){
-                        return;
+            //购买成功或删除商品的广播
+            if(action.equals(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS) || action.equals(CenterActivity.ACTION_GOODS_DELETE_SUCCESS)){
+                final Bundle bundle=intent.getExtras();
+                if(null==bundle){
+                    return;
+                }
+                final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+                if(null==goodsBean){
+                    return;
+                }
+                for(int i=0,len=listBeanAll.size();i<len;i++){
+                    if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
+                        listBeanAll.remove(i);
+                        break;
                     }
-                    final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-                    if(null==goodsBean){
-                        return;
-                    }
-                     for(int i=0,len=listBeanAll.size();i<len;i++){
-                         if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
-                             listBeanAll.remove(i);
-                             break;
-                         }
-                     }
-                     if(null!=recommendedAdapter){
-                         recommendedAdapter.notifyDataSetChanged();
-                     }
-                     break;
+                }
+                if(null!=recommendedAdapter){
+                    recommendedAdapter.notifyDataSetChanged();
+                }
             }
         }
     };

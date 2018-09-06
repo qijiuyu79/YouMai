@@ -47,6 +47,8 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
     //宝贝id
     private String goodsId;
     private DialogView dialogView;
+    //删除商品成功后的广播
+    public final static String ACTION_GOODS_DELETE_SUCCESS = "net.youmai.adminapp.action.goods.delete_success";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center);
@@ -204,6 +206,14 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                                  break;
                              }
                          }
+                         GoodsBean goodsBean=new GoodsBean();
+                         goodsBean.setId(goodsId);
+                         Bundle bundle=new Bundle();
+                         bundle.putSerializable("goodsBean",goodsBean);
+                          //发送广播
+                          Intent broadcastIntent=new Intent(ACTION_GOODS_DELETE_SUCCESS);
+                          broadcastIntent.putExtras(bundle);
+                          sendBroadcast(broadcastIntent);
                          showMsg("删除成功！");
                      }
                      break;
