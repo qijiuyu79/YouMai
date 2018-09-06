@@ -246,10 +246,10 @@ public class JsonUtils {
             }
             final JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
             for (int i = 0; i < jsonArray.length(); i++) {
-                 Comment comment=new Comment();
-                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                 comment.setCreateTime(jsonObject1.getLong("createTime"));
-                 comment.setEvaluate(jsonObject1.getString("evaluate"));
+                Comment comment=new Comment();
+                final JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                comment.setCreateTime(jsonObject1.getLong("createTime"));
+                comment.setEvaluate(jsonObject1.getString("evaluate"));
 
                 JSONObject jsonObject3=new JSONObject(jsonObject1.getString("goods"));
                 comment.setDescription(jsonObject3.getString("description"));
@@ -265,10 +265,10 @@ public class JsonUtils {
                 }
                 comment.setPresentPrice(jsonObject3.getDouble("presentPrice"));
 
-                JSONObject jsonObject4=new JSONObject(jsonObject3.getString("seller"));
-                comment.setCreditLevel(jsonObject4.getInt("creditLevel"));
-                comment.setHead(jsonObject4.getString("head"));
-                comment.setNickname(jsonObject4.getString("nickname"));
+                final JSONObject jsonObject2=new JSONObject(jsonObject1.getString("author"));
+                comment.setCreditLevel(jsonObject2.getInt("creditLevel"));
+                comment.setHead(jsonObject2.getString("head"));
+                comment.setNickname(jsonObject2.getString("nickname"));
 
                 list.add(comment);
             }

@@ -25,7 +25,6 @@ import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
@@ -289,7 +288,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     private void registerReceiver() {
         IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS);
         myIntentFilter.addAction(ACTION_GOODS_COMPLETE_SUCCESS);
         myIntentFilter.addAction(ACTION_GOODS_CANCEL_SUCCESS);
         // 注册广播监听
@@ -308,35 +306,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             }
             final String action = intent.getAction();
             switch (action){
-                //商品购买成功后的广播
-                case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                     //待交易集合添加该商品对象
-                     if(listWait.size()>0){
-                        goodsBean.setStated(1);
-                        listWait.add(0,goodsBean);
-                     }
-
-                    //修改全部订单集合中该商品的状态
-                    if(listBeanAll.size()>0){
-                        int num=-1;
-                        for(int i=0,len=listBeanAll.size();i<len;i++){
-                            if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
-                                num=i;
-                                break;
-                            }
-                        }
-                        if(num==-1){
-                            goodsBean.setStated(1);
-                            listBeanAll.add(0,goodsBean);
-                        }else{
-                            listBeanAll.get(num).setStated(1);
-                        }
-                    }
-
-                    if(null!=orderAdapter){
-                        orderAdapter.notifyDataSetChanged();
-                    }
-                    break;
                 //交易完成
                 case ACTION_GOODS_COMPLETE_SUCCESS:
                      setList(1);
