@@ -62,7 +62,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
         TextView tvPeng = (TextView) findViewById(R.id.tv_acd_peng);
         TextView tvLocation=(TextView)findViewById(R.id.tv_as_location);
         tvDes.setText(goodsBean.getDescription());
-        tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
+        tvMoney.setText("¥ "+ Util.setDouble(goodsBean.getPresentPrice()/100));
         Glide.with(mContext).load(goodsBean.getImgList().get(0)).override(375,283).centerCrop().error(R.mipmap.icon).into(imageView);
         //显示当前位置
         tvLocation.setText(MyApplication.spUtil.getString(SPUtil.LOCATION_ADDRESS));
