@@ -25,6 +25,7 @@ import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
@@ -399,22 +400,22 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      * 查询订单列表
      */
     private void getOrderList(){
-        fragmentIndex=OrderActivity.index;
         if(isVisibleToUser && view!=null){
-            if(fragmentIndex==0 && listBeanAll.size()>0){
-                return;
-
-            }else if(fragmentIndex==1 && listWait.size()>0){
-                return;
-
-            }else if(fragmentIndex==2 && listComplete.size()>0){
-                return;
-
-            }else if(fragmentIndex==3 && listCancle.size()>0){
-                return;
-            }
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
+                    fragmentIndex=OrderActivity.index;
+                    if(fragmentIndex==0 && listBeanAll.size()>0){
+                        return;
+
+                    }else if(fragmentIndex==1 && listWait.size()>0){
+                        return;
+
+                    }else if(fragmentIndex==2 && listComplete.size()>0){
+                        return;
+
+                    }else if(fragmentIndex==3 && listCancle.size()>0){
+                        return;
+                    }
                     listView.addHeaderView(new View(mActivity));
                     getData(HandlerConstant.GET_PAY_ORDER_SUCCESS);
                 }

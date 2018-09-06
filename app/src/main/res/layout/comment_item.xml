@@ -25,8 +25,7 @@
             android:id="@+id/img_ci_head"
             android:layout_width="33dp"
             android:layout_height="33dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/icon" />
+            android:layout_centerVertical="true" />
 
         <TextView android:id="@+id/tv_ci_name"
             android:layout_width="wrap_content"
@@ -124,8 +123,7 @@
 
         <ImageView android:id="@+id/img_mi_icon"
             android:layout_width="59dp"
-            android:layout_height="59dp"
-            android:src="@mipmap/icon"/>
+            android:layout_height="59dp"/>
 
         <TextView android:id="@+id/tv_mi_des"
             android:layout_width="wrap_content"

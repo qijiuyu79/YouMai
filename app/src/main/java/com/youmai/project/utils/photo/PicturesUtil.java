@@ -26,9 +26,7 @@ public class PicturesUtil {
     public static final int CODE_GALLERY_REQUEST = 0xa0;
     public static final int CODE_CAMERA_REQUEST = 0xa1;
     public static final int CODE_RESULT_REQUEST = 0xa2;
-    public static final String pai = Util.getSdcardPath() + "pictures.jpg";
-    public static final String newPath = Util.getSdcardPath() + "new_photo.jpg";
-    public static final String newPath2 = Util.getSdcardPath() + "new_photo2.jpg";
+    public static String pai = Util.getSdcardPath() + "pictures.jpg";
     public static final String crop = Util.getSdcardPath() + "crop.jpg";
 
     public static void selectPhoto(final Activity context, final int type) {
@@ -54,6 +52,7 @@ public class PicturesUtil {
                 Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 // 判断存储卡是否可用，存储照片文件
                 if (Util.hasSdcard()) {
+                    pai=pai+System.currentTimeMillis()+ "pictures.jpg";
                     intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(pai)));
                     context.startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
                 } else {

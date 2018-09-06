@@ -68,7 +68,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 				String imgUrl=goodsBean.getImgList().get(0);
 				holder.imageView.setTag(R.id.imageid,imgUrl);
 				if(holder.imageView.getTag(R.id.imageid)!=null && imgUrl==holder.imageView.getTag(R.id.imageid)){
-					Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).into(holder.imageView);
+					Glide.with(context).load(imgUrl).override(100,100).centerCrop().error(R.mipmap.icon).into(holder.imageView);
 				}
 			}
 			holder.tvDes.setText(goodsBean.getDescription());

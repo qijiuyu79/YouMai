@@ -109,7 +109,7 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         //设置星级
         setXing(goodsBean.getCreditLevel());
         if(goodsBean.getImgList().size()>0){
-            Glide.with(mContext).load(goodsBean.getImgList().get(0)).error(R.mipmap.icon).into(imageView);
+            Glide.with(mContext).load(goodsBean.getImgList().get(0)).override(116,116).error(R.mipmap.icon).into(imageView);
         }
         tvContent.setText(goodsBean.getDescription());
         tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));

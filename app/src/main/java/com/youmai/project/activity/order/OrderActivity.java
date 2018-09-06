@@ -100,6 +100,7 @@ public class OrderActivity extends FragmentActivity {
         public void PageSelected(int position) {
             OrderActivity.index=position;
         }
+
     };
 
 }

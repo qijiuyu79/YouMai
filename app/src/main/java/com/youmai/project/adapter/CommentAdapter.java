@@ -73,7 +73,7 @@ public class CommentAdapter extends BaseAdapter{
 		final String imgHead=comment.getHead();
 		holder.imgHead.setTag(R.id.imgHead,imgHead);
 		if(holder.imgHead.getTag(R.id.imgHead)!=null && imgHead==holder.imgHead.getTag(R.id.imgHead)){
-			Glide.with(context).load(imgHead).centerCrop().error(R.mipmap.icon).into(holder.imgHead);
+			Glide.with(context).load(imgHead).override(33,33).centerCrop().error(R.mipmap.icon).into(holder.imgHead);
 		}
 		holder.tvNickName.setText(comment.getNickname());
 		//设置星级
@@ -87,7 +87,7 @@ public class CommentAdapter extends BaseAdapter{
 			String imgUrl=comment.getImgList().get(0);
 			holder.imgGood.setTag(R.id.imageid,imgUrl);
 			if(holder.imgGood.getTag(R.id.imageid)!=null && imgUrl==holder.imgGood.getTag(R.id.imageid)){
-				Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).animate(R.anim.item_alpha_in).into(holder.imgGood);
+				Glide.with(context).load(imgUrl).override(59,59).centerCrop().error(R.mipmap.icon).animate(R.anim.item_alpha_in).into(holder.imgGood);
 			}
 		}
 		holder.tvDes.setText(comment.getDescription());

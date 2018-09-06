@@ -17,6 +17,7 @@ import com.youmai.project.R;
 import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.callback.TradingPlay;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.ClickTextView;
 
@@ -81,7 +82,7 @@ public class OrderAdapter extends BaseAdapter{
 				String imgUrl=goodsBean.getImgList().get(0);
 				holder.imageView.setTag(R.id.imageid,imgUrl);
 				if(holder.imageView.getTag(R.id.imageid)!=null && imgUrl==holder.imageView.getTag(R.id.imageid)){
-					Glide.with(context).load(imgUrl).centerCrop().error(R.mipmap.icon).into(holder.imageView);
+					Glide.with(context).load(imgUrl).override(102,102).centerCrop().error(R.mipmap.icon).into(holder.imageView);
 				}
 			}
 			holder.tvMoney.setText(Util.setDouble(goodsBean.getPresentPrice()/100));
