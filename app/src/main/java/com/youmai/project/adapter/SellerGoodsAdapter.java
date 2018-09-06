@@ -81,7 +81,6 @@ public class SellerGoodsAdapter extends BaseAdapter{
 			holder.tvOldMoney.setText("¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			holder.tvDes.setText(goodsBean.getDescription());
-			holder.tvTime.setText("发布："+ DateUtil.getData(goodsBean.getCreateTime()));
 			holder.tvBuy.setTag(goodsBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {

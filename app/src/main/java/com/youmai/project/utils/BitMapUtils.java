@@ -30,7 +30,6 @@ public class BitMapUtils {
         //对图片进行压缩
         bitmap = FileUtils.compressImage(bitmap);
         String newPath=Util.getSdcardPath()+System.currentTimeMillis()+"_"+(Math.random()*9+1)*1000+".jpg";
-        LogUtils.e(newPath);
         try {
             file = new File(newPath);
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
