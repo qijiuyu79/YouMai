@@ -20,8 +20,10 @@ import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.media.WeiXinShareContent;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.BitMapUtils;
+import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.ZXingUtils;
@@ -58,9 +60,12 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
         TextView tvMoney=(TextView)findViewById(R.id.tv_sv_money);
         TextView tvWei = (TextView) findViewById(R.id.tv_acd_wei);
         TextView tvPeng = (TextView) findViewById(R.id.tv_acd_peng);
-        tvDes.setText(goodsBean.getDescription());
+        TextView tvLocation=(TextView)findViewById(R.id.tv_as_location);
+//        tvDes.setText(goodsBean.getDescription());
         tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
         Glide.with(mContext).load(goodsBean.getImgList().get(0)).override(375,283).centerCrop().error(R.mipmap.icon).into(imageView);
+        //显示当前位置
+        tvLocation.setText(MyApplication.spUtil.getString(SPUtil.LOCATION_ADDRESS));
         tvWei.setOnClickListener(this);
         tvPeng.setOnClickListener(this);
     }
