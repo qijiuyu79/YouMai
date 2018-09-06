@@ -70,13 +70,15 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         Bundle bundle=getIntent().getExtras();
         if(null!=bundle){
             goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+
             TextView tvNickName=(TextView)findViewById(R.id.tv_asg_name);
-            tvNickName.setText(goodsBean.getNickname());
             imgX1=(ImageView)findViewById(R.id.img_au_x1);
             imgX2=(ImageView)findViewById(R.id.img_au_x2);
             imgX3=(ImageView)findViewById(R.id.img_au_x3);
             imgX4=(ImageView)findViewById(R.id.img_au_x4);
             imgX5=(ImageView)findViewById(R.id.img_au_x5);
+            //设置昵称
+            tvNickName.setText(goodsBean.getNickname());
             //设置星级
             setXing(goodsBean.getCreditLevel());
             swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);

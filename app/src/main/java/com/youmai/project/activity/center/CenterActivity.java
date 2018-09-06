@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import org.json.JSONArray;
@@ -34,6 +36,8 @@ import java.util.List;
  */
 public class CenterActivity extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
+    private TextView tvNickName;
+    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private RefreshLayout swipeLayout;
     private ListView listView;
     private MyGoodsAdapter myGoodsAdapter;
@@ -54,7 +58,12 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
      * 初始化控件
      */
     private void initView(){
-        TextView tvNickName=(TextView)findViewById(R.id.tv_ac_name);
+        tvNickName=(TextView)findViewById(R.id.tv_ac_name);
+        imgX1=(ImageView)findViewById(R.id.img_au_x1);
+        imgX2=(ImageView)findViewById(R.id.img_au_x2);
+        imgX3=(ImageView)findViewById(R.id.img_au_x3);
+        imgX4=(ImageView)findViewById(R.id.img_au_x4);
+        imgX5=(ImageView)findViewById(R.id.img_au_x5);
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -75,7 +84,6 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                 getMyGoodsList(HandlerConstant.GET_MYGOODS_SUCCESS);
             }
         }, 0);
-        tvNickName.setText(MyApplication.userInfoBean.getNickname());
         findViewById(R.id.lin_ac_add).setOnClickListener(this);
         findViewById(R.id.lin_sign_in).setOnClickListener(this);
         findViewById(R.id.tv_ac_order).setOnClickListener(this);
@@ -359,6 +367,32 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
             default:
                 break;
         }
+    }
+
+    /**
+     * 设置星级
+     */
+    private List<ImageView> imgList=new ArrayList<>();
+    private void setXing(int index){
+        imgList.add(imgX1);
+        imgList.add(imgX2);
+        imgList.add(imgX3);
+        imgList.add(imgX4);
+        imgList.add(imgX5);
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tvNickName.setText(MyApplication.userInfoBean.getNickname());
+        setXing(MyApplication.userInfoBean.getCreditLevel());
     }
 }
 

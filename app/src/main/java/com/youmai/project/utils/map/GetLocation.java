@@ -76,7 +76,6 @@ public class GetLocation {
                 final Double longtitude = location.getLongitude();
                 final Double latitude = location.getLatitude();
                 if(Util.checkItude(longtitude + "",latitude + "")){
-                    LogUtils.e(latitude+"___"+longtitude);
                     MyApplication.spUtil.addString(SPUtil.LOCATION_LAT, latitude + "");
                     MyApplication.spUtil.addString(SPUtil.LOCATION_LONG, longtitude + "");
                     MyApplication.spUtil.addString(SPUtil.LOCATION_ADDRESS,location.getAddrStr());

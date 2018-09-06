@@ -149,42 +149,12 @@ public class MainActivity extends BaseActivity{
                         return;
                     }
                     isFirst=true;
-                     //获取商品分类
-//                     getGoodsType();
                     pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
                     pager.setOffscreenPageLimit(3);
                     tabs.setViewPager(pager);
                     tabs.setViewPagerCallBack(viewPagerCallBack);
                     setTabsValue();
                      break;
-                //获取首页分类
-                case HandlerConstant.GET_GOODS_TYPE_SUCCESS:
-                    final String message= (String) msg.obj;
-                    if(TextUtils.isEmpty(message)){
-                        return;
-                    }
-                    try {
-                        final JSONObject object=new JSONObject(message);
-                        if(object.getInt("code")!=200){
-                            return;
-                        }
-                        final JSONObject jsonObject=new JSONObject(object.getString("data"));
-                        final Iterator<String> sIterator = jsonObject.keys();
-                        while(sIterator.hasNext()){
-                            final String key = sIterator.next();
-                            keyList.add(key);
-                            valList.add(jsonObject.getString(key));
-                        }
-                        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-                        pager.setOffscreenPageLimit(valList.size());
-                        tabs.setViewPager(pager);
-                        tabs.setViewPagerCallBack(viewPagerCallBack);
-                        setTabsValue();
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
                 //获取最新的access_token
                 case HandlerConstant.GET_ACCESS_TOKEN_SUCCESS:
                      Login login= (Login) msg.obj;

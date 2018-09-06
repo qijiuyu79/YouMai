@@ -43,11 +43,21 @@ public class JsonUtils {
            for (int i = 0; i < jsonArray.length(); i++) {
                JSONObject jsonObject1=jsonArray.getJSONObject(i);
                GoodsBean goodsBean=new GoodsBean();
-               goodsBean.setAddress(jsonObject1.getString("address"));
-               goodsBean.setDescription(jsonObject1.getString("description"));
-               goodsBean.setId(jsonObject1.getString("id"));
-               goodsBean.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
-               goodsBean.setPresentPrice(jsonObject1.getDouble("presentPrice"));
+               if(!jsonObject1.isNull("address")){
+                   goodsBean.setAddress(jsonObject1.getString("address"));
+               }
+               if(!jsonObject1.isNull("description")){
+                   goodsBean.setDescription(jsonObject1.getString("description"));
+               }
+               if(!jsonObject1.isNull("id")){
+                   goodsBean.setId(jsonObject1.getString("id"));
+               }
+               if(!jsonObject1.isNull("originalPrice")){
+                   goodsBean.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
+               }
+               if(!jsonObject1.isNull("presentPrice")){
+                   goodsBean.setPresentPrice(jsonObject1.getDouble("presentPrice"));
+               }
                List<String> imgList=new ArrayList<>();
 
                //解析图片

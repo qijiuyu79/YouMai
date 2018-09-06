@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="10dp"
-            android:background="@color/color_333333"/>
+            android:background="@color/color_F5F5F5"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:background="@color/color_333333"/>
+                android:background="@color/color_F5F5F5"/>
 
             <com.youmai.project.view.ClickTextView android:id="@+id/tv_confirm"
                 android:layout_width="match_parent"

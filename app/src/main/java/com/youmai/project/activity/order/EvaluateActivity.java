@@ -186,7 +186,9 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
                      showMsg("请描述您的评论！");
                      return;
                  }
-                showProgress("图片压缩中...");
+                 if(Bimp.selectBitmap.size()>0){
+                     showProgress("图片压缩中...");
+                 }
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
                         for (int i=0;i<Bimp.selectBitmap.size();i++){

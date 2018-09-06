@@ -1,7 +1,6 @@
 package com.youmai.project.activity.map;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,12 +28,6 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.MapGoodsListAdapter;
@@ -44,13 +37,11 @@ import com.youmai.project.bean.Store;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.map.GetLocation;
 import com.youmai.project.utils.map.MyOrientationListener;
-import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.MyGridView;
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +159,6 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                          View view= LayoutInflater.from(mContext).inflate(R.layout.map_bottom_goods,null);
                          bottomPopupWindow(0,0,view);
                          TextView tvNickName=(TextView)view.findViewById(R.id.tv_am_nickName);
-                         tvNickName.setText(store.getNickname());
                          ImageView imgX1=(ImageView)view.findViewById(R.id.img_au_x1);
                          ImageView imgX2=(ImageView)view.findViewById(R.id.img_au_x2);
                          ImageView imgX3=(ImageView)view.findViewById(R.id.img_au_x3);
@@ -179,6 +169,8 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                          imgList.add(imgX3);
                          imgList.add(imgX4);
                          imgList.add(imgX5);
+                         //设置昵称
+                         tvNickName.setText(store.getNickname());
                          //设置星级
                          setXing(store.getCreditLevel());
                          MyGridView myGridView=(MyGridView)view.findViewById(R.id.mg_am_goods);
@@ -300,16 +292,6 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             bitmapDescriptor=BitmapDescriptorFactory.fromView(markerView);
             MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmapDescriptor).zIndex(store.getPosition()).animateType(MarkerOptions.MarkerAnimateType.grow);
             mBaiduMap.addOverlay(op);
-
-//            Store store=list.get(i);
-//            markerView=LayoutInflater.from(mContext).inflate(R.layout.map_marker,null);
-//            CircleImageView imgHead=(CircleImageView)markerView.findViewById(R.id.img_head);
-//        TextView tvNickName=(TextView)markerView.findViewById(R.id.tv_nickName);
-//        tvNickName.setText(store.getNickname());
-//        Glide.with(mContext).load(store.getHead()).centerCrop().error(R.mipmap.icon).into(imgHead);
-//        bitmap=BitmapDescriptorFactory.fromView(markerView);
-//        MarkerOptions op = new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).icon(bitmap).zIndex(i).animateType(MarkerOptions.MarkerAnimateType.grow);
-//        mBaiduMap.addOverlay(op);
         }
     }
 

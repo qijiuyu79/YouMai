@@ -99,6 +99,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                 dialogs.setContentView(view);
                 dialogs.show();
                 final EditText etName = (EditText) view.findViewById(R.id.et_setName);
+                etName.setText(tvNickName.getText().toString().trim());
+                etName.setSelection(tvNickName.getText().toString().trim().length());
                 TextView tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
                 TextView tvCancle = (TextView) view.findViewById(R.id.tv_cancle);
                 tvConfirm.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +181,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                         final JSONObject jsonObject=new JSONObject(message);
                         if(jsonObject.getInt("code")==200){
                             tvNickName.setText(nickName);
+                            MyApplication.userInfoBean.setNickname(nickName);
                         }
                     }catch (Exception e){
                         e.printStackTrace();

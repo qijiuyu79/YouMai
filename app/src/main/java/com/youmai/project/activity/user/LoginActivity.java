@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.youmai.project.activity.TabActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
@@ -151,6 +152,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                          MyApplication.spUtil.addString(SPUtil.ACCESS_TOKEN,login.getData().getAccess_token());
                          //获取用户信息
                          getUserInfo();
+                         setClass(TabActivity.class);
                          finish();
                      }else{
                          showMsg(login.getMsg());
