@@ -6,307 +6,293 @@
     android:fitsSystemWindows="true"
     android:background="@android:color/white">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@mipmap/bg_user">
-
-        <com.youmai.project.view.CircleImageView
-            android:id="@+id/img_ri_pic"
-            android:layout_width="72.5dp"
-            android:layout_height="72.5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center"/>
-
-        <TextView android:id="@+id/tv_au_nickName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginLeft="17dp"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"
-            android:textStyle="bold"/>
-
-        <com.youmai.project.view.ClickImageView
-            android:id="@+id/img_au_setName"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@mipmap/edit_name"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"/>
-
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="钱包"
-        android:textSize="15sp"
-        android:textColor="@color/color_333333"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"/>
-
-    <TextView
-        android:id="@+id/tv_au_balance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:textColor="@color/color_E51C23"
-        android:textStyle="bold"
-        android:gravity="center"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
-        android:layout_marginTop="20dp">
-
-        <com.youmai.project.view.ClickTextView
-            android:id="@+id/tv_au_recharge"
-            android:layout_width="65dp"
-            android:layout_height="26.5dp"
-            android:layout_gravity="left"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/bg_recommended_buy"
-            android:gravity="center"
-            android:text="充值"
-            android:textColor="@color/color_E51C23"
-            android:textSize="13sp" />
-
-
-        <com.youmai.project.view.ClickTextView
-            android:id="@+id/tv_au_transfer"
-            android:layout_width="65dp"
-            android:layout_height="26.5dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/bg_recommended_buy"
-            android:gravity="center"
-            android:text="转账"
-            android:textColor="@color/color_E51C23"
-            android:textSize="13sp" />
-
-        <ImageView
-            android:layout_width="21dp"
-            android:layout_height="21dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12.5dp"
-            android:src="@mipmap/help_icon" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_F5F5F5"
-        android:layout_margin="20dp"></View>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="积分"
-            android:textSize="15sp"
-            android:textColor="@color/color_333333"/>
-
-        <TextView
-            android:id="@+id/tv_au_integral"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:textColor="@color/color_333333"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_F5F5F5"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"></View>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="信用"
-            android:textSize="15sp"
-            android:textColor="@color/color_333333"/>
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="35dp">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/img_au_x1"
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/no_select_x"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@mipmap/bg_user">
 
-            <ImageView
-                android:id="@+id/img_au_x2"
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:layout_marginLeft="4dp"
-                android:src="@mipmap/no_select_x"/>
+                <com.youmai.project.view.CircleImageView
+                    android:id="@+id/img_ri_pic"
+                    android:layout_width="72.5dp"
+                    android:layout_height="72.5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center"/>
 
-            <ImageView
-                android:id="@+id/img_au_x3"
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:layout_marginLeft="4dp"
-                android:src="@mipmap/no_select_x"/>
+                <TextView android:id="@+id/tv_au_nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="17dp"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"/>
 
-            <ImageView
-                android:id="@+id/img_au_x4"
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:layout_marginLeft="4dp"
-                android:src="@mipmap/no_select_x"/>
+                <com.youmai.project.view.ClickImageView
+                    android:id="@+id/img_au_setName"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@mipmap/edit_name"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"/>
 
-            <ImageView
-                android:id="@+id/img_au_x5"
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:layout_marginLeft="4dp"
-                android:src="@mipmap/no_select_x"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="钱包"
+                android:textSize="15sp"
+                android:textColor="@color/color_333333"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"/>
+
+            <TextView
+                android:id="@+id/tv_au_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:textColor="@color/color_E51C23"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="20dp">
+
+                <com.youmai.project.view.ClickTextView
+                    android:id="@+id/tv_au_recharge"
+                    android:layout_width="65dp"
+                    android:layout_height="26.5dp"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_recommended_buy"
+                    android:gravity="center"
+                    android:text="充值"
+                    android:textColor="@color/color_E51C23"
+                    android:textSize="13sp" />
+
+
+                <com.youmai.project.view.ClickTextView
+                    android:id="@+id/tv_au_transfer"
+                    android:layout_width="65dp"
+                    android:layout_height="26.5dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/bg_recommended_buy"
+                    android:gravity="center"
+                    android:text="转账"
+                    android:textColor="@color/color_E51C23"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12.5dp"
+                    android:src="@mipmap/help_icon" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_F5F5F5"
+                android:layout_margin="20dp"></View>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_333333"/>
+
+                <TextView
+                    android:id="@+id/tv_au_integral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:textColor="@color/color_333333"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_F5F5F5"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="信用"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_333333"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="35dp">
+
+                    <ImageView
+                        android:id="@+id/img_au_x1"
+                        android:layout_width="13dp"
+                        android:layout_height="14dp"
+                        android:src="@mipmap/no_select_x"/>
+
+                    <ImageView
+                        android:id="@+id/img_au_x2"
+                        android:layout_width="13dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="4dp"
+                        android:src="@mipmap/no_select_x"/>
+
+                    <ImageView
+                        android:id="@+id/img_au_x3"
+                        android:layout_width="13dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="4dp"
+                        android:src="@mipmap/no_select_x"/>
+
+                    <ImageView
+                        android:id="@+id/img_au_x4"
+                        android:layout_width="13dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="4dp"
+                        android:src="@mipmap/no_select_x"/>
+
+                    <ImageView
+                        android:id="@+id/img_au_x5"
+                        android:layout_width="13dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="4dp"
+                        android:src="@mipmap/no_select_x"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_au_credit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:textColor="@color/color_333333"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/color_F5F5F5"></View>
+
+            <RelativeLayout android:id="@+id/rel_au_cer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实名认证"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_333333"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv_au_certification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_B7B7B7"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_F5F5F5"></View>
+
+            <RelativeLayout android:id="@+id/rel_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_333333"
+                    android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/right_next"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_F5F5F5"/>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_au_credit"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:textColor="@color/color_333333"
-            android:textSize="13sp"
-            android:gravity="center"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/color_F5F5F5"></View>
-
-    <RelativeLayout android:id="@+id/rel_au_cer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="实名认证"
-            android:textSize="15sp"
-            android:textColor="@color/color_333333"
-            android:layout_centerVertical="true"/>
-
-        <TextView
-            android:id="@+id/tv_au_certification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/color_B7B7B7"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"/>
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/color_F5F5F5"></View>
-
-    <RelativeLayout android:id="@+id/rel_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="设置"
-            android:textSize="15sp"
-            android:textColor="@color/color_333333"
-            android:layout_centerVertical="true"/>
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_next"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout android:id="@+id/rel_myAddress"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我的地址"
-            android:textSize="13sp"
-            android:textColor="@color/color_333333"
-            android:layout_centerVertical="true"/>
-
-       <ImageView
-           android:layout_width="15dp"
-           android:layout_height="15dp"
-           android:layout_alignParentRight="true"
-           android:layout_marginRight="20dp"
-           android:layout_centerVertical="true"
-           android:src="@mipmap/right_next"/>
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:background="@color/color_F5F5F5"/>
+    </ScrollView>
 
 </LinearLayout>

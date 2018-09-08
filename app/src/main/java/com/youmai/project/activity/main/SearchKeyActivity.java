@@ -209,21 +209,29 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                 return false;
             }
             //保存搜索过的关键字
-            String keys= MyApplication.spUtil.getString(SPUtil.TAG_KEY);
-            Map<String,String> keyMap;
-            if(!TextUtils.isEmpty(keys)){
-                keyMap=MyApplication.gson.fromJson(keys,Map.class);
-            }else{
-                keyMap=new HashMap<>();
-            }
-            keyMap.put(strKey,strKey);
-            MyApplication.spUtil.addString(SPUtil.TAG_KEY,MyApplication.gson.toJson(keyMap));
+            addTabKey();
 
             //按关键字搜索
             searchByKeys();
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 保存搜索过的关键字
+     */
+    private void addTabKey(){
+        String keys= MyApplication.spUtil.getString(SPUtil.TAG_KEY);
+        Map<String,String> keyMap;
+        if(!TextUtils.isEmpty(keys)){
+            keyMap=MyApplication.gson.fromJson(keys,Map.class);
+        }else{
+            keyMap=new HashMap<>();
+        }
+        keyMap.put(strKey,strKey);
+        MyApplication.spUtil.addString(SPUtil.TAG_KEY,MyApplication.gson.toJson(keyMap));
     }
 
     /**
@@ -251,9 +259,10 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            String message;
             switch (msg.what){
                 case HandlerConstant.SEARCH_BOODS_SUCCESS:
-                    final String message= (String) msg.obj;
+                     message= (String) msg.obj;
                     //清空之前搜索过的列表
                     listBeanAll.clear();
                     if(null!=recommendedAdapter){
@@ -262,6 +271,11 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                     refresh(message);
                     swipeLayout.setRefreshing(false);
                     break;
+                case HandlerConstant.SEARCH_BOODS_SUCCESS2:
+                     message= (String) msg.obj;
+                     refresh(message);
+                     swipeLayout.setLoading(false);
+                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     break ;
@@ -362,8 +376,17 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
      */
     private RecognizerDialogListener recognizerDialogListener = new RecognizerDialogListener() {
         public void onResult(RecognizerResult results, boolean isLast) {
-            String text = JsonParser.parseIatResult(results.getResultString());
-            etKeys.append(Util.format(text));
+            final String text = JsonParser.parseIatResult(results.getResultString());
+            if(TextUtils.isEmpty(Util.format(text))){
+                return;
+            }
+            etKeys.setText(Util.format(text));
+            strKey=etKeys.getText().toString().trim();
+            //保存搜索过的关键字
+            addTabKey();
+
+            //按关键字搜索
+            searchByKeys();
         }
         /**
          * 识别回调错误.

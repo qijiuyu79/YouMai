@@ -66,12 +66,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/SocialSDK_QQ_Full.jar')
-    compile files('libs/SocialSDK_Sina_Full.jar')
     compile files('libs/SocialSDK_WeiXin_Full.jar')
     compile files('libs/umeng_social_api.jar')
     compile files('libs/umeng_social_net.jar')
     compile files('libs/umeng_social_tool.jar')
-    compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/open_sdk_r5781.jar')
     compile files('libs/alipaySingle-20160120.jar')
     compile files('libs/zxing.jar')

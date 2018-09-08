@@ -1,5 +1,6 @@
 package com.youmai.project.activity.user;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.youmai.project.activity.TabActivity;
+import com.youmai.project.activity.webview.WebViewActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
@@ -70,6 +72,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         etMobile.setMaxLength(11);
         tvSendCode.setOnClickListener(this);
         tvLogin.setOnClickListener(this);
+        findViewById(R.id.lin_login_service).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -101,6 +104,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                      showProgress("登录中");
                      HttpMethod.login(mobile,code,mHandler);
                  }
+                 break;
+            //服务协议
+            case R.id.lin_login_service:
+                 Intent intent=new Intent(mContext, WebViewActivity.class);
+                 intent.putExtra("type",1);
+                 startActivity(intent);
                  break;
             case R.id.lin_back:
                  finish();

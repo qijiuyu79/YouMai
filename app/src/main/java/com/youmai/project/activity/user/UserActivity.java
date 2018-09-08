@@ -77,7 +77,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         imgX5=(ImageView)findViewById(R.id.img_au_x5);
         imgUserPic.setOnClickListener(this);
         relCertifcation.setOnClickListener(this);
-        findViewById(R.id.rel_myAddress).setOnClickListener(this);
         findViewById(R.id.img_au_setName).setOnClickListener(this);
         findViewById(R.id.tv_au_recharge).setOnClickListener(this);
         findViewById(R.id.tv_au_transfer).setOnClickListener(this);
@@ -130,10 +129,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
             //转账
             case R.id.tv_au_transfer:
                 setClass(WithdrawalActivity.class);
-                 break;
-            //我的地址
-            case R.id.rel_myAddress:
-                 setClass(MyAddressActivity.class);
                  break;
             //实名认证
             case R.id.rel_au_cer:

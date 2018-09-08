@@ -84,6 +84,7 @@
         <activity android:name=".activity.order.CommentListActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.SettingActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.share.ShareActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.webview.WebViewActivity"  android:screenOrientation="portrait"/>
 
         <!-- 百度地图的appkey-->
         <meta-data
@@ -139,22 +140,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- 微博-->
-        <activity
-            android:name=".activity.share.WBShareActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
 
         <!--配置友盟appkey -->
         <meta-data
