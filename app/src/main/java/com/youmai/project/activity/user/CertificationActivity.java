@@ -15,6 +15,7 @@ import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
 import org.json.JSONObject;
@@ -93,6 +94,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                          if(jsonObject.getInt("code")==200){
                              if(null== MyApplication.userInfoBean){
                                  MyApplication.userInfoBean.setReal(true);
+                                 MyApplication.spUtil.addString(SPUtil.USER_INFO, MyApplication.gson.toJson(MyApplication.userInfoBean));
                              }
                              showMsg("认证成功！");
                              finish();

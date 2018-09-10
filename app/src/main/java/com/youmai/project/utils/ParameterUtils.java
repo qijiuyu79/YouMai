@@ -52,16 +52,8 @@ public class ParameterUtils {
         map.put("network_type", network_type);
         map.put("device_width", String.valueOf(width));
         map.put("device_height", String.valueOf(height));
-
-        if (TextUtils.isEmpty(map.get("latitude")) && TextUtils.isEmpty(map.get("longitude"))) {
-            map.put("latitude", MyApplication.spUtil.getString(SPUtil.LOCATION_LAT));
-            map.put("longitude", MyApplication.spUtil.getString(SPUtil.LOCATION_LONG));
-        }
-
-        map.put("latitude", "40.058035");
-        map.put("longitude", "116.314623");
-
-
+        map.put("latitude", MyApplication.spUtil.getString(SPUtil.LOCATION_LAT));
+        map.put("longitude", MyApplication.spUtil.getString(SPUtil.LOCATION_LONG));
         map.put("timestamp", (System.currentTimeMillis()/1000)+"");
         map.put("channel", Util.getChannel(mContext));
         map.put("access_token", MyApplication.spUtil.getString(SPUtil.ACCESS_TOKEN));

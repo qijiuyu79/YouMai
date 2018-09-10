@@ -165,6 +165,8 @@ public class MainActivity extends BaseActivity{
                         MyApplication.spUtil.addString(SPUtil.AUTH_TOKEN,login.getData().getAuth_token());
                         MyApplication.spUtil.addString(SPUtil.ACCESS_TOKEN,login.getData().getAccess_token());
                      }
+                     //获取用户信息
+                     getUserInfo();
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
