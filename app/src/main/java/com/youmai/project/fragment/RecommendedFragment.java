@@ -23,8 +23,10 @@ import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.activity.main.MainActivity;
+import com.youmai.project.activity.user.CertificationActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
@@ -32,6 +34,7 @@ import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.ClickLinearLayout;
+import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     private boolean isTotal=false;
     //fragment是否可见
     private boolean isVisibleToUser=false;
+    private DialogView dialogView;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -137,8 +141,21 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
             linAddShop.setVisibility(View.VISIBLE);
             linAddShop.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    //判断是否登陆
                     if(!Util.isLogin()){
                         setClass(LoginActivity.class);
+                        return;
+                    }
+                    //判断是否实名认证
+                    if(!MyApplication.userInfoBean.isReal()){
+                        dialogView = new DialogView(dialogView, mActivity, "需要实名认证后才可以添加宝贝！",
+                                "去认证", "取消", new View.OnClickListener() {
+                            public void onClick(View v) {
+                                dialogView.dismiss();
+                                setClass(CertificationActivity.class);
+                            }
+                        }, null);
+                        dialogView.show();
                         return;
                     }
                     setClass(AddShopActivity.class);
