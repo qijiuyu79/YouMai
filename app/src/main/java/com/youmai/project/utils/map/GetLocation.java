@@ -90,7 +90,9 @@ public class GetLocation {
                         // 此处设置开发者获取到的方向信息，顺时针0-360
                         .latitude(location.getLatitude())
                         .longitude(location.getLongitude()).build();
-                mBaiduMap.setMyLocationData(locData);
+                if(null!=mBaiduMap){
+                    mBaiduMap.setMyLocationData(locData);
+                }
 
                 final Double longtitude = location.getLongitude();
                 final Double latitude = location.getLatitude();
