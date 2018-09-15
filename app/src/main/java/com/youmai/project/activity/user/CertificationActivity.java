@@ -92,10 +92,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                      try {
                          final JSONObject jsonObject=new JSONObject(message);
                          if(jsonObject.getInt("code")==200){
-                             if(null== MyApplication.userInfoBean){
-                                 MyApplication.userInfoBean.setReal(true);
-                                 MyApplication.spUtil.addString(SPUtil.USER_INFO, MyApplication.gson.toJson(MyApplication.userInfoBean));
-                             }
+                             MyApplication.userInfoBean.setReal(true);
                              showMsg("认证成功！");
                              finish();
                          }else{
