@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity{
      */
     private void getLocation(){
         showProgress("定位中");
-        GetLocation.getInstance().setLocation(MainActivity.this,mHandler);
+        GetLocation.getInstance().setLocation(null,MainActivity.this,mHandler);
     }
 
 

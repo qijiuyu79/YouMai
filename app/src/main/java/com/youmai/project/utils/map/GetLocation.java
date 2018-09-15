@@ -14,7 +14,10 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.UiSettings;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SPUtil;
@@ -33,6 +36,7 @@ public class GetLocation {
     public MyLocationListenner myListener = new MyLocationListenner();
     private Handler handler;
     private Context mContext;
+    private BaiduMap mBaiduMap;
     public static GetLocation getInstance() {
         if (null == getLocation) {
             getLocation = new GetLocation();
@@ -43,13 +47,27 @@ public class GetLocation {
     /**
      * 设置定位
      */
-    public void setLocation(Context mContext, Handler handler) {
+    public void setLocation(BaiduMap mBaiduMap,Context mContext, Handler handler) {
+        this.mBaiduMap=mBaiduMap;
         this.mContext=mContext;
         this.handler = handler;
         mLocClient = new LocationClient(mContext.getApplicationContext());
         mLocClient.registerLocationListener(myListener);
+
+        if(null!=mBaiduMap){
+            UiSettings mUiSetting=mBaiduMap.getUiSettings();
+            //设置不允许3D地图
+            mUiSetting.setOverlookingGesturesEnabled(false);
+            // 开启定位图层
+            mBaiduMap.setMyLocationEnabled(true);
+            //设置不显示建筑物
+            mBaiduMap.setBuildingsEnabled(false);
+            MyLocationConfiguration.LocationMode mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+            mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, null));
+        }
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
+        option.setCoorType("gcj02"); // 设置火星坐标
         option.setScanSpan(10000);
         option.setIsNeedAddress(true);
         mLocClient.setLocOption(option);
@@ -72,6 +90,7 @@ public class GetLocation {
                         // 此处设置开发者获取到的方向信息，顺时针0-360
                         .latitude(location.getLatitude())
                         .longitude(location.getLongitude()).build();
+                mBaiduMap.setMyLocationData(locData);
 
                 final Double longtitude = location.getLongitude();
                 final Double latitude = location.getLatitude();

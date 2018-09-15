@@ -3,6 +3,7 @@ package com.youmai.project.application;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.iflytek.cloud.SpeechConstant;
@@ -41,6 +42,7 @@ public class MyApplication extends Application {
 
         //初始化地图
         SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.setCoordType(CoordType.GCJ02);
 
         //初始化讯飞语音
         SpeechUtility.createUtility(this, SpeechConstant.APPID +"=55d54ce6");

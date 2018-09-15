@@ -73,7 +73,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         setContentView(R.layout.activity_map);
         initView();
         initOritationListener();
-        byLatLocation();
+        startLocation();
     }
 
 
@@ -102,17 +102,6 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         findViewById(R.id.img_am_location).setOnClickListener(this);
     }
 
-    /**
-     * 根据经纬度定位
-     */
-    private void byLatLocation(){
-        final String latitude= MyApplication.spUtil.getString(SPUtil.LOCATION_LAT);
-        final String longtitude= MyApplication.spUtil.getString(SPUtil.LOCATION_LONG);
-        finishLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longtitude));
-        //根据经纬度去定位
-        mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(finishLng));
-    }
-
 
     /**
      * 开始定位
@@ -120,7 +109,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     private void startLocation(){
         showProgress("定位中...");
         GetLocation.getInstance().stopLocation();
-        GetLocation.getInstance().setLocation(mContext,mHandler);
+        GetLocation.getInstance().setLocation(mBaiduMap,mContext,mHandler);
     }
 
 
@@ -369,5 +358,19 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                         mBaiduMap.setMyLocationData(locData);
                     }
                 });
+    }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        myOrientationListener.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        myOrientationListener.stop();
     }
 }
