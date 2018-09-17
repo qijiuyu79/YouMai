@@ -54,7 +54,7 @@ public class UpdateVersionUtils {
                         return;
                     }
                     if(version.isSussess()){
-                        final int app_version=Util.getVersionName(context);
+                        final int app_version=Util.getVersionCode(context);
                         if(app_version<version.getData().getVersion_code()){
                             View view = LayoutInflater.from(context).inflate(R.layout.version_pop, null);
                             TextView tvCalcle = (TextView) view.findViewById(R.id.tv_cancle);

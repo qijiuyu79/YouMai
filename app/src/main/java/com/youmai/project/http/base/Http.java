@@ -43,10 +43,6 @@ public class Http {
     private Http() {
     }
 
-    public static void afreshRetrofit(){
-        retrofit=null;
-    }
-
     private static OkHttpClient getOkHttp() {
         if (okHttpClient == null) {
             OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
@@ -67,6 +63,21 @@ public class Http {
             builder.callFactory(getOkHttp());
             retrofit = builder.build();
         }
+        return retrofit;
+    }
+
+
+    public static Retrofit getRetrofitNoInterceptor() {
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.baseUrl(baseUrl);
+        builder.addConverterFactory(GsonConverterFactory.create());
+        OkHttpClient.Builder okBuilder = new OkHttpClient().newBuilder();
+        okBuilder.connectTimeout(15, TimeUnit.SECONDS);
+        okBuilder.writeTimeout(15, TimeUnit.SECONDS);
+        okBuilder.readTimeout(15, TimeUnit.SECONDS);
+//        okBuilder.addInterceptor(new LogInterceptor());
+        builder.callFactory(okBuilder.build());
+        Retrofit retrofit = builder.build();
         return retrofit;
     }
 
@@ -159,21 +170,6 @@ public class Http {
             if(TextUtils.isEmpty(url)){
                 return;
             }
-            Map<String, String> requstMap = new HashMap<>();
-//            requstMap = ParameterUtils.getInstance().getParameter(requstMap);
-            if(null==requstMap){
-                return;
-            }
-            StringBuffer stringBuffer=new StringBuffer();
-            Iterator entries = requstMap.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry entry = (Map.Entry) entries.next();
-                String key = (String)entry.getKey();
-                String value = (String) entry.getValue();
-                stringBuffer.append("&"+key+"="+value);
-            }
-
-            url+=stringBuffer.toString();
             Request request = new Request.Builder().url(url).build();
             Call call = new OkHttpClient.Builder().readTimeout(60 * 5, TimeUnit.SECONDS).build().newCall(request);
             call.enqueue(new Callback() {

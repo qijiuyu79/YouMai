@@ -252,7 +252,7 @@ public class Util extends ClassLoader {
      *
      * @return
      */
-    public static int getVersionName(Context mContext) {
+    public static int getVersionCode(Context mContext) {
         try {
             // 获取packagemanager的实例
             PackageManager packageManager = mContext.getPackageManager();
@@ -264,6 +264,26 @@ public class Util extends ClassLoader {
             e.printStackTrace();
         }
         return 0;
+    }
+
+
+    /**
+     * 获取当前系统的版本名称
+     *
+     * @return
+     */
+    public static String getVersionName() {
+        try {
+            // 获取packagemanager的实例
+            PackageManager packageManager = MyApplication.application.getPackageManager();
+            // getPackageName()是你当前类的包名，0代表是获取版本信息
+            PackageInfo packInfo = packageManager.getPackageInfo(MyApplication.application.getPackageName(), 0);
+            String version = packInfo.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return"";
     }
 
 

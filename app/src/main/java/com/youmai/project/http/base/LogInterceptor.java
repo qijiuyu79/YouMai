@@ -1,9 +1,14 @@
 package com.youmai.project.http.base;
 
 
+import android.text.TextUtils;
+import com.youmai.project.application.MyApplication;
+import com.youmai.project.bean.Login;
+import com.youmai.project.http.HttpApi;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.ParameterUtils;
-
+import com.youmai.project.utils.SPUtil;
+import com.youmai.project.utils.Util;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -21,6 +26,7 @@ import okhttp3.ResponseBody;
 
 public class LogInterceptor implements Interceptor {
 
+    private final int ACCESS_TOKEN_TIME_OUT_CODE = 403;
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         long t1 = System.nanoTime();
@@ -31,7 +37,18 @@ public class LogInterceptor implements Interceptor {
         Response response = chain.proceed(request);
         long t2 = System.nanoTime();
         String body = response.body().string();
-
+        //如果ACCESS_TOKEN失效，自动重新获取一次
+        final int code = getCode(body);
+        if(code==ACCESS_TOKEN_TIME_OUT_CODE){
+            Login login=getAccessToken();
+            if(null!=login && login.isSussess()){
+                MyApplication.spUtil.addString(SPUtil.AUTH_TOKEN,login.getData().getAuth_token());
+                MyApplication.spUtil.addString(SPUtil.ACCESS_TOKEN,login.getData().getAccess_token());
+                request = addParameter(request);
+                response = chain.proceed(request);
+                body = response.body().string();
+            }
+        }
         LogUtils.e(String.format("response %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, body));
         return response.newBuilder().body(ResponseBody.create(response.body().contentType(), body)).build();
     }
@@ -49,7 +66,7 @@ public class LogInterceptor implements Interceptor {
             //把原来的参数添加到新的构造器，（因为没找到直接添加，所以就new新的）
             for (int i = 0; i < formBody.size(); i++) {
                   requstMap.put(formBody.name(i), formBody.value(i).replace("+","").replace(" ",""));
-                LogUtils.e(request.url() + "参数:" + formBody.name(i) + "=" + formBody.value(i));
+                  LogUtils.e(request.url() + "参数:" + formBody.name(i) + "=" + formBody.value(i));
             }
         }
         requstMap = ParameterUtils.getInstance().getParameter(requstMap);
@@ -58,7 +75,7 @@ public class LogInterceptor implements Interceptor {
               bodyBuilder.addEncoded(key, requstMap.get(key));
         }
         formBody = bodyBuilder.build();
-        request = request.newBuilder().post(formBody).build();
+        request = request.newBuilder().removeHeader("User-Agent").addHeader("User-Agent",getUserAgent()).post(formBody).build();
         return request;
     }
 
@@ -75,4 +92,31 @@ public class LogInterceptor implements Interceptor {
         return code;
     }
 
+
+    /**
+     * 获取AccessToken
+     */
+    public Login getAccessToken() throws IOException {
+        Login login = null;
+        String auth_token = MyApplication.spUtil.getString(SPUtil.AUTH_TOKEN);
+        if (!TextUtils.isEmpty(auth_token)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("auth_token", auth_token);
+            map = ParameterUtils.getInstance().getParameter(map);
+            login = Http.getRetrofitNoInterceptor().create(HttpApi.class).getAccessToken(map).execute().body();
+        }
+        return login;
+    }
+
+
+    /**
+     * 获取 User Agent
+     *
+     * @return
+     */
+    private static String getUserAgent() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("youmai/"+Util.getVersionName()+"(Android;"+android.os.Build.VERSION.RELEASE+")");
+        return sb.toString();
+    }
 }

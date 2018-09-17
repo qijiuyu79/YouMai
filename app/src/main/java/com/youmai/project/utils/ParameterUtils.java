@@ -35,7 +35,7 @@ public class ParameterUtils {
         //手机品牌
         String device_name = android.os.Build.BRAND.replace("+","").replace(" ","");
         //app版本号
-        int app_version = Util.getVersionName(mContext);
+        int app_version = Util.getVersionCode(mContext);
         //屏幕宽高
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
