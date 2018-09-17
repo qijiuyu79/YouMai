@@ -37,6 +37,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
 
     private ImageView imgBalance,imgWeixin,imgZhifu;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
+    private TextView tvZFBIntegral,tvWXIntegral;
     private GoodsBean goodsBean;
     private String payStr="BALANCE";
     //购买成功后的广播
@@ -72,6 +73,8 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         imgX3=(ImageView)findViewById(R.id.img_au_x3);
         imgX4=(ImageView)findViewById(R.id.img_au_x4);
         imgX5=(ImageView)findViewById(R.id.img_au_x5);
+        tvZFBIntegral=(TextView)findViewById(R.id.tv_zfb_integral);
+        tvWXIntegral=(TextView)findViewById(R.id.tv_wx_integral);
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.rel_abg_balance).setOnClickListener(this);
         findViewById(R.id.rel_abg_weixin).setOnClickListener(this);
@@ -95,6 +98,8 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             tvContent.setText(goodsBean.getDescription());
             tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
             tvMoney2.setText("实付款："+ Html.fromHtml("<font color='#FF4181'>"+Util.setDouble(goodsBean.getPresentPrice()/100)+"元</font>"));
+            tvZFBIntegral.setText("(赠送"+goodsBean.getPresentPrice()/100+"积分)");
+            tvWXIntegral.setText("(赠送"+goodsBean.getPresentPrice()/100+"积分)");
         }
     }
 

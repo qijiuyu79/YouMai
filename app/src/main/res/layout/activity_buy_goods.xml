@@ -231,9 +231,9 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_zfb_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="(赠送1000积分)"
                 android:textSize="13sp"
                 android:textColor="@color/color_bab7b7"
                 android:layout_marginLeft="30dp"
@@ -269,9 +269,9 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_wx_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="(赠送1000积分)"
                 android:textSize="13sp"
                 android:textColor="@color/color_bab7b7"
                 android:layout_marginLeft="40dp"
