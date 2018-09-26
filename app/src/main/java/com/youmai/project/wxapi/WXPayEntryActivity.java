@@ -45,6 +45,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				intent.putExtra("type",0);
 				showMsg(getString(R.string.payment_failed));
 			}else{
+				intent.putExtra("type",0);
 				showMsg(getString(R.string.payment_has_been_cancelled));
 			}
 			sendBroadcast(intent);

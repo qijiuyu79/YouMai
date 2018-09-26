@@ -240,8 +240,12 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             final int type=intent.getIntExtra("type",0);
-            if (action.equals("PAY_ACTION") && type==1) {
-                paySuccess();
+            if (action.equals("PAY_ACTION")) {
+                if(type==1){
+                    paySuccess();
+                }else{
+                    HttpMethod.setOrderCancle(orderId,mHandler);
+                }
             }
         }
     };

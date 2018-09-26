@@ -11,6 +11,9 @@ public class SPUtil {
     private SharedPreferences shar;
     private Editor editor;
     public final static String USERMESSAGE = "youmai";
+    //是否是首次打开
+    public final static String IS_FIRST_OPEN="is_first_open";
+    //token数据
     public final static String ACCESS_TOKEN = "access_token";
     public final static String AUTH_TOKEN = "auth_token";
     //当前定位的经纬度
