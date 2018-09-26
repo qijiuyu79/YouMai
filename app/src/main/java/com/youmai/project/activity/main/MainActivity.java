@@ -58,9 +58,16 @@ public class MainActivity extends BaseActivity{
         dm = getResources().getDisplayMetrics();
         pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        //搜索
         findViewById(R.id.rel_am_search).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setClass(SearchKeyActivity.class);
+            }
+        });
+        //扫一扫
+        findViewById(R.id.img_scan).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setClass(ScanActivity.class);
             }
         });
 

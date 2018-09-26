@@ -10,12 +10,20 @@
         android:layout_height="45dp"
         android:background="@color/color_FF4081">
 
+        <com.youmai.project.view.ClickImageView
+            android:id="@+id/img_scan"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/scan_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+
         <RelativeLayout
             android:id="@+id/rel_am_search"
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:background="@drawable/bg_search"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true">
 

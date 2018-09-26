@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
 
     <RelativeLayout android:id="@+id/rel_head"
         android:layout_width="match_parent"
@@ -62,7 +63,6 @@
                 android:textColor="@color/color_FF4081"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_below="@id/rel_head"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="21dp"
                 android:layout_marginRight="27dp"/>
@@ -76,96 +76,6 @@
                 android:background="@color/color_F5F5F5"
                 android:layout_marginTop="22dp" />
 
-            <LinearLayout
-                android:id="@+id/lin_aw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/view_aw"
-                android:layout_marginTop="52dp">
-
-                <LinearLayout
-                    android:id="@+id/lin_aw_wx"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="54dp"
-                        android:layout_height="47dp"
-                        android:src="@mipmap/with_wx"
-                        android:layout_gravity="center"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="转账到微信"
-                        android:textSize="15sp"
-                        android:textColor="@color/color_464646"
-                        android:gravity="center"
-                        android:layout_marginTop="33dp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="（收取1%服务费）"
-                        android:textSize="12sp"
-                        android:textColor="@color/color_a2a0a0"
-                        android:gravity="center"
-                        android:layout_marginTop="8dp"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="127dp"
-                    android:background="@color/color_dbd8d8"/>
-
-                <LinearLayout
-                    android:id="@+id/lin_aw_zfb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="54dp"
-                        android:layout_height="47dp"
-                        android:src="@mipmap/with_zfb"
-                        android:layout_gravity="center"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="转账到支付宝"
-                        android:textSize="15sp"
-                        android:textColor="@color/color_464646"
-                        android:gravity="center"
-                        android:layout_marginTop="33dp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="（收取1%服务费）"
-                        android:textSize="12sp"
-                        android:textColor="@color/color_a2a0a0"
-                        android:gravity="center"
-                        android:layout_marginTop="8dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/view_aw2"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_below="@id/lin_aw"
-                android:background="@color/color_F5F5F5"
-                android:layout_marginTop="32dp" />
-
-
             <TextView
                 android:id="@+id/tv_aw"
                 android:layout_width="wrap_content"
@@ -173,7 +83,7 @@
                 android:text="转入账号"
                 android:textColor="@color/color_464646"
                 android:textSize="15sp"
-                android:layout_below="@id/view_aw2"
+                android:layout_below="@id/view_aw"
                 android:layout_marginTop="26dp"
                 android:layout_marginLeft="25dp"/>
 
@@ -248,6 +158,87 @@
                 android:layout_below="@id/view_aw4"
                 android:layout_marginTop="10dp"
                 android:gravity="center"/>
+
+            <LinearLayout
+                android:id="@+id/lin_aw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/view_aw4"
+                android:layout_marginTop="52dp">
+
+                <com.youmai.project.view.ClickLinearLayout
+                    android:id="@+id/lin_aw_wx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="54dp"
+                        android:layout_height="47dp"
+                        android:src="@mipmap/with_wx"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="转账到微信"
+                        android:textSize="15sp"
+                        android:textColor="@color/color_464646"
+                        android:gravity="center"
+                        android:layout_marginTop="33dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="（收取1%服务费）"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_a2a0a0"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
+                </com.youmai.project.view.ClickLinearLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="127dp"
+                    android:background="@color/color_dbd8d8"/>
+
+                <com.youmai.project.view.ClickLinearLayout
+                    android:id="@+id/lin_aw_zfb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="54dp"
+                        android:layout_height="47dp"
+                        android:src="@mipmap/with_zfb"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="转账到支付宝"
+                        android:textSize="15sp"
+                        android:textColor="@color/color_464646"
+                        android:gravity="center"
+                        android:layout_marginTop="33dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="（收取1%服务费）"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_a2a0a0"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
+                </com.youmai.project.view.ClickLinearLayout>
+
+            </LinearLayout>
 
         </RelativeLayout>
 

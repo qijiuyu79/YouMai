@@ -1,6 +1,7 @@
 package com.youmai.project.activity.order;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,15 +10,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.widget.TextView;
+
 import com.youmai.project.R;
+import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.callback.ViewPagerCallBack;
 import com.youmai.project.fragment.order.MOrderFragment;
+import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.view.PagerSlidingTabStrip;
 
 /**
  * 卖家订单列表
  */
-public class MOrderActivity extends FragmentActivity {
+public class MOrderActivity extends BaseActivity {
 
     private PagerSlidingTabStrip tabs;
     private DisplayMetrics dm;
@@ -27,6 +32,12 @@ public class MOrderActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
+            setTranslucentStatus(true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.color_FF4081);
         initView();
         setIntent();
     }
@@ -36,6 +47,8 @@ public class MOrderActivity extends FragmentActivity {
      * 初始化
      */
     private void initView(){
+        TextView tvHead=(TextView)findViewById(R.id.tv_head);
+        tvHead.setText("店铺订单");
         dm = getResources().getDisplayMetrics();
         pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);

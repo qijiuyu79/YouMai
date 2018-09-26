@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
 
     <RelativeLayout android:id="@+id/rel_head"
         android:layout_width="match_parent"
@@ -37,13 +38,66 @@
 
     </RelativeLayout>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="充值金额"
+        android:textColor="@color/color_464646"
+        android:textSize="15sp"
+        android:layout_below="@id/rel_head"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥"
+        android:textSize="40sp"
+        android:layout_below="@id/rel_head"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="34dp"
+        android:textColor="@android:color/black"/>
+
+    <EditText
+        android:id="@+id/et_ar_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="40sp"
+        android:layout_below="@id/rel_head"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="34dp"
+        android:inputType="phone"/>
+
+    <View
+        android:id="@+id/view_aw1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_dbd8d8"
+        android:layout_below="@id/et_ar_money"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="充值成功后会赠送相应金额的用户积分"
+        android:textSize="13sp"
+        android:textColor="@color/color_b7b5b5"
+        android:layout_below="@id/view_aw1"
+        android:layout_marginTop="10dp"
+        android:gravity="center"/>
+
+
     <LinearLayout
         android:id="@+id/lin_aw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/rel_head"
-        android:layout_marginTop="52dp">
+        android:layout_below="@id/view_aw1"
+        android:layout_marginTop="82dp">
 
         <com.youmai.project.view.ClickLinearLayout
             android:id="@+id/lin_ar_wx"
@@ -117,64 +171,5 @@
         </com.youmai.project.view.ClickLinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:id="@+id/view_aw2"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@id/lin_aw"
-        android:background="@color/color_F5F5F5"
-        android:layout_marginTop="32dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="充值金额"
-        android:textColor="@color/color_464646"
-        android:textSize="15sp"
-        android:layout_below="@id/view_aw2"
-        android:layout_marginTop="26dp"
-        android:layout_marginLeft="25dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¥"
-        android:textSize="40sp"
-        android:layout_below="@id/view_aw2"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="34dp"
-        android:textColor="@android:color/black"/>
-
-    <EditText
-        android:id="@+id/et_ar_money"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:textSize="40sp"
-        android:layout_below="@id/view_aw2"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="34dp"
-        android:inputType="phone"/>
-
-    <View
-        android:id="@+id/view_aw3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_dbd8d8"
-        android:layout_below="@id/et_ar_money"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="充值成功后会赠送相应金额的用户积分"
-        android:textSize="13sp"
-        android:textColor="@color/color_b7b5b5"
-        android:layout_below="@id/view_aw3"
-        android:layout_marginTop="10dp"
-        android:gravity="center"/>
 
 </RelativeLayout>

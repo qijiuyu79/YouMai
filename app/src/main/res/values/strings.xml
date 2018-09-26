@@ -20,4 +20,6 @@
     <string name="share_failed">分享失败</string>
     <string name="share_canceled">分享取消</string>
     <string name="share_failed_install_wechat">分享失败，请安装微信客户端</string>
+    <string name="scan_failed_try_again">扫描失败，请重新扫描！</string>
+    <string name="please_scan_right_qr_code">请扫描正确的二维码！</string>
 </resources>

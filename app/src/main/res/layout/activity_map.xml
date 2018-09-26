@@ -5,8 +5,20 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
+        <TextView android:id="@+id/tv_head"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_FF4081"
+            android:text="逛街淘宝"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center" />
+
     <com.baidu.mapapi.map.MapView
         android:id="@+id/mapView"
+        android:layout_below="@id/tv_head"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

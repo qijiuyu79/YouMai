@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.widget.TextView;
+
 import com.youmai.project.R;
 import com.youmai.project.callback.ViewPagerCallBack;
 import com.youmai.project.fragment.order.OrderFragment;
@@ -34,6 +36,8 @@ public class OrderActivity extends FragmentActivity {
      * 初始化
      */
     private void initView(){
+        TextView tvHead=(TextView)findViewById(R.id.tv_head);
+        tvHead.setText("我的订单");
         dm = getResources().getDisplayMetrics();
         pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);

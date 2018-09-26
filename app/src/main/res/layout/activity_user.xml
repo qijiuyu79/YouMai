@@ -92,10 +92,10 @@
                     android:layout_height="26.5dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="25dp"
-                    android:background="@drawable/bg_recommended_buy"
+                    android:background="@drawable/bg_withdrawal"
                     android:gravity="center"
                     android:text="转账"
-                    android:textColor="@color/color_E51C23"
+                    android:textColor="@color/color_409EFF"
                     android:textSize="13sp" />
 
                 <ImageView

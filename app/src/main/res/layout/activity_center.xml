@@ -6,8 +6,20 @@
     android:fitsSystemWindows="true"
     android:background="@android:color/white">
 
+    <TextView android:id="@+id/tv_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081"
+        android:text="我的店铺"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:gravity="center" />
+
     <RelativeLayout
         android:id="@+id/rel_ac"
+        android:layout_below="@id/tv_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
@@ -139,7 +151,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/view_ac2"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="15dp">
 
         <com.youmai.project.view.ClickLinearLayout
             android:id="@+id/lin_ac_jiaoyi"
@@ -149,8 +161,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@mipmap/dai_jiaoyi"
                 android:layout_gravity="center"/>
 
@@ -160,7 +172,7 @@
                 android:text="待交易"
                 android:textColor="@color/color_777777"
                 android:textSize="15sp"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center"/>
 
         </com.youmai.project.view.ClickLinearLayout>
@@ -173,8 +185,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@mipmap/yi_wancheng"
                 android:layout_gravity="center"/>
 
@@ -184,7 +196,7 @@
                 android:text="已完成"
                 android:textColor="@color/color_777777"
                 android:textSize="15sp"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center"/>
 
         </com.youmai.project.view.ClickLinearLayout>
@@ -197,8 +209,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@mipmap/yi_quxiao"
                 android:layout_gravity="center"/>
 
@@ -208,7 +220,7 @@
                 android:text="已取消"
                 android:textColor="@color/color_777777"
                 android:textSize="15sp"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center"/>
 
         </com.youmai.project.view.ClickLinearLayout>
@@ -233,8 +245,8 @@
         android:layout_marginLeft="10dp">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@mipmap/sign_in"
             android:layout_gravity="center"/>
 
@@ -242,7 +254,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="签到"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/color_FF4081"
             android:gravity="center"
             android:layout_marginLeft="6dp"/>
@@ -259,8 +271,8 @@
         android:layout_marginRight="10dp">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@mipmap/add_shop" />
 
@@ -268,7 +280,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="添加宝贝"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/color_FF4081"
             android:gravity="center"
             android:layout_marginLeft="6dp"/>

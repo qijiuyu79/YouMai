@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.utils.LogUtils;
 
 /**
  * 加载html5页面
@@ -44,6 +45,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         webView.setHorizontalScrollBarEnabled(false);//水平不显示
         webView.setWebViewClient(new webViewClient());
         int type = getIntent().getIntExtra("type", 0);
+        String address=getIntent().getStringExtra("address");
 
         switch (type) {
             //使用说明
@@ -51,6 +53,11 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
                 tvTitle.setText("服务协议");
                 webView.loadUrl("http://www.th2w.com/deal.html");
                 break;
+            case 2:
+                 tvTitle.setText("商品详情");
+                LogUtils.e(address+"+++++++++++++++");
+                 webView.loadUrl(address);
+                 break;
             default:
                 break;
         }
