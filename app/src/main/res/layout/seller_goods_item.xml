@@ -20,7 +20,8 @@
             android:layout_marginLeft="39dp"
             android:layout_marginTop="13dp"/>
 
-        <ImageView
+        <com.youmai.project.view.ClickImageView
+            android:id="@+id/img_share"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@mipmap/share_icon"

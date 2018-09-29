@@ -14,10 +14,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
+import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.DateUtil;
 import com.youmai.project.utils.Util;
+import com.youmai.project.view.ClickImageView;
 
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class SellerGoodsAdapter extends BaseAdapter{
 			holder.tvOldMoney=(TextView)view.findViewById(R.id.tv_sgi_originalPrice);
 			holder.tvTime=(TextView)view.findViewById(R.id.tv_sgi_creatTime);
 			holder.tvBuy=(TextView)view.findViewById(R.id.tv_sgi_buy);
+			holder.imgShare=(ClickImageView)view.findViewById(R.id.img_share);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -81,6 +84,7 @@ public class SellerGoodsAdapter extends BaseAdapter{
 			holder.tvOldMoney.setText("¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			holder.tvDes.setText(goodsBean.getDescription());
+			//购买
 			holder.tvBuy.setTag(goodsBean);
 			holder.tvBuy.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -101,6 +105,23 @@ public class SellerGoodsAdapter extends BaseAdapter{
 					}
 				}
 			});
+			//分享
+			holder.imgShare.setTag(goodsBean);
+			holder.imgShare.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					GoodsBean goodsBean= (GoodsBean) v.getTag();
+					if(goodsBean!=null){
+						Intent intent=new Intent(context, ShareActivity.class);
+						Bundle bundle=new Bundle();
+						bundle.putSerializable("goodsBean",goodsBean);
+						intent.putExtras(bundle);
+						context.startActivity(intent);
+					}
+				}
+			});
 		}
 		return view;
 	}
@@ -108,5 +129,6 @@ public class SellerGoodsAdapter extends BaseAdapter{
 	private class ViewHolder{
 		private TextView tvAddress,tvDes,tvNewMoney,tvOldMoney,tvTime,tvBuy;
 		private ImageView imageView;
+		private ClickImageView imgShare;
 	 }
 }
