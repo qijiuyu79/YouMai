@@ -177,3 +177,6 @@ public *;
 
 -dontwarn com.squareup.okhttp.**
 
+-keep class com.iflytek.**{*;}
+-keepattributes Signature
+
