@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity{
         getLocation();
         //查询版本
         new UpdateVersionUtils().getVersion(MainActivity.this);
+        HttpMethod.getLocationCount(mHandler);
     }
 
 

@@ -249,4 +249,24 @@ public interface HttpApi {
     @POST(HttpConstant.WITHDRAWAL)
     Call<HttpBaseBean> withdrawal(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 查询附近宝贝数量
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.LOCATION_GOODS_COUNT)
+    Call<ResponseBody> getLocationCount(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 根据商品id查询商品详情
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_GOODS_DETAILS)
+    Call<ResponseBody> getGoodsDetails(@FieldMap Map<String, String> map);
+
 }

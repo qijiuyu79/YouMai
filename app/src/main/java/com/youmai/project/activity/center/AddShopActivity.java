@@ -232,7 +232,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
             switch (msg.what){
                 case HandlerConstant.ADD_GOODS_SUCCESS:
                      String message= (String) msg.obj;
-                    LogUtils.e("___"+message);
                      if(TextUtils.isEmpty(message)){
                          return;
                      }

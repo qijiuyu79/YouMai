@@ -752,4 +752,54 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 查询附近商品数量
+     * @param handler
+     */
+    public static void getLocationCount(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("min_distance","0");
+        map.put("max_distance","5000");
+        Http.getRetrofit().create(HttpApi.class).getLocationCount(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_LOCATION_COUNT_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 根据商品id查询商品详情
+     * @param goods_id
+     * @param handler
+     */
+    public static void getGoodsDetails(String goods_id,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("goods_id",goods_id);
+        Http.getRetrofit().create(HttpApi.class).getGoodsDetails(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_GOODS_DETAILS_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }
