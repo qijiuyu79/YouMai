@@ -74,7 +74,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
      * 生成二维码
      */
     private void createQR(){
-        final String url="http://q.th2w.net/g/${"+goodsBean.getId()+"}";
+        final String url="http://q.th2w.net/g/"+goodsBean.getId();
         bitmap=ZXingUtils.createQRImage(url,150,150);
         imgQR.setImageBitmap(bitmap);
     }
