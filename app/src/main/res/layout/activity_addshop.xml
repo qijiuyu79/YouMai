@@ -16,6 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:background="@color/color_e0d7b6"
+                android:text="添加后的宝贝即可被附近的用户在有卖APP里购买"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:textColor="@color/color_d1ad40"/>
 
             <TextView
                 android:layout_width="match_parent"

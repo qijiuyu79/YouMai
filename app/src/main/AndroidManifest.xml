@@ -88,6 +88,7 @@
         <activity android:name=".activity.share.ShareActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.webview.WebViewActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.main.ScanActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.center.AddShopSuccessActivity"  android:screenOrientation="portrait"/>
 
         <!-- 百度地图的appkey-->
         <meta-data

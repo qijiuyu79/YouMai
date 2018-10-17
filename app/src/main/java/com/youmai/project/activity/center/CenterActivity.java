@@ -359,12 +359,19 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         switch (requestCode){
             //添加商品后的返回
             case 1:
+
                 Bundle bundle=data.getExtras();
                 if(bundle==null){
                     return;
                 }
                 GoodsBean myGoods= (GoodsBean) bundle.getSerializable("myGoods");
                 if(null!=myGoods){
+                    //跳转添加成功页面
+                    Intent intent=new Intent(mContext,AddShopSuccessActivity.class);
+                    intent.putExtra("goodId",myGoods.getId());
+                    startActivity(intent);
+
+                    //更新商品列表
                     listAll.add(0,myGoods);
                     if(null==myGoodsAdapter){
                         myGoodsAdapter=new MyGoodsAdapter(CenterActivity.this,listAll);

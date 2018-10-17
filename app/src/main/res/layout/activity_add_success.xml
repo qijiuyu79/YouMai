@@ -1,0 +1,92 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <include android:id="@+id/head" layout="@layout/head"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:layout_below="@id/head"
+        android:background="@color/color_e0d7b6"
+        android:text="添加后的宝贝即可被附近的用户在有卖APP里购买"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:textColor="@color/color_d1ad40"/>
+
+
+    <ImageView
+        android:id="@+id/img_aas"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_below="@id/head"
+        android:layout_marginTop="107dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/add_success_icon"/>
+
+    <TextView
+        android:id="@+id/tv_aas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_aas"
+        android:text="添加成功"
+        android:textSize="15sp"
+        android:textColor="@color/color_74736a"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"/>
+
+    <ImageView
+        android:id="@+id/img_scan"
+        android:layout_width="179dp"
+        android:layout_height="179dp"
+        android:layout_below="@id/tv_aas"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <com.youmai.project.view.ClickTextView
+            android:id="@+id/tv_share"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="分享"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:background="@color/color_FF4081"
+            android:gravity="center"
+            android:layout_marginRight="10dp"/>
+
+        <com.youmai.project.view.ClickTextView
+            android:id="@+id/tv_save"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="保存"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:background="@color/color_FF4081"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_d9d9d9"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"/>
+
+
+</RelativeLayout>
