@@ -215,7 +215,9 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                           broadcastIntent.putExtras(bundle);
                           sendBroadcast(broadcastIntent);
                          showMsg("删除成功！");
-                     }
+                     }else{
+                          showMsg(httpBaseBean.getMsg());
+                      }
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
