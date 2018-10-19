@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
@@ -31,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 public class MainActivity extends BaseActivity{
 
+    private TextView tvCount;
     private PagerSlidingTabStrip tabs;
     private DisplayMetrics dm;
     private ViewPager pager;
@@ -48,7 +50,6 @@ public class MainActivity extends BaseActivity{
         getLocation();
         //查询版本
         new UpdateVersionUtils().getVersion(MainActivity.this);
-        HttpMethod.getLocationCount(mHandler);
     }
 
 
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity{
      * 初始化控件
      */
     private void initView(){
+        tvCount=(TextView)findViewById(R.id.tv_location_count);
         dm = getResources().getDisplayMetrics();
         pager = (ViewPager) findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -127,7 +129,7 @@ public class MainActivity extends BaseActivity{
             super(fm);
         }
 
-        private final String[] titles = { "二手","闲置","植宠"};
+        private final String[] titles = { "二手","卡券","植宠"};
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -175,6 +177,23 @@ public class MainActivity extends BaseActivity{
                      }
                      //获取用户信息
                      getUserInfo();
+                     //查询附近宝贝的数量
+                     getLocationGoodsCount();
+                     break;
+                //查询附近宝贝的数量
+                case HandlerConstant.GET_LOCATION_COUNT_SUCCESS:
+                     final String message= (String) msg.obj;
+                     if(TextUtils.isEmpty(message)){
+                         return;
+                     }
+                     try {
+                         final JSONObject jsonObject=new JSONObject(message);
+                         if(jsonObject.getInt("code")==200){
+                             tvCount.setText("您附近有"+jsonObject.getInt("data")+"个宝贝");
+                         }
+                     }catch (Exception e){
+                         e.printStackTrace();
+                     }
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
@@ -191,6 +210,14 @@ public class MainActivity extends BaseActivity{
             MainActivity.index=position;
         }
     };
+
+
+    /**
+     * 查询附近宝贝的数量
+     */
+    private void getLocationGoodsCount(){
+        HttpMethod.getLocationCount(mHandler);
+    }
 
 
     @Override

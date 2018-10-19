@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="上门取货"
+                android:text="线下交易"
                 android:textSize="15sp"
                 android:textColor="@color/color_444444"/>
 
@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="上门取货之前请电话联系卖家"
+                android:text="支付成功后即可通过电话联系卖家完成交易"
                 android:textSize="12sp"
                 android:textColor="@color/color_bab7b7"/>
 
@@ -311,9 +311,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@mipmap/contact"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/phone_icon"/>
 
             <TextView
                 android:layout_width="wrap_content"

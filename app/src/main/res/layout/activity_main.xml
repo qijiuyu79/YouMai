@@ -34,6 +34,16 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"/>
 
+            <TextView
+                android:id="@+id/tv_location_count"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/color_888888"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="54dp"/>
+
             <ImageView
                 android:layout_width="34dp"
                 android:layout_height="21dp"
