@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
+import com.youmai.project.activity.map.RoutePlanActivity;
 import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.application.MyApplication;
@@ -86,6 +87,7 @@ public class RecommendedAdapter extends BaseAdapter{
 		if(goodsBean!=null){
 			holder.tvContext.setTag(goodsBean);
 			holder.tvContext.setText(goodsBean.getDescription());
+			holder.tvLocation.setTag(goodsBean);
 			holder.tvLocation.setText(goodsBean.getAddress());
 			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
@@ -141,6 +143,21 @@ public class RecommendedAdapter extends BaseAdapter{
 						Bundle bundle=new Bundle();
 						bundle.putSerializable("goodsBean",goodsBean);
 						intent.putExtras(bundle);
+						context.startActivity(intent);
+					}
+				}
+			});
+			//路径规划
+			holder.tvLocation.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					GoodsBean goodsBean= (GoodsBean) v.getTag();
+					if(goodsBean!=null){
+						Intent intent=new Intent(context, RoutePlanActivity.class);
+						intent.putExtra("latitude",goodsBean.getLatitude());
+						intent.putExtra("longtitude",goodsBean.getLongitude());
 						context.startActivity(intent);
 					}
 				}
