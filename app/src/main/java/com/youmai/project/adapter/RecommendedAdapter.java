@@ -23,6 +23,7 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.CircleImageView;
+import com.youmai.project.view.ClickImageView;
 import com.youmai.project.view.ClickTextView;
 import com.youmai.project.view.Shimmer;
 import com.youmai.project.view.ShimmerTextView;
@@ -77,6 +78,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
 			holder.imgShare=(ImageView)view.findViewById(R.id.img_ri_share);
+			holder.imgReport=(ClickImageView)view.findViewById(R.id.img_report);
 //			holder.shimmerTextView=(ShimmerTextView)view.findViewById(R.id.st_ri);
 //			holder.shimmer=new Shimmer();
 			view.setTag(holder);
@@ -162,6 +164,13 @@ public class RecommendedAdapter extends BaseAdapter{
 					}
 				}
 			});
+
+			//举报
+			holder.imgReport.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+
+				}
+			});
 		}
 		return view;
 	}
@@ -190,6 +199,7 @@ public class RecommendedAdapter extends BaseAdapter{
 		private TextView tvContext,tvLocation,tvNewMoney,tvOldMoney,tvNickName;
 		private ClickTextView tvBuy;
 		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5,imgShare;
+		private ClickImageView imgReport;
 		private CircleImageView circleImageView;
 //		private ShimmerTextView shimmerTextView;
 //		private Shimmer shimmer;

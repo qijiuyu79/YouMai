@@ -5,20 +5,52 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
+    <RelativeLayout android:id="@+id/rel_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
+
         <TextView android:id="@+id/tv_head"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_FF4081"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:text="逛街淘宝"
             android:textSize="18sp"
             android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
             android:ellipsize="end"
             android:maxLines="1"
             android:gravity="center" />
 
+        <LinearLayout
+            android:id="@+id/lin_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="店铺签到"
+                android:textSize="13sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/sign"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
     <com.baidu.mapapi.map.MapView
         android:id="@+id/mapView"
-        android:layout_below="@id/tv_head"
+        android:layout_below="@id/rel_head"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -33,6 +33,7 @@ import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.MapGoodsListAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Store;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
@@ -100,6 +101,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         //隐藏缩放按钮
         mapView.showZoomControls(false);
         findViewById(R.id.img_am_location).setOnClickListener(this);
+        findViewById(R.id.lin_sign).setOnClickListener(this);
     }
 
 
@@ -190,6 +192,19 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                          });
                      }
                      break;
+                //店铺签到
+                case HandlerConstant.STORE_EVALUATE_SUCCESS:
+                     clearTask();
+                     HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                     if(null==httpBaseBean){
+                        return;
+                     }
+                     if(httpBaseBean.isSussess()){
+                        showMsg("签到成功！");
+                     }else{
+                        showMsg(httpBaseBean.getMsg());
+                     }
+                     break;
                  default:
                      break;
             }
@@ -238,6 +253,11 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                 isFirst=false;
                 startLocation();
                 break;
+            //店铺签到
+            case R.id.lin_sign:
+                 showProgress("签到中...");
+                 HttpMethod.storeEvaluate(mHandler);
+                 break;
             default:
                 break;
         }

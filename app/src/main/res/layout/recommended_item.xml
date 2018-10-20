@@ -75,6 +75,15 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp" />
 
+    <com.youmai.project.view.ClickImageView
+        android:id="@+id/img_report"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@mipmap/report"
+        android:layout_toLeftOf="@id/img_ri_share"
+        android:layout_below="@+id/tv_ri_name"
+        android:layout_marginRight="15dp"/>
+
     <TextView android:id="@+id/tv_ri_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
