@@ -5,95 +5,110 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-   <LinearLayout
-       android:layout_width="263dp"
-       android:layout_height="312dp"
-       android:orientation="vertical"
-       android:background="@mipmap/report_bg"
-       android:layout_gravity="center">
+    <LinearLayout
+        android:layout_width="263dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
-       <ImageView
-           android:layout_width="48dp"
-           android:layout_height="48dp"
-           android:src="@mipmap/report_title"
-           android:layout_gravity="center"
-           android:layout_marginTop="17dp"/>
+        <ImageView
+            android:id="@+id/img_delete"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/delete"
+            android:layout_gravity="right"/>
 
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:layout_marginLeft="56dp"
-           android:layout_marginTop="42dp">
+        <LinearLayout
+            android:layout_width="263dp"
+            android:layout_height="312dp"
+            android:orientation="vertical"
+            android:background="@mipmap/report_bg"
+            android:layout_gravity="center">
 
-           <ImageView
-               android:layout_width="19dp"
-               android:layout_height="19dp"
-               android:src="@mipmap/report_yes_select"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@mipmap/report_title"
+                android:layout_gravity="center"
+                android:layout_marginTop="17dp"/>
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="内容违反法规；"
-               android:textColor="@android:color/black"
-               android:textSize="15sp"
-               android:layout_marginLeft="13dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="56dp"
+                android:layout_marginTop="42dp">
 
-       </LinearLayout>
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:src="@mipmap/report_yes_select"/>
 
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:layout_marginLeft="56dp"
-           android:layout_marginTop="23dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容违反法规；"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="13dp"/>
 
-           <ImageView
-               android:layout_width="19dp"
-               android:layout_height="19dp"
-               android:src="@mipmap/report_yes_select"/>
+            </LinearLayout>
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="内容质量太差；"
-               android:textColor="@android:color/black"
-               android:textSize="15sp"
-               android:layout_marginLeft="13dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="56dp"
+                android:layout_marginTop="23dp">
 
-       </LinearLayout>
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:src="@mipmap/report_yes_select"/>
 
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:layout_marginLeft="56dp"
-           android:layout_marginTop="23dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容质量太差；"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="13dp"/>
 
-           <ImageView
-               android:layout_width="19dp"
-               android:layout_height="19dp"
-               android:src="@mipmap/report_yes_select"/>
+            </LinearLayout>
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="图片与内容不符；"
-               android:textColor="@android:color/black"
-               android:textSize="15sp"
-               android:layout_marginLeft="13dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="56dp"
+                android:layout_marginTop="23dp">
 
-       </LinearLayout>
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:src="@mipmap/report_yes_select"/>
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="提交"
-           android:textColor="@color/color_FF4081"
-           android:textSize="15sp"
-           android:layout_marginTop="40dp"
-           android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="图片与内容不符；"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="13dp"/>
 
-   </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提交"
+                android:textColor="@color/color_FF4081"
+                android:textSize="15sp"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
