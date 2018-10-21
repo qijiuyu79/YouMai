@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
+import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.map.RoutePlanActivity;
 import com.youmai.project.activity.share.ShareActivity;
