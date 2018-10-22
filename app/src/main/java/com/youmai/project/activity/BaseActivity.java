@@ -47,6 +47,7 @@ public class BaseActivity extends FragmentActivity {
     private ProgressDialog progressDialog = null;
     protected Context mContext = this;
     public PopupWindow mPopuwindow;
+    public Dialog baseDialog;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -131,6 +132,30 @@ public class BaseActivity extends FragmentActivity {
         config.setToDefaults();
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
+    }
+
+
+
+    /**
+     * dialog弹框
+     *
+     * @param view
+     */
+    public Dialog dialogPop(View view, boolean b) {
+        baseDialog = new Dialog(mContext, R.style.ActionSheetDialogStyle);
+        baseDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        baseDialog.setTitle(null);
+        baseDialog.setCancelable(b);
+        baseDialog.setContentView(view);
+        Window window = baseDialog.getWindow();
+        window.setGravity(Gravity.CENTER);  //此处可以设置dialog显示的位置
+        baseDialog.show();
+        return baseDialog;
+    }
+    public void closeDialog() {
+        if (baseDialog != null) {
+            baseDialog.dismiss();
+        }
     }
 
 

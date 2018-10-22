@@ -183,6 +183,11 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.imgReport.setTag(goodsBean.getId());
 			holder.imgReport.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					if(!Util.isLogin()){
+						Intent intent=new Intent(context, LoginActivity.class);
+						context.startActivity(intent);
+						return;
+					}
 					if(null==v.getTag()){
 						return;
 					}

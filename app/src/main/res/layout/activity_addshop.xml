@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
                 android:background="@color/color_e0d7b6"
-                android:text="添加后的宝贝即可被附近的用户在有卖APP里购买"
+                android:text="添加宝贝完成后，即可被附近的用户查看和购买"
                 android:gravity="center"
                 android:textSize="13sp"
                 android:textColor="@color/color_d1ad40"/>
@@ -44,7 +44,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:gravity="top"
-                android:hint="您的宝贝若7日未售出，将会自动降低其展示顺序。"
+                android:hint="描述一下您的宝贝吧..."
                 android:minLines="6"
                 android:textSize="15sp" />
 
@@ -98,24 +98,12 @@
                     android:layout_width="65dp"
                     android:layout_height="28dp"
                     android:layout_marginLeft="20dp"
-                    android:text="二手"
+                    android:text="闲置"
                     android:textColor="@color/color_FF4081"
                     android:textSize="13sp"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:background="@drawable/bg_recommended_buy"/>
-
-                <TextView
-                    android:id="@+id/tv_type2"
-                    android:layout_width="65dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="卡券"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:background="@drawable/borders"/>
 
                 <TextView
                     android:id="@+id/tv_type3"

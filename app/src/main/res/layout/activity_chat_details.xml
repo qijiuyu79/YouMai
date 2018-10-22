@@ -85,8 +85,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/tv_asd_send"
-                android:background="@drawable/white_share"/>
+                android:layout_toLeftOf="@+id/tv_asd_send"/>
 
             <com.youmai.project.view.ClickTextView
                 android:id="@+id/tv_asd_send"

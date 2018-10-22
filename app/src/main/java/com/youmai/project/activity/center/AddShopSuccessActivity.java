@@ -1,16 +1,24 @@
 package com.youmai.project.activity.center;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.utils.BitMapUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.ZXingUtils;
@@ -21,6 +29,8 @@ import com.youmai.project.utils.ZXingUtils;
 public class AddShopSuccessActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView imgScan;
+    //分享渠道
+    private SHARE_MEDIA share_media;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -43,7 +53,8 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("添加成功");
         imgScan=(ImageView)findViewById(R.id.img_scan);
-        findViewById(R.id.tv_save).setOnClickListener(this);
+        findViewById(R.id.lin_share).setOnClickListener(this);
+        findViewById(R.id.lin_save).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -62,17 +73,84 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_save:
+            //分享
+            case R.id.lin_share:
+                 View view= LayoutInflater.from(mContext).inflate(R.layout.share_pop,null);
+                 bottomPopupWindow(0,0,view);
+                 view.findViewById(R.id.img_share_wx).setOnClickListener(new View.OnClickListener() {
+                     public void onClick(View v) {
+                         share_media = SHARE_MEDIA.WEIXIN;
+                         share();
+                     }
+                 });
+                view.findViewById(R.id.img_share_wxp).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
+                        share();
+                    }
+                });
+                 break;
+            //保存在本地
+            case R.id.lin_save:
                  BitMapUtils.saveImageToGallery(mContext,bitmap);
-                 showMsg("已保存在手机本地！");
+                 View view2= LayoutInflater.from(mContext).inflate(R.layout.save_photo,null);
+                 dialogPop(view2,true);
                  break;
             case R.id.lin_back:
                  finish();
                  break;
-                 default:
-                     break;
+             default:
+                 break;
         }
 
+    }
+
+
+    /**
+     * 开始分享
+     */
+    private void share(){
+        UMImage img = new UMImage(this, bitmap);
+        new ShareAction(AddShopSuccessActivity.this).setPlatform(share_media)
+                .setCallback(umShareListener)
+                .withMedia(img)
+                .share();
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        public void onStart(SHARE_MEDIA share_media) {
+        }
+
+        public void onResult(SHARE_MEDIA platform) {
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                showMsg(getString(R.string.collect_success));
+            } else {
+                showMsg(getString(R.string.share_success));
+            }
+        }
+
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            if (t.getMessage().indexOf("2008") != -1) {
+                if (platform.name().equals("WEIXIN") || platform.name().equals("WEIXIN_CIRCLE")) {
+                    showMsg(getString(R.string.share_failed_install_wechat));
+                } else if (platform.name().equals("QQ") || platform.name().equals("QZONE")) {
+                    showMsg(getString(R.string.share_failed_install_qq));
+                }
+            }
+            showMsg(getString(R.string.share_failed));
+        }
+
+        public void onCancel(SHARE_MEDIA platform) {
+            showMsg(getString(R.string.share_canceled));
+        }
+    };
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != 0) {
+            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 

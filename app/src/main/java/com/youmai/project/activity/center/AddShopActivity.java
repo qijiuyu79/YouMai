@@ -43,7 +43,7 @@ import java.util.List;
 
 public class AddShopActivity extends BaseActivity implements View.OnClickListener{
 
-    private TextView tvType1,tvType2,tvType3,tvAddress;
+    private TextView tvType1,tvType3,tvAddress;
     private EditText etContent,etOldMoney,etNewMoney;
     private MyGridView gridView;
     private GridImageAdapter adapter = null;
@@ -72,7 +72,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("添加宝贝");
         tvType1=(TextView)findViewById(R.id.tv_type1);
-        tvType2=(TextView)findViewById(R.id.tv_type2);
         tvType3=(TextView)findViewById(R.id.tv_type3);
         tvAddress=(TextView)findViewById(R.id.tv_aa_location);
         etContent=(EditText)findViewById(R.id.et_aa_content);
@@ -82,7 +81,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.tv_aa_add).setOnClickListener(this);
         tvType1.setOnClickListener(this);
-        tvType2.setOnClickListener(this);
         tvType3.setOnClickListener(this);
 
         //显示当前位置
@@ -110,7 +108,6 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         });
 
         tvList.add(tvType1);
-        tvList.add(tvType2);
         tvList.add(tvType3);
     }
 
@@ -140,17 +137,11 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                  tvType1.setBackground(getResources().getDrawable(R.drawable.bg_recommended_buy));
                  updateColor(0);
                  break;
-            case R.id.tv_type2:
-                 type="NEW";
-                 tvType2.setTextColor(getResources().getColor(R.color.color_FF4081));
-                 tvType2.setBackground(getResources().getDrawable(R.drawable.bg_recommended_buy));
-                 updateColor(1);
-                break;
             case R.id.tv_type3:
                  type="PET";
                  tvType3.setTextColor(getResources().getColor(R.color.color_FF4081));
                  tvType3.setBackground(getResources().getDrawable(R.drawable.bg_recommended_buy));
-                 updateColor(2);
+                 updateColor(1);
                 break;
             //提交
             case R.id.tv_aa_add:

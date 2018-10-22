@@ -1,0 +1,33 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="219dp"
+        android:layout_height="148dp"
+        android:orientation="vertical"
+        android:background="@drawable/white_share"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:layout_width="47dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/add_success_icon"
+            android:layout_marginTop="43dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="已保存二维码至您的相册"
+            android:textSize="15sp"
+            android:textColor="@color/color_7e7e7e"
+            android:layout_marginTop="30dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -129,7 +129,7 @@ public class MainActivity extends BaseActivity{
             super(fm);
         }
 
-        private final String[] titles = { "二手","卡券","植宠"};
+        private final String[] titles = { "闲置","卡券","植宠"};
 
         @Override
         public CharSequence getPageTitle(int position) {
