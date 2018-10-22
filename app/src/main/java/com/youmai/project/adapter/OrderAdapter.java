@@ -19,6 +19,7 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.callback.TradingPlay;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
+import com.youmai.project.view.ClickLinearLayout;
 import com.youmai.project.view.ClickTextView;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class OrderAdapter extends BaseAdapter{
 			holder.tvCancle=(ClickTextView)view.findViewById(R.id.tv_oi_cancle);
 			holder.tvName=(TextView)view.findViewById(R.id.tv_psi_name);
 			holder.tvMoney=(TextView)view.findViewById(R.id.tv_oi_money);
-			holder.tvPhone=(TextView)view.findViewById(R.id.tv_oi_phone);
+			holder.linPhone=(ClickLinearLayout) view.findViewById(R.id.lin_oi_phone);
 			holder.imgX1=(ImageView)view.findViewById(R.id.img_ri_x1);
 			holder.imgX2=(ImageView)view.findViewById(R.id.img_ri_x2);
 			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
@@ -128,8 +129,8 @@ public class OrderAdapter extends BaseAdapter{
 					tradingPlay.cancle((GoodsBean) v.getTag());
 				}
 			});
-			holder.tvPhone.setTag(goodsBean.getMobile());
-			holder.tvPhone.setOnClickListener(new View.OnClickListener() {
+			holder.linPhone.setTag(goodsBean.getMobile());
+			holder.linPhone.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
 						return;
@@ -186,7 +187,8 @@ public class OrderAdapter extends BaseAdapter{
 	private class ViewHolder{
 		private ImageView imageView,imgType;
 		private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgShare;
-		private TextView tvName,tv_psi_des,tvMoney,tvPhone;
+		private TextView tvName,tv_psi_des,tvMoney;
 		private ClickTextView tvComplete,tvCancle;
+		private ClickLinearLayout linPhone;
 	 }
 }

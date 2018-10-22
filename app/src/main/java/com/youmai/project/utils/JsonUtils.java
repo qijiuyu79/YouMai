@@ -330,4 +330,56 @@ public class JsonUtils {
        }
        return myGoods;
     }
+
+
+
+    public static List<GoodsBean> getMyGoods(String message){
+        List<GoodsBean> list=new ArrayList<>();
+        if(TextUtils.isEmpty(message)){
+            return list;
+        }
+       try {
+           JSONObject jsonObject=new JSONObject(message);
+           if(jsonObject.getInt("code")!=200){
+               return list;
+           }
+           JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
+           for (int i = 0; i < jsonArray.length(); i++) {
+               GoodsBean myGoods=new GoodsBean();
+               JSONObject jsonObject1=jsonArray.getJSONObject(i);
+               myGoods.setAddress(jsonObject1.getString("address"));
+               myGoods.setCreateTime(jsonObject1.getLong("createTime"));
+               myGoods.setDescription(jsonObject1.getString("description"));
+               myGoods.setId(jsonObject1.getString("id"));
+               myGoods.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
+               myGoods.setPresentPrice(jsonObject1.getDouble("presentPrice"));
+               myGoods.setStoreId(jsonObject1.getString("storeId"));
+
+               //解析图片
+               List<String> imgList=new ArrayList<>();
+               JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
+               for (int j = 0; j < jsonArray1.length(); j++) {
+                   imgList.add(jsonArray1.getString(j));
+               }
+               myGoods.setImgList(imgList);
+
+               //解析经纬度
+               JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
+               if(null!=jsonObject2){
+                   JSONArray jsonArray2=new JSONArray(jsonObject2.getString("coordinates"));
+                   for (int k = 0; k < jsonArray2.length(); k++) {
+                       if(k==0){
+                           myGoods.setLongitude(jsonArray2.getDouble(k));
+                       }else{
+                           myGoods.setLatitude(jsonArray2.getDouble(k));
+                       }
+                   }
+               }
+               list.add(myGoods);
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+       return  list;
+    }
 }

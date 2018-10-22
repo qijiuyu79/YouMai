@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 推荐的fragment
+ * 店铺订单
  * Created by Administrator on 2018/1/3 0003.
  */
 

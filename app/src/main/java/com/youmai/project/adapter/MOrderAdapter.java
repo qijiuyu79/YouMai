@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.Util;
+import com.youmai.project.view.ClickLinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +63,13 @@ public class MOrderAdapter extends BaseAdapter{
 			holder.tv_psi_des=(TextView)view.findViewById(R.id.tv_psi_des);
 			holder.tvName=(TextView)view.findViewById(R.id.tv_psi_name);
 			holder.tvMoney=(TextView)view.findViewById(R.id.tv_oi_money);
-			holder.tvPhone=(TextView)view.findViewById(R.id.tv_oi_phone);
 			holder.imgX1=(ImageView)view.findViewById(R.id.img_ri_x1);
 			holder.imgX2=(ImageView)view.findViewById(R.id.img_ri_x2);
 			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
 			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
 			holder.imgShare=(ImageView)view.findViewById(R.id.img_oi_share);
+			holder.linPhone=(ClickLinearLayout)view.findViewById(R.id.lin_oi_phone);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -99,8 +101,8 @@ public class MOrderAdapter extends BaseAdapter{
 				default:
 					break;
 			}
-			holder.tvPhone.setTag(goodsBean.getMobile());
-			holder.tvPhone.setOnClickListener(new View.OnClickListener() {
+			holder.linPhone.setTag(goodsBean.getMobile());
+			holder.linPhone.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
 						return;
@@ -154,6 +156,7 @@ public class MOrderAdapter extends BaseAdapter{
 	private class ViewHolder{
 		private ImageView imageView,imgType,imgShare;
 		private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
-		private TextView tvName,tv_psi_des,tvMoney,tvPhone;
+		private TextView tvName,tv_psi_des,tvMoney;
+		private ClickLinearLayout linPhone;
 	 }
 }

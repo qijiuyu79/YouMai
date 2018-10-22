@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,8 +29,6 @@ import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -248,64 +247,28 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
      * 解析并刷新数据
      */
     private void refresh(String message){
-        if(TextUtils.isEmpty(message)){
-            return;
+        final List<GoodsBean> list=JsonUtils.getMyGoods(message);
+        listAll.addAll(list);
+        if(null==myGoodsAdapter){
+            myGoodsAdapter=new MyGoodsAdapter(CenterActivity.this,listAll);
+            listView.setAdapter(myGoodsAdapter);
+        }else{
+            myGoodsAdapter.notifyDataSetChanged();
         }
-        try {
-            JSONObject jsonObject=new JSONObject(message);
-            if(jsonObject.getInt("code")!=200){
-                return;
-            }
-            JSONArray jsonArray=new JSONArray(jsonObject.getString("data"));
-            List<GoodsBean> list=new ArrayList<>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                GoodsBean myGoods=new GoodsBean();
-                JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                myGoods.setAddress(jsonObject1.getString("address"));
-                myGoods.setCreateTime(jsonObject1.getLong("createTime"));
-                myGoods.setDescription(jsonObject1.getString("description"));
-                myGoods.setId(jsonObject1.getString("id"));
-                myGoods.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
-                myGoods.setPresentPrice(jsonObject1.getDouble("presentPrice"));
-                myGoods.setStoreId(jsonObject1.getString("storeId"));
-
-                //解析图片
-                List<String> imgList=new ArrayList<>();
-                JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
-                for (int j = 0; j < jsonArray1.length(); j++) {
-                    imgList.add(jsonArray1.getString(j));
-                }
-                myGoods.setImgList(imgList);
-
-                //解析经纬度
-                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
-                if(null==jsonObject2){
+        myGoodsAdapter.setCallBack(deleteBabyCallBack);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView tvDel=(TextView)view.findViewById(R.id.tv_mi_delete);
+                if(tvDel.getTag()==null){
                     return;
                 }
-                JSONArray jsonArray2=new JSONArray(jsonObject2.getString("coordinates"));
-                for (int k = 0; k < jsonArray2.length(); k++) {
-                    if(k==0){
-                        myGoods.setLongitude(jsonArray2.getDouble(k));
-                    }else{
-                        myGoods.setLatitude(jsonArray2.getDouble(k));
-                    }
-                }
-                list.add(myGoods);
+                showProgress("数据查询中");
+                HttpMethod.getGoodsDetails(tvDel.getTag().toString(),mHandler);
             }
-            listAll.addAll(list);
-            if(null==myGoodsAdapter){
-                myGoodsAdapter=new MyGoodsAdapter(CenterActivity.this,listAll);
-                listView.setAdapter(myGoodsAdapter);
-            }else{
-                myGoodsAdapter.notifyDataSetChanged();
-            }
-            myGoodsAdapter.setCallBack(deleteBabyCallBack);
-            if(list.size()<20){
-                isTotal=true;
-                swipeLayout.setFooter(isTotal);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        });
+        if(list.size()<20){
+            isTotal=true;
+            swipeLayout.setFooter(isTotal);
         }
     }
 
@@ -331,14 +294,6 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
             dialogView.show();
         }
 
-        /**
-         * 根据商品id查询详情
-         * @param goodsId
-         */
-        public void getGoodsDetails(String goodsId) {
-            showProgress("数据查询中");
-            HttpMethod.getGoodsDetails(goodsId,mHandler);
-        }
     };
 
     /**
@@ -385,7 +340,6 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         switch (requestCode){
             //添加商品后的返回
             case 1:
-
                 Bundle bundle=data.getExtras();
                 if(bundle==null){
                     return;

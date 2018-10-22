@@ -140,19 +140,32 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
-
-            <com.youmai.project.view.ClickTextView
-                android:id="@+id/tv_oi_phone"
-                android:layout_width="85dp"
-                android:layout_height="26dp"
-                android:layout_centerVertical="true"
+            <com.youmai.project.view.ClickLinearLayout
+                android:id="@+id/lin_oi_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="7dp"
-                android:text="联系买家"
-                android:textColor="@color/color_FF4081"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:background="@drawable/bg_recommended_buy"/>
+                android:paddingRight="7dp"
+                android:paddingLeft="7dp"
+                android:background="@drawable/bg_recommended_buy">
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/phone_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="7dp"
+                    android:text="联系买家"
+                    android:textColor="@color/color_FF4081"
+                    android:textSize="13sp"
+                    android:gravity="center"/>
+
+            </com.youmai.project.view.ClickLinearLayout>
 
         </RelativeLayout>
 
