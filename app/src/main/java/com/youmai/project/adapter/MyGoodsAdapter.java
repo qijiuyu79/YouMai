@@ -15,6 +15,7 @@ import com.youmai.project.R;
 import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.callback.DeleteBabyCallBack;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.DateUtil;
 
 import java.util.List;
@@ -75,6 +76,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 			holder.tvAddress.setText(goodsBean.getAddress());
 			holder.tvTime.setText("发布："+DateUtil.getData(goodsBean.getCreateTime()));
 			holder.tvDel.setTag(goodsBean.getId());
+			//删除
 			holder.tvDel.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
@@ -84,6 +86,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 				}
 			});
 			holder.imgShare.setTag(goodsBean);
+			//分享
 			holder.imgShare.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
@@ -97,6 +100,16 @@ public class MyGoodsAdapter extends BaseAdapter{
 						intent.putExtras(bundle);
 						context.startActivity(intent);
 					}
+				}
+			});
+			holder.imageView.setTag(goodsBean.getId());
+			//进入详情
+			holder.imageView.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					deleteBabyCallBack.getGoodsDetails(v.getTag().toString());
 				}
 			});
 		}

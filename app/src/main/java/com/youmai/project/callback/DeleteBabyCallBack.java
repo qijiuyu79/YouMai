@@ -6,4 +6,6 @@ package com.youmai.project.callback;
 public interface DeleteBabyCallBack {
 
     public void deleteBaby(String goodsId);
+
+    public void getGoodsDetails(String goodsId);
 }

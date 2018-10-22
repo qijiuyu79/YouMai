@@ -277,4 +277,57 @@ public class JsonUtils {
         }
         return list;
     }
+
+
+
+    public static  GoodsBean getGoodsBean(String message){
+        GoodsBean myGoods=new GoodsBean();
+       try {
+           final JSONObject jsonObject=new JSONObject(message);
+           if(jsonObject.getInt("code")==200){
+               final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
+               myGoods.setAddress(jsonObject1.getString("address"));
+               myGoods.setDescription(jsonObject1.getString("description"));
+               myGoods.setId(jsonObject1.getString("id"));
+               myGoods.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
+               myGoods.setPresentPrice(jsonObject1.getDouble("presentPrice"));
+               //解析图片
+               List<String> imgList=new ArrayList<>();
+               JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
+               for (int j = 0; j < jsonArray1.length(); j++) {
+                   imgList.add(jsonArray1.getString(j));
+               }
+               myGoods.setImgList(imgList);
+
+               //解析经纬度
+               final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
+               for (int k = 0; k < jsonArray2.length(); k++) {
+                   if(k==0){
+                       myGoods.setLongitude(jsonArray2.getDouble(k));
+                   }else{
+                       myGoods.setLatitude(jsonArray2.getDouble(k));
+                   }
+               }
+               //解析用户信息
+               if(!jsonObject1.isNull("seller")){
+                   JSONObject jsonObject2=new JSONObject(jsonObject1.getString("seller"));
+                   if(!jsonObject2.isNull("head")){
+                       myGoods.setHead(jsonObject2.getString("head"));
+                   }
+                   if(!jsonObject2.isNull("nickname")){
+                       myGoods.setNickname(jsonObject2.getString("nickname"));
+                   }
+                   if(!jsonObject2.isNull("storeId")){
+                       myGoods.setStoreId(jsonObject2.getString("storeId"));
+                   }
+                   if(!jsonObject2.isNull("creditLevel")){
+                       myGoods.setCreditLevel(jsonObject2.getInt("creditLevel"));
+                   }
+               }
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+       return myGoods;
+    }
 }

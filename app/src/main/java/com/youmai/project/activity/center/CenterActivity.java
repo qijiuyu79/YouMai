@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.activity.order.CommentListActivity;
 import com.youmai.project.activity.order.MOrderActivity;
 import com.youmai.project.activity.user.CertificationActivity;
@@ -23,6 +24,7 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
@@ -219,6 +221,19 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                           showMsg(httpBaseBean.getMsg());
                       }
                      break;
+                 //根据商品id查询详情
+                case HandlerConstant.GET_GOODS_DETAILS_SUCCESS:
+                     message= (String) msg.obj;
+                     if(TextUtils.isEmpty(message)){
+                        return;
+                     }
+                     GoodsBean goodsBean= JsonUtils.getGoodsBean(message);
+                     Intent intent=new Intent(mContext, GoodDetailsActivity.class);
+                     Bundle bundle=new Bundle();
+                     bundle.putSerializable("goodsBean",goodsBean);
+                     intent.putExtras(bundle);
+                     startActivity(intent);
+                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     break ;
@@ -314,6 +329,15 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                 }
             }, null);
             dialogView.show();
+        }
+
+        /**
+         * 根据商品id查询详情
+         * @param goodsId
+         */
+        public void getGoodsDetails(String goodsId) {
+            showProgress("数据查询中");
+            HttpMethod.getGoodsDetails(goodsId,mHandler);
         }
     };
 

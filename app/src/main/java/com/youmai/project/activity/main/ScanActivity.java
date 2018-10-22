@@ -39,6 +39,7 @@ import com.youmai.project.activity.webview.WebViewActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.scan.cameras.CameraManager;
 import com.youmai.project.utils.scan.decoding.InactivityTimer;
@@ -107,12 +108,12 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
         if (!TextUtils.isEmpty(resultString)) {
             resultString = resultString.replace(" ", "");
             if (resultString.indexOf("q.th2w") != -1) {
-                int position1=resultString.indexOf("{");
-                int position2=resultString.indexOf("}");
-                String goodsId=resultString.substring(++position1,position2);
-                showProgress("数据查询中");
-                HttpMethod.getGoodsDetails(goodsId,mHandler);
-
+                String[] strs=resultString.split("/");
+                if(strs!=null){
+                    String goodsId=strs[strs.length-1];
+                    showProgress("数据查询中");
+                    HttpMethod.getGoodsDetails(goodsId,mHandler);
+                }
             } else {
                 showMsg(getString(R.string.please_scan_right_qr_code));
             }
@@ -128,63 +129,17 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
             clearTask();
             switch (msg.what){
                 case HandlerConstant.GET_GOODS_DETAILS_SUCCESS:
-                    String message= (String) msg.obj;
-                    if(TextUtils.isEmpty(message)){
+                     String message= (String) msg.obj;
+                     if(TextUtils.isEmpty(message)){
                         return;
-                    }
-                    try {
-                        final JSONObject jsonObject=new JSONObject(message);
-                        if(jsonObject.getInt("code")==200){
-                            final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
-                            GoodsBean myGoods=new GoodsBean();
-                            myGoods.setAddress(jsonObject1.getString("address"));
-                            myGoods.setDescription(jsonObject1.getString("description"));
-                            myGoods.setId(jsonObject1.getString("id"));
-                            myGoods.setOriginalPrice(jsonObject1.getDouble("originalPrice"));
-                            myGoods.setPresentPrice(jsonObject1.getDouble("presentPrice"));
-                            //解析图片
-                            List<String> imgList=new ArrayList<>();
-                            JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
-                            for (int j = 0; j < jsonArray1.length(); j++) {
-                                imgList.add(jsonArray1.getString(j));
-                            }
-                            myGoods.setImgList(imgList);
-
-                            //解析经纬度
-                            final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
-                            for (int k = 0; k < jsonArray2.length(); k++) {
-                                if(k==0){
-                                    myGoods.setLongitude(jsonArray2.getDouble(k));
-                                }else{
-                                    myGoods.setLatitude(jsonArray2.getDouble(k));
-                                }
-                            }
-                            //解析用户信息
-                            if(!jsonObject1.isNull("seller")){
-                                JSONObject jsonObject2=new JSONObject(jsonObject1.getString("seller"));
-                                if(!jsonObject2.isNull("head")){
-                                    myGoods.setHead(jsonObject2.getString("head"));
-                                }
-                                if(!jsonObject2.isNull("nickname")){
-                                    myGoods.setNickname(jsonObject2.getString("nickname"));
-                                }
-                                if(!jsonObject2.isNull("storeId")){
-                                    myGoods.setStoreId(jsonObject2.getString("storeId"));
-                                }
-                                if(!jsonObject2.isNull("creditLevel")){
-                                    myGoods.setCreditLevel(jsonObject2.getInt("creditLevel"));
-                                }
-                            }
-                            Intent intent=new Intent(mContext, GoodDetailsActivity.class);
-                            Bundle bundle=new Bundle();
-                            bundle.putSerializable("goodsBean",myGoods);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                     }
+                     GoodsBean goodsBean= JsonUtils.getGoodsBean(message);
+                     Intent intent=new Intent(mContext, GoodDetailsActivity.class);
+                     Bundle bundle=new Bundle();
+                     bundle.putSerializable("goodsBean",goodsBean);
+                     intent.putExtras(bundle);
+                     startActivity(intent);
+                     finish();
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
