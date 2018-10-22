@@ -200,7 +200,9 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                         return;
                      }
                      if(httpBaseBean.isSussess()){
-                        showMsg("签到成功！");
+                         showMsg("签到成功！");
+                         //查询附近的店铺
+                         getStore();
                      }else{
                         showMsg(httpBaseBean.getMsg());
                      }
