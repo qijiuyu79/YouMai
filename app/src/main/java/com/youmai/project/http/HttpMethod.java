@@ -5,6 +5,7 @@ import android.os.Handler;
 import com.youmai.project.bean.DownLoad;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
+import com.youmai.project.bean.Report;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.bean.Version;
 import com.youmai.project.http.base.BaseRequst;
@@ -797,6 +798,59 @@ public class HttpMethod extends BaseRequst {
             }
 
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+
+    /**
+     * 获取举报类型
+     * @return
+     */
+    public static void getReportList(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi.class).getReportList(map).enqueue(new Callback<Report>() {
+            public void onResponse(Call<Report> call, Response<Report> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_REPORT_LIST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Report> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 举报商品
+     * @param targetObjType
+     * @param targetObjId
+     * @param typeId
+     * @param handler
+     */
+    public static void reportGoods(int targetObjType,String targetObjId,int typeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("targetObjType",targetObjType+"");
+        map.put("targetObjId",targetObjId);
+        map.put("typeId",typeId+"");
+        Http.getRetrofit().create(HttpApi.class).reportGoods(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.REPORT_GOODS_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
             }
         });

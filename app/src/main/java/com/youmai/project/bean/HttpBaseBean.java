@@ -1,10 +1,12 @@
 package com.youmai.project.bean;
 
+import java.io.Serializable;
+
 /**
  * 网络请求状态实体类
  */
 
-public class HttpBaseBean {
+public class HttpBaseBean implements Serializable{
     private int code;
     private String msg;
     public HttpBaseBean(){}

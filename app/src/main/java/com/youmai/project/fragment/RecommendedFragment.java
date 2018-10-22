@@ -28,6 +28,7 @@ import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.adapter.RecommendedAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.Report;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
@@ -92,6 +93,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            clearTask();
             String message;
             switch (msg.what){
                 case HandlerConstant.GET_LOCATION_GOODS_SUCCESS:
@@ -233,15 +235,6 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
 
 
     /**
-     * 查询商品列表
-     * @param index
-     */
-    private void getDataList(int index){
-        HttpMethod.getLocationGoods(MainActivity.keyList.get(MainActivity.index),page,index,mHandler);
-    }
-
-
-    /**
      * 注册广播
      */
     private void registerReceiver() {
@@ -254,29 +247,43 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            //购买成功或删除商品的广播
-            if(action.equals(BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS) || action.equals(CenterActivity.ACTION_GOODS_DELETE_SUCCESS)){
-                final Bundle bundle=intent.getExtras();
-                if(null==bundle){
-                    return;
-                }
-                final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-                if(null==goodsBean){
-                    return;
-                }
-                for(int i=0,len=listBeanAll.size();i<len;i++){
-                    if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
-                        listBeanAll.remove(i);
-                        break;
-                    }
-                }
-                if(null!=recommendedAdapter){
-                    recommendedAdapter.notifyDataSetChanged();
-                }
+            final String action = intent.getAction();
+            switch (action){
+                //购买成功或删除商品的广播
+                case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
+                case CenterActivity.ACTION_GOODS_DELETE_SUCCESS:
+                     final Bundle bundle=intent.getExtras();
+                     if(null==bundle){
+                        return;
+                     }
+                     final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+                     if(null==goodsBean){
+                        return;
+                     }
+                     for(int i=0,len=listBeanAll.size();i<len;i++){
+                        if(listBeanAll.get(i).getId().equals(goodsBean.getId())){
+                            listBeanAll.remove(i);
+                            break;
+                        }
+                     }
+                     if(null!=recommendedAdapter){
+                        recommendedAdapter.notifyDataSetChanged();
+                     }
+                     break;
+                 default:
+                     break;
             }
         }
     };
+
+
+    /**
+     * 查询商品列表
+     * @param index
+     */
+    private void getDataList(int index){
+        HttpMethod.getLocationGoods(MainActivity.keyList.get(MainActivity.index),page,index,mHandler);
+    }
 
 
     @Override

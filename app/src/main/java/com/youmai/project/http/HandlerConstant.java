@@ -46,4 +46,6 @@ public class HandlerConstant {
     public static final int WITHDRAWAL_SUCCESS=1147;
     public static final int GET_LOCATION_COUNT_SUCCESS=1148;
     public static final int GET_GOODS_DETAILS_SUCCESS=1149;
+    public static final int GET_REPORT_LIST_SUCCESS=1150;
+    public static final int REPORT_GOODS_SUCCESS=1151;
 }

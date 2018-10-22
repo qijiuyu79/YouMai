@@ -2,6 +2,7 @@ package com.youmai.project.http;
 
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
+import com.youmai.project.bean.Report;
 import com.youmai.project.bean.UserInfo;
 import com.youmai.project.bean.Version;
 
@@ -268,5 +269,25 @@ public interface HttpApi {
     @FormUrlEncoded
     @POST(HttpConstant.GET_GOODS_DETAILS)
     Call<ResponseBody> getGoodsDetails(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取举报类型
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_REPORT_LIST)
+    Call<Report> getReportList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 举报商品
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.REPORT_GOODS)
+    Call<HttpBaseBean> reportGoods(@FieldMap Map<String, String> map);
 
 }

@@ -65,7 +65,12 @@ public class HttpConstant {
 
     public static final String WITHDRAWAL="/user/transfer";
 
-    public static final String LOCATION_GOODS_COUNT="goods/count";
+    public static final String LOCATION_GOODS_COUNT="/goods/count";
 
     public static final String GET_GOODS_DETAILS="/goods/detail";
+
+    public static final String GET_REPORT_LIST="/accusation/type/list";
+
+    public static final String REPORT_GOODS="/user/accusation/add";
+
 }
