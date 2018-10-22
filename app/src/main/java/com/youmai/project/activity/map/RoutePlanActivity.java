@@ -73,4 +73,22 @@ public class RoutePlanActivity  extends BaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getRoutePlan.close();
+    }
 }

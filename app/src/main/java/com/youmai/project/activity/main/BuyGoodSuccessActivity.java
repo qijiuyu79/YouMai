@@ -172,4 +172,10 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
+
 }

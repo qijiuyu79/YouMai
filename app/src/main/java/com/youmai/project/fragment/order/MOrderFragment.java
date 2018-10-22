@@ -179,4 +179,9 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
         //查询订单列表
         getOrderList();
     }
+
+    public void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }

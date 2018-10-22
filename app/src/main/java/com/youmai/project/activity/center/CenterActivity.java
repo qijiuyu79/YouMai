@@ -413,5 +413,11 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         tvNickName.setText(MyApplication.userInfoBean.getNickname());
         setXing(MyApplication.userInfoBean.getCreditLevel());
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }
 

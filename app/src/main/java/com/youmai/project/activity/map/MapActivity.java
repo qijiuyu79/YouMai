@@ -395,4 +395,22 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         super.onStop();
         myOrientationListener.stop();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }

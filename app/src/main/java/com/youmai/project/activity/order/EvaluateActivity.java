@@ -274,4 +274,10 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
         }
         listFile.clear();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }

@@ -228,4 +228,10 @@ public class MainActivity extends BaseActivity{
             HttpMethod.getAccessToken(auth_token,mHandler);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }

@@ -439,5 +439,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     public void onDestroy() {
         super.onDestroy();
         mActivity.unregisterReceiver(mBroadcastReceiver);
+        removeHandler(mHandler);
     }
 }

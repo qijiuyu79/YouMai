@@ -197,4 +197,10 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
     private void getData(int index){
         HttpMethod.getCommentList(storeId,page,index,mHandler);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }

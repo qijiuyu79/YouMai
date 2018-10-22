@@ -135,5 +135,6 @@ public class WithdrawalActivity extends BaseActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mBroadCastReceiver);
+        removeHandler(mHandler);
     }
 }

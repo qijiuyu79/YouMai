@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.View;
@@ -93,6 +94,16 @@ public class BaseFragment extends Fragment {
         }
     }
 
+
+    /**
+     * 删除handler中的消息
+     * @param mHandler
+     */
+    public void removeHandler(Handler mHandler){
+        if(null!=mHandler){
+            mHandler.removeCallbacksAndMessages(null);
+        }
+    }
 
     @Override
     public void onResume() {

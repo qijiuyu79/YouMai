@@ -167,14 +167,24 @@
                 android:layout_below="@id/view_agd2"/>
 
             <TextView
+                android:id="@+id/tv_agd_oldMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_agd_content"
+                android:layout_marginLeft="11dp"
+                android:textSize="14sp"
+                android:textColor="@color/color_999999"/>
+
+            <TextView
                 android:id="@+id/tv_agd_presentPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/color_E51C23"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="11dp"
-                android:layout_below="@id/tv_agd_content"/>
+                android:layout_below="@id/tv_agd_oldMoney"/>
 
             <ImageView
                 android:layout_width="14dp"

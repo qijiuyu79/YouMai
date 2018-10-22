@@ -273,5 +273,6 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mBroadcastReceiver);
+        removeHandler(mHandler);
     }
 }

@@ -309,5 +309,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mBroadcastReceiver);
+        removeHandler(mHandler);
     }
 }

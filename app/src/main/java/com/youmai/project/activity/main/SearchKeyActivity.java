@@ -474,6 +474,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
         // 退出时释放连接
         mIat.cancel();
         mIat.destroy();
+        removeHandler(mHandler);
         unregisterReceiver(mBroadcastReceiver);
     }
 }

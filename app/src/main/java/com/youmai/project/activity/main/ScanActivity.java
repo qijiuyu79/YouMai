@@ -357,6 +357,7 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
         clearTask();
         // 停止相机扫描刷新timer
         inactivityTimer.shutdown();
+        removeHandler(mHandler);
         super.onDestroy();
     }
 }

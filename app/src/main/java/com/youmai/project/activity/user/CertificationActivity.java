@@ -110,4 +110,10 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }

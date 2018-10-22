@@ -273,6 +273,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         unregisterReceiver(mBroadcastReceiver);
+        removeHandler(mHandler);
         super.onDestroy();
     }
 }

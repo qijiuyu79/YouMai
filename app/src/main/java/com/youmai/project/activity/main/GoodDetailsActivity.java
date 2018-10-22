@@ -1,6 +1,7 @@
 package com.youmai.project.activity.main;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.map.RoutePlanActivity;
 import com.youmai.project.activity.map.SellerGoodsActivity;
 import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.activity.user.LoginActivity;
@@ -72,6 +74,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         ImageView imageView=(ImageView)findViewById(R.id.img_agd_img);
         TextView tvCount=(TextView)findViewById(R.id.tv_agd_count);
         TextView tvContent=(TextView)findViewById(R.id.tv_agd_content);
+        TextView tvOldMoney=(TextView)findViewById(R.id.tv_agd_oldMoney);
         TextView tvPresentPrice=(TextView)findViewById(R.id.tv_agd_presentPrice);
         TextView tvAddress=(TextView)findViewById(R.id.tv_agd_address);
         imgX1=(ImageView)findViewById(R.id.img_au_x1);
@@ -86,11 +89,14 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         }
         tvCount.setText("1/"+goodsBean.getImgList().size());
         tvContent.setText(goodsBean.getDescription());
+        tvOldMoney.setText("原价："+Util.setDouble(goodsBean.getOriginalPrice()/100));
+        tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         tvPresentPrice.setText("现价："+ Util.setDouble(goodsBean.getPresentPrice()/100));
         tvAddress.setText(goodsBean.getAddress());
         //设置星级
         setXing(goodsBean.getCreditLevel());
         imageView.setOnClickListener(this);
+        tvAddress.setOnClickListener(this);
         findViewById(R.id.tv_agd_buy).setOnClickListener(this);
         findViewById(R.id.lin_search).setOnClickListener(this);
         findViewById(R.id.lin_agd_share).setOnClickListener(this);
@@ -183,6 +189,13 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
                  intent.putExtras(bundle);
                  startActivity(intent);
                  break;
+            //路径规划
+            case R.id.tv_agd_address:
+                 intent.setClass(mContext, RoutePlanActivity.class);
+                 intent.putExtra("latitude",goodsBean.getLatitude());
+                 intent.putExtra("longtitude",goodsBean.getLongitude());
+                 startActivity(intent);
+                 break;
             case R.id.lin_back:
                  finish();
                  break;
@@ -200,5 +213,11 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         HttpMethod.getGoodsByStoreId(1,goodsBean.getStoreId(),HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS,mHandler);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
     }
 }

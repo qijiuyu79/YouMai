@@ -298,6 +298,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
     public void onDestroy() {
         super.onDestroy();
         mActivity.unregisterReceiver(mBroadcastReceiver);
+        removeHandler(mHandler);
     }
 
 }

@@ -297,4 +297,11 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         }
         listFile.clear();
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeHandler(mHandler);
+    }
 }
