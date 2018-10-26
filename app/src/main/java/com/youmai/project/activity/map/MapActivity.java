@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ZoomControls;
@@ -30,6 +31,7 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.adapter.MapGoodsListAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
@@ -145,7 +147,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                 //根据店铺id查询商品信息
                 case HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS:
                      clearTask();
-                     List<GoodsBean> list= JsonUtils.getGoods(msg.obj.toString());
+                     final List<GoodsBean> list= JsonUtils.getGoods(msg.obj.toString());
                      if(list.size()>0){
                          View view= LayoutInflater.from(mContext).inflate(R.layout.map_bottom_goods,null);
                          bottomPopupWindow(0,0,view);
@@ -167,6 +169,17 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                          MyGridView myGridView=(MyGridView)view.findViewById(R.id.mg_am_goods);
                          MapGoodsListAdapter mapGoodsListAdapter=new MapGoodsListAdapter(mContext,list);
                          myGridView.setAdapter(mapGoodsListAdapter);
+                         //进入商品详情页
+                         myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                 GoodsBean goodsBean=list.get(position);
+                                 Intent intent=new Intent(mContext, GoodDetailsActivity.class);
+                                 Bundle bundle=new Bundle();
+                                 bundle.putSerializable("goodsBean",goodsBean);
+                                 intent.putExtras(bundle);
+                                 startActivity(intent);
+                             }
+                         });
 
                          //查看更多商品
                          view.findViewById(R.id.lin_search).setOnClickListener(new View.OnClickListener() {
