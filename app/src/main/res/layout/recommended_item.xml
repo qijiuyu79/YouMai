@@ -96,9 +96,10 @@
 
     <ImageView android:id="@+id/img_ri_icon"
         android:layout_width="346dp"
-        android:layout_height="281.5dp"
+        android:layout_height="300dp"
         android:layout_below="@id/tv_ri_content"
         android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"/>
 
     <com.youmai.project.view.ShimmerTextView

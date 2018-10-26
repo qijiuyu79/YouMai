@@ -131,8 +131,9 @@
 
             <ImageView
                 android:id="@+id/img_agd_img"
-                android:layout_width="375dp"
-                android:layout_height="283dp"
+                android:layout_width="340dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
                 android:layout_below="@id/view_agd"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"/>
@@ -144,9 +145,9 @@
                 android:textColor="@android:color/white"
                 android:gravity="center"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="13dp"
+                android:layout_marginRight="23dp"
                 android:layout_below="@id/view_agd"
-                android:layout_marginTop="250dp"
+                android:layout_marginTop="270dp"
                 android:background="@drawable/bg_img_count"/>
 
             <View

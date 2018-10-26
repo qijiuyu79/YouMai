@@ -40,7 +40,7 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.gray_bg);
+        tintManager.setStatusBarTintResource(android.R.color.white);
         initView();
         showImg();
     }
