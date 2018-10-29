@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.CommentAdapter;
-import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.Comment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
@@ -22,7 +21,6 @@ import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.view.RefreshLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +51,6 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
         initView();
-        getIntentData();
     }
 
 
@@ -67,6 +64,14 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
         imgX3=(ImageView)findViewById(R.id.img_au_x3);
         imgX4=(ImageView)findViewById(R.id.img_au_x4);
         imgX5=(ImageView)findViewById(R.id.img_au_x5);
+        //获取商品基本信息
+        final String nickName=getIntent().getStringExtra("nickName");
+        storeId=getIntent().getStringExtra("storeId");
+        final int creditLevel=getIntent().getIntExtra("creditLevel",0);
+        tvNickName.setText(nickName);
+        //设置星级
+        setXing(creditLevel);
+
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -95,19 +100,6 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
                 CommentListActivity.this.finish();
             }
         });
-    }
-
-
-    /**
-     * 获取商品基本信息
-     */
-    private void getIntentData(){
-        final String nickName=getIntent().getStringExtra("nickName");
-        storeId=getIntent().getStringExtra("storeId");
-        final int creditLevel=getIntent().getIntExtra("creditLevel",0);
-        tvNickName.setText(nickName);
-        //设置星级
-        setXing(creditLevel);
     }
 
 
@@ -206,7 +198,7 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
      * 查询评论列表数据
      */
     private void getData(int index){
-        HttpMethod.getCommentList(MyApplication.userInfoBean.getStoreId(),page,index,mHandler);
+        HttpMethod.getCommentList(storeId,page,index,mHandler);
     }
 
     @Override

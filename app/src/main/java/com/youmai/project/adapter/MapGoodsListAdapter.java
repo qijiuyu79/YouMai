@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 
 import java.util.List;
