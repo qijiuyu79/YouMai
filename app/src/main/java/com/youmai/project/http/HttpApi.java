@@ -290,4 +290,15 @@ public interface HttpApi {
     @POST(HttpConstant.REPORT_GOODS)
     Call<HttpBaseBean> reportGoods(@FieldMap Map<String, String> map);
 
+
+
+    /**
+     * 根据storeId查询商铺信息
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_STORE_INFO)
+    Call<ResponseBody> getStoreInfo(@FieldMap Map<String, String> map);
+
 }

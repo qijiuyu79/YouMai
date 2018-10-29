@@ -103,12 +103,10 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()){
             //评价
             case R.id.tv_ac_evaluation:
-                 if(listAll.size()==0){
-                     showMsg("请先添加宝贝！");
-                     return;
-                 }
                  intent.setClass(mContext,CommentListActivity.class);
-                 intent.putExtra("storeId",listAll.get(0).getStoreId());
+                 intent.putExtra("nickName",MyApplication.userInfoBean.getNickname());
+                 intent.putExtra("storeId",MyApplication.userInfoBean.getStoreId());
+                 intent.putExtra("creditLevel",MyApplication.userInfoBean.getCreditLevel());
                  startActivity(intent);
                  break;
             //添加宝贝

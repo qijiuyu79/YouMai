@@ -27,6 +27,7 @@ public class UserInfo extends HttpBaseBean {
         private double balance;
         private boolean real;
         private int creditLevel;
+        private String storeId;
 
         public String getHead() {
             return head;
@@ -90,6 +91,14 @@ public class UserInfo extends HttpBaseBean {
 
         public void setCreditLevel(int creditLevel) {
             this.creditLevel = creditLevel;
+        }
+
+        public String getStoreId() {
+            return storeId;
+        }
+
+        public void setStoreId(String storeId) {
+            this.storeId = storeId;
         }
     }
 }

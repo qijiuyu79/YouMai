@@ -856,4 +856,29 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 根据storeId查询商铺信息
+     * @param storeId
+     * @param handler
+     */
+    public static void getStoreInfo(String storeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("storeId",storeId);
+        Http.getRetrofit().create(HttpApi.class).getStoreInfo(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_STORE_INFO_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

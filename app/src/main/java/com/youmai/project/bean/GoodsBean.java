@@ -27,6 +27,7 @@ public class GoodsBean implements Serializable {
     private String storeId;
     private String mobile;
     private int creditLevel;
+    private int commentCount;
 
     public String getAddress() {
         return address;
@@ -154,5 +155,13 @@ public class GoodsBean implements Serializable {
 
     public void setCreditLevel(int creditLevel) {
         this.creditLevel = creditLevel;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 }

@@ -31,15 +31,16 @@ import java.util.List;
  */
 public class CommentListActivity extends BaseActivity   implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
+    private TextView tvNickName;
     private RefreshLayout swipeLayout;
     private ListView listView;
     private CommentAdapter commentAdapter;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private int page=1;
     private boolean isTotal=false;
-    //店铺id
-    private String storeId;
     private List<Comment> listAll=new ArrayList<>();
+    //商铺id
+    private String storeId;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -52,6 +53,7 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
         initView();
+        getIntentData();
     }
 
 
@@ -59,16 +61,12 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
      * 初始化
      */
     private void initView(){
-        storeId=getIntent().getStringExtra("storeId");
-        TextView tvNickName=(TextView)findViewById(R.id.tv_ac_name);
-        tvNickName.setText(MyApplication.userInfoBean.getNickname());
+        tvNickName=(TextView)findViewById(R.id.tv_ac_name);
         imgX1=(ImageView)findViewById(R.id.img_au_x1);
         imgX2=(ImageView)findViewById(R.id.img_au_x2);
         imgX3=(ImageView)findViewById(R.id.img_au_x3);
         imgX4=(ImageView)findViewById(R.id.img_au_x4);
         imgX5=(ImageView)findViewById(R.id.img_au_x5);
-        //设置星级
-        setXing(MyApplication.userInfoBean.getCreditLevel());
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -97,6 +95,19 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
                 CommentListActivity.this.finish();
             }
         });
+    }
+
+
+    /**
+     * 获取商品基本信息
+     */
+    private void getIntentData(){
+        final String nickName=getIntent().getStringExtra("nickName");
+        storeId=getIntent().getStringExtra("storeId");
+        final int creditLevel=getIntent().getIntExtra("creditLevel",0);
+        tvNickName.setText(nickName);
+        //设置星级
+        setXing(creditLevel);
     }
 
 
@@ -195,7 +206,7 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
      * 查询评论列表数据
      */
     private void getData(int index){
-        HttpMethod.getCommentList(storeId,page,index,mHandler);
+        HttpMethod.getCommentList(MyApplication.userInfoBean.getStoreId(),page,index,mHandler);
     }
 
     @Override

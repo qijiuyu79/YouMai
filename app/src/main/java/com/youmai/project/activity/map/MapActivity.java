@@ -145,9 +145,9 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                      setMark(msg.obj.toString());
                      break;
                 //根据店铺id查询商品信息
-                case HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS:
+                case HandlerConstant.GET_STORE_INFO_SUCCESS:
                      clearTask();
-                     final List<GoodsBean> list= JsonUtils.getGoods(msg.obj.toString());
+                     final List<GoodsBean> list= JsonUtils.getMapGoods(msg.obj.toString());
                      if(list.size()>0){
                          View view= LayoutInflater.from(mContext).inflate(R.layout.map_bottom_goods,null);
                          bottomPopupWindow(0,0,view);
@@ -187,10 +187,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                                  Intent intent=new Intent();
                                  Bundle bundle=new Bundle();
                                  intent.setClass(mContext, SellerGoodsActivity.class);
-                                 GoodsBean goodsBean=new GoodsBean();
-                                 goodsBean.setStoreId(store.getId());
-                                 goodsBean.setNickname(store.getNickname());
-                                 bundle.putSerializable("goodsBean",goodsBean);
+                                 bundle.putSerializable("goodsBean",list.get(0));
                                  intent.putExtras(bundle);
                                  startActivity(intent);
 
@@ -255,7 +252,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                 return false;
             }
             showProgress("商品查询中...");
-            HttpMethod.getGoodsByStoreId(1,store.getId(),HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS,mHandler);
+            HttpMethod.getStoreInfo(store.getId(),mHandler);
         }
         return true;
     }

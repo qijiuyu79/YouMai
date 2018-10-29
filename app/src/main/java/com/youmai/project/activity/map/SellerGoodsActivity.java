@@ -21,7 +21,9 @@ import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
+import com.youmai.project.activity.order.CommentListActivity;
 import com.youmai.project.adapter.SellerGoodsAdapter;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
@@ -81,6 +83,8 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             tvNickName.setText(goodsBean.getNickname());
             //设置星级
             setXing(goodsBean.getCreditLevel());
+            TextView tvComment=(TextView)findViewById(R.id.tv_ac_evaluation);
+            tvComment.setText(goodsBean.getCommentCount()+"人评价");
             swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
             listView=(ListView)findViewById(R.id.list);
             listView.setDividerHeight(0);
@@ -101,9 +105,19 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
                     getGoodsList(HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS);
                 }
             }, 0);
+
+            //进入评价列表
+            tvComment.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent=new Intent(mContext,CommentListActivity.class);
+                    intent.putExtra("nickName",goodsBean.getNickname());
+                    intent.putExtra("storeId",goodsBean.getStoreId());
+                    intent.putExtra("creditLevel",goodsBean.getCreditLevel());
+                    startActivity(intent);
+                }
+            });
         }
 
-        //返回
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

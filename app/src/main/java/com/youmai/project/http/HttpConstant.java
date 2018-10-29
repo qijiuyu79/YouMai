@@ -73,4 +73,6 @@ public class HttpConstant {
 
     public static final String REPORT_GOODS="/user/accusation/add";
 
+    public static final String GET_STORE_INFO="/store/info";
+
 }
