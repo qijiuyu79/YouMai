@@ -1,5 +1,6 @@
 package com.youmai.project.activity.center;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +30,9 @@ import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +41,7 @@ import java.util.List;
  */
 public class CenterActivity extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
-    private TextView tvNickName;
+    private TextView tvNickName,tvCommentNum;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private RefreshLayout swipeLayout;
     private ListView listView;
@@ -62,6 +66,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
      */
     private void initView(){
         tvNickName=(TextView)findViewById(R.id.tv_ac_name);
+        tvCommentNum=(TextView)findViewById(R.id.tv_ac_evaluation);
         imgX1=(ImageView)findViewById(R.id.img_au_x1);
         imgX2=(ImageView)findViewById(R.id.img_au_x2);
         imgX3=(ImageView)findViewById(R.id.img_au_x3);
@@ -161,6 +166,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -230,6 +236,23 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                      bundle.putSerializable("goodsBean",goodsBean);
                      intent.putExtras(bundle);
                      startActivity(intent);
+                     break;
+                //根据storeId查询评论人数
+                case HandlerConstant.GET_STORE_INFO_SUCCESS:
+                     message= (String) msg.obj;
+                     if(TextUtils.isEmpty(message)){
+                         return;
+                     }
+                     try {
+                         final JSONObject jsonObject=new JSONObject(message);
+                         if(jsonObject.getInt("code")==200){
+                             final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
+                             final int commentNum=jsonObject2.getInt("commentCount");
+                             tvCommentNum.setText(commentNum+"人评价");
+                         }
+                     }catch (Exception e){
+                         e.printStackTrace();
+                     }
                      break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
@@ -383,11 +406,21 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+
+    /**
+     * 查询评论人数
+     */
+    private void getCommentNum(){
+        HttpMethod.getStoreInfo(MyApplication.userInfoBean.getStoreId(),mHandler);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         tvNickName.setText(MyApplication.userInfoBean.getNickname());
         setXing(MyApplication.userInfoBean.getCreditLevel());
+        //查询评论人数
+        getCommentNum();
     }
 
     @Override

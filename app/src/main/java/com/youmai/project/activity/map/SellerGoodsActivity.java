@@ -23,15 +23,14 @@ import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.main.GoodDetailsActivity;
 import com.youmai.project.activity.order.CommentListActivity;
 import com.youmai.project.adapter.SellerGoodsAdapter;
-import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.view.RefreshLayout;
+import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +39,7 @@ import java.util.List;
  */
 public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
+    private TextView tvComment;
     private RefreshLayout swipeLayout;
     private ListView listView;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
@@ -63,6 +63,8 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         initView();
         //注册广播
         registerReceiver();
+        //查询评论人数
+        getCommentNum();
     }
 
 
@@ -84,8 +86,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             tvNickName.setText(goodsBean.getNickname());
             //设置星级
             setXing(goodsBean.getCreditLevel());
-            TextView tvComment=(TextView)findViewById(R.id.tv_ac_evaluation);
-            tvComment.setText(goodsBean.getCommentCount()+"人评价");
+            tvComment=(TextView)findViewById(R.id.tv_ac_evaluation);
             swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
             listView=(ListView)findViewById(R.id.list);
             listView.setDividerHeight(0);
@@ -163,6 +164,23 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
                     message= (String) msg.obj;
                     refresh(message);
                     swipeLayout.setLoading(false);
+                    break;
+                //根据storeId查询评论人数
+                case HandlerConstant.GET_STORE_INFO_SUCCESS:
+                    message= (String) msg.obj;
+                    if(TextUtils.isEmpty(message)){
+                        return;
+                    }
+                    try {
+                        final JSONObject jsonObject=new JSONObject(message);
+                        if(jsonObject.getInt("code")==200){
+                            final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
+                            final int commentNum=jsonObject2.getInt("commentCount");
+                            tvComment.setText(commentNum+"人评价");
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
@@ -283,6 +301,13 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             }
         }
     };
+
+    /**
+     * 查询评论人数
+     */
+    private void getCommentNum(){
+        HttpMethod.getStoreInfo(goodsBean.getStoreId(),mHandler);
+    }
 
     @Override
     public void onDestroy() {
