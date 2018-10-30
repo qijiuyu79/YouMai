@@ -149,13 +149,13 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                  final String oldMoney=etOldMoney.getText().toString().trim();
                  final String newMoney=etNewMoney.getText().toString().trim();
                  if(TextUtils.isEmpty(content)){
-                     showMsg("请输入商品详情！");
+                     showMsg("请输入宝贝详情！");
                  }else if(TextUtils.isEmpty(oldMoney)){
-                     showMsg("请输入商品原价！");
+                     showMsg("请输入宝贝原价！");
                  }else if(TextUtils.isEmpty(newMoney)){
-                     showMsg("请输入商品现价！");
+                     showMsg("请输入宝贝现价！");
                  }else if(Bimp.selectBitmap.size()==0){
-                     showMsg("请选择商品图片！");
+                     showMsg("请选择宝贝图片！");
                  }else{
                      showProgress("图片压缩中...");
                      mHandler.postDelayed(new Runnable() {
@@ -270,6 +270,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                              finish();
 
                          }else{
+                             showMsg(jsonObject.getString(""));
                          }
                      }catch (Exception e){
                          e.printStackTrace();

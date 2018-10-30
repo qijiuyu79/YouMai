@@ -70,12 +70,14 @@ public class JsonUtils {
                }
 
                //解析经纬度
-               final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
-               for (int k = 0; k < jsonArray2.length(); k++) {
-                   if(k==0){
-                       goodsBean.setLongitude(jsonArray2.getDouble(k));
-                   }else{
-                       goodsBean.setLatitude(jsonArray2.getDouble(k));
+               if(!jsonObject1.isNull("location")){
+                   final JSONArray jsonArray2=new JSONArray(jsonObject1.getString("location"));
+                   for (int k = 0; k < jsonArray2.length(); k++) {
+                       if(k==0){
+                           goodsBean.setLongitude(jsonArray2.getDouble(k));
+                       }else{
+                           goodsBean.setLatitude(jsonArray2.getDouble(k));
+                       }
                    }
                }
 
@@ -154,6 +156,9 @@ public class JsonUtils {
                     }
                 }
 
+                if(jsonObject1.isNull("goods")){
+                    continue ;
+                }
                 JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
                 myGoods.setOrderId(jsonObject1.getString("id"));
                 myGoods.setStated(jsonObject1.getInt("stated"));
@@ -162,9 +167,9 @@ public class JsonUtils {
                 myGoods.setId(jsonObject2.getString("id"));
                 myGoods.setOriginalPrice(jsonObject2.getDouble("originalPrice"));
                 myGoods.setPresentPrice(jsonObject2.getDouble("presentPrice"));
-                List<String> imgList=new ArrayList<>();
 
                 //解析图片
+                List<String> imgList=new ArrayList<>();
                 if(!jsonObject2.isNull("images")){
                     final JSONArray jsonArray1=new JSONArray(jsonObject2.getString("images"));
                     for (int j = 0; j < jsonArray1.length(); j++) {

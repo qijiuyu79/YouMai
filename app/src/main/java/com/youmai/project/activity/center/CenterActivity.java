@@ -42,7 +42,7 @@ import java.util.List;
 public class CenterActivity extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
     private TextView tvNickName,tvCommentNum;
-    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
+    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgRed;
     private RefreshLayout swipeLayout;
     private ListView listView;
     private MyGoodsAdapter myGoodsAdapter;
@@ -72,6 +72,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         imgX3=(ImageView)findViewById(R.id.img_au_x3);
         imgX4=(ImageView)findViewById(R.id.img_au_x4);
         imgX5=(ImageView)findViewById(R.id.img_au_x5);
+        imgRed=(ImageView)findViewById(R.id.img_red_round);
         swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
         listView=(ListView)findViewById(R.id.list);
         listView.setDividerHeight(0);
@@ -254,6 +255,16 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                          e.printStackTrace();
                      }
                      break;
+                 //查询是否有待交易的订单
+                case HandlerConstant.GET_M_ORDER_SUCCESS:
+                     message= (String) msg.obj;
+                     List<GoodsBean> list= JsonUtils.getGoods2(message);
+                     if(list.size()>0){
+                         imgRed.setVisibility(View.VISIBLE);
+                     }else{
+                         imgRed.setVisibility(View.GONE);
+                     }
+                    break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     break ;
@@ -414,6 +425,14 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         HttpMethod.getStoreInfo(MyApplication.userInfoBean.getStoreId(),mHandler);
     }
 
+
+    /**
+     * 查询是否有待交易的订单
+     */
+    private void isTrade(){
+        HttpMethod.getMOrderList("1",1,HandlerConstant.GET_M_ORDER_SUCCESS,mHandler);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -421,6 +440,8 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
         setXing(MyApplication.userInfoBean.getCreditLevel());
         //查询评论人数
         getCommentNum();
+        //查询是否有待交易的订单
+        isTrade();
     }
 
     @Override

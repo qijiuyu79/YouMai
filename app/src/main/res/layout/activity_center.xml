@@ -159,11 +159,26 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:src="@mipmap/dai_jiaoyi"
-                android:layout_gravity="center"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:src="@mipmap/dai_jiaoyi"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/img_red_round"
+                    android:visibility="gone"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/red_round"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
