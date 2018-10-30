@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
+import com.youmai.project.activity.map.RoutePlanActivity;
 import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.callback.DeleteBabyCallBack;
 import com.youmai.project.bean.GoodsBean;
@@ -95,6 +96,23 @@ public class MyGoodsAdapter extends BaseAdapter{
 						Bundle bundle=new Bundle();
 						bundle.putSerializable("goodsBean",goodsBean);
 						intent.putExtras(bundle);
+						context.startActivity(intent);
+					}
+				}
+			});
+
+			//路径规划
+			holder.tvAddress.setTag(goodsBean);
+			holder.tvAddress.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					GoodsBean goodsBean= (GoodsBean) v.getTag();
+					if(goodsBean!=null){
+						Intent intent=new Intent(context, RoutePlanActivity.class);
+						intent.putExtra("latitude",goodsBean.getLatitude());
+						intent.putExtra("longtitude",goodsBean.getLongitude());
 						context.startActivity(intent);
 					}
 				}

@@ -20,6 +20,7 @@ import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.media.WeiXinShareContent;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.map.RoutePlanActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.BitMapUtils;
@@ -68,6 +69,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
         tvLocation.setText(MyApplication.spUtil.getString(SPUtil.LOCATION_ADDRESS));
         tvWei.setOnClickListener(this);
         tvPeng.setOnClickListener(this);
+        tvLocation.setOnClickListener(this);
     }
 
     /**
@@ -90,6 +92,12 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
                 share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
                 share();
                 break;
+            case R.id.tv_as_location:
+                 Intent intent=new Intent(mContext, RoutePlanActivity.class);
+                 intent.putExtra("latitude",goodsBean.getLatitude());
+                 intent.putExtra("longtitude",goodsBean.getLongitude());
+                 startActivity(intent);
+                 break;
             default:
                 break;
         }

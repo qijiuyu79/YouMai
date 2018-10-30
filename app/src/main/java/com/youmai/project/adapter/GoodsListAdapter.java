@@ -26,14 +26,7 @@ public class GoodsListAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-		if(null==list){
-			return 0;
-		}
-		if(list.size()>4){
-			return 4;
-		}else{
-			return list.size();
-		}
+		return list==null ? 0 : list.size();
 	}
 
 	@Override
