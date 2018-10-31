@@ -168,7 +168,7 @@
             <com.youmai.project.view.ClickLinearLayout
                 android:id="@+id/lin_oi_phone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="26dp"
                 android:orientation="horizontal"
                 android:layout_alignParentRight="true"
                 android:paddingRight="7dp"

@@ -1,5 +1,9 @@
 package com.youmai.project.fragment.order;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,10 +17,13 @@ import com.youmai.project.R;
 import com.youmai.project.activity.order.MOrderActivity;
 import com.youmai.project.adapter.MOrderAdapter;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.HttpBaseBean;
+import com.youmai.project.callback.TradingPlay;
 import com.youmai.project.fragment.BaseFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
+import com.youmai.project.view.DialogView;
 import com.youmai.project.view.RefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +39,21 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
     private ListView listView;
     private MOrderAdapter mOrderAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
+    private List<GoodsBean> listComplete=new ArrayList<>();
+    private List<GoodsBean> listCancle=new ArrayList<>();
+    private List<GoodsBean> listWait=new ArrayList<>();
     private List<String> keyList=new ArrayList<>();
     private boolean isTotal=false;
     //fragment是否可见
     private boolean isVisibleToUser=false;
     //页码
     private int page=1;
+    //此刻是第几个fragment
+    private int fragmentIndex;
+    private GoodsBean goodsBean;
+    private DialogView dialogView;
+    //交易取消广播
+    private final static String ACTION_MYGOODS_CANCEL_SUCCESS = "net.youmai.adminapp.action.mygoods.cancel.success";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(keyList.size()==0){
@@ -46,6 +62,8 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
             keyList.add("2");
             keyList.add("4");
         }
+        //注册广播
+        registerReceiver();
     }
 
     View view;
@@ -82,7 +100,7 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
             switch (msg.what){
                 case HandlerConstant.GET_M_ORDER_SUCCESS:
                     message= (String) msg.obj;
-                    listBeanAll.clear();
+                    setDataByIndex(1);
                     refresh(message);
                     swipeLayout.setRefreshing(false);
                     break;
@@ -90,6 +108,21 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
                     message= (String) msg.obj;
                     refresh(message);
                     swipeLayout.setLoading(false);
+                    break;
+                //交易取消
+                case HandlerConstant.SET_ORDER_CANCLE_SUCCESS:
+                    HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                    if(null==httpBaseBean){
+                        return;
+                    }
+                    if(!httpBaseBean.isSussess()){
+                        showMsg(httpBaseBean.getMsg());
+                        return;
+
+                    }
+                    Intent intent=new Intent(ACTION_MYGOODS_CANCEL_SUCCESS);
+                    intent.putExtra("goodsBean",goodsBean);
+                    mActivity.sendBroadcast(intent);
                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
@@ -107,18 +140,131 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
     List<GoodsBean> list;
     private void refresh(String message){
         list= JsonUtils.getGoods2(message);
-        listBeanAll.addAll(list);
+        setDataByIndex(0);
         if(null==mOrderAdapter){
-            mOrderAdapter=new MOrderAdapter(mActivity,listBeanAll);
+            setDataByIndex(2);
             listView.setAdapter(mOrderAdapter);
         }else{
             mOrderAdapter.notifyDataSetChanged();
         }
+        mOrderAdapter.setCallBack(tradingPlay);
         if(list.size()<20){
             isTotal=true;
             swipeLayout.setFooter(isTotal);
         }
     }
+
+
+    private void setDataByIndex(int type){
+        switch (fragmentIndex){
+            case 0:
+                if(type==0){
+                    listBeanAll.addAll(list);
+                }else if(type==1){
+                    listBeanAll.clear();
+                }else if(type==2){
+                    mOrderAdapter=new MOrderAdapter(mActivity,listBeanAll);
+                }
+                break;
+            case 1:
+                if(type==0){
+                    listWait.addAll(list);
+                }else if(type==1){
+                    listWait.clear();
+                }else if(type==2){
+                    mOrderAdapter=new MOrderAdapter(mActivity,listWait);
+                }
+                break;
+            case 2:
+                if(type==0){
+                    listComplete.addAll(list);
+                }else if(type==1){
+                    listComplete.clear();
+                }else if(type==2){
+                    mOrderAdapter=new MOrderAdapter(mActivity,listComplete);
+                }
+                break;
+            case 3:
+                if(type==0){
+                    listCancle.addAll(list);
+                }else if(type==1){
+                    listCancle.clear();
+                }else if(type==2){
+                    mOrderAdapter=new MOrderAdapter(mActivity,listCancle);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private TradingPlay tradingPlay=new TradingPlay() {
+        public void complete(final GoodsBean goodsBean) {
+
+        }
+        /**
+         * 交易取消
+         * @param goodsBean
+         */
+        public void cancle(final GoodsBean goodsBean) {
+            if(null==goodsBean){
+                return;
+            }
+            MOrderFragment.this.goodsBean=goodsBean;
+            dialogView = new DialogView(dialogView, mActivity, "确定取消交易吗？",
+                    "确定", "取消", new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialogView.dismiss();
+                    showProgress("设置中...");
+                    HttpMethod.setOrderCancle(goodsBean.getOrderId(),mHandler);
+                }
+            }, null);
+            dialogView.show();
+        }
+    };
+
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(ACTION_MYGOODS_CANCEL_SUCCESS);
+        // 注册广播监听
+        mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            goodsBean= (GoodsBean) intent.getSerializableExtra("goodsBean");
+            if(null==goodsBean){
+                return;
+            }
+            final String action = intent.getAction();
+            switch (action){
+                //交易取消
+                case ACTION_MYGOODS_CANCEL_SUCCESS:
+                     if(listCancle.size()>0){
+                        goodsBean.setStated(4);
+                        listCancle.add(0,goodsBean);
+                     }
+
+                     for(int i=0;i<listBeanAll.size();i++){
+                        if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
+                            listBeanAll.get(i).setStated(4);
+                            break;
+                        }
+                     }
+                     if(null!=mOrderAdapter){
+                         mOrderAdapter.notifyDataSetChanged();
+                     }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 
     /**
@@ -158,9 +304,22 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
      * 查询订单列表
      */
     private void getOrderList(){
-        if(isVisibleToUser && view!=null && listBeanAll.size()==0){
+        if(isVisibleToUser && view!=null){
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
+                    fragmentIndex= MOrderActivity.index;
+                    if(fragmentIndex==0 && listBeanAll.size()>0){
+                        return;
+
+                    }else if(fragmentIndex==1 && listWait.size()>0){
+                        return;
+
+                    }else if(fragmentIndex==2 && listComplete.size()>0){
+                        return;
+
+                    }else if(fragmentIndex==3 && listCancle.size()>0){
+                        return;
+                    }
                     listView.addHeaderView(new View(mActivity));
                     getData(HandlerConstant.GET_M_ORDER_SUCCESS);
                 }
@@ -182,6 +341,7 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     public void onDestroy() {
         super.onDestroy();
+        mActivity.unregisterReceiver(mBroadcastReceiver);
         removeHandler(mHandler);
     }
 }

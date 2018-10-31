@@ -18,10 +18,4 @@ public interface TradingPlay {
      * @param goodsBean
      */
     public void cancle(GoodsBean goodsBean);
-
-    /**
-     * 联系卖家
-     * @param phone
-     */
-    public void playPhon(String phone);
 }

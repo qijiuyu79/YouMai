@@ -113,6 +113,7 @@ public class OrderAdapter extends BaseAdapter{
 			holder.tvComplete.setTag(goodsBean);
 			holder.tvCancle.setTag(goodsBean);
 			holder.imgShare.setTag(goodsBean);
+			//交易完成
 			holder.tvComplete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
@@ -121,6 +122,7 @@ public class OrderAdapter extends BaseAdapter{
 					tradingPlay.complete((GoodsBean) v.getTag());
 				}
 			});
+			//交易取消
 			holder.tvCancle.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){

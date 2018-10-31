@@ -110,9 +110,13 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
             if (resultString.indexOf("q.th2w") != -1) {
                 String[] strs=resultString.split("/");
                 if(strs!=null){
-                    String goodsId=strs[strs.length-1];
-                    showProgress("数据查询中");
-                    HttpMethod.getGoodsDetails(goodsId,mHandler);
+                    String type=strs[3];
+                    if(type.equals("g")){
+                        showProgress("数据查询中");
+                        HttpMethod.getGoodsDetails(strs[4],mHandler);
+                    }else{
+
+                    }
                 }
             } else {
                 showMsg(getString(R.string.please_scan_right_qr_code));

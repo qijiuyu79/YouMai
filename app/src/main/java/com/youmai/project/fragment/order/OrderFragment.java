@@ -127,6 +127,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                          return;
                      }
                      if(!httpBaseBean.isSussess()){
+                         showMsg(httpBaseBean.getMsg());
                          return;
 
                      }
@@ -157,6 +158,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     List<GoodsBean> list;
     private void refresh(String message){
+        LogUtils.e(fragmentIndex+"+++++++++++++++++++++");
         list= JsonUtils.getGoods2(message);
         setDataByIndex(0);
         if(null==orderAdapter){
@@ -231,7 +233,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private TradingPlay tradingPlay=new TradingPlay() {
         /**
-         * 交易完成或者重新购买
+         * 交易完成或者删除
          * @param goodsBean
          */
         public void complete(final GoodsBean goodsBean) {
@@ -288,14 +290,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 }
             }, null);
             dialogView.show();
-        }
-
-        /**
-         * 联系卖家
-         * @param phone
-         */
-        public void playPhon(String phone) {
-
         }
     };
 

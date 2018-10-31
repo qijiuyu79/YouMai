@@ -214,6 +214,8 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
                             showMsg(getString(R.string.payment_failed));
                         }
+                        //取消订单接口
+                        cancleOrder();
                     }
                     break;
                 case HandlerConstant.REQUST_ERROR:
@@ -244,11 +246,20 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
                 if(type==1){
                     paySuccess();
                 }else{
-                    HttpMethod.setOrderCancle(orderId,mHandler);
+                    //取消订单接口
+                    cancleOrder();
                 }
             }
         }
     };
+
+
+    /**
+     * 取消订单接口
+     */
+    private void cancleOrder(){
+        HttpMethod.setOrderCancle(orderId,mHandler);
+    }
 
 
     /**

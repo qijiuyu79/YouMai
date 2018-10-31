@@ -10,15 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.share.ShareActivity;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.callback.TradingPlay;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.ClickLinearLayout;
-
+import com.youmai.project.view.ClickTextView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +31,7 @@ public class MOrderAdapter extends BaseAdapter{
 	private List<GoodsBean> list;
 	private GoodsBean goodsBean;
 	private List<ImageView> imgList=new ArrayList<>();
+	private TradingPlay tradingPlay;
 	public MOrderAdapter(Context context, List<GoodsBean> list) {
 		super();
 		this.context = context;
@@ -70,6 +71,7 @@ public class MOrderAdapter extends BaseAdapter{
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
 			holder.imgShare=(ImageView)view.findViewById(R.id.img_oi_share);
 			holder.linPhone=(ClickLinearLayout)view.findViewById(R.id.lin_oi_phone);
+			holder.tvCancle=(ClickTextView)view.findViewById(R.id.tv_oi_cancle);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -91,16 +93,29 @@ public class MOrderAdapter extends BaseAdapter{
 			switch (goodsBean.getStated()){
 				case 1:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yizhifu));
+					holder.tvCancle.setText("交易取消");
 					break;
 				case 2:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiwancheng));
 					break;
 				case 4:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));
+					holder.tvCancle.setText("删除");
 					break;
 				default:
 					break;
 			}
+			//交易取消
+			holder.tvCancle.setTag(goodsBean);
+			holder.tvCancle.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if(null==v.getTag()){
+						return;
+					}
+					tradingPlay.cancle((GoodsBean) v.getTag());
+				}
+			});
+			//联系买家
 			holder.linPhone.setTag(goodsBean.getMobile());
 			holder.linPhone.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -114,6 +129,7 @@ public class MOrderAdapter extends BaseAdapter{
 					}
 				}
 			});
+			//分享
 			holder.imgShare.setTag(goodsBean);
 			holder.imgShare.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -153,10 +169,15 @@ public class MOrderAdapter extends BaseAdapter{
 		}
 	}
 
+	public void setCallBack(TradingPlay tradingPlay){
+		this.tradingPlay=tradingPlay;
+	}
+
 	private class ViewHolder{
 		private ImageView imageView,imgType,imgShare;
 		private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
 		private TextView tvName,tv_psi_des,tvMoney;
+		private ClickTextView tvCancle;
 		private ClickLinearLayout linPhone;
 	 }
 }
