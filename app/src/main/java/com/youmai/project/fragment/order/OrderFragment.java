@@ -63,6 +63,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private final static String ACTION_GOODS_COMPLETE_SUCCESS = "net.youmai.adminapp.action.goods.complete.success";
     //交易取消广播
     private final static String ACTION_GOODS_CANCEL_SUCCESS = "net.youmai.adminapp.action.goods.cancel.success";
+    //删除订单广播
+    private final static String ACTION_DELETE_ORDER_SUCCESS = "net.youmai.adminapp.action.delete_order.success";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(keyList.size()==0){
@@ -122,6 +124,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                  case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
                  //交易取消
                 case HandlerConstant.SET_ORDER_CANCLE_SUCCESS:
+                //删除订单
+                case HandlerConstant.DELETE_ORDER_SUCCESS:
                       HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
                       if(null==httpBaseBean){
                          return;
@@ -135,12 +139,22 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                       Bundle bundle=new Bundle();
                       bundle.putSerializable("goodsBean",goodsBean);
                       intent.putExtras(bundle);
-                      if(msg.what==HandlerConstant.SET_ORDER_COMPLETE_SUCCESS){
-                         intent.setAction(ACTION_GOODS_COMPLETE_SUCCESS);
+                      switch (msg.what){
+                          //交易完成
+                          case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
+                               intent.setAction(ACTION_GOODS_COMPLETE_SUCCESS);
+                               break;
+                          //交易取消
+                          case HandlerConstant.SET_ORDER_CANCLE_SUCCESS:
+                               intent.setAction(ACTION_GOODS_CANCEL_SUCCESS);
+                              break;
+                          //删除订单
+                          case HandlerConstant.DELETE_ORDER_SUCCESS:
+                               intent.setAction(ACTION_DELETE_ORDER_SUCCESS);
+                              break;
+                          default:
+                              break;
                       }
-                     if(msg.what==HandlerConstant.SET_ORDER_CANCLE_SUCCESS){
-                         intent.setAction(ACTION_GOODS_CANCEL_SUCCESS);
-                     }
                      mActivity.sendBroadcast(intent);
                      break;
                 case HandlerConstant.REQUST_ERROR:
@@ -262,10 +276,17 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                     intent.setClass(mActivity, EvaluateActivity.class);
                     startActivity(intent);
                      break;
-                //重新购买
+                //删除订单
                 case 4:
-                     intent.setClass(mActivity, BuyGoodsActivity.class);
-                     startActivity(intent);
+                    dialogView = new DialogView(dialogView, mActivity, "确定删除该订单数据？",
+                            "确定", "取消", new View.OnClickListener() {
+                        public void onClick(View v) {
+                            dialogView.dismiss();
+                            showProgress("删除订单中...");
+                            HttpMethod.deleteOrder(goodsBean.getOrderId(),mHandler);
+                        }
+                    }, null);
+                    dialogView.show();
                      break;
                 default:
                     break;
@@ -301,6 +322,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(ACTION_GOODS_COMPLETE_SUCCESS);
         myIntentFilter.addAction(ACTION_GOODS_CANCEL_SUCCESS);
+        myIntentFilter.addAction(ACTION_DELETE_ORDER_SUCCESS);
         // 注册广播监听
         mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
@@ -325,8 +347,26 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 case ACTION_GOODS_CANCEL_SUCCESS:
                      setList(2);
                      break;
-                    default:
-                        break;
+                //删除订单
+                case ACTION_DELETE_ORDER_SUCCESS:
+                     for(int i=0;i<listBeanAll.size();i++){
+                         if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
+                            listBeanAll.remove(i);
+                            break;
+                         }
+                     }
+                     for(int i=0;i<listCancle.size();i++){
+                        if(goodsBean.getOrderId().equals(listCancle.get(i).getOrderId())){
+                            listCancle.remove(i);
+                            break;
+                         }
+                     }
+                     if(null!=orderAdapter){
+                        orderAdapter.notifyDataSetChanged();
+                     }
+                     break;
+                default:
+                    break;
             }
         }
     };

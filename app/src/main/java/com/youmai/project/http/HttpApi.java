@@ -301,4 +301,15 @@ public interface HttpApi {
     @POST(HttpConstant.GET_STORE_INFO)
     Call<ResponseBody> getStoreInfo(@FieldMap Map<String, String> map);
 
+
+
+    /**
+     * 删除订单
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_ORDER)
+    Call<HttpBaseBean> deleteOrder(@FieldMap Map<String, String> map);
+
 }

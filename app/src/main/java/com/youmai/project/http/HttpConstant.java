@@ -75,4 +75,6 @@ public class HttpConstant {
 
     public static final String GET_STORE_INFO="/store/info";
 
+    public static final String DELETE_ORDER="/user/order/delete";
+
 }

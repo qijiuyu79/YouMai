@@ -883,4 +883,29 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 删除订单
+     * @param order_id
+     * @param handler
+     */
+    public static void deleteOrder(String order_id,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("order_id",order_id);
+        Http.getRetrofit().create(HttpApi.class).deleteOrder(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.DELETE_ORDER_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

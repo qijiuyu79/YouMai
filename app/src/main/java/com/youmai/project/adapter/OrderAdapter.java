@@ -113,7 +113,7 @@ public class OrderAdapter extends BaseAdapter{
 			holder.tvComplete.setTag(goodsBean);
 			holder.tvCancle.setTag(goodsBean);
 			holder.imgShare.setTag(goodsBean);
-			//交易完成
+			//交易完成或者删除订单
 			holder.tvComplete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
