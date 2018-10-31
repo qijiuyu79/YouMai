@@ -105,7 +105,7 @@ public class OrderAdapter extends BaseAdapter{
 				case 4:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));
 					holder.tvCancle.setVisibility(View.GONE);
-					holder.tvComplete.setText("重新购买");
+					holder.tvComplete.setText("删除");
 					break;
 					default:
 						break;

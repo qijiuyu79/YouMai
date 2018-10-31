@@ -90,6 +90,7 @@
         <activity android:name=".activity.main.ScanActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.center.AddShopSuccessActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.map.RoutePlanActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.order.OrderDetailsActivity"  android:screenOrientation="portrait"/>
 
         <!-- 百度地图的appkey-->
         <meta-data

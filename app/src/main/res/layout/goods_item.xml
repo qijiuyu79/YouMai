@@ -24,7 +24,7 @@
             android:textColor="@color/color_E51C23"
             android:textSize="15sp"
             android:layout_below="@id/img_gi_photo"
-            android:layout_marginLeft="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"/>
 
         <TextView

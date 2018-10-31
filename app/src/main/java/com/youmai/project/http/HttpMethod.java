@@ -862,13 +862,15 @@ public class HttpMethod extends BaseRequst {
      * @param storeId
      * @param handler
      */
-    public static void getStoreInfo(String storeId,final Handler handler) {
+    public static void getStoreInfo(String storeId,int page,int row,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("storeId",storeId);
+        map.put("page",page+"");
+        map.put("row",row+"");
         Http.getRetrofit().create(HttpApi.class).getStoreInfo(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.GET_STORE_INFO_SUCCESS, response.body().string());
+                    sendMessage(handler, index, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);

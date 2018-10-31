@@ -49,4 +49,5 @@ public class HandlerConstant {
     public static final int GET_REPORT_LIST_SUCCESS=1150;
     public static final int REPORT_GOODS_SUCCESS=1151;
     public static final int GET_STORE_INFO_SUCCESS=1152;
+    public static final int GET_STORE_INFO_SUCCESS2=1153;
 }

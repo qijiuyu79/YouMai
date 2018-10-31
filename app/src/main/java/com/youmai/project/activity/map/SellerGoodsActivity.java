@@ -30,7 +30,6 @@ import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.view.RefreshLayout;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +38,14 @@ import java.util.List;
  */
 public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadListener {
 
-    private TextView tvComment;
+    private TextView tvComment,tvNickName;
     private RefreshLayout swipeLayout;
     private ListView listView;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
     private GoodsBean goodsBean;
     private List<GoodsBean> listAll=new ArrayList<>();
     private int page=1;
+    private int row=20;
     private boolean isTotal=false;
     private SellerGoodsAdapter sellerGoodsAdapter;
     @Override
@@ -63,8 +63,6 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         initView();
         //注册广播
         registerReceiver();
-        //查询评论人数
-        getCommentNum();
     }
 
 
@@ -75,17 +73,12 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         Bundle bundle=getIntent().getExtras();
         if(null!=bundle){
             goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-
-            TextView tvNickName=(TextView)findViewById(R.id.tv_asg_name);
+            tvNickName=(TextView)findViewById(R.id.tv_asg_name);
             imgX1=(ImageView)findViewById(R.id.img_au_x1);
             imgX2=(ImageView)findViewById(R.id.img_au_x2);
             imgX3=(ImageView)findViewById(R.id.img_au_x3);
             imgX4=(ImageView)findViewById(R.id.img_au_x4);
             imgX5=(ImageView)findViewById(R.id.img_au_x5);
-            //设置昵称
-            tvNickName.setText(goodsBean.getNickname());
-            //设置星级
-            setXing(goodsBean.getCreditLevel());
             tvComment=(TextView)findViewById(R.id.tv_ac_evaluation);
             swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
             listView=(ListView)findViewById(R.id.list);
@@ -104,7 +97,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             swipeLayout.postDelayed(new Runnable() {
                 public void run() {
                     listView.addHeaderView(new View(SellerGoodsActivity.this));
-                    getGoodsList(HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS);
+                    getGoodsList(HandlerConstant.GET_STORE_INFO_SUCCESS);
                 }
             }, 0);
 
@@ -154,33 +147,16 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             super.handleMessage(msg);
             String message;
             switch (msg.what){
-                case HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS:
+                case HandlerConstant.GET_STORE_INFO_SUCCESS:
                     message= (String) msg.obj;
                     listAll.clear();
                     refresh(message);
                     swipeLayout.setRefreshing(false);
                     break;
-                case HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS2:
+                case HandlerConstant.GET_STORE_INFO_SUCCESS2:
                     message= (String) msg.obj;
                     refresh(message);
                     swipeLayout.setLoading(false);
-                    break;
-                //根据storeId查询评论人数
-                case HandlerConstant.GET_STORE_INFO_SUCCESS:
-                    message= (String) msg.obj;
-                    if(TextUtils.isEmpty(message)){
-                        return;
-                    }
-                    try {
-                        final JSONObject jsonObject=new JSONObject(message);
-                        if(jsonObject.getInt("code")==200){
-                            final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
-                            final int commentNum=jsonObject2.getInt("commentCount");
-                            tvComment.setText(commentNum+"人评价");
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
@@ -198,8 +174,15 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         if(TextUtils.isEmpty(message)){
             return;
         }
-        List<GoodsBean> list= JsonUtils.getGoods(message);
+        List<GoodsBean> list= JsonUtils.getMapGoods(message);
         listAll.addAll(list);
+        //设置昵称
+        tvNickName.setText(listAll.get(0).getNickname());
+        //设置星级
+        setXing(listAll.get(0).getCreditLevel());
+        //评论人数
+        tvComment.setText(listAll.get(0).getCommentCount()+"人评论");
+
         if(null==sellerGoodsAdapter){
             sellerGoodsAdapter=new SellerGoodsAdapter(mContext,listAll);
             listView.setAdapter(sellerGoodsAdapter);
@@ -235,7 +218,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
      * @param index
      */
     private void getGoodsList(int index){
-        HttpMethod.getGoodsByStoreId(page,goodsBean.getStoreId(),index,mHandler);
+        HttpMethod.getStoreInfo(goodsBean.getStoreId(),page,row,index,mHandler);
     }
 
 
@@ -246,7 +229,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
                 page=1;
                 isTotal=false;
                 swipeLayout.setFooter(isTotal);
-                getGoodsList(HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS);
+                getGoodsList(HandlerConstant.GET_STORE_INFO_SUCCESS);
             }
         }, 200);
     }
@@ -260,7 +243,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         swipeLayout.postDelayed(new Runnable() {
             public void run() {
                 page++;
-                getGoodsList(HandlerConstant.GET_GOODS_BY_STOREID_SUCCESS2);
+                getGoodsList(HandlerConstant.GET_STORE_INFO_SUCCESS2);
             }
         }, 200);
 
@@ -302,12 +285,6 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         }
     };
 
-    /**
-     * 查询评论人数
-     */
-    private void getCommentNum(){
-        HttpMethod.getStoreInfo(goodsBean.getStoreId(),mHandler);
-    }
 
     @Override
     public void onDestroy() {

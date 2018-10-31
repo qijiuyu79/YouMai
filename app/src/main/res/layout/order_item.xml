@@ -107,7 +107,6 @@
                 android:maxLines="3"
                 android:layout_marginLeft="14dp"
                 android:layout_marginTop="15dp"
-                android:text="10月份京东购买的吉他，9成新，主要不太会用"
                 android:textColor="@color/color_020202"
                 android:textSize="13sp"
                 android:layout_marginRight="10dp"

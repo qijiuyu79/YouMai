@@ -12,11 +12,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.activity.main.BuyGoodsActivity;
 import com.youmai.project.activity.order.EvaluateActivity;
 import com.youmai.project.activity.order.OrderActivity;
+import com.youmai.project.activity.order.OrderDetailsActivity;
 import com.youmai.project.adapter.OrderAdapter;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.HttpBaseBean;
@@ -163,6 +166,19 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             orderAdapter.notifyDataSetChanged();
         }
         orderAdapter.setCallBack(tradingPlay);
+        //进入订单详情
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ImageView imgShare=(ImageView)view.findViewById(R.id.img_oi_share);
+                if(null==imgShare.getTag()){
+                    return;
+                }
+                final GoodsBean goodsBean= (GoodsBean) imgShare.getTag();
+                Intent intent=new Intent(mActivity,OrderDetailsActivity.class);
+                intent.putExtra("goodsBean",goodsBean);
+                startActivity(intent);
+            }
+        });
         if(list.size()<20){
             isTotal=true;
             swipeLayout.setFooter(isTotal);

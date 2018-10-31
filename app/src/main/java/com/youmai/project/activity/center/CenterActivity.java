@@ -422,7 +422,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
      * 查询评论人数
      */
     private void getCommentNum(){
-        HttpMethod.getStoreInfo(MyApplication.userInfoBean.getStoreId(),mHandler);
+        HttpMethod.getStoreInfo(MyApplication.userInfoBean.getStoreId(),1,3,HandlerConstant.GET_STORE_INFO_SUCCESS,mHandler);
     }
 
 
