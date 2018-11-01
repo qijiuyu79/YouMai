@@ -267,15 +267,13 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
      */
     private void paySuccess(){
         Intent intent=new Intent(mContext,BuyGoodSuccessActivity.class);
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("goodsBean",goodsBean);
-        bundle.putString("payType",payStr);
-        bundle.putString("orderId",orderId);
-        intent.putExtras(bundle);
+        intent.putExtra("goodsBean",goodsBean);
+        intent.putExtra("payType",payStr);
+        intent.putExtra("orderId",orderId);
         startActivity(intent);
         //发送广播
         Intent broadcastIntent=new Intent(ACTION_GOODS_PAYSUCCESS);
-        broadcastIntent.putExtras(bundle);
+        broadcastIntent.putExtra("goodsBean",goodsBean);
         sendBroadcast(broadcastIntent);
         BuyGoodsActivity.this.finish();
     }

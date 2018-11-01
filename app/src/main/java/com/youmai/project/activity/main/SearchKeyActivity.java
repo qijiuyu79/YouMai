@@ -446,11 +446,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
             switch (action){
                 //商品购买成功后的广播
                 case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                     final Bundle bundle=intent.getExtras();
-                     if(null==bundle){
-                         return;
-                     }
-                     final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+                     final GoodsBean goodsBean= (GoodsBean) intent.getSerializableExtra("goodsBean");
                      if(null==goodsBean){
                          return;
                      }

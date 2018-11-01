@@ -182,11 +182,8 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                          //查看更多商品
                          view.findViewById(R.id.lin_search).setOnClickListener(new View.OnClickListener() {
                              public void onClick(View v) {
-                                 Intent intent=new Intent();
-                                 Bundle bundle=new Bundle();
-                                 intent.setClass(mContext, SellerGoodsActivity.class);
-                                 bundle.putSerializable("goodsBean",list.get(0));
-                                 intent.putExtras(bundle);
+                                 Intent intent=new Intent(mContext, SellerGoodsActivity.class);
+                                 intent.putExtra("goodsBean",list.get(0));
                                  startActivity(intent);
 
                              }

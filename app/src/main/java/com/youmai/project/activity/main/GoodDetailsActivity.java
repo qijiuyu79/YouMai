@@ -179,8 +179,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
             //查看更多的卖家商品
             case R.id.lin_search:
                  intent.setClass(mContext, SellerGoodsActivity.class);
-                 bundle.putSerializable("goodsBean",goodsBean);
-                 intent.putExtras(bundle);
+                 intent.putExtra("goodsBean",goodsBean);
                  startActivity(intent);
                  break;
             //分享

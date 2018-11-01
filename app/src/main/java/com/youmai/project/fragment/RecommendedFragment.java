@@ -250,11 +250,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
                 //购买成功或删除商品的广播
                 case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
                 case CenterActivity.ACTION_GOODS_DELETE_SUCCESS:
-                     final Bundle bundle=intent.getExtras();
-                     if(null==bundle){
-                        return;
-                     }
-                     final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+                     final GoodsBean goodsBean= (GoodsBean) intent.getSerializableExtra("goodsBean");
                      if(null==goodsBean){
                         return;
                      }

@@ -212,13 +212,11 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                                  break;
                              }
                          }
-                         GoodsBean goodsBean=new GoodsBean();
-                         goodsBean.setId(goodsId);
-                         Bundle bundle=new Bundle();
-                         bundle.putSerializable("goodsBean",goodsBean);
                           //发送广播
                           Intent broadcastIntent=new Intent(ACTION_GOODS_DELETE_SUCCESS);
-                          broadcastIntent.putExtras(bundle);
+                          GoodsBean goodsBean=new GoodsBean();
+                          goodsBean.setId(goodsId);
+                          broadcastIntent.putExtra("goodsBean",goodsBean);
                           sendBroadcast(broadcastIntent);
                          showMsg("删除成功！");
                      }else{

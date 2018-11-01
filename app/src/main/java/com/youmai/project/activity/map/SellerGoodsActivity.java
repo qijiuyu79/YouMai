@@ -70,51 +70,47 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
      * 初始化
      */
     private void initView(){
-        Bundle bundle=getIntent().getExtras();
-        if(null!=bundle){
-            goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-            tvNickName=(TextView)findViewById(R.id.tv_asg_name);
-            imgX1=(ImageView)findViewById(R.id.img_au_x1);
-            imgX2=(ImageView)findViewById(R.id.img_au_x2);
-            imgX3=(ImageView)findViewById(R.id.img_au_x3);
-            imgX4=(ImageView)findViewById(R.id.img_au_x4);
-            imgX5=(ImageView)findViewById(R.id.img_au_x5);
-            tvComment=(TextView)findViewById(R.id.tv_ac_evaluation);
-            swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
-            listView=(ListView)findViewById(R.id.list);
-            listView.setDividerHeight(0);
-            swipeLayout.setColorSchemeResources(R.color.color_bule2,
-                    R.color.color_bule,
-                    R.color.color_bule2,
-                    R.color.color_bule3);
-            swipeLayout.setOnRefreshListener(SellerGoodsActivity.this);
-            swipeLayout.setOnLoadListener(SellerGoodsActivity.this);
-            swipeLayout.post(new Thread(new Runnable() {
-                public void run() {
-                    swipeLayout.setRefreshing(true);
-                }
-            }));
-            swipeLayout.postDelayed(new Runnable() {
-                public void run() {
-                    listView.addHeaderView(new View(SellerGoodsActivity.this));
-                    getGoodsList(HandlerConstant.GET_STORE_INFO_SUCCESS);
-                }
-            }, 0);
+        goodsBean= (GoodsBean) getIntent().getSerializableExtra("goodsBean");
+        tvNickName=(TextView)findViewById(R.id.tv_asg_name);
+        imgX1=(ImageView)findViewById(R.id.img_au_x1);
+        imgX2=(ImageView)findViewById(R.id.img_au_x2);
+        imgX3=(ImageView)findViewById(R.id.img_au_x3);
+        imgX4=(ImageView)findViewById(R.id.img_au_x4);
+        imgX5=(ImageView)findViewById(R.id.img_au_x5);
+        tvComment=(TextView)findViewById(R.id.tv_ac_evaluation);
+        swipeLayout=(RefreshLayout)findViewById(R.id.swipe_container);
+        listView=(ListView)findViewById(R.id.list);
+        listView.setDividerHeight(0);
+        swipeLayout.setColorSchemeResources(R.color.color_bule2,
+                R.color.color_bule,
+                R.color.color_bule2,
+                R.color.color_bule3);
+        swipeLayout.setOnRefreshListener(SellerGoodsActivity.this);
+        swipeLayout.setOnLoadListener(SellerGoodsActivity.this);
+        swipeLayout.post(new Thread(new Runnable() {
+            public void run() {
+                swipeLayout.setRefreshing(true);
+            }
+        }));
+        swipeLayout.postDelayed(new Runnable() {
+            public void run() {
+                listView.addHeaderView(new View(SellerGoodsActivity.this));
+                getGoodsList(HandlerConstant.GET_STORE_INFO_SUCCESS);
+            }
+        }, 0);
 
-            //进入评价列表
-            tvComment.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent=new Intent(mContext,CommentListActivity.class);
-                    intent.putExtra("nickName",goodsBean.getNickname());
-                    intent.putExtra("storeId",goodsBean.getStoreId());
-                    intent.putExtra("creditLevel",goodsBean.getCreditLevel());
-                    startActivity(intent);
-                }
-            });
-        }
+        //进入评价列表
+        tvComment.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext,CommentListActivity.class);
+                intent.putExtra("nickName",goodsBean.getNickname());
+                intent.putExtra("storeId",goodsBean.getStoreId());
+                intent.putExtra("creditLevel",goodsBean.getCreditLevel());
+                startActivity(intent);
+            }
+        });
 
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 SellerGoodsActivity.this.finish();
             }
@@ -266,11 +262,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
             switch (action){
                 //商品购买成功后的广播
                 case BuyGoodsActivity.ACTION_GOODS_PAYSUCCESS:
-                    final Bundle bundle=intent.getExtras();
-                    if(null==bundle){
-                        return;
-                    }
-                    final GoodsBean goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+                    final GoodsBean goodsBean= (GoodsBean) intent.getSerializableExtra("goodsBean");
                     if(null==goodsBean){
                         return;
                     }

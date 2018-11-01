@@ -52,29 +52,28 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
     /**
      * 初始化控件
      */
-    private void initView(){
-        TextView tvHead=(TextView)findViewById(R.id.tv_head);
+    private void initView() {
+        //接收数据
+        goodsBean = (GoodsBean) getIntent().getSerializableExtra("goodsBean");
+        payType = getIntent().getStringExtra("payType");
+        orderId = getIntent().getStringExtra("orderId");
+
+        TextView tvHead = (TextView) findViewById(R.id.tv_head);
         tvHead.setText("购买宝贝");
-        imageView=(ImageView)findViewById(R.id.img_abg_goods);
-        tvContent=(TextView)findViewById(R.id.tv_abg_content);
-        tvMoney=(TextView)findViewById(R.id.tv_abg_money);
-        tvPayType=(TextView)findViewById(R.id.tv_abgs_paytype);
-        tvMoney2=(TextView)findViewById(R.id.tv_abg_money2);
-        tvNickName=(TextView)findViewById(R.id.tv_abg_name);
-        imgX1=(ImageView)findViewById(R.id.img_au_x1);
-        imgX2=(ImageView)findViewById(R.id.img_au_x2);
-        imgX3=(ImageView)findViewById(R.id.img_au_x3);
-        imgX4=(ImageView)findViewById(R.id.img_au_x4);
-        imgX5=(ImageView)findViewById(R.id.img_au_x5);
+        imageView = (ImageView) findViewById(R.id.img_abg_goods);
+        tvContent = (TextView) findViewById(R.id.tv_abg_content);
+        tvMoney = (TextView) findViewById(R.id.tv_abg_money);
+        tvPayType = (TextView) findViewById(R.id.tv_abgs_paytype);
+        tvMoney2 = (TextView) findViewById(R.id.tv_abg_money2);
+        tvNickName = (TextView) findViewById(R.id.tv_abg_name);
+        imgX1 = (ImageView) findViewById(R.id.img_au_x1);
+        imgX2 = (ImageView) findViewById(R.id.img_au_x2);
+        imgX3 = (ImageView) findViewById(R.id.img_au_x3);
+        imgX4 = (ImageView) findViewById(R.id.img_au_x4);
+        imgX5 = (ImageView) findViewById(R.id.img_au_x5);
         findViewById(R.id.lin_abgs_order).setOnClickListener(this);
         findViewById(R.id.lin_abgs_contact).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
-        final Bundle bundle=getIntent().getExtras();
-        if(null!=bundle){
-            goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-            payType=bundle.getString("payType");
-            orderId=bundle.getString("orderId");
-        }
     }
 
 

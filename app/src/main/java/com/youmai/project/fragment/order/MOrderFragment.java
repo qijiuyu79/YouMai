@@ -274,11 +274,20 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
             switch (action){
                 //交易取消
                 case ACTION_MYGOODS_CANCEL_SUCCESS:
+                     //删除待交易集合中该商品对象
+                     for(int i=0;i<listWait.size();i++){
+                        if(goodsBean.getOrderId().equals(listWait.get(i).getOrderId())){
+                            listWait.remove(i);
+                            break;
+                        }
+                     }
+                     //交易集合中添加最新数据
                      if(listCancle.size()>0){
                         goodsBean.setStated(4);
                         listCancle.add(0,goodsBean);
                      }
 
+                     //更改全部订单中的该交易对象状态
                      for(int i=0;i<listBeanAll.size();i++){
                         if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
                             listBeanAll.get(i).setStated(4);
