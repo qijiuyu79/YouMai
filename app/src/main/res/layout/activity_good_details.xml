@@ -60,8 +60,8 @@
                 android:layout_marginLeft="11dp">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="18dp"
+                    android:layout_width="18dp"
+                    android:layout_height="19dp"
                     android:src="@mipmap/dianpu_icon"
                     android:layout_centerVertical="true"/>
 

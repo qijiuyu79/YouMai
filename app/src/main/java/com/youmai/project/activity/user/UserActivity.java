@@ -285,7 +285,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
      */
     private List<ImageView> imgList=new ArrayList<>();
     private void setXing(int index){
-        index=2;
         imgList.add(imgX1);
         imgList.add(imgX2);
         imgList.add(imgX3);

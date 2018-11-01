@@ -86,6 +86,19 @@ public class OrderDetailsActivity  extends BaseActivity implements View.OnClickL
         tvContent.setText(goodsBean.getDescription());
         tvMoney1.setText(Util.setDouble(goodsBean.getPresentPrice()/100));
         tvMoney2.setText("¥"+Util.setDouble(goodsBean.getPresentPrice()/100));
+        switch (goodsBean.getPayment()){
+            case 0:
+                tvPayType.setText("余额支付");
+                 break;
+            case 1:
+                tvPayType.setText("微信支付");
+                break;
+            case 2:
+                tvPayType.setText("支付宝支付");
+                break;
+            default:
+                break;
+        }
         switch (goodsBean.getStated()){
             case 1:
                 imgType.setImageDrawable(getResources().getDrawable(R.mipmap.yizhifu));

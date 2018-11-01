@@ -162,6 +162,7 @@ public class JsonUtils {
                 JSONObject jsonObject2=new JSONObject(jsonObject1.getString("goods"));
                 myGoods.setOrderId(jsonObject1.getString("id"));
                 myGoods.setStated(jsonObject1.getInt("stated"));
+                myGoods.setPayment(jsonObject1.getInt("payment"));
                 myGoods.setAddress(jsonObject2.getString("address"));
                 myGoods.setDescription(jsonObject2.getString("description"));
                 myGoods.setId(jsonObject2.getString("id"));
