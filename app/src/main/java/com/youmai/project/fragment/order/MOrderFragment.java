@@ -54,6 +54,8 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
     private DialogView dialogView;
     //交易取消广播
     private final static String ACTION_MYGOODS_CANCEL_SUCCESS = "net.youmai.adminapp.action.mygoods.cancel.success";
+    //删除订单广播
+    private final static String ACTION_DELETE_MORDER_SUCCESS = "net.youmai.adminapp.action.delete_morder.success";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(keyList.size()==0){
@@ -111,6 +113,8 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
                     break;
                 //交易取消
                 case HandlerConstant.SET_ORDER_CANCLE_SUCCESS:
+                //删除订单
+                case HandlerConstant.DELETE_ORDER_SUCCESS:
                     HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
                     if(null==httpBaseBean){
                         return;
@@ -118,10 +122,19 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
                     if(!httpBaseBean.isSussess()){
                         showMsg(httpBaseBean.getMsg());
                         return;
-
                     }
-                    Intent intent=new Intent(ACTION_MYGOODS_CANCEL_SUCCESS);
+                    Intent intent=new Intent();
                     intent.putExtra("goodsBean",goodsBean);
+                    switch (msg.what){
+                        case HandlerConstant.SET_ORDER_CANCLE_SUCCESS:
+                             intent.setAction(ACTION_MYGOODS_CANCEL_SUCCESS);
+                             break;
+                        case HandlerConstant.DELETE_ORDER_SUCCESS:
+                             intent.setAction(ACTION_DELETE_MORDER_SUCCESS);
+                            break;
+                        default:
+                            break;
+                    }
                     mActivity.sendBroadcast(intent);
                     break;
                 case HandlerConstant.REQUST_ERROR:
@@ -201,26 +214,41 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     private TradingPlay tradingPlay=new TradingPlay() {
         public void complete(final GoodsBean goodsBean) {
-
         }
         /**
-         * 交易取消
+         * 交易取消/删除订单
          * @param goodsBean
          */
         public void cancle(final GoodsBean goodsBean) {
-            if(null==goodsBean){
-                return;
-            }
             MOrderFragment.this.goodsBean=goodsBean;
-            dialogView = new DialogView(dialogView, mActivity, "确定取消交易吗？",
-                    "确定", "取消", new View.OnClickListener() {
-                public void onClick(View v) {
-                    dialogView.dismiss();
-                    showProgress("设置中...");
-                    HttpMethod.setOrderCancle(goodsBean.getOrderId(),mHandler);
-                }
-            }, null);
-            dialogView.show();
+            switch (goodsBean.getStated()){
+                //取消交易
+                case 1:
+                     dialogView = new DialogView(dialogView, mActivity, "确定取消交易吗？",
+                            "确定", "取消", new View.OnClickListener() {
+                        public void onClick(View v) {
+                            dialogView.dismiss();
+                            showProgress("设置中...");
+                            HttpMethod.setOrderCancle(goodsBean.getOrderId(),mHandler);
+                        }
+                     }, null);
+                     dialogView.show();
+                     break;
+                //删除订单
+                case 4:
+                    dialogView = new DialogView(dialogView, mActivity, "确定删除该订单数据？",
+                            "确定", "取消", new View.OnClickListener() {
+                        public void onClick(View v) {
+                            dialogView.dismiss();
+                            showProgress("删除订单中...");
+                            HttpMethod.deleteOrder(goodsBean.getOrderId(),mHandler);
+                        }
+                    }, null);
+                    dialogView.show();
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -231,6 +259,7 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
     private void registerReceiver() {
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(ACTION_MYGOODS_CANCEL_SUCCESS);
+        myIntentFilter.addAction(ACTION_DELETE_MORDER_SUCCESS);
         // 注册广播监听
         mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
@@ -260,6 +289,24 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
                          mOrderAdapter.notifyDataSetChanged();
                      }
                     break;
+                //删除订单
+                case ACTION_DELETE_MORDER_SUCCESS:
+                     for(int i=0;i<listBeanAll.size();i++){
+                        if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
+                            listBeanAll.remove(i);
+                            break;
+                        }
+                     }
+                     for(int i=0;i<listCancle.size();i++){
+                        if(goodsBean.getOrderId().equals(listCancle.get(i).getOrderId())){
+                            listCancle.remove(i);
+                            break;
+                        }
+                     }
+                    if(null!=mOrderAdapter){
+                        mOrderAdapter.notifyDataSetChanged();
+                    }
+                     break;
                 default:
                     break;
             }

@@ -185,9 +185,7 @@ public class RecommendedFragment extends BaseFragment  implements SwipeRefreshLa
             return;
         }
         Intent intent=new Intent(mActivity, GoodDetailsActivity.class);
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("goodsBean",goodsBean);
-        intent.putExtras(bundle);
+        intent.putExtra("goodsBean",goodsBean);
         startActivity(intent);
     }
 

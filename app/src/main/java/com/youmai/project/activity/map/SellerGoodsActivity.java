@@ -176,6 +176,9 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         }
         List<GoodsBean> list= JsonUtils.getMapGoods(message);
         listAll.addAll(list);
+        if(listAll.size()==0){
+            return;
+        }
         //设置昵称
         tvNickName.setText(listAll.get(0).getNickname());
         //设置星级
@@ -200,9 +203,7 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
                     return;
                 }
                 Intent intent=new Intent(mContext, GoodDetailsActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("goodsBean",goodsBean);
-                intent.putExtras(bundle);
+                intent.putExtra("goodsBean",goodsBean);
                 startActivity(intent);
             }
         });

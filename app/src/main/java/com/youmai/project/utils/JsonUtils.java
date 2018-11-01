@@ -221,7 +221,6 @@ public class JsonUtils {
                //解析经纬度
                if(!jsonObject1.isNull("location")){
                    JSONObject jsonObject2=new JSONObject(jsonObject1.getString("location"));
-
                    JSONArray jsonArray2=new JSONArray(jsonObject2.getString("coordinates"));
                    for (int k = 0; k < jsonArray2.length(); k++) {
                        if(k==0){

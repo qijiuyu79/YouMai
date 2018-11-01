@@ -314,9 +314,7 @@ public class SearchKeyActivity extends BaseActivity implements View.OnClickListe
                     return;
                 }
                 Intent intent=new Intent(mContext, GoodDetailsActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("goodsBean",goodsBean);
-                intent.putExtras(bundle);
+                intent.putExtra("goodsBean",goodsBean);
                 startActivity(intent);
             }
         });

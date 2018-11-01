@@ -135,10 +135,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                          return;
 
                      }
-                      Intent intent=new Intent();
-                      Bundle bundle=new Bundle();
-                      bundle.putSerializable("goodsBean",goodsBean);
-                      intent.putExtras(bundle);
+                    Intent intent=new Intent();
+                    intent.putExtra("goodsBean",goodsBean);
                       switch (msg.what){
                           //交易完成
                           case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
@@ -251,14 +249,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
          * @param goodsBean
          */
         public void complete(final GoodsBean goodsBean) {
-            if(null==goodsBean){
-                return;
-            }
             OrderFragment.this.goodsBean=goodsBean;
-            Intent intent=new Intent();
-            Bundle bundle=new Bundle();
-            bundle.putSerializable("goodsBean",goodsBean);
-            intent.putExtras(bundle);
             switch (goodsBean.getStated()){
                 case 1:
                     dialogView = new DialogView(dialogView, mActivity, "确定完成交易吗？",
@@ -273,8 +264,9 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                      break;
                 //评价晒单
                 case 2:
-                    intent.setClass(mActivity, EvaluateActivity.class);
-                    startActivity(intent);
+                     Intent intent=new Intent(mActivity, EvaluateActivity.class);
+                     intent.putExtra("goodsBean",goodsBean);
+                     startActivity(intent);
                      break;
                 //删除订单
                 case 4:
@@ -298,9 +290,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
          * @param goodsBean
          */
         public void cancle(final GoodsBean goodsBean) {
-            if(null==goodsBean){
-                return;
-            }
             OrderFragment.this.goodsBean=goodsBean;
             dialogView = new DialogView(dialogView, mActivity, "确定取消交易吗？",
                     "确定", "取消", new View.OnClickListener() {
@@ -329,11 +318,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
-            final Bundle bundle=intent.getExtras();
-            if(null==bundle){
-                return;
-            }
-            goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+            goodsBean= (GoodsBean) intent.getSerializableExtra("goodsBean");
             if(null==goodsBean){
                 return;
             }

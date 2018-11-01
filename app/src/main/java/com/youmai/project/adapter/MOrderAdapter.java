@@ -105,7 +105,7 @@ public class MOrderAdapter extends BaseAdapter{
 				default:
 					break;
 			}
-			//交易取消
+			//交易取消/删除订单
 			holder.tvCancle.setTag(goodsBean);
 			holder.tvCancle.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {

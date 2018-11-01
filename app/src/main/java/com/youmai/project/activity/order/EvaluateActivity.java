@@ -12,27 +12,21 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonObject;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.photo.BigPhotoActivity;
 import com.youmai.project.adapter.photo.GridImageAdapter;
 import com.youmai.project.bean.GoodsBean;
-import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.BitMapUtils;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.photo.Bimp;
 import com.youmai.project.utils.photo.ImageItem;
 import com.youmai.project.utils.photo.PicturesUtil;
 import com.youmai.project.view.MyGridView;
-
 import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +66,7 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
      * 初始化控件
      */
     private void initView(){
-        Bundle bundle=getIntent().getExtras();
-        goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+        goodsBean= (GoodsBean)getIntent().getSerializableExtra("goodsBean");
         ImageView imageView=(ImageView)findViewById(R.id.img_ae_img);
         if(goodsBean!=null){
             if(goodsBean.getImgList().size()>0){

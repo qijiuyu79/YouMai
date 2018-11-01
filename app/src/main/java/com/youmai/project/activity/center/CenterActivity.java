@@ -233,9 +233,7 @@ public class CenterActivity extends BaseActivity implements View.OnClickListener
                      }
                      GoodsBean goodsBean= JsonUtils.getGoodsBean(message);
                      Intent intent=new Intent(mContext, GoodDetailsActivity.class);
-                     Bundle bundle=new Bundle();
-                     bundle.putSerializable("goodsBean",goodsBean);
-                     intent.putExtras(bundle);
+                     intent.putExtra("goodsBean",goodsBean);
                      startActivity(intent);
                      break;
                 //根据storeId查询评论人数

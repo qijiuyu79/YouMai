@@ -174,9 +174,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                  GoodsBean goodsBean=list.get(position);
                                  Intent intent=new Intent(mContext, GoodDetailsActivity.class);
-                                 Bundle bundle=new Bundle();
-                                 bundle.putSerializable("goodsBean",goodsBean);
-                                 intent.putExtras(bundle);
+                                 intent.putExtra("goodsBean",goodsBean);
                                  startActivity(intent);
                              }
                          });
@@ -292,7 +290,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     private View markerView;
     private ViewHolder holder = null;
     private void setMark(String msg){
-        //情况地图
+        //清空地图
         mBaiduMap.clear();
         //解析json数据
         JsonUtils.getStoreList(msg,list);
