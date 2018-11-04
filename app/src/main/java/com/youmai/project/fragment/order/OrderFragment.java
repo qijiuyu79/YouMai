@@ -250,13 +250,14 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         public void complete(final GoodsBean goodsBean) {
             OrderFragment.this.goodsBean=goodsBean;
             switch (goodsBean.getStated()){
+                //设置交易完成
                 case 1:
                     dialogView = new DialogView(dialogView, mActivity, "确定完成交易吗？",
                             "确定", "取消", new View.OnClickListener() {
                         public void onClick(View v) {
                             dialogView.dismiss();
                             showProgress("设置中...");
-                            HttpMethod.setOrderComplete(goodsBean.getOrderId(),mHandler);
+                            HttpMethod.setOrderComplete(goodsBean.getOrderId(),null,mHandler);
                         }
                     }, null);
                     dialogView.show();

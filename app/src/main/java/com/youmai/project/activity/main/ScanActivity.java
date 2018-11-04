@@ -37,6 +37,7 @@ import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.webview.WebViewActivity;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
@@ -115,7 +116,8 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
                         showProgress("数据查询中");
                         HttpMethod.getGoodsDetails(strs[4],mHandler);
                     }else{
-
+                        showProgress("加载中...");
+                        HttpMethod.setOrderComplete(strs[4],strs[5],mHandler);
                     }
                 }
             } else {
@@ -132,6 +134,7 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
             super.handleMessage(msg);
             clearTask();
             switch (msg.what){
+                //查询订单详情回执
                 case HandlerConstant.GET_GOODS_DETAILS_SUCCESS:
                      String message= (String) msg.obj;
                      if(TextUtils.isEmpty(message)){
@@ -139,10 +142,21 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
                      }
                      GoodsBean goodsBean= JsonUtils.getGoodsBean(message);
                      Intent intent=new Intent(mContext, GoodDetailsActivity.class);
-                     Bundle bundle=new Bundle();
-                     bundle.putSerializable("goodsBean",goodsBean);
-                     intent.putExtras(bundle);
+                     intent.putExtra("goodsBean",goodsBean);
                      startActivity(intent);
+                     finish();
+                     break;
+                //设置交易完成回执
+                case HandlerConstant.SET_ORDER_COMPLETE_SUCCESS:
+                     HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                     if(null==httpBaseBean){
+                        return;
+                     }
+                     if(!httpBaseBean.isSussess()){
+                        showMsg(httpBaseBean.getMsg());
+                        return;
+                     }
+                     showMsg("交易完成！");
                      finish();
                      break;
                 case HandlerConstant.REQUST_ERROR:

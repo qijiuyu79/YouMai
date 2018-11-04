@@ -477,9 +477,10 @@ public class HttpMethod extends BaseRequst {
      * 设置交易完成
      * @return
      */
-    public static void setOrderComplete(String orderId,final Handler handler) {
+    public static void setOrderComplete(String orderId,String nonce,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("order_id",orderId);
+        map.put("nonce",nonce);
         Http.getRetrofit().create(HttpApi.class).setOrderComplete(map).enqueue(new Callback<HttpBaseBean>() {
             public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
                 try {
