@@ -29,6 +29,8 @@ public class GoodsBean implements Serializable {
     private int creditLevel;
     private int commentCount;
     private int payment;
+    private boolean commented;
+    private String qrCodeText;
 
     public String getAddress() {
         return address;
@@ -172,5 +174,21 @@ public class GoodsBean implements Serializable {
 
     public void setPayment(int payment) {
         this.payment = payment;
+    }
+
+    public boolean isCommented() {
+        return commented;
+    }
+
+    public void setCommented(boolean commented) {
+        this.commented = commented;
+    }
+
+    public String getQrCodeText() {
+        return qrCodeText;
+    }
+
+    public void setQrCodeText(String qrCodeText) {
+        this.qrCodeText = qrCodeText;
     }
 }

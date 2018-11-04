@@ -170,7 +170,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     List<GoodsBean> list;
     private void refresh(String message){
-        LogUtils.e(fragmentIndex+"+++++++++++++++++++++");
         list= JsonUtils.getGoods2(message);
         setDataByIndex(0);
         if(null==orderAdapter){
@@ -312,6 +311,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         myIntentFilter.addAction(ACTION_GOODS_COMPLETE_SUCCESS);
         myIntentFilter.addAction(ACTION_GOODS_CANCEL_SUCCESS);
         myIntentFilter.addAction(ACTION_DELETE_ORDER_SUCCESS);
+        myIntentFilter.addAction(EvaluateActivity.ACTION_EVALUATE_GOODS_SUCCESS);
         // 注册广播监听
         mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
@@ -345,6 +345,24 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                             listCancle.remove(i);
                             break;
                          }
+                     }
+                     if(null!=orderAdapter){
+                        orderAdapter.notifyDataSetChanged();
+                     }
+                     break;
+                //评价订单成功
+                case EvaluateActivity.ACTION_EVALUATE_GOODS_SUCCESS:
+                     for(int i=0;i<listBeanAll.size();i++){
+                        if(goodsBean.getOrderId().equals(listBeanAll.get(i).getOrderId())){
+                            listBeanAll.get(i).setCommented(true);
+                            break;
+                        }
+                     }
+                     for(int i=0;i<listComplete.size();i++){
+                        if(goodsBean.getOrderId().equals(listComplete.get(i).getOrderId())){
+                            listComplete.get(i).setCommented(true);
+                            break;
+                        }
                      }
                      if(null!=orderAdapter){
                         orderAdapter.notifyDataSetChanged();

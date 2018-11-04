@@ -122,6 +122,12 @@ public class JsonUtils {
                 GoodsBean myGoods=new GoodsBean();
                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
 
+                if(!jsonObject1.isNull("commented")){
+                    myGoods.setCommented(jsonObject1.getBoolean("commented"));
+                }
+                if(!jsonObject1.isNull("qrCodeText")){
+                    myGoods.setQrCodeText(jsonObject1.getString("qrCodeText"));
+                }
                 //解析用户信息
                 if(!jsonObject1.isNull("seller")){
                     JSONObject jsonObject3=new JSONObject(jsonObject1.getString("seller"));

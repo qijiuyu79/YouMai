@@ -47,6 +47,8 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
     private List<File> listFile=new ArrayList<>();
     //商品对象
     private GoodsBean goodsBean;
+    //评价成功的广播
+    public final static String ACTION_EVALUATE_GOODS_SUCCESS = "net.youmai.adminapp.action.evaluate_goods.success";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -134,10 +136,12 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
                          JSONObject jsonObject=new JSONObject(message);
                          if(jsonObject.getInt("code")==200){
                              showMsg("评价成功！");
+                             Intent intent=new Intent(ACTION_EVALUATE_GOODS_SUCCESS);
+                             intent.putExtra("goodsBean",goodsBean);
+                             sendBroadcast(intent);
                              finish();
                          }else{
                              showMsg("评价失败！");
-                             finish();
                          }
                      }catch (Exception e){
                          e.printStackTrace();

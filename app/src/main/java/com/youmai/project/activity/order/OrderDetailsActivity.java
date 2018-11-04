@@ -141,8 +141,7 @@ public class OrderDetailsActivity  extends BaseActivity implements View.OnClickL
      */
     private Bitmap bitmap;
     private void createQR(){
-        final String url="http://q.th2w.net/o/"+goodsBean.getOrderId();
-        bitmap= ZXingUtils.createQRImage(url,183,183);
+        bitmap= ZXingUtils.createQRImage(goodsBean.getQrCodeText(),183,183);
         imgOrder.setImageBitmap(bitmap);
     }
 

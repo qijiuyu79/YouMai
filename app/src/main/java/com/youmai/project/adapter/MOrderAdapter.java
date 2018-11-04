@@ -97,6 +97,9 @@ public class MOrderAdapter extends BaseAdapter{
 					break;
 				case 2:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiwancheng));
+					if(goodsBean.isCommented()){
+						holder.tvCancle.setText("查看评价");
+					}
 					break;
 				case 4:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));

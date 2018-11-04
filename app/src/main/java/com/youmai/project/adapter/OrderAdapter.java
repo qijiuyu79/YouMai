@@ -100,7 +100,11 @@ public class OrderAdapter extends BaseAdapter{
 				case 2:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiwancheng));
 					holder.tvCancle.setVisibility(View.GONE);
-					holder.tvComplete.setText("评价晒单");
+					if(goodsBean.isCommented()){
+						holder.tvComplete.setText("查看评价");
+					}else{
+						holder.tvComplete.setText("评价晒单");
+					}
 					break;
 				case 4:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));
