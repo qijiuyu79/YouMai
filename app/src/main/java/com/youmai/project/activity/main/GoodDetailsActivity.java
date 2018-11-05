@@ -65,10 +65,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
      * 初始化控件
      */
     private void initView(){
-        Bundle bundle=getIntent().getExtras();
-        if(bundle!=null){
-            goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-        }
+        goodsBean= (GoodsBean) getIntent().getSerializableExtra("goodsBean");
         scrollView=(ScrollView)findViewById(R.id.scrollView_agd);
         scrollView.smoothScrollTo(0,20);
         TextView tvNickName=(TextView)findViewById(R.id.tv_agd_nickName);
