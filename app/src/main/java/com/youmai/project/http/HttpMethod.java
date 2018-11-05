@@ -1,6 +1,7 @@
 package com.youmai.project.http;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.youmai.project.bean.DownLoad;
 import com.youmai.project.bean.HttpBaseBean;
@@ -480,7 +481,9 @@ public class HttpMethod extends BaseRequst {
     public static void setOrderComplete(String orderId,String nonce,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("order_id",orderId);
-        map.put("nonce",nonce);
+        if(!TextUtils.isEmpty(nonce)){
+            map.put("nonce",nonce);
+        }
         Http.getRetrofit().create(HttpApi.class).setOrderComplete(map).enqueue(new Callback<HttpBaseBean>() {
             public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
                 try {
