@@ -173,8 +173,8 @@
                 <ImageView
                     android:id="@+id/img_red_round"
                     android:visibility="gone"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_marginLeft="15dp"
                     android:src="@mipmap/red_round"/>
 

@@ -106,6 +106,18 @@
                     android:background="@drawable/bg_recommended_buy"/>
 
                 <TextView
+                    android:id="@+id/tv_type2"
+                    android:layout_width="65dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="卡券"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/borders"/>
+
+                <TextView
                     android:id="@+id/tv_type3"
                     android:layout_width="65dp"
                     android:layout_height="28dp"
