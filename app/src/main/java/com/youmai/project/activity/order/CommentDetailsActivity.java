@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ import java.util.List;
  * Created by Administrator on 2018/11/10.
  */
 
-public class CommentDetailsActivity extends BaseActivity {
+public class CommentDetailsActivity extends BaseActivity implements View.OnClickListener{
 
     private TextView tvUserName,tvContent,tvMoney,tvCommUserName,tvCommTime,tvCommDes;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgGood,imgType,imgComm1,imgComm2,imgComm3,imgComm4,imgComm5;
@@ -50,7 +51,6 @@ public class CommentDetailsActivity extends BaseActivity {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
         initView();
-        showData();
         getData();
     }
 
@@ -59,6 +59,10 @@ public class CommentDetailsActivity extends BaseActivity {
      * 初始化控件
      */
     private void initView(){
+        goodsBean = (GoodsBean) getIntent().getSerializableExtra("goodsBean");
+        if (null == goodsBean) {
+            return;
+        }
         tvUserName=(TextView)findViewById(R.id.tv_aod_name);
         imgX1=(ImageView)findViewById(R.id.img_ri_x1);
         imgX2=(ImageView)findViewById(R.id.img_ri_x2);
@@ -78,39 +82,17 @@ public class CommentDetailsActivity extends BaseActivity {
         tvContent=(TextView)findViewById(R.id.tv_psi_des);
         tvMoney=(TextView)findViewById(R.id.tv_oi_money);
         imgType=(ImageView)findViewById(R.id.img_oi_type);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
-
-
-    /**
-     * 展示数据
-     */
-    private void showData() {
-        goodsBean = (GoodsBean) getIntent().getSerializableExtra("goodsBean");
-        if (null == goodsBean) {
-            return;
-        }
-        tvUserName.setText(goodsBean.getNickname());
-        //设置星级
-        setXing(goodsBean.getCreditLevel());
-        Glide.with(mContext).load(goodsBean.getImgList().get(0)).override(102,102).centerCrop().error(R.mipmap.icon).into(imgGood);
-        tvContent.setText(goodsBean.getDescription());
-        tvMoney.setText(Util.setDouble(goodsBean.getPresentPrice()/100));
-        switch (goodsBean.getStated()){
-            case 1:
-                imgType.setImageDrawable(getResources().getDrawable(R.mipmap.yizhifu));
-                break;
-            case 2:
-                imgType.setImageDrawable(getResources().getDrawable(R.mipmap.yiwancheng));
-                break;
-            case 4:
-                imgType.setImageDrawable(getResources().getDrawable(R.mipmap.yiquxiao));
-                break;
-            default:
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.lin_back:
+                finish();
                 break;
         }
     }
-
 
     private Handler mHandler=new Handler(new Handler.Callback() {
         public boolean handleMessage(Message msg) {
@@ -140,6 +122,37 @@ public class CommentDetailsActivity extends BaseActivity {
             return;
         }
         final Comment comment=list.get(0);
+
+        /**
+         * 显示卖家信息
+         */
+        tvUserName.setText(comment.getS_nickname());
+        //设置星级
+        setXing(comment.getS_creditLevel());
+
+        /**
+         * 显示商品信息
+         */
+        Glide.with(mContext).load(comment.getImgList().get(0)).override(102,102).centerCrop().error(R.mipmap.icon).into(imgGood);
+        tvContent.setText(comment.getDescription());
+        tvMoney.setText(Util.setDouble(comment.getPresentPrice()/100));
+        switch (goodsBean.getStated()){
+            case 1:
+                imgType.setImageDrawable(getResources().getDrawable(R.mipmap.yizhifu));
+                break;
+            case 2:
+                imgType.setImageDrawable(getResources().getDrawable(R.mipmap.yiwancheng));
+                break;
+            case 4:
+                imgType.setImageDrawable(getResources().getDrawable(R.mipmap.yiquxiao));
+                break;
+            default:
+                break;
+        }
+
+        /**
+         * 显示评论者信息
+         */
         Glide.with(mContext).load(comment.getHead()).override(44,44).centerCrop().error(R.mipmap.icon).into(imgUserPic);
         tvCommUserName.setText(comment.getNickname());
         //设置星级
@@ -195,4 +208,5 @@ public class CommentDetailsActivity extends BaseActivity {
     private void getData(){
         HttpMethod.getCommentList(null,goodsBean.getOrderId(),1, HandlerConstant.GET_COMMENT_LIST_SUCCESS,mHandler);
     }
+
 }

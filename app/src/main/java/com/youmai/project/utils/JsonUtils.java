@@ -276,11 +276,22 @@ public class JsonUtils {
                 }
                 comment.setPresentPrice(jsonObject3.getDouble("presentPrice"));
 
+                //解析评论者信息
                 final JSONObject jsonObject2=new JSONObject(jsonObject1.getString("author"));
                 comment.setCreditLevel(jsonObject2.getInt("creditLevel"));
                 comment.setHead(jsonObject2.getString("head"));
                 comment.setNickname(jsonObject2.getString("nickname"));
 
+                //解析卖家信息
+                if(!jsonObject3.isNull("seller")){
+                    JSONObject jsonObject4=new JSONObject(jsonObject3.getString("seller"));
+                    if(!jsonObject4.isNull("nickname")){
+                        comment.setS_nickname(jsonObject4.getString("nickname"));
+                    }
+                    if(!jsonObject4.isNull("creditLevel")){
+                        comment.setS_creditLevel(jsonObject4.getInt("creditLevel"));
+                    }
+                }
                 list.add(comment);
             }
         }catch (Exception e){
