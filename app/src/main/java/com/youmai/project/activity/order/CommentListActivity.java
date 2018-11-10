@@ -198,7 +198,7 @@ public class CommentListActivity extends BaseActivity   implements SwipeRefreshL
      * 查询评论列表数据
      */
     private void getData(int index){
-        HttpMethod.getCommentList(storeId,page,index,mHandler);
+        HttpMethod.getCommentList(storeId,null,page,index,mHandler);
     }
 
     @Override

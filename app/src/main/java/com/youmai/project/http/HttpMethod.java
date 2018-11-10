@@ -169,13 +169,14 @@ public class HttpMethod extends BaseRequst {
      * @param list
      * @param handler
      */
-    public static void addGoods(String content, String oldMoney, String newMoney, String goodsType,String address, List<File> list, final Handler handler) {
+    public static void addGoods(String content, String oldMoney, String newMoney, String goodsType,String address,String stock, List<File> list, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("description",content);
         map.put("original_price",oldMoney);
         map.put("present_price",newMoney);
         map.put("type",goodsType);
         map.put("address",address);
+        map.put("stock",stock);
         Http.upLoadFile(HttpConstant.ADD_GOODS,"images", list, map, new okhttp3.Callback() {
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 LogUtils.e("1111111111111111111111111111");
@@ -686,9 +687,14 @@ public class HttpMethod extends BaseRequst {
      * 查询评论列表
      * @param handler
      */
-    public static void getCommentList(String storeId,int page,final int index,final Handler handler) {
+    public static void getCommentList(String storeId,String orderId,int page,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("storeId",storeId);
+        if(!TextUtils.isEmpty(storeId)){
+            map.put("storeId",storeId);
+        }
+        if(!TextUtils.isEmpty(orderId)){
+            map.put("orderId",orderId);
+        }
         map.put("page",page+"");
         map.put("row","20");
         Http.getRetrofit().create(HttpApi.class).getCommentList(map).enqueue(new Callback<ResponseBody>() {

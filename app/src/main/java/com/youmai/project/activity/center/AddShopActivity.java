@@ -43,7 +43,7 @@ import java.util.List;
 
 public class AddShopActivity extends BaseActivity implements View.OnClickListener{
 
-    private TextView tvType1,tvType2,tvType3,tvAddress;
+    private TextView tvType1,tvType2,tvType3,tvAddress,tvStockNum;
     private EditText etContent,etOldMoney,etNewMoney;
     private MyGridView gridView;
     private GridImageAdapter adapter = null;
@@ -52,6 +52,8 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
     //压缩后的图片文件
     private List<File> listFile=new ArrayList<>();
     private List<TextView> tvList=new ArrayList<>();
+    //库存量
+    private int stockNum=1;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -75,12 +77,15 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         tvType2=(TextView)findViewById(R.id.tv_type2);
         tvType3=(TextView)findViewById(R.id.tv_type3);
         tvAddress=(TextView)findViewById(R.id.tv_aa_location);
+        tvStockNum=(TextView)findViewById(R.id.tv_stock_num);
         etContent=(EditText)findViewById(R.id.et_aa_content);
         etOldMoney=(EditText)findViewById(R.id.et_aa_oleMoney);
         etNewMoney=(EditText)findViewById(R.id.et_aa_newMoney);
         gridView=(MyGridView)findViewById(R.id.mg_addshop);
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.tv_aa_add).setOnClickListener(this);
+        findViewById(R.id.img_add_stock).setOnClickListener(this);
+        findViewById(R.id.img_remove_stock).setOnClickListener(this);
         tvType1.setOnClickListener(this);
         tvType2.setOnClickListener(this);
         tvType3.setOnClickListener(this);
@@ -152,6 +157,19 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                  tvType3.setBackground(getResources().getDrawable(R.drawable.bg_recommended_buy));
                  updateColor(2);
                 break;
+            //增加库存
+            case R.id.img_add_stock:
+                 ++stockNum;
+                 tvStockNum.setText(String.valueOf(stockNum));
+                 break;
+            //减少库存
+            case R.id.img_remove_stock:
+                 if(stockNum==1){
+                     return;
+                 }
+                 --stockNum;
+                 tvStockNum.setText(String.valueOf(stockNum));
+                 break;
             //提交
             case R.id.tv_aa_add:
                  final String content=etContent.getText().toString().trim();
@@ -181,7 +199,9 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                                  }
                              }
                              showProgress("添加宝贝中...");
-                             HttpMethod.addGoods(content,oldMoney,newMoney,type,tvAddress.getText().toString().trim(),listFile,mHandler);
+                             final String address=tvAddress.getText().toString().trim();
+                             final String stock=tvStockNum.getText().toString().trim();
+                             HttpMethod.addGoods(content,oldMoney,newMoney,type,address,stock,listFile,mHandler);
                          }
                      },100);
                  }
