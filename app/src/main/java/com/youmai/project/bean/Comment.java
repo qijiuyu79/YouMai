@@ -18,6 +18,7 @@ public class Comment implements Serializable {
     private String description;
     private List<String> imgList=new ArrayList<>();
     private double presentPrice;
+    private int score;
 
     public int getCreditLevel() {
         return creditLevel;
@@ -83,4 +84,11 @@ public class Comment implements Serializable {
         this.presentPrice = presentPrice;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

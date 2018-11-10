@@ -12,12 +12,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.bean.Comment;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.DateUtil;
+import com.youmai.project.utils.JsonUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
+import com.youmai.project.view.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +33,9 @@ import java.util.List;
 
 public class CommentDetailsActivity extends BaseActivity {
 
-    private TextView tvUserName,tvContent,tvMoney;
-    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgGood,imgType;
+    private TextView tvUserName,tvContent,tvMoney,tvCommUserName,tvCommTime,tvCommDes;
+    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgGood,imgType,imgComm1,imgComm2,imgComm3,imgComm4,imgComm5;
+    private CircleImageView imgUserPic;
     private GoodsBean goodsBean;
     private List<ImageView> imgList=new ArrayList<>();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +65,16 @@ public class CommentDetailsActivity extends BaseActivity {
         imgX3=(ImageView)findViewById(R.id.img_ri_x3);
         imgX4=(ImageView)findViewById(R.id.img_ri_x4);
         imgX5=(ImageView)findViewById(R.id.img_ri_x5);
+        imgUserPic=(CircleImageView)findViewById(R.id.img_acd_pic);
+        tvCommUserName=(TextView)findViewById(R.id.tv_acd_name);
+        imgComm1=(ImageView)findViewById(R.id.img_acd_x1);
+        imgComm2=(ImageView)findViewById(R.id.img_acd_x2);
+        imgComm3=(ImageView)findViewById(R.id.img_acd_x3);
+        imgComm4=(ImageView)findViewById(R.id.img_acd_x4);
+        imgComm5=(ImageView)findViewById(R.id.img_acd_x5);
         imgGood=(ImageView)findViewById(R.id.img_psi_icon);
+        tvCommTime=(TextView)findViewById(R.id.tv_comm_time);
+        tvCommDes=(TextView)findViewById(R.id.tv_comment_des);
         tvContent=(TextView)findViewById(R.id.tv_psi_des);
         tvMoney=(TextView)findViewById(R.id.tv_oi_money);
         imgType=(ImageView)findViewById(R.id.img_oi_type);
@@ -100,20 +114,71 @@ public class CommentDetailsActivity extends BaseActivity {
 
     private Handler mHandler=new Handler(new Handler.Callback() {
         public boolean handleMessage(Message msg) {
+            clearTask();
+            switch (msg.what){
+                case HandlerConstant.GET_COMMENT_LIST_SUCCESS:
+                    String message= (String) msg.obj;
+                    List<Comment> list= JsonUtils.getCommentList(message);
+                    showComment(list);
+                    break;
+                case HandlerConstant.REQUST_ERROR:
+                    showMsg(getString(R.string.http_error));
+                    break ;
+                default:
+                    break;
+            }
             return false;
         }
     });
 
 
     /**
-     * 设置星级
+     * 展示评论信息
+     */
+    private void showComment(List<Comment> list){
+        if(null==list || list.size()==0){
+            return;
+        }
+        final Comment comment=list.get(0);
+        Glide.with(mContext).load(comment.getHead()).override(44,44).centerCrop().error(R.mipmap.icon).into(imgUserPic);
+        tvCommUserName.setText(comment.getNickname());
+        //设置星级
+        setCommXing(comment.getScore());
+        tvCommTime.setText(DateUtil.getData(comment.getCreateTime()));
+        tvCommDes.setText(comment.getEvaluate());
+    }
+
+
+    /**
+     * 设置卖家星级
      */
     private void setXing(int index){
+        imgList.clear();
         imgList.add(imgX1);
         imgList.add(imgX2);
         imgList.add(imgX3);
         imgList.add(imgX4);
         imgList.add(imgX5);
+        for (int i=0;i<imgList.size();i++){
+            if(i<index){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+            }
+        }
+    }
+
+
+    /**
+     * 设置评论星级
+     */
+    private void setCommXing(int index){
+        imgList.clear();
+        imgList.add(imgComm1);
+        imgList.add(imgComm2);
+        imgList.add(imgComm3);
+        imgList.add(imgComm4);
+        imgList.add(imgComm5);
         for (int i=0;i<imgList.size();i++){
             if(i<index){
                 imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));

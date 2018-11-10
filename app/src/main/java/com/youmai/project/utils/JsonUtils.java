@@ -261,7 +261,7 @@ public class JsonUtils {
                 final JSONObject jsonObject1=jsonArray.getJSONObject(i);
                 comment.setCreateTime(jsonObject1.getLong("createTime"));
                 comment.setEvaluate(jsonObject1.getString("evaluate"));
-
+                comment.setScore(jsonObject1.getInt("score"));
                 JSONObject jsonObject3=new JSONObject(jsonObject1.getString("goods"));
                 comment.setDescription(jsonObject3.getString("description"));
 

@@ -26,20 +26,12 @@
                     android:layout_gravity="center"/>
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@mipmap/icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/share_logo"
                     android:layout_marginLeft="13dp"
                     android:layout_marginTop="14dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginTop="19dp"
-                    android:text="@string/app_name"
-                    android:textSize="15sp"
-                    android:textColor="@color/color_fffafa"/>
 
             </RelativeLayout>
 
