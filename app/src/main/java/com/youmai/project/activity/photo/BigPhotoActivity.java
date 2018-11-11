@@ -34,7 +34,7 @@ public class BigPhotoActivity extends Activity {
         Intent intent = getIntent();
         id = intent.getIntExtra("ID", 0);
         TextView tvHead=(TextView)findViewById(R.id.tv_head);
-        tvHead.setText("选择图片");
+        tvHead.setText("图片详情");
         bigImage = (TouchImageView) findViewById(R.id.img_big_photo);
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

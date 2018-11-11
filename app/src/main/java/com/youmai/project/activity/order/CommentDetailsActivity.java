@@ -1,5 +1,6 @@
 package com.youmai.project.activity.order;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,12 +8,15 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.photo.NetBigPhotoActivity;
+import com.youmai.project.adapter.photo.NetGridImageAdapter;
+import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.Comment;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
@@ -23,7 +27,7 @@ import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.CircleImageView;
-
+import com.youmai.project.view.MyGridView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +41,7 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
     private TextView tvUserName,tvContent,tvMoney,tvCommUserName,tvCommTime,tvCommDes;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgGood,imgType,imgComm1,imgComm2,imgComm3,imgComm4,imgComm5;
     private CircleImageView imgUserPic;
+    private MyGridView myGridView;
     private GoodsBean goodsBean;
     private List<ImageView> imgList=new ArrayList<>();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +87,7 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         tvContent=(TextView)findViewById(R.id.tv_psi_des);
         tvMoney=(TextView)findViewById(R.id.tv_oi_money);
         imgType=(ImageView)findViewById(R.id.img_oi_type);
+        myGridView=(MyGridView)findViewById(R.id.mg_commimg);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -159,6 +165,15 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         setCommXing(comment.getScore());
         tvCommTime.setText(DateUtil.getData(comment.getCreateTime()));
         tvCommDes.setText(comment.getEvaluate());
+        NetGridImageAdapter netGridImageAdapter=new NetGridImageAdapter(mContext,comment.getComm_imgs());
+        myGridView.setAdapter(netGridImageAdapter);
+        myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                Intent intent = new Intent(mContext, NetBigPhotoActivity.class);
+                intent.putExtra("imgUrl", comment.getComm_imgs().get(arg2));
+                startActivity(intent);
+            }
+        });
     }
 
 

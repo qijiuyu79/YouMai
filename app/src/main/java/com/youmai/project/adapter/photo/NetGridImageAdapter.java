@@ -48,11 +48,11 @@ public class NetGridImageAdapter extends BaseAdapter {
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		String imgPath=selectBitmap.get(position);
-		if(!TextUtils.isEmpty(imgPath)){
-			if(!imgPath.equals(holder.grida_image.getTag())){
-				holder.grida_image.setTag(imgPath);
-				Glide.with(MyApplication.application).load(imgPath).into(holder.grida_image);
+		String imgUrl=selectBitmap.get(position);
+		if(!TextUtils.isEmpty(imgUrl)){
+			holder.grida_image.setTag(R.id.imageid,imgUrl);
+			if(holder.grida_image.getTag(R.id.imageid)!=null && imgUrl==holder.grida_image.getTag(R.id.imageid)){
+				Glide.with(context).load(imgUrl).override(110,110).centerCrop().error(R.mipmap.icon).into(holder.grida_image);
 			}
 		}
 		return convertView;

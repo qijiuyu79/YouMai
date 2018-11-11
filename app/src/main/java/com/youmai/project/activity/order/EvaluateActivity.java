@@ -72,7 +72,7 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
         ImageView imageView=(ImageView)findViewById(R.id.img_ae_img);
         if(goodsBean!=null){
             if(goodsBean.getImgList().size()>0){
-                Glide.with(mContext).load(goodsBean.getImgList().get(0)).centerCrop().error(R.mipmap.icon).into(imageView);
+                Glide.with(mContext).load(goodsBean.getImgList().get(0)).centerCrop().override(73,73).error(R.mipmap.icon).into(imageView);
             }
         }
         imageView1=(ImageView)findViewById(R.id.img_ae_xing1);

@@ -76,7 +76,6 @@
         <activity android:name=".activity.photo.ImageGridActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.photo.NetBigPhotoActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.center.AddShopActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activity.order.ChatActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.MyAddressActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.AddAddressActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".activity.user.CertificationActivity"  android:screenOrientation="portrait"/>

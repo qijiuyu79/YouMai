@@ -262,6 +262,16 @@ public class JsonUtils {
                 comment.setCreateTime(jsonObject1.getLong("createTime"));
                 comment.setEvaluate(jsonObject1.getString("evaluate"));
                 comment.setScore(jsonObject1.getInt("score"));
+                //解析评论图片
+                List<String> commImgs=new ArrayList<>();
+                if(!jsonObject1.isNull("images")){
+                    final JSONArray jsonArray1=new JSONArray(jsonObject1.getString("images"));
+                    for (int j = 0; j < jsonArray1.length(); j++) {
+                        commImgs.add(jsonArray1.getString(j));
+                    }
+                    comment.setComm_imgs(commImgs);
+                }
+
                 JSONObject jsonObject3=new JSONObject(jsonObject1.getString("goods"));
                 comment.setDescription(jsonObject3.getString("description"));
 
