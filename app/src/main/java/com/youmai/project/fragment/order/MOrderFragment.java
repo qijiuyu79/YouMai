@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.youmai.project.R;
+import com.youmai.project.activity.order.CommentDetailsActivity;
+import com.youmai.project.activity.order.EvaluateActivity;
 import com.youmai.project.activity.order.MOrderActivity;
 import com.youmai.project.adapter.MOrderAdapter;
 import com.youmai.project.bean.GoodsBean;
@@ -233,6 +235,15 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
                         }
                      }, null);
                      dialogView.show();
+                     break;
+                //查看评价
+                case 2:
+                     if(goodsBean.isCommented()){
+                         Intent intent=new Intent();
+                         intent.putExtra("goodsBean",goodsBean);
+                         intent.setClass(mActivity, CommentDetailsActivity.class);
+                         startActivity(intent);
+                     }
                      break;
                 //删除订单
                 case 4:
