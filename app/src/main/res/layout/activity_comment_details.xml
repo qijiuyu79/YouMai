@@ -300,4 +300,52 @@
 
     </ScrollView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/view_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_f8f8f8"/>
+
+        <TextView
+            android:id="@+id/tv_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="答复"
+            android:textSize="15sp"
+            android:textColor="@color/color_333333"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/et_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入要答复的内容"
+            android:textSize="13sp"
+            android:textColor="@color/color_333333"
+            android:layout_below="@id/view_bottom"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_edittext"
+            android:layout_toLeftOf="@id/tv_reply"
+            android:padding="5dp"
+            android:minHeight="35dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@id/et_reply"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>
