@@ -109,7 +109,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     Intent intent = new Intent(mContext, BigPhotoActivity.class);
                     intent.putExtra("ID", arg2);
-                    startActivityForResult(intent, 0x002);
+                    startActivity(intent);
                 }
             }
         });

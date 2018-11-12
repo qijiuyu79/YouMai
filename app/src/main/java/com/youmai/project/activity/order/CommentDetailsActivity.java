@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.main.ShowImgActivity;
 import com.youmai.project.activity.photo.NetBigPhotoActivity;
 import com.youmai.project.adapter.photo.NetGridImageAdapter;
 import com.youmai.project.application.MyApplication;
@@ -205,8 +206,9 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         myGridView.setAdapter(netGridImageAdapter);
         myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                Intent intent = new Intent(mContext, NetBigPhotoActivity.class);
-                intent.putExtra("imgUrl", comment.getComm_imgs().get(arg2));
+                Intent intent = new Intent(mContext, ShowImgActivity.class);
+                intent.putExtra("imgs", MyApplication.gson.toJson(comment.getComm_imgs()));
+                intent.putExtra("index",arg2);
                 startActivity(intent);
             }
         });

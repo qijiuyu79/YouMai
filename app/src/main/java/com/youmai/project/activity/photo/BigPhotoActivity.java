@@ -2,7 +2,6 @@ package com.youmai.project.activity.photo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,16 +13,11 @@ import com.youmai.project.R;
 import com.youmai.project.http.HttpConstant;
 import com.youmai.project.utils.photo.Bimp;
 import com.youmai.project.view.TouchImageView;
-
-import java.util.ArrayList;
-
-
 /**
  * @author Administrator
  */
 
 public class BigPhotoActivity extends Activity {
-    private ArrayList<Bitmap> bitList = new ArrayList<>();
     private TouchImageView bigImage;
     private int id;
 

@@ -30,6 +30,7 @@ public class ShowImgActivity extends BaseActivity {
     private ViewPager viewPager;
     private LinearLayout layoutPoint;
     private List<String> listImg;
+    private int index;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_img);
@@ -75,7 +76,9 @@ public class ShowImgActivity extends BaseActivity {
 
             }
         });
-        setLayoutPoint(0);
+        index=getIntent().getIntExtra("index",0);
+        viewPager.setCurrentItem(index);
+        setLayoutPoint(index);
     }
 
     /**
