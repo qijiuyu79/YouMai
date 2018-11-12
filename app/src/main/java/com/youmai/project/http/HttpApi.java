@@ -312,4 +312,14 @@ public interface HttpApi {
     @POST(HttpConstant.DELETE_ORDER)
     Call<HttpBaseBean> deleteOrder(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 回复评论
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.Reply)
+    Call<HttpBaseBean> reply(@FieldMap Map<String, String> map);
+
 }

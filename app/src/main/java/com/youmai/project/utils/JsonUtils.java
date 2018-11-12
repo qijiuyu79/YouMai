@@ -259,8 +259,10 @@ public class JsonUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 Comment comment=new Comment();
                 final JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                comment.setId(jsonObject1.getString("id"));
                 comment.setCreateTime(jsonObject1.getLong("createTime"));
                 comment.setEvaluate(jsonObject1.getString("evaluate"));
+                //评论星级
                 comment.setScore(jsonObject1.getInt("score"));
                 //解析评论图片
                 List<String> commImgs=new ArrayList<>();
@@ -301,6 +303,12 @@ public class JsonUtils {
                     if(!jsonObject4.isNull("creditLevel")){
                         comment.setS_creditLevel(jsonObject4.getInt("creditLevel"));
                     }
+                }
+
+                //解析卖家回复内容
+                if(!jsonObject1.isNull("reply")){
+                    final JSONObject jsonObject5=new JSONObject(jsonObject1.getString("reply"));
+                    comment.setReplyContent(jsonObject5.getString("content"));
                 }
                 list.add(comment);
             }

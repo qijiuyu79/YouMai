@@ -918,4 +918,31 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 回复评论
+     * @param commentId
+     * @param content
+     * @param handler
+     */
+    public static void reply(String commentId,String content,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("commentId",commentId);
+        map.put("content",content);
+        Http.getRetrofit().create(HttpApi.class).reply(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.REPLY_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

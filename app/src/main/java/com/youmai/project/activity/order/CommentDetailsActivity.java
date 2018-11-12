@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
@@ -19,6 +22,7 @@ import com.youmai.project.adapter.photo.NetGridImageAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.Comment;
 import com.youmai.project.bean.GoodsBean;
+import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.DateUtil;
@@ -42,6 +46,9 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgGood,imgType,imgComm1,imgComm2,imgComm3,imgComm4,imgComm5;
     private CircleImageView imgUserPic;
     private MyGridView myGridView;
+    private EditText etReply;
+    private TextView tvReplyContent;
+    private RelativeLayout relReply;
     private GoodsBean goodsBean;
     private List<ImageView> imgList=new ArrayList<>();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,12 +95,25 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         tvMoney=(TextView)findViewById(R.id.tv_oi_money);
         imgType=(ImageView)findViewById(R.id.img_oi_type);
         myGridView=(MyGridView)findViewById(R.id.mg_commimg);
+        etReply=(EditText)findViewById(R.id.et_reply);
+        tvReplyContent=(TextView)findViewById(R.id.tv_reply_content);
+        relReply=(RelativeLayout)findViewById(R.id.rel_reply);
+        findViewById(R.id.tv_reply).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //答复
+            case R.id.tv_reply:
+                 final String content=etReply.getText().toString().trim();
+                 if(TextUtils.isEmpty(content)){
+                     showMsg("请输入要答复的内容！");
+                     return;
+                 }
+                 reply(content);
+                 break;
             case R.id.lin_back:
                 finish();
                 break;
@@ -109,6 +129,21 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
                     List<Comment> list= JsonUtils.getCommentList(message);
                     showComment(list);
                     break;
+                //答复回执
+                case HandlerConstant.REPLY_SUCCESS:
+                     final HttpBaseBean httpBaseBean= (HttpBaseBean) msg.obj;
+                     if(null==httpBaseBean){
+                         break;
+                     }
+                     if(httpBaseBean.isSussess()){
+                         showMsg("答复成功");
+                         tvReplyContent.setVisibility(View.VISIBLE);
+                         tvReplyContent.setText("回复："+etReply.getText().toString());
+                         relReply.setVisibility(View.GONE);
+                     }else{
+                         showMsg(httpBaseBean.getMsg());
+                     }
+                     break;
                 case HandlerConstant.REQUST_ERROR:
                     showMsg(getString(R.string.http_error));
                     break ;
@@ -123,11 +158,12 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
     /**
      * 展示评论信息
      */
+    private Comment comment;
     private void showComment(List<Comment> list){
         if(null==list || list.size()==0){
             return;
         }
-        final Comment comment=list.get(0);
+        comment=list.get(0);
 
         /**
          * 显示卖家信息
@@ -174,6 +210,13 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
                 startActivity(intent);
             }
         });
+
+        //显示卖家回复内容
+        if(!TextUtils.isEmpty(comment.getReplyContent())){
+            tvReplyContent.setVisibility(View.VISIBLE);
+            tvReplyContent.setText("回复："+comment.getReplyContent());
+            relReply.setVisibility(View.GONE);
+        }
     }
 
 
@@ -222,6 +265,15 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
      */
     private void getData(){
         HttpMethod.getCommentList(null,goodsBean.getOrderId(),1, HandlerConstant.GET_COMMENT_LIST_SUCCESS,mHandler);
+    }
+
+
+    /**
+     * 回复评论
+     */
+    private void reply(String content){
+        showProgress("提交中...");
+        HttpMethod.reply(comment.getId(),content,mHandler);
     }
 
 }

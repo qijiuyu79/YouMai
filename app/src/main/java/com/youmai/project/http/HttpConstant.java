@@ -77,4 +77,6 @@ public class HttpConstant {
 
     public static final String DELETE_ORDER="/user/order/delete";
 
+    public static final String Reply="/user/order/comment/reply";
+
 }

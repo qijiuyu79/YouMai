@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public class Comment implements Serializable {
+    private String id;
     private int creditLevel;
     private String head;
     private String nickname;
@@ -22,6 +23,7 @@ public class Comment implements Serializable {
     private int s_creditLevel;
     private String s_nickname;
     private List<String> comm_imgs=new ArrayList<>();
+    private String replyContent;
 
     public int getCreditLevel() {
         return creditLevel;
@@ -117,5 +119,21 @@ public class Comment implements Serializable {
 
     public void setComm_imgs(List<String> comm_imgs) {
         this.comm_imgs = comm_imgs;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
     }
 }
