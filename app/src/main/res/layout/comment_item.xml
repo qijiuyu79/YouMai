@@ -25,13 +25,14 @@
             android:id="@+id/img_ci_head"
             android:layout_width="33dp"
             android:layout_height="33dp"
+            android:src="@mipmap/default_head"
             android:layout_centerVertical="true" />
 
         <TextView android:id="@+id/tv_ci_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/color_707070"
             android:layout_toRightOf="@id/img_ci_head"
