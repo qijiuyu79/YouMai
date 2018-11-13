@@ -241,6 +241,7 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
                      if(goodsBean.isCommented()){
                          Intent intent=new Intent();
                          intent.putExtra("goodsBean",goodsBean);
+                         intent.putExtra("type",1);
                          intent.setClass(mActivity, CommentDetailsActivity.class);
                          startActivity(intent);
                      }

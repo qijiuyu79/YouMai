@@ -93,16 +93,21 @@ public class MOrderAdapter extends BaseAdapter{
 			switch (goodsBean.getStated()){
 				case 1:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yizhifu));
+					holder.tvCancle.setVisibility(View.VISIBLE);
 					holder.tvCancle.setText("交易取消");
 					break;
 				case 2:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiwancheng));
 					if(goodsBean.isCommented()){
+						holder.tvCancle.setVisibility(View.VISIBLE);
 						holder.tvCancle.setText("查看评价");
+					}else{
+						holder.tvCancle.setVisibility(View.GONE);
 					}
 					break;
 				case 4:
 					holder.imgType.setImageDrawable(context.getResources().getDrawable(R.mipmap.yiquxiao));
+					holder.tvCancle.setVisibility(View.VISIBLE);
 					holder.tvCancle.setText("删除");
 					break;
 				default:

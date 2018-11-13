@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.main.ShowImgActivity;
-import com.youmai.project.activity.photo.NetBigPhotoActivity;
 import com.youmai.project.adapter.photo.NetGridImageAdapter;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.bean.Comment;
@@ -52,6 +51,8 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
     private RelativeLayout relReply;
     private GoodsBean goodsBean;
     private List<ImageView> imgList=new ArrayList<>();
+    //类型：卖家为1
+    private int type;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -72,6 +73,7 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
      * 初始化控件
      */
     private void initView(){
+        type=getIntent().getIntExtra("type",0);
         goodsBean = (GoodsBean) getIntent().getSerializableExtra("goodsBean");
         if (null == goodsBean) {
             return;
@@ -217,7 +219,9 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         if(!TextUtils.isEmpty(comment.getReplyContent())){
             tvReplyContent.setVisibility(View.VISIBLE);
             tvReplyContent.setText("回复："+comment.getReplyContent());
-            relReply.setVisibility(View.GONE);
+        }else if(type==1){
+            //卖家才可以答复
+            relReply.setVisibility(View.VISIBLE);
         }
     }
 
