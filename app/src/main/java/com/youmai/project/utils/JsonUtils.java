@@ -1,21 +1,9 @@
 package com.youmai.project.utils;
 
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
-
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.model.LatLng;
-import com.bumptech.glide.Glide;
-import com.youmai.project.R;
 import com.youmai.project.bean.Comment;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.Store;
-import com.youmai.project.view.CircleImageView;
-import com.youmai.project.view.ExpandView;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -291,7 +279,9 @@ public class JsonUtils {
                 //解析评论者信息
                 final JSONObject jsonObject2=new JSONObject(jsonObject1.getString("author"));
                 comment.setCreditLevel(jsonObject2.getInt("creditLevel"));
-                comment.setHead(jsonObject2.getString("head"));
+                if(!jsonObject2.isNull("head")){
+                    comment.setHead(jsonObject2.getString("head"));
+                }
                 comment.setNickname(jsonObject2.getString("nickname"));
 
                 //解析卖家信息
