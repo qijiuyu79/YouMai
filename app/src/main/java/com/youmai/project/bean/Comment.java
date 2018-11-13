@@ -11,42 +11,53 @@ import java.util.List;
 
 public class Comment implements Serializable {
     private String id;
-    private int creditLevel;
-    private String head;
-    private String nickname;
+    //买家属性
+    private int addCreditLevel;
+    private String addHead;
+    private String addNickname;
     private long createTime;
     private String evaluate;
     private String description;
     private List<String> imgList=new ArrayList<>();
     private double presentPrice;
     private int score;
-    private int s_creditLevel;
-    private String s_nickname;
+    //买家属性
+    private int remove_creditLevel;
+    private String remove_nickname;
+    private String remove_head;
     private List<String> comm_imgs=new ArrayList<>();
     private String replyContent;
 
-    public int getCreditLevel() {
-        return creditLevel;
+    public String getId() {
+        return id;
     }
 
-    public void setCreditLevel(int creditLevel) {
-        this.creditLevel = creditLevel;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getHead() {
-        return head;
+    public int getAddCreditLevel() {
+        return addCreditLevel;
     }
 
-    public void setHead(String head) {
-        this.head = head;
+    public void setAddCreditLevel(int addCreditLevel) {
+        this.addCreditLevel = addCreditLevel;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getAddHead() {
+        return addHead;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setAddHead(String addHead) {
+        this.addHead = addHead;
+    }
+
+    public String getAddNickname() {
+        return addNickname;
+    }
+
+    public void setAddNickname(String addNickname) {
+        this.addNickname = addNickname;
     }
 
     public long getCreateTime() {
@@ -97,20 +108,28 @@ public class Comment implements Serializable {
         this.score = score;
     }
 
-    public int getS_creditLevel() {
-        return s_creditLevel;
+    public int getRemove_creditLevel() {
+        return remove_creditLevel;
     }
 
-    public void setS_creditLevel(int s_creditLevel) {
-        this.s_creditLevel = s_creditLevel;
+    public void setRemove_creditLevel(int remove_creditLevel) {
+        this.remove_creditLevel = remove_creditLevel;
     }
 
-    public String getS_nickname() {
-        return s_nickname;
+    public String getRemove_nickname() {
+        return remove_nickname;
     }
 
-    public void setS_nickname(String s_nickname) {
-        this.s_nickname = s_nickname;
+    public void setRemove_nickname(String remove_nickname) {
+        this.remove_nickname = remove_nickname;
+    }
+
+    public String getRemove_head() {
+        return remove_head;
+    }
+
+    public void setRemove_head(String remove_head) {
+        this.remove_head = remove_head;
     }
 
     public List<String> getComm_imgs() {
@@ -119,14 +138,6 @@ public class Comment implements Serializable {
 
     public void setComm_imgs(List<String> comm_imgs) {
         this.comm_imgs = comm_imgs;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getReplyContent() {

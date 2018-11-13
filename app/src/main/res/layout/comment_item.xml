@@ -82,6 +82,7 @@
         </LinearLayout>
 
         <com.youmai.project.view.ClickImageView
+            android:visibility="gone"
             android:id="@+id/img_ci_zan"
             android:layout_width="24dp"
             android:layout_height="23dp"

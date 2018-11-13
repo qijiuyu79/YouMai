@@ -42,9 +42,9 @@ import java.util.List;
 
 public class CommentDetailsActivity extends BaseActivity implements View.OnClickListener{
 
-    private TextView tvUserName,tvContent,tvMoney,tvCommUserName,tvCommTime,tvCommDes;
-    private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgGood,imgType,imgComm1,imgComm2,imgComm3,imgComm4,imgComm5;
-    private CircleImageView imgUserPic;
+    private TextView tvContent,tvMoney,tvCommUserName,tvCommTime,tvCommDes;
+    private ImageView imgGood,imgType,imgComm1,imgComm2,imgComm3,imgComm4,imgComm5;
+    private CircleImageView imgCommHead;
     private MyGridView myGridView;
     private EditText etReply;
     private TextView tvReplyContent;
@@ -78,13 +78,7 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         if (null == goodsBean) {
             return;
         }
-        tvUserName=(TextView)findViewById(R.id.tv_aod_name);
-        imgX1=(ImageView)findViewById(R.id.img_ri_x1);
-        imgX2=(ImageView)findViewById(R.id.img_ri_x2);
-        imgX3=(ImageView)findViewById(R.id.img_ri_x3);
-        imgX4=(ImageView)findViewById(R.id.img_ri_x4);
-        imgX5=(ImageView)findViewById(R.id.img_ri_x5);
-        imgUserPic=(CircleImageView)findViewById(R.id.img_acd_pic);
+        imgCommHead=(CircleImageView)findViewById(R.id.img_comm_pic);
         tvCommUserName=(TextView)findViewById(R.id.tv_acd_name);
         imgComm1=(ImageView)findViewById(R.id.img_acd_x1);
         imgComm2=(ImageView)findViewById(R.id.img_acd_x2);
@@ -169,13 +163,6 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         comment=list.get(0);
 
         /**
-         * 显示卖家信息
-         */
-        tvUserName.setText(comment.getS_nickname());
-        //设置星级
-        setXing(comment.getS_creditLevel());
-
-        /**
          * 显示商品信息
          */
         Glide.with(mContext).load(comment.getImgList().get(0)).override(102,102).centerCrop().error(R.mipmap.icon).into(imgGood);
@@ -198,8 +185,8 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         /**
          * 显示评论者信息
          */
-        Glide.with(mContext).load(comment.getHead()).override(44,44).centerCrop().error(R.mipmap.icon).into(imgUserPic);
-        tvCommUserName.setText(comment.getNickname());
+        Glide.with(mContext).load(comment.getAddHead()).override(44,44).centerCrop().error(R.mipmap.default_head).into(imgCommHead);
+        tvCommUserName.setText(comment.getAddNickname());
         //设置星级
         setCommXing(comment.getScore());
         tvCommTime.setText(DateUtil.getData(comment.getCreateTime()));
@@ -222,26 +209,6 @@ public class CommentDetailsActivity extends BaseActivity implements View.OnClick
         }else if(type==1){
             //卖家才可以答复
             relReply.setVisibility(View.VISIBLE);
-        }
-    }
-
-
-    /**
-     * 设置卖家星级
-     */
-    private void setXing(int index){
-        imgList.clear();
-        imgList.add(imgX1);
-        imgList.add(imgX2);
-        imgList.add(imgX3);
-        imgList.add(imgX4);
-        imgList.add(imgX5);
-        for (int i=0;i<imgList.size();i++){
-            if(i<index){
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
-            }else{
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
-            }
         }
     }
 

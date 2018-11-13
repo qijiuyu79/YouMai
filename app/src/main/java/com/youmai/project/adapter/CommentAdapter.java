@@ -70,14 +70,14 @@ public class CommentAdapter extends BaseAdapter{
 		if(null==comment){
 			return null;
 		}
-		final String imgHead=comment.getHead();
+		final String imgHead=comment.getAddHead();
 		holder.imgHead.setTag(R.id.imgHead,imgHead);
 		if(holder.imgHead.getTag(R.id.imgHead)!=null && imgHead==holder.imgHead.getTag(R.id.imgHead)){
 			Glide.with(context).load(imgHead).override(33,33).centerCrop().error(R.mipmap.icon).into(holder.imgHead);
 		}
-		holder.tvNickName.setText(comment.getNickname());
+		holder.tvNickName.setText(comment.getAddNickname());
 		//设置星级
-		setXing(comment.getCreditLevel());
+		setXing(comment.getAddCreditLevel());
 		holder.tvEvaluate.setText(comment.getEvaluate());
 		holder.tvTime.setText(DateUtil.getData(comment.getCreateTime()));
 

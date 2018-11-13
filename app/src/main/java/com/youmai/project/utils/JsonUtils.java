@@ -276,22 +276,25 @@ public class JsonUtils {
                 }
                 comment.setPresentPrice(jsonObject3.getDouble("presentPrice"));
 
-                //解析评论者信息
+                //解析买家信息
                 final JSONObject jsonObject2=new JSONObject(jsonObject1.getString("author"));
-                comment.setCreditLevel(jsonObject2.getInt("creditLevel"));
+                comment.setAddCreditLevel(jsonObject2.getInt("creditLevel"));
                 if(!jsonObject2.isNull("head")){
-                    comment.setHead(jsonObject2.getString("head"));
+                    comment.setAddHead(jsonObject2.getString("head"));
                 }
-                comment.setNickname(jsonObject2.getString("nickname"));
+                comment.setAddNickname(jsonObject2.getString("nickname"));
 
                 //解析卖家信息
                 if(!jsonObject3.isNull("seller")){
                     JSONObject jsonObject4=new JSONObject(jsonObject3.getString("seller"));
                     if(!jsonObject4.isNull("nickname")){
-                        comment.setS_nickname(jsonObject4.getString("nickname"));
+                        comment.setRemove_nickname(jsonObject4.getString("nickname"));
                     }
                     if(!jsonObject4.isNull("creditLevel")){
-                        comment.setS_creditLevel(jsonObject4.getInt("creditLevel"));
+                        comment.setRemove_creditLevel(jsonObject4.getInt("creditLevel"));
+                    }
+                    if(!jsonObject4.isNull("head")){
+                        comment.setRemove_head(jsonObject4.getString("head"));
                     }
                 }
 
