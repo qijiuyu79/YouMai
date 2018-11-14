@@ -6,16 +6,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 
 /**
@@ -23,54 +16,6 @@ import java.text.DecimalFormat;
  */
 
 public class FileUtils {
-    public static void mkdirsPath(String path) {
-        File file = new File(path);
-        if (file == null) {
-            return;
-        }
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-    }
-
-    public static boolean fileExists(String path) {
-        File file = new File(path);
-        if (file == null) {
-            return false;
-        }
-        return file.exists();
-    }
-
-    /**
-     * 截取url的文件名作为本地存储的文件名
-     */
-    public static String getFileName(String path) {
-        String fileName = "";
-        if (TextUtils.isEmpty(path) || !path.contains("/")) {
-            return fileName;
-        }
-        try {
-            fileName = path.substring(path.lastIndexOf("/") + 1);
-        } catch (Exception e) {
-            fileName = "";
-        }
-        return fileName;
-    }
-
-
-    public static long getFileSizes(File f) throws Exception {
-        long s = 0;
-        if (f.exists()) {
-            FileInputStream fis = null;
-            fis = new FileInputStream(f);
-            s = fis.available();
-        } else {
-            f.createNewFile();
-        }
-        return s;
-    }
-
-
     /**
      * 将图片的长和宽缩小味原来的1/2
      * @param imgPath
@@ -163,24 +108,49 @@ public class FileUtils {
     }
 
 
+    // 计算比例
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        return inSampleSize;
+    }
     /**
-     * 获取文件大小
-     * @param fileS
+     * 根据路径获得到图片并压缩返回bitmap用于显示
+     *
+     * @param filePath
      * @return
      */
-    public static String FormetFileSize(long fileS) {
-        DecimalFormat df = new DecimalFormat("#.00");
-        String fileSizeString = "";
-        if (fileS < 1024) {
-            fileSizeString = df.format((double) fileS) + "B";
-        } else if (fileS < 1048576) {
-            fileSizeString = df.format((double) fileS / 1024) + "K";
-        } else if (fileS < 1073741824) {
-            fileSizeString = df.format((double) fileS / 1048576) + "M";
-        } else {
-            fileSizeString = df.format((double) fileS / 1073741824) + "G";
+    public static Bitmap getSmallBitmap(String filePath) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;  //只返回图片的大小信息
+        BitmapFactory.decodeFile(filePath, options);
+        options.inSampleSize = calculateInSampleSize(options, 480, 480);
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+        compressBmpToFile(bitmap);
+        return bitmap;
+    }
+
+    /**
+     * 质量压缩
+     * @param bmp bitmap 对象
+     */
+    public static void compressBmpToFile(Bitmap bmp){
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int options = 80;
+        bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
+        while (baos.toByteArray().length / 1024 > 100) {
+            baos.reset();
+            options -= 10;
+            bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
         }
-        return fileSizeString;
     }
 
 }
