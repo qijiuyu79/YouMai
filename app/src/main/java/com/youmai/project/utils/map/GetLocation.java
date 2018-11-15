@@ -24,7 +24,6 @@ public class GetLocation {
 
     private static GetLocation getLocation;
     private LocationClient mLocClient;
-    private Context mContext;
     public MyLocationListenner myListener = new MyLocationListenner();
     private Handler handler;
     private BaiduMap mBaiduMap;
@@ -41,7 +40,6 @@ public class GetLocation {
     public void setLocation(BaiduMap mBaiduMap,Context mContext, Handler handler) {
         this.mBaiduMap=mBaiduMap;
         this.handler = handler;
-        this.mContext=mContext;
         mLocClient = new LocationClient(mContext.getApplicationContext());
         mLocClient.registerLocationListener(myListener);
 

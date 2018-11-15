@@ -1,6 +1,7 @@
 package com.youmai.project.activity.main;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import com.youmai.project.activity.user.LoginActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
@@ -23,6 +25,7 @@ import com.youmai.project.callback.ViewPagerCallBack;
 import com.youmai.project.fragment.RecommendedFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.Util;
 import com.youmai.project.utils.map.GetLocation;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.UpdateVersionUtils;
@@ -71,6 +74,11 @@ public class MainActivity extends BaseActivity{
         //扫一扫
         findViewById(R.id.img_scan).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if(!Util.isLogin()){
+                    Intent intent=new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 setClass(ScanActivity.class);
             }
         });
