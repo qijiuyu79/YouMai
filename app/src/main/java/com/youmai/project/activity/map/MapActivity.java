@@ -121,14 +121,17 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
+                //定位失败
+                case -1:
+                     clearTask();
+                     GetLocation.getInstance().isOPen(mContext);
+                     break;
                 //定位
                 case 0x00:
                     final String latitude= MyApplication.spUtil.getString(SPUtil.LOCATION_LAT);
                     final String longtitude= MyApplication.spUtil.getString(SPUtil.LOCATION_LONG);
                     if(TextUtils.isEmpty(latitude) && TextUtils.isEmpty(longtitude)){
                         clearTask();
-                        //去打开定位权限
-                        GetLocation.isOPen(mContext);
                         return;
                     }
                     if (!isFirst) {

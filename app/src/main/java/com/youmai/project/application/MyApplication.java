@@ -42,7 +42,7 @@ public class MyApplication extends Application {
 
         //初始化地图
         SDKInitializer.initialize(getApplicationContext());
-        SDKInitializer.setCoordType(CoordType.GCJ02);
+        SDKInitializer.setCoordType(CoordType.BD09LL);
 
         //初始化讯飞语音
         SpeechUtility.createUtility(this, SpeechConstant.APPID +"=55d54ce6");

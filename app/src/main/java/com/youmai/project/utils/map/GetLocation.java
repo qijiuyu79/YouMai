@@ -24,6 +24,7 @@ public class GetLocation {
 
     private static GetLocation getLocation;
     private LocationClient mLocClient;
+    private Context mContext;
     public MyLocationListenner myListener = new MyLocationListenner();
     private Handler handler;
     private BaiduMap mBaiduMap;
@@ -40,6 +41,7 @@ public class GetLocation {
     public void setLocation(BaiduMap mBaiduMap,Context mContext, Handler handler) {
         this.mBaiduMap=mBaiduMap;
         this.handler = handler;
+        this.mContext=mContext;
         mLocClient = new LocationClient(mContext.getApplicationContext());
         mLocClient.registerLocationListener(myListener);
 
@@ -56,7 +58,7 @@ public class GetLocation {
         }
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
-        option.setCoorType("gcj02"); // 设置火星坐标
+        option.setCoorType("bd09ll"); // 设置火星坐标
         option.setScanSpan(10000);
         option.setIsNeedAddress(true);
         mLocClient.setLocOption(option);
@@ -69,6 +71,7 @@ public class GetLocation {
      */
     public class MyLocationListenner implements BDLocationListener {
         public void onReceiveLocation(BDLocation location) {
+            Message message = new Message();
             //GPS定位成功、网络定位成功、离线定位成功
             if (location.getLocType() == BDLocation.TypeGpsLocation ||
                     location.getLocType() == BDLocation.TypeNetWorkLocation ||
@@ -87,9 +90,10 @@ public class GetLocation {
                 MyApplication.spUtil.addString(SPUtil.LOCATION_LAT, latitude + "");
                 MyApplication.spUtil.addString(SPUtil.LOCATION_LONG, longtitude + "");
                 MyApplication.spUtil.addString(SPUtil.LOCATION_ADDRESS,location.getAddrStr());
+                message.what = 0x00;
+            }else{
+                message.what = -1;
             }
-            Message message = new Message();
-            message.what = 0x00;
             handler.sendMessage(message);
         }
 
@@ -103,7 +107,7 @@ public class GetLocation {
      * @param context
      * @return true 表示开启
      */
-    public static final boolean isOPen(final Context context) {
+    public boolean isOPen(final Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);

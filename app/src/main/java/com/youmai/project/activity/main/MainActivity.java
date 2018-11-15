@@ -155,6 +155,10 @@ public class MainActivity extends BaseActivity{
             super.handleMessage(msg);
             clearTask();
             switch (msg.what){
+                //定位失败
+                case -1:
+                    GetLocation.getInstance().isOPen(mContext);
+                    break;
                 //定位成功
                 case 0x00:
                     if(isFirst){
