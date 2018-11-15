@@ -21,7 +21,6 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -44,7 +43,6 @@ import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.map.GetLocation;
-import com.youmai.project.utils.map.MyOrientationListener;
 import com.youmai.project.view.MyGridView;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,14 +66,12 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     //店铺对象
     private Store store;
     private List<ImageView> imgList=new ArrayList<>();
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_map);
         initView();
-        initOritationListener();
         startLocation();
     }
 
@@ -364,44 +360,16 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         }
     }
 
-    /**
-     * 传感器监听
-     **/
-    MyOrientationListener myOrientationListener;
-
-    private void initOritationListener() {
-        myOrientationListener = new MyOrientationListener(MapActivity.this);
-        myOrientationListener
-                .setOnOrientationListener(new MyOrientationListener.OnOrientationListener() {
-                    public void onOrientationChanged(float x) {
-                        if (mBaiduMap == null || mBaiduMap.getLocationData() == null) {
-                            return;
-                        }
-                        // 构造定位数据
-                        MyLocationData locData = new MyLocationData.Builder()
-                                .accuracy(mBaiduMap.getLocationData().accuracy)
-                                // 此处设置开发者获取到的方向信息，顺时针0-360
-                                .direction((int) x)
-                                .latitude(mBaiduMap.getLocationData().latitude)
-                                .longitude(mBaiduMap.getLocationData().longitude).build();
-                        // 设置定位数据
-                        mBaiduMap.setMyLocationData(locData);
-                    }
-                });
-    }
-
 
 
     @Override
     public void onStart() {
         super.onStart();
-        myOrientationListener.start();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        myOrientationListener.stop();
     }
 
     @Override

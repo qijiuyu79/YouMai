@@ -52,6 +52,8 @@ public class MainActivity extends BaseActivity{
         initView();
         //开始定位
         getLocation();
+        //查询附近宝贝的数量
+        getLocationGoodsCount();
         //查询版本
         new UpdateVersionUtils().getVersion(MainActivity.this);
     }
@@ -191,8 +193,6 @@ public class MainActivity extends BaseActivity{
                      }
                      //获取用户信息
                      getUserInfo();
-                     //查询附近宝贝的数量
-                     getLocationGoodsCount();
                      break;
                 //查询附近宝贝的数量
                 case HandlerConstant.GET_LOCATION_COUNT_SUCCESS:

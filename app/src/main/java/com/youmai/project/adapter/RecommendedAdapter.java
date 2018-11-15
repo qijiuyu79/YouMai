@@ -114,12 +114,12 @@ public class RecommendedAdapter extends BaseAdapter{
 				String imgUrl=goodsBean.getImgList().get(0);
 				holder.imgIcon.setTag(R.id.imageid,imgUrl);
 				if(holder.imgIcon.getTag(R.id.imageid)!=null && imgUrl==holder.imgIcon.getTag(R.id.imageid)){
-					Glide.with(context).load(imgUrl).override(346,300).centerCrop().error(R.mipmap.default_head).into(holder.imgIcon);
+					Glide.with(context).load(imgUrl).override(346,300).centerCrop().into(holder.imgIcon);
 				}
 			}else{
 				holder.imgIcon.setImageDrawable(null);
 			}
-			Glide.with(context).load(goodsBean.getHead()).error(R.mipmap.icon).into(holder.circleImageView);
+			Glide.with(context).load(goodsBean.getHead()).error(R.mipmap.default_head).into(holder.circleImageView);
 			holder.tvNickName.setText(goodsBean.getNickname());
 			//设置星级
 			setXing(goodsBean.getCreditLevel());

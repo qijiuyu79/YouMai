@@ -9,9 +9,12 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
+import com.youmai.project.R;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.utils.SPUtil;
 import com.youmai.project.view.DialogView;
@@ -75,7 +78,7 @@ public class GetLocation {
                     location.getLocType() == BDLocation.TypeNetWorkLocation ||
                     location.getLocType() == BDLocation.TypeOffLineLocation) {
                 MyLocationData locData = new MyLocationData.Builder()
-                        .accuracy(location.getRadius())
+                        .accuracy(0)//0：去掉蓝色小图标
                         // 此处设置开发者获取到的方向信息，顺时针0-360
                         .latitude(location.getLatitude())
                         .longitude(location.getLongitude()).build();

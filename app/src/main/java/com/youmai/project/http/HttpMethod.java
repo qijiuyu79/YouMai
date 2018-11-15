@@ -771,7 +771,7 @@ public class HttpMethod extends BaseRequst {
     public static void getLocationCount(final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("min_distance","0");
-        map.put("max_distance","5000");
+        map.put("max_distance","15000");
         Http.getRetrofit().create(HttpApi.class).getLocationCount(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
