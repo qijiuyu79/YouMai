@@ -128,7 +128,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                     if(TextUtils.isEmpty(latitude) && TextUtils.isEmpty(longtitude)){
                         clearTask();
                         //去打开定位权限
-                        GetLocation.getInstance().openLocation();
+                        GetLocation.isOPen(mContext);
                         return;
                     }
                     if (!isFirst) {

@@ -1,5 +1,6 @@
 package com.youmai.project.activity.main;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -148,6 +149,7 @@ public class MainActivity extends BaseActivity{
 
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

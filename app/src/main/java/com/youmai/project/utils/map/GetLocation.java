@@ -1,15 +1,9 @@
 package com.youmai.project.utils.map;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ZoomControls;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -19,11 +13,8 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
 import com.youmai.project.application.MyApplication;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SPUtil;
-import com.youmai.project.utils.Util;
 import com.youmai.project.view.DialogView;
-
 /**
  * 定位
  * Created by Administrator on 2017/3/15 0015.
@@ -35,7 +26,6 @@ public class GetLocation {
     private LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
     private Handler handler;
-    private Context mContext;
     private BaiduMap mBaiduMap;
     public static GetLocation getInstance() {
         if (null == getLocation) {
@@ -49,7 +39,6 @@ public class GetLocation {
      */
     public void setLocation(BaiduMap mBaiduMap,Context mContext, Handler handler) {
         this.mBaiduMap=mBaiduMap;
-        this.mContext=mContext;
         this.handler = handler;
         mLocClient = new LocationClient(mContext.getApplicationContext());
         mLocClient.registerLocationListener(myListener);
@@ -81,7 +70,6 @@ public class GetLocation {
     public class MyLocationListenner implements BDLocationListener {
         public void onReceiveLocation(BDLocation location) {
             //GPS定位成功、网络定位成功、离线定位成功
-
             if (location.getLocType() == BDLocation.TypeGpsLocation ||
                     location.getLocType() == BDLocation.TypeNetWorkLocation ||
                     location.getLocType() == BDLocation.TypeOffLineLocation) {
@@ -96,11 +84,9 @@ public class GetLocation {
 
                 final Double longtitude = location.getLongitude();
                 final Double latitude = location.getLatitude();
-                if(Util.checkItude(longtitude + "",latitude + "")){
-                    MyApplication.spUtil.addString(SPUtil.LOCATION_LAT, latitude + "");
-                    MyApplication.spUtil.addString(SPUtil.LOCATION_LONG, longtitude + "");
-                    MyApplication.spUtil.addString(SPUtil.LOCATION_ADDRESS,location.getAddrStr());
-                }
+                MyApplication.spUtil.addString(SPUtil.LOCATION_LAT, latitude + "");
+                MyApplication.spUtil.addString(SPUtil.LOCATION_LONG, longtitude + "");
+                MyApplication.spUtil.addString(SPUtil.LOCATION_ADDRESS,location.getAddrStr());
             }
             Message message = new Message();
             message.what = 0x00;
@@ -113,30 +99,22 @@ public class GetLocation {
 
 
     /**
-     * 开启定位权限
+     * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
+     * @param context
+     * @return true 表示开启
      */
-    private DialogView dialogView;
-    public void openLocation() {
-        if (null != dialogView) {
-            return;
+    public static final boolean isOPen(final Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
+        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (gps || network) {
+            return true;
         }
-        dialogView = new DialogView(mContext, "无法定位，请开启定位权限或者打开GPS！", "去打开", "取消", new View.OnClickListener() {
-            public void onClick(View v) {
-                dialogView.dismiss();
-                dialogView=null;
-                stopLocation();
-                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.parse("package:" + mContext.getPackageName()));
-                mContext.startActivity(intent);
-            }
-        }, new View.OnClickListener(){
-            public void onClick(View v) {
-                dialogView.dismiss();
-                dialogView=null;
-                stopLocation();
-            }
-        });
+        DialogView dialogView = new DialogView(context,"无法定位，请开启定位权限或者打开GPS", "确定", null, null, null);
         dialogView.show();
+        return false;
     }
 
     /**
