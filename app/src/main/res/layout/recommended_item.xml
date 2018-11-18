@@ -119,8 +119,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_ri_icon"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp">
 
         <ImageView
@@ -134,9 +134,15 @@
             android:layout_marginLeft="19dp"
             android:textColor="@color/color_FF4081"
             android:textSize="14sp"
-            android:layout_marginRight="95dp"
-            android:singleLine="true"
-            android:ellipsize="end"/>
+            android:maxLength="9"/>
+
+        <TextView android:id="@+id/tv_ri_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_FF4081"
+            android:textSize="14sp"
+            android:layout_marginRight="75dp"
+            android:layout_toRightOf="@id/tv_ri_location"/>
 
         <TextView android:id="@+id/tv_ri_newMoney"
             android:layout_width="wrap_content"
@@ -145,7 +151,7 @@
             android:layout_marginTop="7dp"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@color/color_E51C23"/>
+            android:textColor="@color/color_FF4081"/>
 
         <TextView android:id="@+id/tv_ri_oldMoney"
             android:layout_width="wrap_content"
@@ -165,7 +171,7 @@
             android:layout_height="26dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:text="购买"
             android:textColor="@color/color_FF4081"
             android:textSize="13sp"

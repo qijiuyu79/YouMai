@@ -225,16 +225,6 @@ public class Util extends ClassLoader {
         return df.format(d);
     }
 
-    /**
-     * 保留1位小数的double数据
-     * @param d
-     * @return
-     */
-    public static String setDoubleDotOne(double d){
-        final DecimalFormat df = new DecimalFormat("0.0");
-        return df.format(d);
-    }
-
 
     /**
      * 抖动的动画特效

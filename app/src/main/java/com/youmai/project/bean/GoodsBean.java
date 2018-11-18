@@ -14,6 +14,7 @@ public class GoodsBean implements Serializable {
     private String address;
     private long createTime;
     private String description;
+    private double distance;
     private String id;
     private List<String> imgList=new ArrayList<>();
     private Double latitude=0.0;
@@ -190,5 +191,13 @@ public class GoodsBean implements Serializable {
 
     public void setQrCodeText(String qrCodeText) {
         this.qrCodeText = qrCodeText;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }

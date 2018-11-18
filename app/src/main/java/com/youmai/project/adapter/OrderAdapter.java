@@ -3,7 +3,6 @@ package com.youmai.project.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
-import com.youmai.project.activity.share.ShareActivity;
+import com.youmai.project.activity.order.OrderDetailsActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.callback.TradingPlay;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.ClickLinearLayout;
 import com.youmai.project.view.ClickTextView;
@@ -72,7 +69,7 @@ public class OrderAdapter extends BaseAdapter{
 			holder.imgX3=(ImageView)view.findViewById(R.id.img_ri_x3);
 			holder.imgX4=(ImageView)view.findViewById(R.id.img_ri_x4);
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
-			holder.imgShare=(ImageView)view.findViewById(R.id.img_oi_share);
+			holder.imgDetails=(ImageView)view.findViewById(R.id.img_oi_details);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -116,7 +113,7 @@ public class OrderAdapter extends BaseAdapter{
 			}
 			holder.tvComplete.setTag(goodsBean);
 			holder.tvCancle.setTag(goodsBean);
-			holder.imgShare.setTag(goodsBean);
+			holder.imgDetails.setTag(goodsBean);
 			//交易完成或者删除订单
 			holder.tvComplete.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -148,17 +145,15 @@ public class OrderAdapter extends BaseAdapter{
 					}
 				}
 			});
-			holder.imgShare.setOnClickListener(new View.OnClickListener() {
+			holder.imgDetails.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if(null==v.getTag()){
 						return;
 					}
 					GoodsBean goodsBean= (GoodsBean) v.getTag();
 					if(goodsBean!=null){
-						Intent intent=new Intent(context, ShareActivity.class);
-						Bundle bundle=new Bundle();
-						bundle.putSerializable("goodsBean",goodsBean);
-						intent.putExtras(bundle);
+						Intent intent=new Intent(context, OrderDetailsActivity.class);
+						intent.putExtra("goodsBean",goodsBean);
 						context.startActivity(intent);
 					}
 				}
@@ -192,7 +187,7 @@ public class OrderAdapter extends BaseAdapter{
 	
 	private class ViewHolder{
 		private ImageView imageView,imgType;
-		private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgShare;
+		private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgDetails;
 		private TextView tvName,tv_psi_des,tvMoney;
 		private ClickTextView tvComplete,tvCancle;
 		private ClickLinearLayout linPhone;

@@ -37,6 +37,9 @@ public class JsonUtils {
                if(!jsonObject1.isNull("description")){
                    goodsBean.setDescription(jsonObject1.getString("description"));
                }
+               if(!jsonObject1.isNull("distance")){
+                   goodsBean.setDistance(jsonObject1.getDouble("distance"));
+               }
                if(!jsonObject1.isNull("id")){
                    goodsBean.setId(jsonObject1.getString("id"));
                }

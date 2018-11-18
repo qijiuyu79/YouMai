@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.activity.order.CommentDetailsActivity;
@@ -39,6 +40,7 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     private RefreshLayout swipeLayout;
     private ListView listView;
+    private LinearLayout linNotData;
     private MOrderAdapter mOrderAdapter;
     private List<GoodsBean> listBeanAll=new ArrayList<>();
     private List<GoodsBean> listComplete=new ArrayList<>();
@@ -74,9 +76,10 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_recommended, container, false);
+        view = inflater.inflate(R.layout.fragment_order, container, false);
         swipeLayout=(RefreshLayout)view.findViewById(R.id.swipe_container);
         listView=(ListView)view.findViewById(R.id.list);
+        linNotData=(LinearLayout)view.findViewById(R.id.lin_not_data);
         listView.setDividerHeight(0);
         swipeLayout.setColorSchemeResources(R.color.color_bule2,
                 R.color.color_bule,
@@ -175,6 +178,11 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
             case 0:
                 if(type==0){
                     listBeanAll.addAll(list);
+                    if(listBeanAll.size()==0){
+                        linNotData.setVisibility(View.VISIBLE);
+                    }else{
+                        linNotData.setVisibility(View.GONE);
+                    }
                 }else if(type==1){
                     listBeanAll.clear();
                 }else if(type==2){
@@ -184,6 +192,11 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
             case 1:
                 if(type==0){
                     listWait.addAll(list);
+                    if(listWait.size()==0){
+                        linNotData.setVisibility(View.VISIBLE);
+                    }else{
+                        linNotData.setVisibility(View.GONE);
+                    }
                 }else if(type==1){
                     listWait.clear();
                 }else if(type==2){
@@ -193,6 +206,11 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
             case 2:
                 if(type==0){
                     listComplete.addAll(list);
+                    if(listComplete.size()==0){
+                        linNotData.setVisibility(View.VISIBLE);
+                    }else{
+                        linNotData.setVisibility(View.GONE);
+                    }
                 }else if(type==1){
                     listComplete.clear();
                 }else if(type==2){
@@ -202,6 +220,11 @@ public class MOrderFragment extends BaseFragment implements SwipeRefreshLayout.O
             case 3:
                 if(type==0){
                     listCancle.addAll(list);
+                    if(listCancle.size()==0){
+                        linNotData.setVisibility(View.VISIBLE);
+                    }else{
+                        linNotData.setVisibility(View.GONE);
+                    }
                 }else if(type==1){
                     listCancle.clear();
                 }else if(type==2){

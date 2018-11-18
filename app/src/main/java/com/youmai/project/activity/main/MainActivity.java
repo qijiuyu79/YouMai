@@ -15,24 +15,19 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
-
 import com.youmai.project.activity.user.LoginActivity;
-import com.youmai.project.application.MyApplication;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
-import com.youmai.project.bean.Login;
 import com.youmai.project.callback.ViewPagerCallBack;
 import com.youmai.project.fragment.RecommendedFragment;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.map.GetLocation;
-import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.UpdateVersionUtils;
 import com.youmai.project.view.PagerSlidingTabStrip;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 public class MainActivity extends BaseActivity{
 
@@ -45,15 +40,12 @@ public class MainActivity extends BaseActivity{
     //是否定位成功
     private boolean isFirst=false;
     public static List<String> keyList=new ArrayList<>();
-    public static List<String> valList=new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
         //开始定位
         getLocation();
-        //查询附近宝贝的数量
-        getLocationGoodsCount();
         //查询版本
         new UpdateVersionUtils().getVersion(MainActivity.this);
     }
@@ -96,15 +88,6 @@ public class MainActivity extends BaseActivity{
     private void getLocation(){
         showProgress("定位中");
         GetLocation.getInstance().setLocation(null,MainActivity.this,mHandler);
-    }
-
-
-    /**
-     * 获取商品分类
-     */
-    private void getGoodsType(){
-        showProgress("加载中...");
-        HttpMethod.getGoodsType(mHandler);
     }
 
 
@@ -163,14 +146,15 @@ public class MainActivity extends BaseActivity{
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            clearTask();
             switch (msg.what){
                 //定位失败
                 case -1:
+                    clearTask();
                     GetLocation.getInstance().isOPen(mContext);
                     break;
                 //定位成功
                 case 0x00:
+                    clearTask();
                     if(isFirst){
                         return;
                     }
@@ -180,19 +164,8 @@ public class MainActivity extends BaseActivity{
                     tabs.setViewPager(pager);
                     tabs.setViewPagerCallBack(viewPagerCallBack);
                     setTabsValue();
-                     break;
-                //获取最新的access_token
-                case HandlerConstant.GET_ACCESS_TOKEN_SUCCESS:
-                     Login login= (Login) msg.obj;
-                     if(login==null){
-                        return;
-                     }
-                     if(login.isSussess()){
-                        MyApplication.spUtil.addString(SPUtil.AUTH_TOKEN,login.getData().getAuth_token());
-                        MyApplication.spUtil.addString(SPUtil.ACCESS_TOKEN,login.getData().getAccess_token());
-                     }
-                     //获取用户信息
-                     getUserInfo();
+                    //查询附近宝贝的数量
+                    getLocationGoodsCount();
                      break;
                 //查询附近宝贝的数量
                 case HandlerConstant.GET_LOCATION_COUNT_SUCCESS:
@@ -237,10 +210,8 @@ public class MainActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        final String auth_token= MyApplication.spUtil.getString(SPUtil.AUTH_TOKEN);
-        if(!TextUtils.isEmpty(auth_token)){
-            HttpMethod.getAccessToken(auth_token,mHandler);
-        }
+        //获取用户信息
+        getUserInfo();
     }
 
     @Override

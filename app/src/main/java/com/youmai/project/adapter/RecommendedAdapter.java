@@ -93,6 +93,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.imgX5=(ImageView)view.findViewById(R.id.img_ri_x5);
 			holder.imgShare=(ImageView)view.findViewById(R.id.img_ri_share);
 			holder.imgReport=(ClickImageView)view.findViewById(R.id.img_report);
+			holder.tvDistance=(TextView)view.findViewById(R.id.tv_ri_distance);
 //			holder.shimmerTextView=(ShimmerTextView)view.findViewById(R.id.st_ri);
 //			holder.shimmer=new Shimmer();
 			view.setTag(holder);
@@ -105,6 +106,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvContext.setText(goodsBean.getDescription());
 			holder.tvLocation.setTag(goodsBean);
 			holder.tvLocation.setText(goodsBean.getAddress());
+			holder.tvDistance.setText("(距离"+Util.setDouble(goodsBean.getDistance())+"米)");
 			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -224,7 +226,7 @@ public class RecommendedAdapter extends BaseAdapter{
 	}
 	
 	private class ViewHolder{
-		private TextView tvContext,tvLocation,tvNewMoney,tvOldMoney,tvNickName;
+		private TextView tvContext,tvLocation,tvNewMoney,tvOldMoney,tvNickName,tvDistance;
 		private ClickTextView tvBuy;
 		private ImageView imgIcon,imgX1,imgX2,imgX3,imgX4,imgX5,imgShare;
 		private ClickImageView imgReport;
