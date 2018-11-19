@@ -29,7 +29,6 @@ import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Report;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.view.CircleImageView;
 import com.youmai.project.view.ClickImageView;
@@ -218,9 +217,9 @@ public class RecommendedAdapter extends BaseAdapter{
 		imgList.add(holder.imgX5);
 		for (int i=0;i<imgList.size();i++){
 			if(i<index){
-				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.yes_select_x));
+				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.yes_hselect_x));
 			}else{
-				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.no_select_x));
+				imgList.get(i).setImageDrawable(context.getResources().getDrawable(R.mipmap.no_hselect_x));
 			}
 		}
 	}

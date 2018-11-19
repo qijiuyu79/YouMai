@@ -1,5 +1,6 @@
 package com.youmai.project.activity.map;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -130,14 +131,15 @@ public class SellerGoodsActivity extends BaseActivity  implements SwipeRefreshLa
         imgList.add(imgX5);
         for (int i=0;i<imgList.size();i++){
             if(i<index){
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_hselect_x));
             }else{
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_hselect_x));
             }
         }
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

@@ -24,13 +24,10 @@ import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
-import com.youmai.project.utils.SPUtil;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.Util;
 import com.youmai.project.utils.photo.PicturesUtil;
 import com.youmai.project.view.CircleImageView;
-import com.youmai.project.view.ClickRelativeLayout;
-import com.youmai.project.view.DialogView;
 
 import org.json.JSONObject;
 import java.io.File;
@@ -292,9 +289,9 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         imgList.add(imgX5);
         for (int i=0;i<imgList.size();i++){
             if(i<index){
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_hselect_x));
             }else{
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_hselect_x));
             }
         }
     }

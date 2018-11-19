@@ -1,5 +1,6 @@
 package com.youmai.project.activity.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,8 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
-import com.youmai.project.activity.TabActivity;
-import com.youmai.project.activity.center.CenterActivity;
 import com.youmai.project.activity.order.OrderActivity;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
@@ -77,6 +76,7 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -140,9 +140,9 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         imgList.add(imgX5);
         for (int i=0;i<imgList.size();i++){
             if(i<index){
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_hselect_x));
             }else{
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_hselect_x));
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.youmai.project.activity.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
@@ -25,7 +26,6 @@ import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
-import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.Util;
@@ -114,14 +114,15 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
         imgList.add(imgX5);
         for (int i=0;i<imgList.size();i++){
             if(i<index){
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_hselect_x));
             }else{
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_hselect_x));
             }
         }
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

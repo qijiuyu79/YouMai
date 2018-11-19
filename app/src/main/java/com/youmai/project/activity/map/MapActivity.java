@@ -1,5 +1,6 @@
 package com.youmai.project.activity.map;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -113,6 +114,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -224,9 +226,9 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     private void setXing(int index){
         for (int i=0;i<imgList.size();i++){
             if(i<index){
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.yes_hselect_x));
             }else{
-                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_select_x));
+                imgList.get(i).setImageDrawable(getResources().getDrawable(R.mipmap.no_hselect_x));
             }
         }
     }
