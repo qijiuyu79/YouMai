@@ -1,5 +1,6 @@
 package com.youmai.project.activity.main;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -161,6 +162,7 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

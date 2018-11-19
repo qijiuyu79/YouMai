@@ -346,7 +346,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             LatLng finishLng2 = mapStatus.target;// 获取地图中心点坐标
             // 计算距离
             Double distance = Util.GetShortDistance(finishLng.longitude, finishLng.latitude, finishLng2.longitude, finishLng2.latitude);
-            if(distance>2000){
+            if(distance>5000){
                 //查询附近的店铺
                 getStore();
             }

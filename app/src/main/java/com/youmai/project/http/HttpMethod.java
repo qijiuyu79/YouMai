@@ -534,7 +534,7 @@ public class HttpMethod extends BaseRequst {
     public static void getNearStore(final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("min_distance","0");
-        map.put("max_distance","2000");
+        map.put("max_distance","10000");
         Http.getRetrofit().create(HttpApi.class).getNearStore(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
