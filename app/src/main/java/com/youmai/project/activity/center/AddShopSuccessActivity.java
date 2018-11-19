@@ -2,6 +2,7 @@ package com.youmai.project.activity.center;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -62,12 +63,13 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
     /**
      * 展示二维码图片
      */
-    private Bitmap bitmap;
+    private Bitmap bitmap,bm_logo;
     private void showImg(){
         String goodId=getIntent().getStringExtra("goodId");
         final String url="http://q.th2w.net/g/"+goodId;
-        bitmap= ZXingUtils.createQRImage(url,179,179);
-        imgScan.setImageBitmap(bitmap);
+        bitmap= ZXingUtils.createQRImage(url,200,200);
+        bm_logo = BitmapFactory.decodeResource(getResources(), R.mipmap.icon);
+        imgScan.setImageBitmap(ZXingUtils.addLogo(bitmap,bm_logo));
     }
 
     @Override
@@ -160,6 +162,10 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
         if(null!=bitmap){
             bitmap.recycle();;
             bitmap=null;
+        }
+        if(null!=bm_logo){
+            bm_logo.recycle();;
+            bm_logo=null;
         }
     }
 }

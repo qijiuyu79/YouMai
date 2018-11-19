@@ -39,15 +39,15 @@
         android:textSize="15sp"
         android:textColor="@color/color_74736a"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"/>
+        android:layout_marginTop="10dp"/>
 
     <ImageView
         android:id="@+id/img_scan"
-        android:layout_width="179dp"
-        android:layout_height="179dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_below="@id/tv_aas"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="10dp"/>
     
     <LinearLayout
         android:layout_width="match_parent"

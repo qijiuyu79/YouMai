@@ -41,6 +41,7 @@ import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.JsonUtils;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.scan.cameras.CameraManager;
 import com.youmai.project.utils.scan.decoding.InactivityTimer;
@@ -106,6 +107,7 @@ public class ScanActivity extends BaseActivity implements SurfaceHolder.Callback
             return;
         }
         String resultString = result.getText();
+        LogUtils.e(resultString+"++++++++++++");
         if (!TextUtils.isEmpty(resultString)) {
             resultString = resultString.replace(" ", "");
             if (resultString.indexOf("q.th2w") != -1) {
