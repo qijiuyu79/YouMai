@@ -105,7 +105,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvContext.setText(goodsBean.getDescription());
 			holder.tvLocation.setTag(goodsBean);
 			holder.tvLocation.setText(goodsBean.getAddress());
-			holder.tvDistance.setText("(距离"+Util.setDouble(goodsBean.getDistance())+"米)");
+			holder.tvDistance.setText("(距离"+goodsBean.getDistance()+")");
 			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -138,9 +138,7 @@ public class RecommendedAdapter extends BaseAdapter{
 						GoodsBean goodsBean= (GoodsBean) v.getTag();
 						if(goodsBean!=null){
 							Intent intent=new Intent(context, BuyGoodsActivity.class);
-							Bundle bundle=new Bundle();
-							bundle.putSerializable("goodsBean",goodsBean);
-							intent.putExtras(bundle);
+							intent.putExtra("goodsBean",goodsBean);
 							context.startActivity(intent);
 						}
 					}
@@ -157,9 +155,7 @@ public class RecommendedAdapter extends BaseAdapter{
 					GoodsBean goodsBean= (GoodsBean) v.getTag();
 					if(goodsBean!=null){
 						Intent intent=new Intent(context, ShareActivity.class);
-						Bundle bundle=new Bundle();
-						bundle.putSerializable("goodsBean",goodsBean);
-						intent.putExtras(bundle);
+						intent.putExtra("goodsBean",goodsBean);
 						context.startActivity(intent);
 					}
 				}

@@ -155,7 +155,6 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent intent=new Intent();
-        Bundle bundle=new Bundle();
         switch (v.getId()){
             case R.id.img_agd_img:
                  intent.setClass(mContext,ShowImgActivity.class);
@@ -170,8 +169,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                  intent.setClass(mContext,BuyGoodsActivity.class);
-                 bundle.putSerializable("goodsBean",goodsBean);
-                 intent.putExtras(bundle);
+                 intent.putExtra("goodsBean",goodsBean);
                  startActivity(intent);
                  break;
             //查看更多的卖家商品
@@ -183,8 +181,7 @@ public class GoodDetailsActivity extends BaseActivity implements View.OnClickLis
             //分享
             case R.id.lin_agd_share:
                  intent.setClass(mContext,ShareActivity.class);
-                 bundle.putSerializable("goodsBean",goodsBean);
-                 intent.putExtras(bundle);
+                 intent.putExtra("goodsBean",goodsBean);
                  startActivity(intent);
                  break;
             //路径规划

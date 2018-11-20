@@ -289,9 +289,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
                              }
 
                              Intent intent=new Intent(mContext,CenterActivity.class);
-                             Bundle bundle=new Bundle();
-                             bundle.putSerializable("myGoods",myGoods);
-                             intent.putExtras(bundle);
+                             intent.putExtra("goodsBean",myGoods);
                              setResult(RESULT_OK,intent);
 
                              //删除压缩后的图片

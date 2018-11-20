@@ -52,8 +52,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener{
      * 初始化
      */
     private void initView(){
-        Bundle bundle=getIntent().getExtras();
-        goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
+        goodsBean= (GoodsBean) getIntent().getSerializableExtra("goodsBean");
         scShare=(ScrollView)findViewById(R.id.sc_sv);
         imgQR=(ImageView)findViewById(R.id.img_qr);
         ImageView imageView=(ImageView)findViewById(R.id.img_sv_img);

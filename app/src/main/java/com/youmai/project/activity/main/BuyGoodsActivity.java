@@ -81,27 +81,24 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.rel_abg_weixin).setOnClickListener(this);
         findViewById(R.id.rel_abg_zhi).setOnClickListener(this);
         findViewById(R.id.tv_abg_buy).setOnClickListener(this);
-        final Bundle bundle=getIntent().getExtras();
-        if(bundle!=null){
-            goodsBean= (GoodsBean) bundle.getSerializable("goodsBean");
-            if(null==goodsBean){
-                return;
-            }
-            if(MyApplication.userInfoBean!=null){
-                tvBalance.setText("(余额¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100)+")");
-            }
-            tvNickName.setText(goodsBean.getNickname());
-            //设置星级
-            setXing(goodsBean.getCreditLevel());
-            if(goodsBean.getImgList().size()>0){
-                Glide.with(mContext).load(goodsBean.getImgList().get(0)).override(116,116).centerCrop().error(R.mipmap.icon).into(imageView);
-            }
-            tvContent.setText(goodsBean.getDescription());
-            tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
-            tvMoney2.setText("实付款："+ Html.fromHtml("<font color='#FF4181'>"+Util.setDouble(goodsBean.getPresentPrice()/100)+"元</font>"));
-            tvZFBIntegral.setText("(赠送"+goodsBean.getPresentPrice()/100+"积分)");
-            tvWXIntegral.setText("(赠送"+goodsBean.getPresentPrice()/100+"积分)");
+        goodsBean= (GoodsBean) getIntent().getSerializableExtra("goodsBean");
+        if(null==goodsBean){
+            return;
         }
+        if(MyApplication.userInfoBean!=null){
+            tvBalance.setText("(余额¥"+Util.setDouble(MyApplication.userInfoBean.getBalance()/100)+")");
+        }
+        tvNickName.setText(goodsBean.getNickname());
+        //设置星级
+        setXing(goodsBean.getCreditLevel());
+        if(goodsBean.getImgList().size()>0){
+            Glide.with(mContext).load(goodsBean.getImgList().get(0)).override(116,116).centerCrop().error(R.mipmap.icon).into(imageView);
+        }
+        tvContent.setText(goodsBean.getDescription());
+        tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
+        tvMoney2.setText("实付款："+ Html.fromHtml("<font color='#FF4181'>"+Util.setDouble(goodsBean.getPresentPrice()/100)+"元</font>"));
+        tvZFBIntegral.setText("(赠送"+goodsBean.getPresentPrice()/100+"积分)");
+        tvWXIntegral.setText("(赠送"+goodsBean.getPresentPrice()/100+"积分)");
     }
 
 

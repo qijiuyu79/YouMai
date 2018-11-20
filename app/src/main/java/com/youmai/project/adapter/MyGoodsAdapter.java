@@ -93,9 +93,7 @@ public class MyGoodsAdapter extends BaseAdapter{
 					GoodsBean goodsBean= (GoodsBean) v.getTag();
 					if(goodsBean!=null){
 						Intent intent=new Intent(context, ShareActivity.class);
-						Bundle bundle=new Bundle();
-						bundle.putSerializable("goodsBean",goodsBean);
-						intent.putExtras(bundle);
+						intent.putExtra("goodsBean",goodsBean);
 						context.startActivity(intent);
 					}
 				}

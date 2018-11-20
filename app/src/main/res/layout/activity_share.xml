@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/share_logo"
                     android:layout_marginLeft="13dp"
-                    android:layout_marginTop="14dp"/>
+                    android:paddingTop="15dp"/>
 
 
             </RelativeLayout>

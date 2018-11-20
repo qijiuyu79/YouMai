@@ -20,6 +20,7 @@ import com.umeng.socialize.media.UMImage;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.share.ShareActivity;
+import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.utils.BitMapUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 import com.youmai.project.utils.ZXingUtils;
@@ -32,6 +33,7 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
     private ImageView imgScan;
     //分享渠道
     private SHARE_MEDIA share_media;
+    private GoodsBean goodsBean;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -65,8 +67,8 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
      */
     private Bitmap bitmap,bm_logo;
     private void showImg(){
-        String goodId=getIntent().getStringExtra("goodId");
-        final String url="http://q.th2w.net/g/"+goodId;
+        goodsBean= (GoodsBean) getIntent().getSerializableExtra("goodsBean");
+        final String url="http://q.th2w.net/g/"+goodsBean.getId();
         bitmap= ZXingUtils.createQRImage(url,200,200);
         bm_logo = BitmapFactory.decodeResource(getResources(), R.mipmap.icon);
         imgScan.setImageBitmap(ZXingUtils.addLogo(bitmap,bm_logo));
@@ -77,20 +79,23 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
         switch (v.getId()){
             //分享
             case R.id.lin_share:
-                 View view= LayoutInflater.from(mContext).inflate(R.layout.share_pop,null);
-                 bottomPopupWindow(0,0,view);
-                 view.findViewById(R.id.img_share_wx).setOnClickListener(new View.OnClickListener() {
-                     public void onClick(View v) {
-                         share_media = SHARE_MEDIA.WEIXIN;
-                         share();
-                     }
-                 });
-                view.findViewById(R.id.img_share_wxp).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
-                        share();
-                    }
-                });
+                 Intent intent=new Intent(mContext,ShareActivity.class);
+                 intent.putExtra("goodsBean",goodsBean);
+                 startActivity(intent);
+//                 View view= LayoutInflater.from(mContext).inflate(R.layout.share_pop,null);
+//                 bottomPopupWindow(0,0,view);
+//                 view.findViewById(R.id.img_share_wx).setOnClickListener(new View.OnClickListener() {
+//                     public void onClick(View v) {
+//                         share_media = SHARE_MEDIA.WEIXIN;
+//                         share();
+//                     }
+//                 });
+//                view.findViewById(R.id.img_share_wxp).setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
+//                        share();
+//                    }
+//                });
                  break;
             //保存在本地
             case R.id.lin_save:
