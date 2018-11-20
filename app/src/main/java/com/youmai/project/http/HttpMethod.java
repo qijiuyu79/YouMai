@@ -115,7 +115,7 @@ public class HttpMethod extends BaseRequst {
         Map<String, String> map = new HashMap<>();
         map.put("type",type);
         map.put("min_distance","0");
-        map.put("max_distance","15000");
+        map.put("max_distance","30000");
         map.put("page",page+"");
         map.put("row","20");
         Http.getRetrofit().create(HttpApi.class).getLocationGoods(map).enqueue(new Callback<ResponseBody>() {
@@ -455,6 +455,8 @@ public class HttpMethod extends BaseRequst {
      */
     public static void getGoodsByKey(String key,int page,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
+        map.put("min_distance","0");
+        map.put("max_distance","30000");
         map.put("key",key);
         map.put("page",page+"");
         map.put("row","20");
@@ -534,7 +536,7 @@ public class HttpMethod extends BaseRequst {
     public static void getNearStore(final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("min_distance","0");
-        map.put("max_distance","10000");
+        map.put("max_distance","2000");
         Http.getRetrofit().create(HttpApi.class).getNearStore(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
