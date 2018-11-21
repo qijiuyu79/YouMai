@@ -105,7 +105,7 @@ public class RecommendedAdapter extends BaseAdapter{
 			holder.tvContext.setText(goodsBean.getDescription());
 			holder.tvLocation.setTag(goodsBean);
 			holder.tvLocation.setText(goodsBean.getAddress());
-			holder.tvDistance.setText("(距离"+goodsBean.getDistance()+")");
+			holder.tvDistance.setText("距离："+goodsBean.getDistance());
 			holder.tvNewMoney.setText("现价：¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
 			holder.tvOldMoney.setText("原价：¥"+Util.setDouble(goodsBean.getOriginalPrice()/100));
 			holder.tvOldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

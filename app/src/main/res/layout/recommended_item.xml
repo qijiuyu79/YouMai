@@ -121,11 +121,12 @@
         android:layout_below="@id/img_ri_icon"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="8dp">
 
         <ImageView
             android:layout_width="14dp"
             android:layout_height="17dp"
+            android:layout_centerVertical="true"
             android:src="@mipmap/location_icon"/>
 
         <TextView android:id="@+id/tv_ri_location"
@@ -134,36 +135,48 @@
             android:layout_marginLeft="19dp"
             android:textColor="@color/color_FF4081"
             android:textSize="14sp"
-            android:maxLength="9"/>
+            android:layout_marginRight="80dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_centerVertical="true"/>
 
         <TextView android:id="@+id/tv_ri_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_FF4081"
-            android:textSize="14sp"
-            android:layout_marginRight="75dp"
-            android:layout_toRightOf="@id/tv_ri_location"/>
+            android:textColor="@color/color_707070"
+            android:textSize="13sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_ri2"
+        android:layout_below="@id/rel_ri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <TextView android:id="@+id/tv_ri_newMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_ri_location"
-            android:layout_marginTop="7dp"
-            android:textSize="15sp"
+            android:textSize="14sp"
+            android:textColor="@color/color_FF4081"
             android:textStyle="bold"
-            android:textColor="@color/color_FF4081"/>
+            android:layout_centerVertical="true"
+            android:gravity="center"/>
 
         <TextView android:id="@+id/tv_ri_oldMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_ri_location"
-            android:layout_marginTop="7dp"
             android:layout_toRightOf="@id/tv_ri_newMoney"
-            android:layout_alignBottom="@id/tv_ri_newMoney"
             android:layout_marginLeft="15dp"
             android:textSize="12sp"
             android:textColor="@color/color_999999"
-            android:gravity="bottom"/>
+            android:layout_centerVertical="true"/>
 
         <com.youmai.project.view.ClickTextView
             android:id="@+id/tv_ri_buy"
@@ -171,7 +184,6 @@
             android:layout_height="26dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
             android:text="购买"
             android:textColor="@color/color_FF4081"
             android:textSize="13sp"
@@ -183,7 +195,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="11dp"
-        android:layout_below="@id/rel_ri"
+        android:layout_below="@id/rel_ri2"
         android:layout_marginTop="10dp"
         android:background="@color/color_F5F5F5"/>
 
