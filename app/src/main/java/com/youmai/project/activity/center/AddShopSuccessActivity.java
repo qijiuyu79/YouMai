@@ -77,7 +77,7 @@ public class AddShopSuccessActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            //分享
+            //分
             case R.id.lin_share:
                  Intent intent=new Intent(mContext,ShareActivity.class);
                  intent.putExtra("goodsBean",goodsBean);
