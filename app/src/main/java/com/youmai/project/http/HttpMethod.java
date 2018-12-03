@@ -947,4 +947,39 @@ public class HttpMethod extends BaseRequst {
         });
     }
 
+
+    /**
+     * 添加地址
+     * @param name
+     * @param mobile
+     * @param area
+     * @param address
+     * @param lon
+     * @param lat
+     * @param handler
+     */
+    public static void addAddress(String name,String mobile,String area,String address,String lon,String lat,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("name",name);
+        map.put("mobile",mobile);
+        map.put("area",area);
+        map.put("address",address);
+        map.put("lon",lon);
+        map.put("lat",lat);
+        Http.getRetrofit().create(HttpApi.class).addAddress(map).enqueue(new Callback<HttpBaseBean>() {
+            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.REPLY_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

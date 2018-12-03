@@ -3,6 +3,8 @@ package com.youmai.project.activity.user;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,9 +16,11 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
+import com.youmai.project.utils.map.GetLocation;
 
 /**
  * Created by Administrator on 2018/1/19 0019.
@@ -37,7 +41,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(android.R.color.white);
+        tintManager.setStatusBarTintResource(R.color.color_ffffff);
         initView();
     }
 
@@ -87,6 +91,9 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                     showMsg("请输入门牌号！");
                     return;
                  }
+                 showProgress("添加地址中");
+                 final LatLng latLng= GetLocation.getInstance().getNewLatLng();
+                 HttpMethod.addAddress(name,phone,address,houseNum,String.valueOf(latLng.longitude),String.valueOf(latLng.latitude),mHandler);
                  break;
             case R.id.lin_back:
                  finish();
@@ -95,6 +102,14 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                  break;
         }
     }
+
+
+    private Handler mHandler=new Handler(new Handler.Callback() {
+        public boolean handleMessage(Message msg) {
+            clearTask();
+            return false;
+        }
+    });
 
 
     @Override

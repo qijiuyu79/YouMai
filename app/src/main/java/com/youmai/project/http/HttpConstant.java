@@ -79,4 +79,6 @@ public class HttpConstant {
 
     public static final String Reply="/user/order/comment/reply";
 
+    public static final String ADD_ADDRESS="/user/address/add";
+
 }

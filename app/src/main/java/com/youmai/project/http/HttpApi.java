@@ -322,4 +322,14 @@ public interface HttpApi {
     @POST(HttpConstant.Reply)
     Call<HttpBaseBean> reply(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 添加地址
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_ADDRESS)
+    Call<HttpBaseBean> addAddress(@FieldMap Map<String, String> map);
+
 }
