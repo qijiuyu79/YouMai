@@ -1,5 +1,6 @@
 package com.youmai.project.activity.user;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -77,6 +78,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
         findViewById(R.id.img_au_setName).setOnClickListener(this);
         findViewById(R.id.tv_au_recharge).setOnClickListener(this);
         findViewById(R.id.tv_au_transfer).setOnClickListener(this);
+        findViewById(R.id.rel_addr).setOnClickListener(this);
         findViewById(R.id.rel_setting).setOnClickListener(this);
     }
 
@@ -125,11 +127,15 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
                  break;
             //转账
             case R.id.tv_au_transfer:
-                setClass(WithdrawalActivity.class);
+                 setClass(WithdrawalActivity.class);
                  break;
             //实名认证
             case R.id.rel_au_cer:
-                setClass(CertificationActivity.class);
+                 setClass(CertificationActivity.class);
+                 break;
+            //我的地址
+            case R.id.rel_addr:
+                 setClass(MyAddressActivity.class);
                  break;
             //设置
             case R.id.rel_setting:
@@ -142,6 +148,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

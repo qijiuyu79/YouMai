@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.MyAddressAdapter;
+import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
 
 /**
@@ -22,6 +23,7 @@ public class MyAddressActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_address);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //系统版本大于19
             setTranslucentStatus(true);
@@ -39,9 +41,8 @@ public class MyAddressActivity extends BaseActivity {
         ListView listView=(ListView)findViewById(R.id.listView);
         MyAddressAdapter myAddressAdapter=new MyAddressAdapter(mContext);
         listView.setAdapter(myAddressAdapter);
-
-        findViewById(R.id.lin_aa_add).setOnClickListener(new View.OnClickListener() {
-            @Override
+        //新增收获地址
+        findViewById(R.id.lin_add).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setClass(AddAddressActivity.class);
             }

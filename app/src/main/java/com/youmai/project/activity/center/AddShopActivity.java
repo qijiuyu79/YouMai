@@ -63,7 +63,7 @@ public class AddShopActivity extends BaseActivity implements View.OnClickListene
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.gray_bg);
+        tintManager.setStatusBarTintResource(android.R.color.white);
         initView();
     }
 

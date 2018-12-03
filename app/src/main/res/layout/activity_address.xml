@@ -1,12 +1,14 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="50dp">
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
 
         <LinearLayout android:id="@+id/lin_back"
             android:layout_width="wrap_content"
@@ -17,50 +19,64 @@
             android:layout_marginLeft="10dp">
 
             <ImageView
-                android:layout_width="9dp"
-                android:layout_height="16dp"
-                android:src="@mipmap/ic_black_back"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_next_icon"/>
 
         </LinearLayout>
 
         <TextView android:id="@+id/tv_head"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="17sp"
-            android:textColor="@android:color/black"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="70dp"
-            android:layout_marginLeft="50dp"
             android:text="我的地址"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:gravity="center"/>
-
-        <LinearLayout android:id="@+id/lin_aa_add"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_alignParentRight="true">
-
-            <ImageView android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@mipmap/icon"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"/>
-
-        </LinearLayout>
+            android:gravity="center" />
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_777777"/>
-
-    <ListView android:id="@+id/listView"
+    <ListView
+        android:id="@+id/listView"
+        android:layout_below="@id/head"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:divider="#00000000">
     </ListView>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white">
+
+        <com.youmai.project.view.ClickLinearLayout
+            android:id="@+id/lin_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/add_shop" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="新增收获地址"
+                android:textSize="14sp"
+                android:textColor="@color/color_FF4081"
+                android:gravity="center"
+                android:layout_marginLeft="6dp"/>
+
+        </com.youmai.project.view.ClickLinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

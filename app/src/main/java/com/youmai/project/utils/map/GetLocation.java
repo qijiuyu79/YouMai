@@ -4,6 +4,8 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -14,6 +16,7 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
+import com.baidu.mapapi.model.LatLng;
 import com.youmai.project.R;
 import com.youmai.project.application.MyApplication;
 import com.youmai.project.utils.SPUtil;
@@ -120,6 +123,22 @@ public class GetLocation {
         DialogView dialogView = new DialogView(context,"无法定位，请开启定位权限或者打开GPS", "确定", null, null, null);
         dialogView.show();
         return false;
+    }
+
+
+    /**
+     * 获取当前的经纬度
+     * @return
+     */
+    public LatLng getNewLatLng(){
+        String strLat=MyApplication.spUtil.getString(SPUtil.LOCATION_LAT);
+        String strLon=MyApplication.spUtil.getString(SPUtil.LOCATION_LONG);
+        if(TextUtils.isEmpty(strLat) || TextUtils.isEmpty(strLon)){
+            return null;
+        }
+        final double lat = Double.parseDouble(strLat);
+        final double lon = Double.parseDouble(strLon);
+        return new LatLng(lat,lon);
     }
 
     /**

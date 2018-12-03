@@ -1,0 +1,91 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <RelativeLayout android:id="@+id/rel_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_FF4081">
+
+        <LinearLayout android:id="@+id/lin_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="30dp"
+            android:layout_marginLeft="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_next_icon"/>
+
+        </LinearLayout>
+
+    <TextView android:id="@+id/tv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="选择地址"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:gravity="center" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/color_FF4081">
+
+        <RelativeLayout
+            android:id="@+id/rel_am_search"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@drawable/bg_search"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="17.5dp"
+                android:layout_height="17.5dp"
+                android:src="@mipmap/search_icon"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_location_count"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/color_888888"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="54dp"/>
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="21dp"
+                android:src="@mipmap/logos_icon"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+</LinearLayout>
