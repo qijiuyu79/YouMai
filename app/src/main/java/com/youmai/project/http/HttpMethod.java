@@ -3,6 +3,7 @@ package com.youmai.project.http;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.youmai.project.bean.Address;
 import com.youmai.project.bean.DownLoad;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
@@ -966,17 +967,66 @@ public class HttpMethod extends BaseRequst {
         map.put("address",address);
         map.put("lon",lon);
         map.put("lat",lat);
-        Http.getRetrofit().create(HttpApi.class).addAddress(map).enqueue(new Callback<HttpBaseBean>() {
-            public void onResponse(Call<HttpBaseBean> call, Response<HttpBaseBean> response) {
+        Http.getRetrofit().create(HttpApi.class).addAddress(map).enqueue(new Callback<Address>() {
+            public void onResponse(Call<Address> call, Response<Address> response) {
                 try {
-                    sendMessage(handler, HandlerConstant.REPLY_SUCCESS, response.body());
+                    sendMessage(handler, HandlerConstant.ADD_ADDRESS_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<HttpBaseBean> call, Throwable t) {
+            public void onFailure(Call<Address> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询地址列表
+     * @param handler
+     */
+    public static void getAddressList(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi.class).getAddressList(map).enqueue(new Callback<Address>() {
+            public void onResponse(Call<Address> call, Response<Address> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.GET_ADDRESS_LIST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Address> call, Throwable t) {
+                sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    public static void editAddress(int index,String name,String mobile,String area,String address,String lon,String lat,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("index",String.valueOf(index));
+        map.put("name",name);
+        map.put("mobile",mobile);
+        map.put("area",area);
+        map.put("address",address);
+        map.put("lon",lon);
+        map.put("lat",lat);
+        Http.getRetrofit().create(HttpApi.class).editAddress(map).enqueue(new Callback<Address>() {
+            public void onResponse(Call<Address> call, Response<Address> response) {
+                try {
+                    sendMessage(handler, HandlerConstant.ADD_ADDRESS_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Address> call, Throwable t) {
                 sendMessage(handler, HandlerConstant.REQUST_ERROR, null);
             }
         });

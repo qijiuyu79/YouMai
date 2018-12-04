@@ -1,5 +1,6 @@
 package com.youmai.project.http;
 
+import com.youmai.project.bean.Address;
 import com.youmai.project.bean.HttpBaseBean;
 import com.youmai.project.bean.Login;
 import com.youmai.project.bean.Report;
@@ -330,6 +331,26 @@ public interface HttpApi {
      */
     @FormUrlEncoded
     @POST(HttpConstant.ADD_ADDRESS)
-    Call<HttpBaseBean> addAddress(@FieldMap Map<String, String> map);
+    Call<Address> addAddress(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询地址列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ADDRESS_LISTS)
+    Call<Address> getAddressList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 修改地址
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.EDIT_ADDRESS)
+    Call<Address> editAddress(@FieldMap Map<String, String> map);
 
 }

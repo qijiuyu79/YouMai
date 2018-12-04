@@ -81,4 +81,8 @@ public class HttpConstant {
 
     public static final String ADD_ADDRESS="/user/address/add";
 
+    public static final String GET_ADDRESS_LISTS="/user/address/list";
+
+    public static final String EDIT_ADDRESS="/user/address/edit";
+
 }

@@ -52,4 +52,6 @@ public class HandlerConstant {
     public static final int GET_STORE_INFO_SUCCESS2=1153;
     public static final int DELETE_ORDER_SUCCESS=1154;
     public static final int REPLY_SUCCESS=1155;
+    public static final int ADD_ADDRESS_SUCCESS=1156;
+    public static final int GET_ADDRESS_LIST_SUCCESS=1157;
 }

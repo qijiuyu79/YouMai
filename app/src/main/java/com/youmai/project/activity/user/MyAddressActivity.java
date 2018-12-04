@@ -1,18 +1,23 @@
 package com.youmai.project.activity.user;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.adapter.MyAddressAdapter;
+import com.youmai.project.bean.Address;
+import com.youmai.project.http.HandlerConstant;
+import com.youmai.project.http.HttpMethod;
 import com.youmai.project.utils.StatusBarUtils;
 import com.youmai.project.utils.SystemBarTintManager;
-
 /**
  * 我的地址
  * Created by Administrator on 2018/1/19 0019.
@@ -20,6 +25,7 @@ import com.youmai.project.utils.SystemBarTintManager;
 
 public class MyAddressActivity extends BaseActivity {
 
+    private ListView listView;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,19 +38,19 @@ public class MyAddressActivity extends BaseActivity {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.color_FF4081);
         initView();
+        getAddressList();
     }
 
     /**
      * 初始化控件
      */
     private void initView(){
-        ListView listView=(ListView)findViewById(R.id.listView);
-        MyAddressAdapter myAddressAdapter=new MyAddressAdapter(mContext);
-        listView.setAdapter(myAddressAdapter);
+        listView=(ListView)findViewById(R.id.listView);
         //新增收获地址
         findViewById(R.id.lin_add).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setClass(AddAddressActivity.class);
+                Intent intent=new Intent(mContext,AddAddressActivity.class);
+                startActivityForResult(intent,2);
             }
         });
 
@@ -54,5 +60,60 @@ public class MyAddressActivity extends BaseActivity {
             }
         });
 
+    }
+
+
+    private Handler mHandler=new Handler(new Handler.Callback() {
+        public boolean handleMessage(Message msg) {
+            clearTask();
+            switch (msg.what){
+                case HandlerConstant.GET_ADDRESS_LIST_SUCCESS:
+                     Address address= (Address) msg.obj;
+                     if(null==address){
+                         break;
+                     }
+                     if(address.isSussess()){
+                         MyAddressAdapter myAddressAdapter=new MyAddressAdapter(MyAddressActivity.this,address.getData());
+                         listView.setAdapter(myAddressAdapter);
+                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                             }
+                         });
+                     }else{
+                         showMsg(address.getMsg());
+                     }
+                     break;
+                case HandlerConstant.REQUST_ERROR:
+                     showMsg(getString(R.string.http_error));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    });
+
+
+    /**
+     * 查询地址列表数据
+     */
+    private void getAddressList(){
+        showProgress("数据加载中");
+        HttpMethod.getAddressList(mHandler);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==2){
+            final Address address= (Address) data.getSerializableExtra("address");
+            if(null==address){
+                return;
+            }
+            MyAddressAdapter myAddressAdapter=new MyAddressAdapter(MyAddressActivity.this,address.getData());
+            listView.setAdapter(myAddressAdapter);
+        }
     }
 }
