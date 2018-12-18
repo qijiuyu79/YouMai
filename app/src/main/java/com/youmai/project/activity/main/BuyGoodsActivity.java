@@ -13,19 +13,23 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
+import com.youmai.project.activity.user.MyAddressActivity;
+import com.youmai.project.adapter.MyAddressAdapter;
 import com.youmai.project.application.MyApplication;
+import com.youmai.project.bean.Address;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.bean.PayResult;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
+import com.youmai.project.utils.LogUtils;
 import com.youmai.project.utils.PayUtils;
 import com.youmai.project.utils.Util;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,17 +42,21 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
 
     private ImageView imgBalance,imgWeixin,imgZhifu;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5;
-    private TextView tvZFBIntegral,tvWXIntegral;
+    private TextView tvZFBIntegral,tvWXIntegral,tvAddress,tvMobile;
     private GoodsBean goodsBean;
     private String payStr="BALANCE";
     //购买成功后的广播
     public final static String ACTION_GOODS_PAYSUCCESS = "net.youmai.adminapp.action.goods.paysuccess";
     //订单id
     private String orderId;
+    //收获地址对象
+    private Address.AddressBean addressBean;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_goods);
         initView();
+        //查询地址列表数据
+        getAddressList();
         //注册广播
         registerReceiver();
     }
@@ -76,6 +84,9 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         imgX5=(ImageView)findViewById(R.id.img_au_x5);
         tvZFBIntegral=(TextView)findViewById(R.id.tv_zfb_integral);
         tvWXIntegral=(TextView)findViewById(R.id.tv_wx_integral);
+        tvAddress=(TextView)findViewById(R.id.tv_address);
+        tvMobile=(TextView)findViewById(R.id.tv_mobile);
+        findViewById(R.id.rel_address).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
         findViewById(R.id.rel_abg_balance).setOnClickListener(this);
         findViewById(R.id.rel_abg_weixin).setOnClickListener(this);
@@ -124,6 +135,12 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //选择收货地址
+            case R.id.rel_address:
+                 Intent intent=new Intent(mContext, MyAddressActivity.class);
+                 intent.putExtra("type",1);
+                 startActivityForResult(intent,1);
+                 break;
             //余额支付
             case R.id.rel_abg_balance:
                  payStr="BALANCE";
@@ -147,8 +164,12 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
                  break;
             //支付
             case R.id.tv_abg_buy:
+                 if(null==addressBean){
+                     showMsg("请选择收货地址！");
+                     return;
+                 }
                  showProgress("购买中...");
-                 HttpMethod.buy(payStr,goodsBean.getId(),mHandler);
+                 HttpMethod.buy(payStr,goodsBean.getId(),String.valueOf(addressBean.getIndex()),mHandler);
                  break;
             case R.id.lin_back:
                  finish();
@@ -165,6 +186,22 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
             super.handleMessage(msg);
             clearTask();
             switch (msg.what){
+                //获取地址列表
+                case HandlerConstant.GET_ADDRESS_LIST_SUCCESS:
+                     Address address= (Address) msg.obj;
+                     if(null==address){
+                        break;
+                     }
+                     if(address.isSussess() && address.getData().size()>0){
+                         addressBean=address.getData().get(0);
+                         if(null!=addressBean){
+                             tvAddress.setText(addressBean.getAddress());
+                             tvMobile.setText(addressBean.getName()+"    "+addressBean.getMobile());
+                             tvMobile.setVisibility(View.VISIBLE);
+                         }
+                     }
+                     break;
+                //购买
                 case HandlerConstant.BUY_SUCCESS:
                      String message= (String) msg.obj;
                      if(TextUtils.isEmpty(message)){
@@ -269,12 +306,35 @@ public class BuyGoodsActivity extends BaseActivity implements View.OnClickListen
         intent.putExtra("goodsBean",goodsBean);
         intent.putExtra("payType",payStr);
         intent.putExtra("orderId",orderId);
+        intent.putExtra("addressBean",addressBean);
         startActivity(intent);
         //发送广播
         Intent broadcastIntent=new Intent(ACTION_GOODS_PAYSUCCESS);
         broadcastIntent.putExtra("goodsBean",goodsBean);
         sendBroadcast(broadcastIntent);
         BuyGoodsActivity.this.finish();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1){
+            addressBean= (Address.AddressBean) data.getSerializableExtra("addressBean");
+            if(null!=addressBean){
+                tvAddress.setText(addressBean.getAddress());
+                tvMobile.setText(addressBean.getName()+"    "+addressBean.getMobile());
+                tvMobile.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    /**
+     * 查询地址列表数据
+     */
+    private void getAddressList(){
+        showProgress("数据加载中");
+        HttpMethod.getAddressList(mHandler);
     }
 
 

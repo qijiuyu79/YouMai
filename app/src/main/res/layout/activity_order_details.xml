@@ -190,11 +190,11 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="交易方式"
+                    android:layout_height="wrap_content"
+                    android:text="收货地址"
                     android:textSize="15sp"
                     android:textColor="@color/color_444444"
-                    android:gravity="center"/>
+                    android:layout_centerVertical="true"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -204,20 +204,20 @@
                     android:layout_centerVertical="true">
 
                     <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_444444"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_mobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="线下交易"
-                        android:textSize="15sp"
-                        android:textColor="@color/color_444444"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="支付成功后即可通过电话联系卖家完成交易"
+                        android:layout_marginTop="10dp"
                         android:textSize="12sp"
-                        android:textColor="@color/color_bab7b7"/>
+                        android:textColor="@color/color_444444"/>
 
                 </LinearLayout>
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@color/color_F5F5F5">
+    android:background="@android:color/white">
 
     <include layout="@layout/head"/>
 
@@ -99,7 +99,7 @@
     </RelativeLayout>
 
     <View
-        android:id="@+id/view_abg"
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/color_dbd8d8"
@@ -109,54 +109,57 @@
         android:layout_marginTop="16dp"/>
 
     <RelativeLayout
-        android:id="@+id/rel_abg_trans"
+        android:id="@+id/rel_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/view_abg"
+        android:layout_below="@id/view"
         android:layout_marginTop="12dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
 
         <TextView
+            android:id="@+id/tv_go"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="交易方式"
-            android:textSize="15sp"
+            android:text="订单配送至"
             android:textColor="@color/color_444444"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/tv_go"
+            android:text="新增收货地址"
+            android:textColor="@color/color_444444"
+            android:textSize="15sp"/>
+
+
+        <TextView
+            android:id="@+id/tv_mobile"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_address"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/color_444444"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_next"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="线下交易"
-                android:textSize="15sp"
-                android:textColor="@color/color_444444"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="支付成功后即可通过电话联系卖家完成交易"
-                android:textSize="12sp"
-                android:textColor="@color/color_bab7b7"/>
-
-        </LinearLayout>
-
     </RelativeLayout>
-
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="8dp"
-        android:layout_below="@id/rel_abg_trans"
+        android:layout_below="@id/rel_address"
         android:background="@color/color_ececec"
         android:layout_marginTop="20dp"/>
 
@@ -165,7 +168,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="28dp"
-        android:layout_below="@id/rel_abg_trans"
+        android:layout_below="@id/rel_address"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
 

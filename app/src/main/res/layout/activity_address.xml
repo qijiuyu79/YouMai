@@ -79,4 +79,29 @@
 
     </RelativeLayout>
 
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/lin_not_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/not_data"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="暂无地址"
+            android:textSize="14sp"
+            android:textColor="@color/color_666666"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

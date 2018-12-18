@@ -185,6 +185,16 @@ public class JsonUtils {
                         myGoods.setLatitude(jsonArray2.getDouble(k));
                     }
                 }
+
+
+                //解析收货地址
+                if(!jsonObject1.isNull("address")){
+                    JSONObject jsonObject4=new JSONObject(jsonObject1.getString("address"));
+                    myGoods.setSend_address(jsonObject4.getString("address"));
+                    myGoods.setSend_name(jsonObject4.getString("name"));
+                    myGoods.setSend_mobile(jsonObject4.getString("mobile"));
+                }
+
                 list.add(myGoods);
             }
         }catch (Exception e){

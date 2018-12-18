@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
-
-import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
@@ -29,8 +30,10 @@ import java.util.List;
 
 public class SelectAddressActivity extends BaseActivity implements OnGetPoiSearchResultListener{
 
-    private PoiSearch mPoiSearch;
     private ListView listView;
+    private EditText etKeys;
+    private PoiSearch mPoiSearch;
+    private PoiNearbySearchOption poiNearbySearchOption;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -51,15 +54,35 @@ public class SelectAddressActivity extends BaseActivity implements OnGetPoiSearc
      */
     private void initView(){
         listView=(ListView)findViewById(R.id.listView);
+        etKeys=(EditText) findViewById(R.id.tv_keys);
         // POI初始化搜索模块，注册搜索事件监听
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);
-        PoiNearbySearchOption poiNearbySearchOption = new PoiNearbySearchOption();
-        poiNearbySearchOption.keyword("公司");
+        poiNearbySearchOption = new PoiNearbySearchOption();
+        poiNearbySearchOption.keyword("公司,家");
         poiNearbySearchOption.location(GetLocation.getInstance().getNewLatLng());
         poiNearbySearchOption.radius(200);  // 检索半径，单位是米
         poiNearbySearchOption.pageCapacity(30);  // 默认每页10条
         mPoiSearch.searchNearby(poiNearbySearchOption);  // 发起附近检索请求
+
+        /**
+         * 根据关键字搜索
+         */
+        etKeys.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length()==0){
+                    return;
+                }
+                poiNearbySearchOption.keyword(s.toString());
+                mPoiSearch.searchNearby(poiNearbySearchOption);  // 发起附近检索请求
+            }
+        });
         //返回
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

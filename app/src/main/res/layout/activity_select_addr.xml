@@ -45,7 +45,6 @@
         android:background="@color/color_FF4081">
 
         <RelativeLayout
-            android:id="@+id/rel_am_search"
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:background="@drawable/bg_search"
@@ -60,11 +59,12 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"/>
 
-            <TextView
-                android:id="@+id/tv_location_count"
+            <EditText
+                android:id="@+id/tv_keys"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/color_888888"
+                android:background="@null"
                 android:textSize="12sp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="40dp"

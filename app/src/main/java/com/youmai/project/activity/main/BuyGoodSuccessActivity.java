@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
 import com.youmai.project.activity.order.OrderActivity;
+import com.youmai.project.bean.Address;
 import com.youmai.project.bean.GoodsBean;
 import com.youmai.project.http.HandlerConstant;
 import com.youmai.project.http.HttpMethod;
@@ -32,12 +33,14 @@ import java.util.List;
 public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView imageView,imgX1,imgX2,imgX3,imgX4,imgX5;
-    private TextView tvNickName,tvContent,tvMoney,tvPayType,tvMoney2;
+    private TextView tvNickName,tvContent,tvMoney,tvPayType,tvMoney2,tvAddress,tvMobile;
     private GoodsBean goodsBean;
     //订单id和支付方式
     private String orderId,payType;
     //卖家的手机号码
     private String mobile;
+    //收货地址对象
+    private Address.AddressBean addressBean;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_goods_success);
@@ -56,6 +59,7 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         goodsBean = (GoodsBean) getIntent().getSerializableExtra("goodsBean");
         payType = getIntent().getStringExtra("payType");
         orderId = getIntent().getStringExtra("orderId");
+        addressBean= (Address.AddressBean) getIntent().getSerializableExtra("addressBean");
 
         TextView tvHead = (TextView) findViewById(R.id.tv_head);
         tvHead.setText("购买宝贝");
@@ -65,6 +69,8 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         tvPayType = (TextView) findViewById(R.id.tv_abgs_paytype);
         tvMoney2 = (TextView) findViewById(R.id.tv_abg_money2);
         tvNickName = (TextView) findViewById(R.id.tv_abg_name);
+        tvAddress=(TextView)findViewById(R.id.tv_address);
+        tvMobile=(TextView)findViewById(R.id.tv_mobile);
         imgX1 = (ImageView) findViewById(R.id.img_au_x1);
         imgX2 = (ImageView) findViewById(R.id.img_au_x2);
         imgX3 = (ImageView) findViewById(R.id.img_au_x3);
@@ -113,6 +119,8 @@ public class BuyGoodSuccessActivity extends BaseActivity implements View.OnClick
         tvContent.setText(goodsBean.getDescription());
         tvMoney.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
         tvMoney2.setText("¥"+ Util.setDouble(goodsBean.getPresentPrice()/100));
+        tvAddress.setText(addressBean.getAddress());
+        tvMobile.setText(addressBean.getName()+"     "+addressBean.getMobile());
         switch (payType){
             case "BALANCE":
                 tvPayType.setText("余额支付");

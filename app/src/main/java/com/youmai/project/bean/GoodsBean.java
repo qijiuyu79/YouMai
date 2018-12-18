@@ -32,6 +32,9 @@ public class GoodsBean implements Serializable {
     private int payment;
     private boolean commented;
     private String qrCodeText;
+    private String send_address;
+    private String send_name;
+    private String send_mobile;
 
     public String getAddress() {
         return address;
@@ -199,5 +202,29 @@ public class GoodsBean implements Serializable {
 
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    public String getSend_address() {
+        return send_address;
+    }
+
+    public void setSend_address(String send_address) {
+        this.send_address = send_address;
+    }
+
+    public String getSend_name() {
+        return send_name;
+    }
+
+    public void setSend_name(String send_name) {
+        this.send_name = send_name;
+    }
+
+    public String getSend_mobile() {
+        return send_mobile;
+    }
+
+    public void setSend_mobile(String send_mobile) {
+        this.send_mobile = send_mobile;
     }
 }

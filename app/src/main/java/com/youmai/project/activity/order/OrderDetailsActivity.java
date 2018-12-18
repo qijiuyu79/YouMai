@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class OrderDetailsActivity  extends BaseActivity implements View.OnClickListener{
 
-    private TextView tvUserName,tvContent,tvMoney1,tvPayType,tvMoney2;
+    private TextView tvUserName,tvContent,tvMoney1,tvPayType,tvMoney2,tvAddress,tvMobile;
     private ImageView imgX1,imgX2,imgX3,imgX4,imgX5,imgGood,imgOrder,imgType;
     private GoodsBean goodsBean;
     private List<ImageView> imgList=new ArrayList<>();
@@ -63,6 +63,8 @@ public class OrderDetailsActivity  extends BaseActivity implements View.OnClickL
         tvMoney1=(TextView)findViewById(R.id.tv_oi_money);
         tvPayType=(TextView)findViewById(R.id.tv_abgs_paytype);
         tvMoney2=(TextView)findViewById(R.id.tv_abg_money2);
+        tvAddress=(TextView)findViewById(R.id.tv_address);
+        tvMobile=(TextView)findViewById(R.id.tv_mobile);
         imgOrder=(ImageView)findViewById(R.id.img_order);
         imgType=(ImageView)findViewById(R.id.img_oi_type);
         findViewById(R.id.lin_abgs_contact).setOnClickListener(this);
@@ -86,6 +88,8 @@ public class OrderDetailsActivity  extends BaseActivity implements View.OnClickL
         tvContent.setText(goodsBean.getDescription());
         tvMoney1.setText(Util.setDouble(goodsBean.getPresentPrice()/100));
         tvMoney2.setText("¥"+Util.setDouble(goodsBean.getPresentPrice()/100));
+        tvAddress.setText(goodsBean.getSend_address());
+        tvMobile.setText(goodsBean.getSend_name()+"     "+goodsBean.getSend_mobile());
         switch (goodsBean.getPayment()){
             case 0:
                 tvPayType.setText("余额支付");

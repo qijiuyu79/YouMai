@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.youmai.project.R;
 import com.youmai.project.activity.BaseActivity;
@@ -26,6 +27,9 @@ import com.youmai.project.utils.SystemBarTintManager;
 public class MyAddressActivity extends BaseActivity {
 
     private ListView listView;
+    private LinearLayout linNo;
+    private int type;
+    private Address address;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -45,7 +49,9 @@ public class MyAddressActivity extends BaseActivity {
      * 初始化控件
      */
     private void initView(){
+        type=getIntent().getIntExtra("type",0);
         listView=(ListView)findViewById(R.id.listView);
+        linNo=(LinearLayout)findViewById(R.id.lin_not_data);
         //新增收获地址
         findViewById(R.id.lin_add).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -68,16 +74,24 @@ public class MyAddressActivity extends BaseActivity {
             clearTask();
             switch (msg.what){
                 case HandlerConstant.GET_ADDRESS_LIST_SUCCESS:
-                     Address address= (Address) msg.obj;
+                     address= (Address) msg.obj;
                      if(null==address){
                          break;
                      }
                      if(address.isSussess()){
                          MyAddressAdapter myAddressAdapter=new MyAddressAdapter(MyAddressActivity.this,address.getData());
                          listView.setAdapter(myAddressAdapter);
+                         if(address.getData().size()==0){
+                             linNo.setVisibility(View.VISIBLE);
+                         }
                          listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                                 if(type==1){
+                                     Intent intent=new Intent();
+                                     intent.putExtra("addressBean",address.getData().get(position));
+                                     setResult(1,intent);
+                                     MyAddressActivity.this.finish();
+                                 }
                              }
                          });
                      }else{
@@ -108,12 +122,13 @@ public class MyAddressActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==2){
-            final Address address= (Address) data.getSerializableExtra("address");
+            address= (Address) data.getSerializableExtra("address");
             if(null==address){
                 return;
             }
             MyAddressAdapter myAddressAdapter=new MyAddressAdapter(MyAddressActivity.this,address.getData());
             listView.setAdapter(myAddressAdapter);
+            linNo.setVisibility(View.GONE);
         }
     }
 }
